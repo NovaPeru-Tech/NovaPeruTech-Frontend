@@ -1,6 +1,9 @@
 {
   "name": "frontend-nova-peru-tech",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Frontend Nova Peru Tech",
+  "author": "Nova Peru Tech",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -22,12 +25,16 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cdk": "^20.2.5",
     "@angular/common": "^20.3.0",
     "@angular/compiler": "^20.3.0",
     "@angular/core": "^20.3.0",
     "@angular/forms": "^20.3.0",
+    "@angular/material": "^20.2.5",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
