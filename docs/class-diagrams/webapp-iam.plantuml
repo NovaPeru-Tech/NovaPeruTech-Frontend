@@ -1,0 +1,70 @@
+@startuml
+
+
+package "iam.application" {
+ class novaPeruTech-store{
+ }
+}
+
+package "iam.domain.model" {
+  class administrator {
+
+  }
+  class familiar {
+
+  }
+
+  class nursingHome {
+
+  }
+  class user {
+
+  }
+  class addFamiliar{
+  }
+}
+
+package "iam.infrastructure" {
+
+class NovaPeruTech-api{
+}
+class administratorAssembler {
+}
+class nursingHomeAssembler {
+}
+class familiarAssembler {
+}
+interface administratorResponse{
+}
+interface nursingHomeResponse{
+}
+interface familiarResponse{
+}
+}
+package "iam.presentation" {
+package "components"{
+component authenticationSection{
+}
+
+}
+package "views"{
+component sign-in{
+
+}
+component sign-up-familiar{
+}
+component sign-up-administrator{
+}
+component welcome {
+
+}
+component sign-up-nursing-home{
+}
+component add-familiar{
+}
+
+}
+
+
+
+@enduml
