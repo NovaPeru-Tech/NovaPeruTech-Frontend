@@ -1,0 +1,18 @@
+{
+"toolbar": {
+"logoAlt": "logo"
+},
+"welcome": {
+"title": "Cuidamos de quienes<br>amas, informamos<br>a quienes esperan",
+"subtitle": "Veyra: Tu mejor aliado en el cuidado y conexión familiar.",
+"imageAlt": "Cuidadora con paciente"
+},
+"auth": {
+"login": "Iniciar Sesión",
+"register": "Registrarse"
+},
+"buttons": {
+"administrator": "Administrador",
+"family": "Familiar"
+}
+}
