@@ -1,0 +1,39 @@
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.administration,
+.familiar {
+  font-size: 18px;
+}
+
+button[mat-stroked-button] {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+
+.familiar button {
+  background-color: #2686B6;
+  color: white;
+}
+
+.administration button {
+  background-color: #66B3AD;
+  color: white;
+}
+@media (max-width: 768px) {
+  .button-container {
+    justify-content: center; /* centrados en tablets/móviles */
+  }
+
+  .button-container button {
+    flex: 1 1 100%;          /* que ocupen todo el ancho disponible */
+    max-width: 100%;
+  }
+}
