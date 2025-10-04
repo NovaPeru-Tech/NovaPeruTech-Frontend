@@ -29,11 +29,11 @@ button[mat-stroked-button] {
 }
 @media (max-width: 768px) {
   .button-container {
-    justify-content: center; /* centrados en tablets/móviles */
+    justify-content: center;
   }
 
   .button-container button {
-    flex: 1 1 100%;          /* que ocupen todo el ancho disponible */
+    flex: 1 1 100%;
     max-width: 100%;
   }
 }

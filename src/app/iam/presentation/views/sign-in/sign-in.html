@@ -1,1 +1,36 @@
-<p>sing-in works!</p>
+<div class="sign-in-content">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sign In</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="Email" type="email">
+          @if (showError('email')) {
+            <mat-error>{{ getError('email') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" placeholder="Password" type="password">
+          @if (showError('password')) {
+            <mat-error>{{ getError('password') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">Sign In</button>
+      </form>
+      @if (error) {
+        <div style="color:red; margin-top:10px;">
+          {{ error }}
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+
+</div>
