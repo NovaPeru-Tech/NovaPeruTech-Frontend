@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -8,6 +8,8 @@ import { MatButton } from '@angular/material/button';
 import {BaseForm} from '../../../../shared/presentation/base-form';
 import {IamStore} from '../../../application/iam.store';
 import {SignUp} from '../../../domain/model/sign-up.entity';
+import {take} from 'rxjs';
+import {Toolbar} from '../../../../shared/presentation/components/toolbar/toolbar';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,7 +22,8 @@ import {SignUp} from '../../../domain/model/sign-up.entity';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInput,
-    MatButton
+    MatButton,
+    Toolbar
   ],
   templateUrl: './sign-up.html',
   styleUrls: ['./sign-up.css']
@@ -33,8 +36,9 @@ export class SignUpComponent extends BaseForm {
   constructor(
     private fb: FormBuilder,
     public iamStore: IamStore,
-    private route: ActivatedRoute
-  ) {
+    private route: ActivatedRoute,
+  private router: Router
+) {
     super();
     this.userRole = this.route.snapshot.data['role'];
 
@@ -62,8 +66,24 @@ export class SignUpComponent extends BaseForm {
       role: this.userRole
     });
 
-    this.iamStore.createSignUp(signUp);
+    this.iamStore.createSignUp(signUp).pipe(take(1)).subscribe({
+      next: createdUser => {
+        if (createdUser.rol === 'administrator') {
+          this.router.navigate(['register/nursingHome'], { queryParams: { adminId: createdUser.id } })
+            .catch(err => console.error('Navigation error', err));
+        } else if (createdUser.rol === 'family') {
+          this.router.navigate(['/elders/add'], { queryParams: { familyId: createdUser.id } })
+            .catch(err => console.error('Navigation error', err));
+        } else {
+          this.router.navigate(['/']).catch(err => console.error('Navigation error', err));
+        }
+      },
+      error: err => {
+        console.error('Error registrando usuario', err);
+      }
+    });
   }
+
 
   showError(controlName: string): boolean {
     const control = this.form.get(controlName);

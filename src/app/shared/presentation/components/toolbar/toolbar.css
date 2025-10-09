@@ -1,0 +1,11 @@
+.toolbar{
+  background: #66B3AD;
+}
+.toolbar img {
+  height: 100px;
+  width: auto;
+  margin-right: 8px;
+}
+.spacer{
+  flex: 1 1 auto;
+}

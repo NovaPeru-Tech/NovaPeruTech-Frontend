@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { SignIn } from '../domain/model/sign-in.entity';
 import { SignUp } from '../domain/model/sign-up.entity';
 import { IamApi } from '../infrastructure/iam-api';
-import { retry } from 'rxjs';
+import {catchError, Observable, retry, tap, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,25 +20,25 @@ export class IamStore {
 
   constructor(private iamApi: IamApi) {}
 
-  createSignUp(signUp: SignUp) {
+  createSignUp(signUp: SignUp): Observable<SignUp> {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
 
-    this.iamApi.CreateSignUp(signUp).pipe(retry(1)).subscribe({
-      next: registeredUser => {
-        if (registeredUser) {
-          this._signUpSignal.set(registeredUser);
-        } else {
-          this._signUpSignal.set(null);
-          this._errorSignal.set('Error al registrar usuario');
+    return this.iamApi.CreateSignUp(signUp).pipe(
+      retry(1),
+      tap({
+        next: (registeredUser: SignUp) => {
+          this._signUpSignal.set(registeredUser ?? null);
+          this._loadingSignal.set(false);
         }
-        this._loadingSignal.set(false);
-      },
-      error: err => {
+      }),
+      catchError(err => {
         this._errorSignal.set(this.formatError(err, 'Error al registrar usuario'));
+        this._signUpSignal.set(null);
         this._loadingSignal.set(false);
-      }
-    });
+        return throwError(() => err);
+      })
+    );
   }
 
 

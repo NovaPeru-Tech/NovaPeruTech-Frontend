@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import {MatToolbar} from '@angular/material/toolbar';
-import {LanguageSwitcher} from '../../components/language-switcher/language-switcher';
 import { AuthenticationSection } from '../../../../iam/presentation/components/authentication-section/authentication-section';
+import {Toolbar} from '../../components/toolbar/toolbar';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    MatToolbar,
-    LanguageSwitcher,
-    AuthenticationSection
+    AuthenticationSection,
+    Toolbar,
+    TranslatePipe
   ],
   templateUrl: './home.html',
   styleUrl: './home.css'
