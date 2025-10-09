@@ -1,25 +1,19 @@
-<mat-toolbar color="primary" class="toolbar">
-  <img src="/images/logo/veyralogo.png" alt="logo" >
-  <span class="spacer"></span>
-  <app-language-switcher></app-language-switcher>
-</mat-toolbar>
+<app-toolbar></app-toolbar>
 
 <div class="welcome-container">
   <div class="content-wrapper">
     <div class="text-section">
-      <h1 class="title">
-        Cuidamos de quienes<br>
-        amas, informamos<br>
-        a quienes esperan
-      </h1>
+      <h1 class="title" [innerHTML]="'welcome.title' | translate"></h1>
+
       <span class="subtitle">
-        Veyra: Tu mejor aliado en el cuidado y conexión familiar.
+        {{ 'welcome.subtitle' | translate }}
       </span>
 
       <app-authentication-section></app-authentication-section>
     </div>
+
     <div class="image-section">
-      <img src="/images/bounden-iam/photoInitial.png" alt="Cuidadora con paciente">
+      <img src="/images/bounden-iam/photoInitial.png" alt="{{ 'welcome.imageAlt' | translate }}">
     </div>
   </div>
 </div>
