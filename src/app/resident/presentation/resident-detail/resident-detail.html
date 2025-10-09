@@ -1,0 +1,559 @@
+<app-toolbar></app-toolbar>
+
+<div class="detail-container">
+
+  @if (store.loading()) {
+    <div class="loading-wrapper">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Cargando información...</p>
+    </div>
+  }
+
+  @if (store.error()) {
+    <mat-error class="error-message">
+      <mat-icon>error</mat-icon>
+      {{ store.error() }}
+    </mat-error>
+  }
+
+  @if (resident()) {
+
+    <div class="top-actions">
+      <button mat-icon-button (click)="goBack()" class="back-btn">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span class="breadcrumb">Residentes / Detalles</span>
+    </div>
+
+    <div class="detail-layout">
+
+      <!-- Header Card -->
+      <mat-card class="header-card">
+        <div class="header-content">
+          <div class="photo-section">
+            <div class="photo-wrapper">
+              <div class="photo-frame">
+                <img [src]="resident()!.image || 'assets/default-avatar.png'"
+                     [alt]="resident()!.name + ' ' + resident()!.lastname">
+              </div>
+              <div class="photo-badge">
+                <mat-icon>verified</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="main-info">
+            <div class="name-section">
+              <h1 class="resident-name">
+                {{ resident()!.name }} {{ resident()!.lastname }}
+              </h1>
+              <mat-chip [class.chip-active]="resident()!.state === 'Active'"
+                        [class.chip-inactive]="resident()!.state !== 'Active'">
+                <mat-icon>
+                  {{ resident()!.state === 'Active' ? 'check_circle' : 'cancel' }}
+                </mat-icon>
+                {{ resident()!.state }}
+              </mat-chip>
+            </div>
+
+            <div class="quick-info">
+              <div class="info-item">
+                <mat-icon>badge</mat-icon>
+                <div>
+                  <span class="info-label">DNI</span>
+                  <span class="info-value">{{ resident()!.dni }}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon>meeting_room</mat-icon>
+                <div>
+                  <span class="info-label">Habitación</span>
+                  <span class="info-value">{{ resident()!.room }}</span>
+                </div>
+              </div>
+              <div class="info-item">
+                <mat-icon>cake</mat-icon>
+                <div>
+                  <span class="info-label">Fecha Nacimiento</span>
+                  <span class="info-value">{{ resident()!.birthDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+        <div class="card-actions">
+          <button mat-raised-button color="primary" (click)="editResident()" class="action-btn">
+            <mat-icon>edit</mat-icon>
+            Editar Información
+          </button>
+          <button mat-stroked-button color="accent" (click)="viewMedicalHistory()" class="action-btn">
+            <mat-icon>medical_services</mat-icon>
+            Historias Clínicas
+          </button>
+          <button mat-stroked-button color="warn" (click)="deleteResident()" class="action-btn">
+            <mat-icon>delete_outline</mat-icon>
+            Eliminar
+          </button>
+        </div>
+      </mat-card>
+
+      <div class="section-title">
+        <mat-icon>person</mat-icon>
+        <h2>Información Personal</h2>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper personal">
+              <mat-icon>person</mat-icon>
+            </div>
+            <h3>Datos Personales</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>badge</mat-icon>
+                DNI
+              </div>
+              <div class="detail-value">{{ resident()!.dni }}</div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>cake</mat-icon>
+                Fecha de Nacimiento
+              </div>
+              <div class="detail-value">{{ resident()!.birthDate | date:'dd/MM/yyyy' }}</div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>bloodtype</mat-icon>
+                Tipo de Sangre
+              </div>
+              <div class="detail-value blood-type">{{ resident()!.bloodType }}</div>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper contact">
+              <mat-icon>contact_phone</mat-icon>
+            </div>
+            <h3>Contacto</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>phone</mat-icon>
+                Teléfono
+              </div>
+              <div class="detail-value">{{ resident()!.phoneNumber }}</div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>email</mat-icon>
+                Correo
+              </div>
+              <div class="detail-value email-value">{{ resident()!.email }}</div>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper location">
+              <mat-icon>meeting_room</mat-icon>
+            </div>
+            <h3>Ubicación</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>door_front</mat-icon>
+                Habitación
+              </div>
+              <div class="detail-value room-badge">
+                <mat-icon>door_front</mat-icon>
+                {{ resident()!.room }}
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>toggle_on</mat-icon>
+                Estado
+              </div>
+              <div class="detail-value">
+                <span [class.status-active]="resident()!.state === 'Active'"
+                      [class.status-inactive]="resident()!.state !== 'Active'"
+                      class="status-badge">
+                  {{ resident()!.state }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="section-title">
+        <mat-icon>medical_services</mat-icon>
+        <h2>Información Médica</h2>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper medical">
+              <mat-icon>healing</mat-icon>
+            </div>
+            <h3>Alergias</h3>
+          </div>
+          <div class="card-body">
+            <div class="text-content">
+              {{ resident()!.allergies || 'Ninguna alergia registrada' }}
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper medical">
+              <mat-icon>medication</mat-icon>
+            </div>
+            <h3>Medicamentos Actuales</h3>
+          </div>
+          <div class="card-body">
+            <div class="text-content">
+              {{ resident()!.currentMedications || 'Sin medicamentos registrados' }}
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper medical">
+              <mat-icon>restaurant</mat-icon>
+            </div>
+            <h3>Dieta Especial</h3>
+          </div>
+          <div class="card-body">
+            <div class="text-content">
+              {{ resident()!.specialDiet || 'Dieta normal' }}
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      @if (resident()!.chronicDiseases && resident()!.chronicDiseases.length > 0) {
+        <mat-card class="full-width-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper medical">
+              <mat-icon>local_hospital</mat-icon>
+            </div>
+            <h3>Enfermedades Crónicas</h3>
+          </div>
+          <div class="card-body">
+            <div class="chips-container">
+              @for (disease of resident()!.chronicDiseases; track disease) {
+                <mat-chip class="disease-chip">
+                  <mat-icon>warning</mat-icon>
+                  {{ disease }}
+                </mat-chip>
+              }
+            </div>
+          </div>
+        </mat-card>
+      }
+
+      <div class="section-title">
+        <mat-icon>accessible</mat-icon>
+        <h2>Movilidad y Dependencia</h2>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper mobility">
+              <mat-icon>directions_walk</mat-icon>
+            </div>
+            <h3>Nivel de Movilidad</h3>
+          </div>
+          <div class="card-body">
+            <div class="level-badge mobility-badge">
+              <mat-icon>directions_walk</mat-icon>
+              {{ resident()!.mobilityLevel }}
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper mobility">
+              <mat-icon>supervised_user_circle</mat-icon>
+            </div>
+            <h3>Nivel de Dependencia</h3>
+          </div>
+          <div class="card-body">
+            <div class="level-badge dependency-badge">
+              <mat-icon>supervised_user_circle</mat-icon>
+              {{ resident()!.dependencyLevel }}
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <mat-card class="full-width-card">
+        <div class="card-header-custom">
+          <div class="icon-wrapper assistance">
+            <mat-icon>support</mat-icon>
+          </div>
+          <h3>Necesidades de Asistencia</h3>
+        </div>
+        <div class="card-body">
+          <div class="assistance-grid">
+            <div class="assistance-item" [class.assistance-active]="resident()!.needsBathingAssistance">
+              <mat-icon>bathtub</mat-icon>
+              <span>Baño</span>
+              <mat-icon class="check-icon">
+                {{ resident()!.needsBathingAssistance ? 'check_circle' : 'cancel' }}
+              </mat-icon>
+            </div>
+            <div class="assistance-item" [class.assistance-active]="resident()!.needsFeedingAssistance">
+              <mat-icon>restaurant</mat-icon>
+              <span>Alimentación</span>
+              <mat-icon class="check-icon">
+                {{ resident()!.needsFeedingAssistance ? 'check_circle' : 'cancel' }}
+              </mat-icon>
+            </div>
+            <div class="assistance-item" [class.assistance-active]="resident()!.needsDressingAssistance">
+              <mat-icon>checkroom</mat-icon>
+              <span>Vestimenta</span>
+              <mat-icon class="check-icon">
+                {{ resident()!.needsDressingAssistance ? 'check_circle' : 'cancel' }}
+              </mat-icon>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+
+      <div class="section-title">
+        <mat-icon>emergency</mat-icon>
+        <h2>Contactos de Emergencia</h2>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper emergency">
+              <mat-icon>contact_emergency</mat-icon>
+            </div>
+            <h3>Contacto Principal</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>person</mat-icon>
+                Nombre
+              </div>
+              <div class="detail-value">{{ resident()!.emergencyContactName }}</div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>phone</mat-icon>
+                Teléfono
+              </div>
+              <div class="detail-value">{{ resident()!.emergencyPhone }}</div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>family_restroom</mat-icon>
+                Relación
+              </div>
+              <div class="detail-value">{{ resident()!.contactRelation }}</div>
+            </div>
+          </div>
+        </mat-card>
+
+        @if (resident()!.secondaryContact) {
+          <mat-card class="info-card">
+            <div class="card-header-custom">
+              <div class="icon-wrapper emergency">
+                <mat-icon>contact_phone</mat-icon>
+              </div>
+              <h3>Contacto Secundario</h3>
+            </div>
+            <div class="card-body">
+              <div class="detail-row">
+                <div class="detail-label">
+                  <mat-icon>person</mat-icon>
+                  Nombre
+                </div>
+                <div class="detail-value">{{ resident()!.secondaryContact }}</div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="detail-row">
+                <div class="detail-label">
+                  <mat-icon>phone</mat-icon>
+                  Teléfono
+                </div>
+                <div class="detail-value">{{ resident()!.secondaryPhone }}</div>
+              </div>
+            </div>
+          </mat-card>
+        }
+      </div>
+
+      <div class="section-title">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <h2>Información Administrativa</h2>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper admin">
+              <mat-icon>event</mat-icon>
+            </div>
+            <h3>Fechas</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <div class="detail-label">
+                <mat-icon>login</mat-icon>
+                Fecha de Admisión
+              </div>
+              <div class="detail-value">{{ resident()!.admissionDate | date:'dd/MM/yyyy' }}</div>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper admin">
+              <mat-icon>medical_information</mat-icon>
+            </div>
+            <h3>Médico Tratante</h3>
+          </div>
+          <div class="card-body">
+            <div class="doctor-info">
+              <mat-icon>local_hospital</mat-icon>
+              <span>{{ resident()!.attendingPhysician }}</span>
+            </div>
+          </div>
+        </mat-card>
+
+        @if (resident()!.medicalInsurance) {
+          <mat-card class="info-card">
+            <div class="card-header-custom">
+              <div class="icon-wrapper admin">
+                <mat-icon>health_and_safety</mat-icon>
+              </div>
+              <h3>Seguro Médico</h3>
+            </div>
+            <div class="card-body">
+              <div class="text-content">
+                {{ resident()!.medicalInsurance }}
+              </div>
+            </div>
+          </mat-card>
+        }
+
+        @if (resident()!.socialSecurityNumber) {
+          <mat-card class="info-card">
+            <div class="card-header-custom">
+              <div class="icon-wrapper admin">
+                <mat-icon>security</mat-icon>
+              </div>
+              <h3>Número de Seguridad Social</h3>
+            </div>
+            <div class="card-body">
+              <div class="text-content">
+                {{ resident()!.socialSecurityNumber }}
+              </div>
+            </div>
+          </mat-card>
+        }
+      </div>
+
+      @if (resident()!.legalGuardian) {
+        <div class="section-title">
+          <mat-icon>gavel</mat-icon>
+          <h2>Información Legal</h2>
+        </div>
+
+        <mat-card class="full-width-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper legal">
+              <mat-icon>account_balance</mat-icon>
+            </div>
+            <h3>Tutor Legal</h3>
+          </div>
+          <div class="card-body">
+            <div class="info-grid-inline">
+              <div class="detail-row">
+                <div class="detail-label">
+                  <mat-icon>person</mat-icon>
+                  Nombre del Tutor
+                </div>
+                <div class="detail-value">{{ resident()!.legalGuardian }}</div>
+              </div>
+              @if (resident()!.guardianPhone) {
+                <mat-divider></mat-divider>
+                <div class="detail-row">
+                  <div class="detail-label">
+                    <mat-icon>phone</mat-icon>
+                    Teléfono del Tutor
+                  </div>
+                  <div class="detail-value">{{ resident()!.guardianPhone }}</div>
+                </div>
+              }
+            </div>
+          </div>
+        </mat-card>
+      }
+
+      <mat-card class="medical-card">
+        <div class="medical-content">
+          <div class="medical-icon-wrapper">
+            <mat-icon>medical_services</mat-icon>
+          </div>
+          <div class="medical-text">
+            <h3>Historias Clínicas</h3>
+            <p>
+              Accede al historial médico completo con diagnósticos, tratamientos
+              y notas clínicas del residente.
+            </p>
+          </div>
+          <button mat-fab
+                  color="accent"
+                  (click)="viewMedicalHistory()"
+                  class="medical-fab">
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+
+    </div>
+  } @else {
+    <div class="not-found">
+      <div class="not-found-icon-wrapper">
+        <mat-icon class="not-found-icon">person_off</mat-icon>
+      </div>
+      <h2>Residente no encontrado</h2>
+      <p>No se pudo encontrar la información del residente solicitado</p>
+      <button mat-raised-button color="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Volver a la Lista
+      </button>
+    </div>
+  }
+
+</div>
