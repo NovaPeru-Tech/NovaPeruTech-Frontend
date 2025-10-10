@@ -1,0 +1,45 @@
+<app-toolbar></app-toolbar>
+<h1 class="title">{{(isEdit? 'nursingHome.edit.title':'nursingHome.new.title') |translate}}</h1>
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field>
+    <mat-label> {{'nursingHome.name' | translate}}</mat-label>
+    <input matInput formControlName="name" required>
+    @if (form.get('name')?.touched && form.get('name')!.hasError('required')) {
+      <mat-error>{{ 'nursingHome.error.name-required' | translate }}</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ 'nursingHome.ruc'|translate}}</mat-label>
+    <input matInput formControlName="ruc" required>
+    @if (form.get('ruc')?.touched&&form.get('ruc')!.hasError('required')){
+      <mat-error>{{ 'nursingHome.error.ruc-required'|translate }}</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ 'nursingHome.phoneNumber' | translate  }}</mat-label>
+    <input matInput formControlName="phoneNumber" required>
+    @if (form.get('phoneNumber')?.touched&&form.get('phoneNumber')!.hasError('required')){
+      <mat-error> {{ 'nursingHome.error.phoneNumber-required' |translate }}</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{ 'nursingHome.address' | translate}}</mat-label>
+    <input matInput formControlName="address" required>
+    @if (form.get('address')?.touched&&form.get('address')!.hasError('required')){
+      <mat-error> {{ 'nursingHome.error.address-required' | translate }}</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>{{ 'nursingHome.description' | translate  }}</mat-label>
+    <input matInput formControlName="description" required>
+    @if (form.get('description')?.touched&&form.get('description')!.hasError('required')){
+      <mat-error> {{ 'nursingHome.error.description-required' | translate}}</mat-error>
+    }
+  </mat-form-field>
+  <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+    {{ 'nursingHome.button.create' | translate }}
+  </button>
+
+</form>
