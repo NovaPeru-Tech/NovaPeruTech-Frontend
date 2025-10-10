@@ -1,0 +1,96 @@
+<app-toolbar></app-toolbar>
+<h1 class="title">{{ 'residents.list-title' | translate }}</h1>
+
+<!-- Loading State -->
+@if (store.loading()) {
+  <mat-spinner diameter="40"></mat-spinner>
+}
+
+<!-- Error State -->
+@if (store.error()) {
+  <mat-error>{{ store.error() }}</mat-error>
+}
+
+<div class="cards-grid">
+  @for (resident of residents(); track resident.id) {
+    <mat-card class="resident-card"
+              [class.selected]="selectedId === resident.id"
+              (click)="selectResident(resident.id)">
+
+      <div class="selection-indicator"
+           [class.active]="selectedId === resident.id">
+      </div>
+
+      <div class="resident-image">
+        <img [src]="resident.image || 'assets/default-avatar.png'"
+             [alt]="resident.name + ' ' + resident.lastname">
+      </div>
+
+      <mat-card-content>
+        <p class="resident-info">
+          <strong>{{ 'residents.lastName' | translate }}:</strong>
+          {{ resident.lastname }}
+        </p>
+        <p class="resident-info">
+          <strong>{{ 'residents.firstName' | translate }}:</strong>
+          {{ resident.name}}
+        </p>
+        <p class="resident-info">
+          <strong>{{ 'residents.dni' | translate }}:</strong>
+          {{ resident.dni}}
+        </p>
+      </mat-card-content>
+
+      <button mat-raised-button
+              color="primary"
+              class="detail-button"
+              (click)="viewDetails(resident.id); $event.stopPropagation()">
+        {{ 'residents.details' | translate }}
+      </button>
+
+      <div class="card-actions">
+        <button mat-icon-button
+                [attr.aria-label]="'residents.edit' | translate"
+                (click)="editResident(resident.id); $event.stopPropagation()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button
+                color="warn"
+                [attr.aria-label]="'residents.delete' | translate"
+                (click)="deleteResident(resident.id); $event.stopPropagation()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
+    </mat-card>
+  } @empty {
+    <div class="empty-state">
+      <p>{{ 'residents.no-residents' | translate }}</p>
+    </div>
+  }
+</div>
+
+<div class="action-buttons">
+  <button mat-raised-button
+          color="warn"
+          [disabled]="!selectedId"
+          (click)="deleteResident(selectedId!)">
+    <mat-icon>delete</mat-icon>
+    {{ 'residents.delete' | translate }}
+  </button>
+
+  <button mat-raised-button
+          color="primary"
+          [disabled]="!selectedId"
+          (click)="editResident(selectedId!)">
+    <mat-icon>edit</mat-icon>
+    {{ 'residents.edit' | translate }}
+  </button>
+
+  <button mat-raised-button
+          color="accent"
+          (click)="navigateToNew()">
+    <mat-icon>add</mat-icon>
+    {{ 'residents.add' | translate }}
+  </button>
+</div>
