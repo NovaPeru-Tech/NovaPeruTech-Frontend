@@ -4,5 +4,7 @@ export const environment = {
   platformProviderSignInEndpointPath:'/users',
   platformProviderSignUpEndpointPath:'/users',
   platformProviderRegisterNursingHomeEndPoint:'/nursingHome',
-  platformProviderResidentPath:'/residents'
+  platformProviderResidentPath:'/residents',
+  platformProviderEmployeeEndPoint:'/employee'
+
 };
