@@ -1,0 +1,333 @@
+<app-toolbar></app-toolbar>
+
+<div class="form-wrapper">
+  <h1 class="title">{{ 'staff.edit.title' | translate }}</h1>
+
+  @if (store.loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  @if (store.error()) {
+    <div class="error-container">
+      <mat-error>{{ store.error() }}</mat-error>
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="staff-form">
+
+    <!-- Basic Information Section -->
+    <div class="section-divider">
+      <mat-icon>person</mat-icon>
+      <span>{{ 'staff.basic-info' | translate }}</span>
+    </div>
+
+    <mat-form-field>
+      <mat-label>{{ 'state' | translate }}</mat-label>
+      <mat-select formControlName="state" required>
+        @for (status of stateOptions; track status) {
+          <mat-option [value]="status">{{ status }}</mat-option>
+        }
+      </mat-select>
+      @if (form.get('state')?.touched && form.get('state')!.hasError('required')) {
+        <mat-error>{{ 'staff.error.state-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>{{ 'name' | translate }}</mat-label>
+        <input matInput formControlName="name" readonly>
+        @if (form.get('name')?.touched && form.get('name')!.hasError('required')) {
+          <mat-error>{{ 'staff.error.name-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'lastname' | translate }}</mat-label>
+        <input matInput formControlName="lastname" readonly>
+        @if (form.get('lastname')?.touched && form.get('lastname')!.hasError('required')) {
+          <mat-error>{{ 'staff.error.lastname-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>{{ 'dni' | translate }}</mat-label>
+        <input matInput formControlName="dni" readonly>
+        @if (form.get('dni')?.touched && form.get('dni')!.hasError('required')) {
+          <mat-error>{{ 'staff.error.dni-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'nationality' | translate }}</mat-label>
+        <input matInput formControlName="nationality">
+        <mat-hint>{{ 'staff.optional' | translate }}</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="calendar-section readonly-calendar">
+      <label class="section-label">
+        {{ 'birthDate' | translate }}
+        <span class="required">*</span>
+        <span class="readonly-badge">{{ 'staff.readonly' | translate }}</span>
+      </label>
+
+      <mat-calendar
+        [selected]="form.value.birthDate"
+        [maxDate]="maxDate"
+        [startAt]="startDate">
+      </mat-calendar>
+
+      @if (form.value.birthDate) {
+        <div class="selected-date">
+          <mat-icon>event</mat-icon>
+          <span>{{ form.value.birthDate | date:'dd/MM/yyyy' }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Photo Upload -->
+    <div class="image-upload-section">
+      <label class="image-label">
+        {{ 'image' | translate }}
+        <span class="required">*</span>
+      </label>
+
+      <div class="image-upload-container">
+        @if (!imagePreview) {
+          <div class="upload-placeholder">
+            <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none">
+            <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">
+              <mat-icon>add_photo_alternate</mat-icon>
+              {{ 'staff.select-image' | translate }}
+            </button>
+            <p class="upload-hint">JPG, PNG - {{ 'staff.max-size' | translate }}</p>
+          </div>
+        } @else {
+          <div class="image-preview-container">
+            <img [src]="imagePreview" alt="Preview" class="image-preview">
+            <button mat-icon-button color="warn" type="button" class="remove-image-btn" (click)="removeImage()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      @if (form.get('image')?.touched && form.get('image')!.hasError('required')) {
+        <mat-error class="image-error">
+          {{ 'staff.error.image-required' | translate }}
+        </mat-error>
+      }
+    </div>
+
+    <!-- Contact Information Section -->
+    <div class="section-divider">
+      <mat-icon>contact_phone</mat-icon>
+      <span>{{ 'staff.contact-info' | translate }}</span>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>{{ 'phoneNumber' | translate }}</mat-label>
+        <input matInput formControlName="phoneNumber" required>
+        @if (form.get('phoneNumber')?.touched && form.get('phoneNumber')!.hasError('required')) {
+          <mat-error>{{ 'staff.error.phoneNumber-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'email' | translate }}</mat-label>
+        <input matInput type="email" formControlName="email" required>
+        @if (form.get('email')?.touched && form.get('email')!.hasError('required')) {
+          <mat-error>{{ 'staff.error.email-required' | translate }}</mat-error>
+        }
+        @if (form.get('email')?.touched && form.get('email')!.hasError('email')) {
+          <mat-error>{{ 'staff.error.email-invalid' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-label>{{ 'address' | translate }}</mat-label>
+      <textarea matInput formControlName="address" rows="2" required></textarea>
+      @if (form.get('address')?.touched && form.get('address')!.hasError('required')) {
+        <mat-error>{{ 'staff.error.address-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Employment Information Section -->
+    <div class="section-divider">
+      <mat-icon>work</mat-icon>
+      <span>{{ 'staff.employment-info' | translate }}</span>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>{{ 'post' | translate }}</mat-label>
+        <mat-select formControlName="post" required>
+          @for (position of postOptions; track position) {
+            <mat-option [value]="position">{{ position }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('post')?.touched && form.get('post')!.hasError('required')) {
+          <mat-error>{{ 'staff.error.post-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'typeOfContract' | translate }}</mat-label>
+        <mat-select formControlName="typeOfContract" required>
+          @for (contractType of typeOfContractOptions; track contractType) {
+            <mat-option [value]="contractType">{{ contractType }}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('typeOfContract')?.touched && form.get('typeOfContract')!.hasError('required')) {
+          <mat-error>{{ 'staff.error.typeOfContract-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-label>{{ 'workShift' | translate }}</mat-label>
+      <mat-select formControlName="workShift" required>
+        @for (shift of workShiftOptions; track shift) {
+          <mat-option [value]="shift">{{ shift }}</mat-option>
+        }
+      </mat-select>
+      @if (form.get('workShift')?.touched && form.get('workShift')!.hasError('required')) {
+        <mat-error>{{ 'staff.error.workShift-required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="calendar-section">
+      <label class="section-label">
+        {{ 'contractDate' | translate }}
+        <span class="required">*</span>
+      </label>
+
+      <mat-calendar
+        [selected]="form.value.contractDate"
+        (selectedChange)="onContractDateSelected($event)"
+        [minDate]="minContractDate">
+      </mat-calendar>
+
+      @if (form.value.contractDate) {
+        <div class="selected-date">
+          <mat-icon>event</mat-icon>
+          <span>{{ form.value.contractDate | date:'dd/MM/yyyy' }}</span>
+        </div>
+      }
+
+      @if (form.get('contractDate')?.touched && form.get('contractDate')!.hasError('required')) {
+        <mat-error>{{ 'staff.error.contractDate-required' | translate }}</mat-error>
+      }
+    </div>
+
+    <div class="form-row">
+      <div class="calendar-section">
+        <label class="section-label">
+          {{ 'contractEndDate' | translate }}
+        </label>
+
+        <mat-calendar
+          [selected]="form.value.contractEndDate"
+          (selectedChange)="onContractEndDateSelected($event)"
+          [minDate]="minContractDate">
+        </mat-calendar>
+
+        @if (form.value.contractEndDate) {
+          <div class="selected-date">
+            <mat-icon>event</mat-icon>
+            <span>{{ form.value.contractEndDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+        }
+        <mat-hint>{{ 'staff.optional' | translate }}</mat-hint>
+      </div>
+
+      <div class="calendar-section">
+        <label class="section-label">
+          {{ 'terminationDate' | translate }}
+        </label>
+
+        <mat-calendar
+          [selected]="form.value.terminationDate"
+          (selectedChange)="onTerminationDateSelected($event)"
+          [minDate]="minContractDate">
+        </mat-calendar>
+
+        @if (form.value.terminationDate) {
+          <div class="selected-date">
+            <mat-icon>event</mat-icon>
+            <span>{{ form.value.terminationDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+        }
+        <mat-hint>{{ 'staff.optional' | translate }}</mat-hint>
+      </div>
+    </div>
+
+    <!-- Professional Information Section -->
+    <div class="section-divider">
+      <mat-icon>school</mat-icon>
+      <span>{{ 'staff.professional-info' | translate }}</span>
+    </div>
+
+    <mat-form-field>
+      <mat-label>{{ 'certifications' | translate }}</mat-label>
+      <mat-chip-grid #chipGrid>
+        @for (certification of form.value.certifications; track certification) {
+          <mat-chip-row (removed)="removeCertification(certification)">
+            {{ certification }}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+        }
+        <input placeholder="{{ 'staff.add-certification' | translate }}"
+               [matChipInputFor]="chipGrid"
+               (matChipInputTokenEnd)="addCertification($event)">
+      </mat-chip-grid>
+      <mat-hint>{{ 'staff.optional' | translate }}</mat-hint>
+    </mat-form-field>
+
+    <!-- Emergency Contacts Section -->
+    <div class="section-divider emergency">
+      <mat-icon>emergency</mat-icon>
+      <span>{{ 'staff.emergency-contacts' | translate }}</span>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>{{ 'emergencyContactName' | translate }}</mat-label>
+        <input matInput formControlName="emergencyContactName" required>
+        @if (form.get('emergencyContactName')?.touched && form.get('emergencyContactName')!.hasError('required')) {
+          <mat-error>{{ 'staff.error.emergencyContactName-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'emergencyContactPhone' | translate }}</mat-label>
+        <input matInput formControlName="emergencyContactPhone" required>
+        @if (form.get('emergencyContactPhone')?.touched && form.get('emergencyContactPhone')!.hasError('required')) {
+          <mat-error>{{ 'staff.error.emergencyContactPhone-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        <mat-icon>save</mat-icon>
+        {{ 'staff.update' | translate }}
+      </button>
+      <button mat-button type="button" (click)="onCancel()">
+        <mat-icon>cancel</mat-icon>
+        {{ 'staff.cancel' | translate }}
+      </button>
+    </div>
+
+  </form>
+</div>
