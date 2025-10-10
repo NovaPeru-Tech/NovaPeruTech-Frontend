@@ -1,0 +1,122 @@
+@startuml
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package "employees.domain.model" #F4F6F6 {
+  class Staff {
+    - _id: number
+    - _name: string
+    - _lastname: string
+    - _dni: string
+    - _post: string
+    - _workShift: string
+    - _typeOfContract: string
+    - _birthDate: Date
+    ' ... y otras propiedades
+    - calculateAge(birthDate: Date): number
+  }
+}
+
+package "employees.application" #F4F6F6 {
+  class EmployeesStore {
+    - _staffSignal: Signal<Staff[]>
+    - _loadingSignal: Signal<boolean>
+    - _errorSignal: Signal<string|null>
+    - EmployeeApi: EmployeesApi
+    + staffs: Signal<Staff[]>
+    + loading: Signal<boolean>
+    + error: Signal<string|null>
+    + getStaffById(id: number): Signal<Staff>
+    + addStaff(staff: Staff)
+    + updateStaff(staff: Staff)
+    + deleteStaff(id: number)
+    + loadStaff()
+  }
+}
+
+package "employees.infrastructure" #F4F6F6 {
+  class EmployeesApi {
+    - _staffEndpoint: StaffApiEndpoint
+    + createEmployee(s: Staff): Observable<Staff>
+    + updateEmployee(s: Staff): Observable<Staff>
+    + DeleteEmployee(id: number): Observable<void>
+    + getEmployees(): Observable<Staff[]>
+  }
+  class StaffApiEndpoint {
+    ' Métodos heredados de una clase base
+  }
+  class StaffAssembler {
+    + toEntityFromResource(res: StaffResource): Staff
+    + toResourceFromEntity(ent: Staff): StaffResource
+  }
+  interface StaffResource {
+    id: number
+    name: string
+    lastname: string
+    dni: string
+    post: string
+    birthDate: string
+    ' ... y otras propiedades
+  }
+}
+
+package "employees.presentation" #F4F6F6 {
+  object EmployeeRouters {
+    routes: Routes
+  }
+
+  package "staff-detail" {
+     class StaffDetail <<component>> {
+        ' Propiedades y métodos para ver un empleado
+     }
+  }
+  package "staff-form-create" {
+     class StaffFormCreate <<component>> {
+        ' Propiedades y métodos para el formulario de creación
+     }
+  }
+  package "staff-form-edit" {
+     class StaffFormEdit <<component>> {
+        ' Propiedades y métodos para el formulario de edición
+     }
+  }
+   package "staff-form-list" {
+     class StaffFormList <<component>> {
+        ' Propiedades y métodos para listar empleados
+     }
+  }
+}
+
+' --- Relaciones ---
+
+' Capa de Presentación (Los componentes usan el store)
+StaffFormCreate --> EmployeesStore : "uses"
+StaffFormEdit --> EmployeesStore : "uses"
+StaffFormList --> EmployeesStore : "uses"
+StaffDetail --> EmployeesStore : "uses"
+StaffFormCreate --> Staff : "creates"
+StaffFormEdit --> Staff : "creates"
+
+
+' Enrutamiento
+EmployeeRouters ..> StaffFormCreate : "lazy loads"
+EmployeeRouters ..> StaffFormList : "lazy loads"
+EmployeeRouters ..> StaffFormEdit : "lazy loads"
+EmployeeRouters ..> StaffDetail : "lazy loads"
+
+
+' Capa de Aplicación
+EmployeesStore --> EmployeesApi : "uses"
+EmployeesStore ..> Staff : "manages state of"
+
+
+' Capa de Infraestructura
+EmployeesApi --> StaffApiEndpoint : "delegates to"
+StaffApiEndpoint ..> StaffAssembler : "uses"
+
+' Assemblers (Traductores)
+StaffAssembler --> Staff : "creates"
+StaffAssembler ..> StaffResource : "transforms"
+
+@enduml
