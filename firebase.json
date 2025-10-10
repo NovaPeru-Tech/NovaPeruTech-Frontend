@@ -1,15 +1,10 @@
 {
   "hosting": {
-    "public": "dist/FrontendNovaPeruTech",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "public": "n",
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
+        "destination": "/app.html"
       }
     ]
   }
