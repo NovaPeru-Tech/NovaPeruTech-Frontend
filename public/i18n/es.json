@@ -90,11 +90,31 @@
   },
 
   "staff": {
+    "list-title": "Lista de Empleados",
+    "lastName": "Apellido",
+    "firstName": "Nombre",
+    "dni": "DNI",
+    "details": "Ver Detalles",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "add": "Agregar Nuevo",
+    "no-staff": "No hay empleados registrados.",
     "new": {
       "title": "Nuevo Empleado"
     },
     "edit": {
       "title": "Editar Empleado"
+    },
+    "detail": {
+      "personal-info": "Información Personal",
+      "contact-info": "Información de Contacto",
+      "employment-info": "Información Laboral",
+      "professional-info": "Información Profesional",
+      "emergency-contacts": "Contactos de Emergencia",
+      "employee-records": "Expediente Laboral",
+      "not-found": "Empleado no encontrado",
+      "not-found-message": "No se pudo encontrar la información del empleado solicitado",
+      "back-to-list": "Volver a la Lista"
     },
     "basic-info": "Información Básica",
     "contact-info": "Información de Contacto",
@@ -102,8 +122,9 @@
     "professional-info": "Información Profesional",
     "emergency-contacts": "Contactos de Emergencia",
     "register": "Registrar Empleado",
-    "update": "Actualizar",
+    "update": "Actualizar Empleado",
     "cancel": "Cancelar",
+    "readonly": "Solo lectura",
     "select-image": "Seleccionar Imagen",
     "max-size": "Máximo 5MB",
     "optional": "Opcional",

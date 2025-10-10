@@ -90,11 +90,31 @@
   },
 
   "staff": {
+    "list-title": "Staff List",
+    "lastName": "Last Name",
+    "firstName": "First Name",
+    "dni": "DNI",
+    "details": "View Details",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add New",
+    "no-staff": "No staff members registered.",
     "new": {
       "title": "New Employee"
     },
     "edit": {
       "title": "Edit Employee"
+    },
+    "detail": {
+      "personal-info": "Personal Information",
+      "contact-info": "Contact Information",
+      "employment-info": "Employment Information",
+      "professional-info": "Professional Information",
+      "emergency-contacts": "Emergency Contacts",
+      "employee-records": "Employee Records",
+      "not-found": "Employee not found",
+      "not-found-message": "Could not find the requested employee information",
+      "back-to-list": "Back to List"
     },
     "basic-info": "Basic Information",
     "contact-info": "Contact Information",
@@ -102,8 +122,9 @@
     "professional-info": "Professional Information",
     "emergency-contacts": "Emergency Contacts",
     "register": "Register Employee",
-    "update": "Update",
+    "update": "Update Employee",
     "cancel": "Cancel",
+    "readonly": "Read-only",
     "select-image": "Select Image",
     "max-size": "Max 5MB",
     "optional": "Optional",
