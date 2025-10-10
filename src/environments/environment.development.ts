@@ -1,9 +1,10 @@
 export const environment = {
-  production: false,
-  platformProviderApiBaseUrl: 'https://my-fake-api-open.vercel.app',
-  platformProviderSignInEndpointPath: '/users',
-  platformProviderSignUpEndpointPath: '/users',
-  platformProviderRegisterNursingHomeEndPoint: '/nursingHome',
-  platformProviderResidentPath: '/residents',
-  platformProviderEmployeeEndPoint: '/employee'
+  production: true,
+  platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
+  platformProviderSignInEndpointPath:'/users',
+  platformProviderSignUpEndpointPath:'/users',
+  platformProviderRegisterNursingHomeEndPoint:'/nursingHome',
+  platformProviderResidentPath:'/residents',
+  platformProviderEmployeeEndPoint:'/employee',
+  platformProviderMedicationEndPoint:'/medications',
 };
