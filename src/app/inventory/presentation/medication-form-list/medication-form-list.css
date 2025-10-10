@@ -1,0 +1,307 @@
+.list-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0;
+  color: #333;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.header-section button {
+  height: 44px;
+  font-weight: 500;
+}
+
+.header-section button mat-icon {
+  margin-right: 8px;
+}
+
+/* Loading and Error */
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}
+
+.error-message {
+  text-align: center;
+  padding: 16px;
+  margin: 20px 0;
+  background-color: #ffebee;
+  border-radius: 8px;
+  color: #c62828;
+}
+
+/* Table Container */
+.table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* Table Styling */
+.medications-table {
+  width: 100%;
+  background: white;
+}
+
+/* Header */
+::ng-deep .mat-mdc-header-row {
+  background: linear-gradient(135deg, #5f9ea0 0%, #4a8385 100%);
+  height: 56px;
+}
+
+::ng-deep .mat-mdc-header-cell {
+  color: white !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  border-bottom: none !important;
+}
+
+/* Rows */
+::ng-deep .mat-mdc-row {
+  height: 60px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+::ng-deep .mat-mdc-row:hover {
+  background-color: #f5f7fa;
+}
+
+::ng-deep .mat-mdc-row.selected-row {
+  background-color: #e3f2fd;
+}
+
+::ng-deep .mat-mdc-cell {
+  color: #333;
+  font-size: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Name Cell */
+.name-cell {
+  font-weight: 600;
+  color: #1976d2;
+}
+
+.name-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.medication-name {
+  flex: 1;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-indicator.expired {
+  background-color: #f44336;
+  box-shadow: 0 0 6px rgba(244, 67, 54, 0.5);
+}
+
+.status-indicator.near-expiration {
+  background-color: #ff9800;
+  box-shadow: 0 0 6px rgba(255, 152, 0, 0.5);
+}
+
+.status-indicator.low-stock {
+  background-color: #ffc107;
+  box-shadow: 0 0 6px rgba(255, 193, 7, 0.5);
+}
+
+/* Special Cell Styling */
+.cost-cell {
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.near-expiration {
+  color: #f57c00;
+  font-weight: 600;
+}
+
+.expired {
+  color: #d32f2f;
+  font-weight: 700;
+  background-color: #ffebee;
+}
+
+.low-stock {
+  color: #f57c00;
+  font-weight: 600;
+  background-color: #fff3e0;
+}
+
+/* Actions Cell */
+.actions-cell {
+  text-align: right;
+}
+
+.actions-cell button {
+  color: #1976d2;
+}
+
+/* Checkbox Styling */
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__background {
+  border-color: white;
+}
+
+::ng-deep .mat-mdc-header-cell .mat-mdc-checkbox .mdc-checkbox__background {
+  border-color: white !important;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+/* Paginator */
+::ng-deep .mat-mdc-paginator {
+  background: #f8f9fa;
+  border-top: 2px solid #e0e0e0;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  padding: 12px 16px;
+  justify-content: center;
+}
+
+/* Floating Actions */
+.floating-actions {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.floating-actions button {
+  height: 44px;
+  font-weight: 500;
+}
+
+.floating-actions button mat-icon {
+  margin-right: 8px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .medications-table {
+    min-width: 1000px;
+  }
+}
+
+@media (max-width: 768px) {
+  .list-container {
+    padding: 16px;
+  }
+
+  .header-section {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .header-section button {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .floating-actions {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    flex-direction: column;
+  }
+
+  .floating-actions button {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-mdc-row {
+    height: auto;
+    min-height: 60px;
+  }
+
+  ::ng-deep .mat-mdc-cell {
+    padding: 12px 8px;
+    font-size: 13px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .header-section button,
+  .floating-actions,
+  .actions-cell {
+    display: none !important;
+  }
+
+  .table-container {
+    box-shadow: none;
+  }
+}
