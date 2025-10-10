@@ -1,4 +1,10 @@
 export class NursingHome
+
+  /*
+* @purpose: Represents a nursing home entity with properties such as id, name, ruc, phone number, address, description, and adminId.
+* @description: This class encapsulates the details of a nursing home and provides getters and setters for each property.
+* */
+
 {
   private _id:number;
   private _name:string;
@@ -17,6 +23,11 @@ export class NursingHome
     this._description = nursingHome.description;
 
   }
+
+  /*
+* @purpose: Getters and Setters for NursingHome properties.
+* @description: These methods allow access and modification of the properties of the NursingHome entity.
+* */
 
   get id(): number {
     return this._id;
