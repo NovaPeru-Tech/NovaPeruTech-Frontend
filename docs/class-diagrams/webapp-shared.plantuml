@@ -1,0 +1,55 @@
+@startuml
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package "shared.domain.model" #F4F6F6 {
+  interface BaseEntity {
+    id: number
+  }
+}
+
+package "shared.infrastructure" #F4F6F6 {
+  abstract class BaseApi {
+  }
+
+  interface BaseResource {
+    id: number
+  }
+
+  interface BaseResponse {
+  }
+
+  interface "BaseAssembler<TEntity, TResource, TResponse>" as BaseAssembler {
+    + toEntityFromResource(resource: TResource): TEntity
+    + toResourceFromEntity(entity: TEntity): TResource
+    + toEntitiesFromResponse(response: TResponse): TEntity[]
+  }
+
+  abstract "class BaseApiEndpoint<TEntity, TResource, TResponse, TAssembler>" as BaseApiEndpoint {
+    # http: HttpClient
+    # endpointUrl: string
+    # assembler: TAssembler
+    + getAll(): Observable<TEntity[]>
+    + getById(id: number): Observable<TEntity>
+    + create(entity: TEntity): Observable<TEntity>
+    + update(entity: TEntity, id: number): Observable<TEntity>
+    + delete(id: number): Observable<void>
+    - handleError(operation: string): Observable<never>
+  }
+}
+
+package "shared.presentation.views" #F4F6F6 {
+  class BaseForm {
+    # isInvalidControl(form: FormGroup, controlName: string): boolean
+    # errorMessagesForControl(form: FormGroup, controlName: string): string
+    - errorMessageForControl(controlName: string, errorKey: string): string
+  }
+}
+
+' --- Relaciones dentro del módulo Shared ---
+BaseApiEndpoint --> BaseAssembler : "uses >"
+BaseAssembler ..> BaseEntity : "uses >"
+BaseAssembler ..> BaseResource : "uses >"
+BaseAssembler ..> BaseResponse : "uses >"
+@enduml
