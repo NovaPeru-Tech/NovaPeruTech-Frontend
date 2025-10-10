@@ -1,18 +1,204 @@
 {
-"toolbar": {
-"logoAlt": "logo"
-},
-"welcome": {
-"title": "Cuidamos de quienes<br>amas, informamos<br>a quienes esperan",
-"subtitle": "Veyra: Tu mejor aliado en el cuidado y conexión familiar.",
-"imageAlt": "Cuidadora con paciente"
-},
-"auth": {
-"login": "Iniciar Sesión",
-"register": "Registrarse"
-},
-"buttons": {
-"administrator": "Administrador",
-"family": "Familiar"
-}
+  "toolbar": {
+    "logoAlt": "logo"
+  },
+  "welcome": {
+    "title": "Cuidamos a quienes<br>amas, informamos a<br>quienes esperan",
+    "subtitle": "Veyra: Tu mejor aliado en cuidado y conexión familiar.",
+    "imageAlt": "Cuidador con paciente"
+  },
+  "auth": {
+    "login": "Iniciar Sesión",
+    "register": "Registrarse"
+  },
+  "buttons": {
+    "administrator": "Administrador",
+    "family": "Familia"
+  },
+
+  "nursingHome": {
+    "new": {
+      "title": "Registrar Residencia"
+    },
+    "edit": {
+      "title": "Editar Residencia"
+    },
+    "name": "Nombre",
+    "ruc": "RUC",
+    "phoneNumber": "Teléfono",
+    "address": "Dirección",
+    "description": "Descripción",
+    "button": {
+      "create": "Crear"
+    },
+    "error": {
+      "name-required": "El nombre es requerido",
+      "ruc-required": "El RUC es requerido",
+      "phoneNumber-required": "El teléfono es requerido",
+      "address-required": "La dirección es requerida",
+      "description-required": "La descripción es requerida"
+    }
+  },
+
+  "resident": {
+    "new": {
+      "title": "Nuevo Residente"
+    },
+    "edit": {
+      "title": "Editar Residente"
+    },
+    "basic-info": "Información Básica",
+    "medical-info": "Información Médica",
+    "mobility-dependency": "Movilidad y Dependencia",
+    "emergency-contacts": "Contactos de Emergencia",
+    "administrative-info": "Información Administrativa",
+    "legal-info": "Información Legal",
+    "register": "Registrar Residente",
+    "update": "Actualizar",
+    "cancel": "Cancelar",
+    "select-image": "Seleccionar Imagen",
+    "max-size": "Máximo 5MB",
+    "optional": "Opcional",
+    "allergies-placeholder": "Ejemplo: Penicilina, polen, mariscos...",
+    "add-disease": "Agregar enfermedad",
+    "medications-placeholder": "Ejemplo: Metformina, Gabapentina, Paracetamol...",
+    "diet-placeholder": "Ejemplo: Sin sal, diabética, vegetariana...",
+    "needs-assistance": "Necesita asistencia para",
+    "bathing-assistance": "Baño",
+    "feeding-assistance": "Alimentación",
+    "dressing-assistance": "Vestimenta",
+    "error": {
+      "state-required": "El estado es requerido",
+      "name-required": "El nombre es requerido",
+      "lastname-required": "El apellido es requerido",
+      "dni-required": "El DNI es requerido",
+      "birthDate-required": "La fecha de nacimiento es requerida",
+      "room-required": "La habitación es requerida",
+      "image-required": "La imagen es requerida",
+      "phoneNumber-required": "El teléfono es requerido",
+      "email-required": "El email es requerido",
+      "email-invalid": "Email inválido",
+      "bloodType-required": "El tipo de sangre es requerido",
+      "mobilityLevel-required": "El nivel de movilidad es requerido",
+      "dependencyLevel-required": "El nivel de dependencia es requerido",
+      "emergencyContactName-required": "El nombre del contacto de emergencia es requerido",
+      "emergencyPhone-required": "El teléfono de emergencia es requerido",
+      "contactRelation-required": "La relación del contacto es requerida",
+      "admissionDate-required": "La fecha de admisión es requerida",
+      "attendingPhysician-required": "El médico tratante es requerido"
+    }
+  },
+
+  "staff": {
+    "list-title": "Lista de Empleados",
+    "lastName": "Apellido",
+    "firstName": "Nombre",
+    "dni": "DNI",
+    "details": "Ver Detalles",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "add": "Agregar Nuevo",
+    "no-staff": "No hay empleados registrados.",
+    "new": {
+      "title": "Nuevo Empleado"
+    },
+    "edit": {
+      "title": "Editar Empleado"
+    },
+    "detail": {
+      "personal-info": "Información Personal",
+      "contact-info": "Información de Contacto",
+      "employment-info": "Información Laboral",
+      "professional-info": "Información Profesional",
+      "emergency-contacts": "Contactos de Emergencia",
+      "employee-records": "Expediente Laboral",
+      "not-found": "Empleado no encontrado",
+      "not-found-message": "No se pudo encontrar la información del empleado solicitado",
+      "back-to-list": "Volver a la Lista"
+    },
+    "basic-info": "Información Básica",
+    "contact-info": "Información de Contacto",
+    "employment-info": "Información Laboral",
+    "professional-info": "Información Profesional",
+    "emergency-contacts": "Contactos de Emergencia",
+    "register": "Registrar Empleado",
+    "update": "Actualizar Empleado",
+    "cancel": "Cancelar",
+    "readonly": "Solo lectura",
+    "select-image": "Seleccionar Imagen",
+    "max-size": "Máximo 5MB",
+    "optional": "Opcional",
+    "add-certification": "Agregar certificación",
+    "error": {
+      "state-required": "El estado es requerido",
+      "name-required": "El nombre es requerido",
+      "lastname-required": "El apellido es requerido",
+      "dni-required": "El DNI es requerido",
+      "birthDate-required": "La fecha de nacimiento es requerida",
+      "image-required": "La imagen es requerida",
+      "phoneNumber-required": "El teléfono es requerido",
+      "email-required": "El email es requerido",
+      "email-invalid": "Email inválido",
+      "address-required": "La dirección es requerida",
+      "post-required": "El cargo es requerido",
+      "typeOfContract-required": "El tipo de contrato es requerido",
+      "workShift-required": "El turno de trabajo es requerido",
+      "contractDate-required": "La fecha de contrato es requerida",
+      "emergencyContactName-required": "El nombre del contacto de emergencia es requerido",
+      "emergencyContactPhone-required": "El teléfono de emergencia es requerido"
+    }
+  },
+
+  "state": "Estado",
+  "name": "Nombre",
+  "lastname": "Apellido",
+  "dni": "DNI",
+  "birthDate": "Fecha de Nacimiento",
+  "nationality": "Nacionalidad",
+  "phoneNumber": "Teléfono",
+  "email": "Email",
+  "address": "Dirección",
+  "age": "Edad",
+  "bloodType": "Tipo de Sangre",
+  "room": "Habitación",
+  "image": "Imagen",
+  "allergies": "Alergias",
+  "chronicDiseases": "Enfermedades Crónicas",
+  "currentMedications": "Medicamentos Actuales",
+  "specialDiet": "Dieta Especial",
+  "mobilityLevel": "Nivel de Movilidad",
+  "dependencyLevel": "Nivel de Dependencia",
+  "emergencyContactName": "Nombre Contacto de Emergencia",
+  "emergencyPhone": "Teléfono de Emergencia",
+  "contactRelation": "Relación",
+  "secondaryContact": "Contacto Secundario",
+  "secondaryPhone": "Teléfono Secundario",
+  "admissionDate": "Fecha de Admisión",
+  "attendingPhysician": "Médico Tratante",
+  "medicalInsurance": "Seguro Médico",
+  "socialSecurityNumber": "Número de Seguridad Social",
+  "legalGuardian": "Tutor Legal",
+  "guardianPhone": "Teléfono del Tutor",
+  "post": "Cargo",
+  "typeOfContract": "Tipo de Contrato",
+  "workShift": "Turno de Trabajo",
+  "contractDate": "Fecha de Contrato",
+  "contractEndDate": "Fecha Fin de Contrato",
+  "terminationDate": "Fecha de Terminación",
+  "certifications": "Certificaciones",
+  "emergencyContactPhone": "Teléfono de Contacto de Emergencia",
+  "add": "Agregar",
+  "cancel": "Cancelar",
+
+  "residents": {
+    "list-title": "Lista de Residentes",
+    "lastName": "Apellido",
+    "firstName": "Nombre",
+    "dni": "DNI",
+    "details": "Ver Detalles",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "add": "Agregar Nuevo",
+    "no-residents": "No hay residentes registrados."
+  }
 }

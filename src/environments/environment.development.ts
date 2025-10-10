@@ -6,4 +6,5 @@ export const environment = {
   platformProviderRegisterNursingHomeEndPoint:'/nursingHome',
   platformProviderResidentPath:'/residents',
   platformProviderEmployeeEndPoint:'/employee'
+
 };

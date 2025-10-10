@@ -1,19 +1,204 @@
 {
-"toolbar": {
-"logoAlt": "logo"
-},
-"welcome": {
-"title": "We care for those<br>you love, we inform<br>those who wait",
-"subtitle": "Veyra: Your best ally in family care and connection.",
-"imageAlt": "Caregiver with patient"
-},
-"auth": {
-"login": "Login",
-"register": "Sign Up"
-},
-"buttons": {
-"administrator": "Administrator",
-"family": "Family"
-}
-}
+  "toolbar": {
+    "logoAlt": "logo"
+  },
+  "welcome": {
+    "title": "We care for those<br>you love, we inform<br>those who wait",
+    "subtitle": "Veyra: Your best ally in care and family connection.",
+    "imageAlt": "Caregiver with patient"
+  },
+  "auth": {
+    "login": "Log In",
+    "register": "Register"
+  },
+  "buttons": {
+    "administrator": "Administrator",
+    "family": "Family"
+  },
 
+  "nursingHome": {
+    "new": {
+      "title": "Register Nursing Home"
+    },
+    "edit": {
+      "title": "Edit Nursing Home"
+    },
+    "name": "Name",
+    "ruc": "RUC",
+    "phoneNumber": "Phone Number",
+    "address": "Address",
+    "description": "Description",
+    "button": {
+      "create": "Create"
+    },
+    "error": {
+      "name-required": "Name is required",
+      "ruc-required": "RUC is required",
+      "phoneNumber-required": "Phone number is required",
+      "address-required": "Address is required",
+      "description-required": "Description is required"
+    }
+  },
+
+  "resident": {
+    "new": {
+      "title": "New Resident"
+    },
+    "edit": {
+      "title": "Edit Resident"
+    },
+    "basic-info": "Basic Information",
+    "medical-info": "Medical Information",
+    "mobility-dependency": "Mobility and Dependency",
+    "emergency-contacts": "Emergency Contacts",
+    "administrative-info": "Administrative Information",
+    "legal-info": "Legal Information",
+    "register": "Register Resident",
+    "update": "Update",
+    "cancel": "Cancel",
+    "select-image": "Select Image",
+    "max-size": "Max 5MB",
+    "optional": "Optional",
+    "allergies-placeholder": "Example: Penicillin, pollen, seafood...",
+    "add-disease": "Add disease",
+    "medications-placeholder": "Example: Metformin, Gabapentin, Paracetamol...",
+    "diet-placeholder": "Example: Low sodium, diabetic, vegetarian...",
+    "needs-assistance": "Needs assistance with",
+    "bathing-assistance": "Bathing",
+    "feeding-assistance": "Feeding",
+    "dressing-assistance": "Dressing",
+    "error": {
+      "state-required": "State is required",
+      "name-required": "Name is required",
+      "lastname-required": "Last name is required",
+      "dni-required": "DNI is required",
+      "birthDate-required": "Birth date is required",
+      "room-required": "Room is required",
+      "image-required": "Image is required",
+      "phoneNumber-required": "Phone number is required",
+      "email-required": "Email is required",
+      "email-invalid": "Invalid email",
+      "bloodType-required": "Blood type is required",
+      "mobilityLevel-required": "Mobility level is required",
+      "dependencyLevel-required": "Dependency level is required",
+      "emergencyContactName-required": "Emergency contact name is required",
+      "emergencyPhone-required": "Emergency phone is required",
+      "contactRelation-required": "Contact relation is required",
+      "admissionDate-required": "Admission date is required",
+      "attendingPhysician-required": "Attending physician is required"
+    }
+  },
+
+  "staff": {
+    "list-title": "Staff List",
+    "lastName": "Last Name",
+    "firstName": "First Name",
+    "dni": "DNI",
+    "details": "View Details",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add New",
+    "no-staff": "No staff members registered.",
+    "new": {
+      "title": "New Employee"
+    },
+    "edit": {
+      "title": "Edit Employee"
+    },
+    "detail": {
+      "personal-info": "Personal Information",
+      "contact-info": "Contact Information",
+      "employment-info": "Employment Information",
+      "professional-info": "Professional Information",
+      "emergency-contacts": "Emergency Contacts",
+      "employee-records": "Employee Records",
+      "not-found": "Employee not found",
+      "not-found-message": "Could not find the requested employee information",
+      "back-to-list": "Back to List"
+    },
+    "basic-info": "Basic Information",
+    "contact-info": "Contact Information",
+    "employment-info": "Employment Information",
+    "professional-info": "Professional Information",
+    "emergency-contacts": "Emergency Contacts",
+    "register": "Register Employee",
+    "update": "Update Employee",
+    "cancel": "Cancel",
+    "readonly": "Read-only",
+    "select-image": "Select Image",
+    "max-size": "Max 5MB",
+    "optional": "Optional",
+    "add-certification": "Add certification",
+    "error": {
+      "state-required": "State is required",
+      "name-required": "Name is required",
+      "lastname-required": "Last name is required",
+      "dni-required": "DNI is required",
+      "birthDate-required": "Birth date is required",
+      "image-required": "Image is required",
+      "phoneNumber-required": "Phone number is required",
+      "email-required": "Email is required",
+      "email-invalid": "Invalid email",
+      "address-required": "Address is required",
+      "post-required": "Position is required",
+      "typeOfContract-required": "Contract type is required",
+      "workShift-required": "Work shift is required",
+      "contractDate-required": "Contract date is required",
+      "emergencyContactName-required": "Emergency contact name is required",
+      "emergencyContactPhone-required": "Emergency contact phone is required"
+    }
+  },
+
+  "state": "State",
+  "name": "Name",
+  "lastname": "Last Name",
+  "dni": "DNI",
+  "birthDate": "Birth Date",
+  "nationality": "Nationality",
+  "phoneNumber": "Phone Number",
+  "email": "Email",
+  "address": "Address",
+  "age": "Age",
+  "bloodType": "Blood Type",
+  "room": "Room",
+  "image": "Image",
+  "allergies": "Allergies",
+  "chronicDiseases": "Chronic Diseases",
+  "currentMedications": "Current Medications",
+  "specialDiet": "Special Diet",
+  "mobilityLevel": "Mobility Level",
+  "dependencyLevel": "Dependency Level",
+  "emergencyContactName": "Emergency Contact Name",
+  "emergencyPhone": "Emergency Phone",
+  "contactRelation": "Relation",
+  "secondaryContact": "Secondary Contact",
+  "secondaryPhone": "Secondary Phone",
+  "admissionDate": "Admission Date",
+  "attendingPhysician": "Attending Physician",
+  "medicalInsurance": "Medical Insurance",
+  "socialSecurityNumber": "Social Security Number",
+  "legalGuardian": "Legal Guardian",
+  "guardianPhone": "Guardian Phone",
+  "post": "Position",
+  "typeOfContract": "Contract Type",
+  "workShift": "Work Shift",
+  "contractDate": "Contract Date",
+  "contractEndDate": "Contract End Date",
+  "terminationDate": "Termination Date",
+  "certifications": "Certifications",
+  "emergencyContactPhone": "Emergency Contact Phone",
+  "add": "Add",
+  "cancel": "Cancel",
+
+  "residents": {
+    "list-title": "Residents List",
+    "lastName": "Last Name",
+    "firstName": "First Name",
+    "dni": "DNI",
+    "details": "View Details",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add New",
+    "no-residents": "No residents registered."
+  }
+}
