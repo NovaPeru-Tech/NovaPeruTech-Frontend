@@ -1,0 +1,61 @@
+<app-toolbar></app-toolbar>
+<div class="sign-up-content">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sign Up</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="firstName" placeholder="Nombre">
+          @if (showError('firstName')) {
+            <mat-error>{{ getError('firstName') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="lastName" placeholder="Apellido">
+          @if (showError('lastName')) {
+            <mat-error>{{ getError('lastName') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="email@ejemplo.com" type="email">
+          @if (showError('email')) {
+            <mat-error>{{ getError('email') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" placeholder="Password" type="password">
+          @if (showError('password')) {
+            <mat-error>{{ getError('password') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="iamStore.loading()">
+          @if (iamStore.loading()) { Registrando... } @else { Sign Up }
+        </button>
+      </form>
+
+      @if (iamStore.signUp()) {
+        <div style="color:green; margin-top:12px;">
+          Registro exitoso — {{ iamStore.signUp()?.email }}
+        </div>
+      }
+
+      @if (iamStore.error()) {
+        <div style="color:red; margin-top:12px;">
+          {{ iamStore.error() }}
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

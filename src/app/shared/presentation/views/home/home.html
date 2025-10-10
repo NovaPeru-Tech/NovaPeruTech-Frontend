@@ -1,0 +1,19 @@
+<app-toolbar></app-toolbar>
+
+<div class="welcome-container">
+  <div class="content-wrapper">
+    <div class="text-section">
+      <h1 class="title" [innerHTML]="'welcome.title' | translate"></h1>
+
+      <span class="subtitle">
+        {{ 'welcome.subtitle' | translate }}
+      </span>
+
+      <app-authentication-section></app-authentication-section>
+    </div>
+
+    <div class="image-section">
+      <img src="/images/bounden-iam/photoInitial.png" alt="{{ 'welcome.imageAlt' | translate }}">
+    </div>
+  </div>
+</div>

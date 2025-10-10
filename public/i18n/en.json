@@ -1,0 +1,19 @@
+{
+"toolbar": {
+"logoAlt": "logo"
+},
+"welcome": {
+"title": "We care for those<br>you love, we inform<br>those who wait",
+"subtitle": "Veyra: Your best ally in family care and connection.",
+"imageAlt": "Caregiver with patient"
+},
+"auth": {
+"login": "Login",
+"register": "Sign Up"
+},
+"buttons": {
+"administrator": "Administrator",
+"family": "Family"
+}
+}
+
