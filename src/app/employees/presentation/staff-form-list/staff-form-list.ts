@@ -8,6 +8,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
 import {EmployeesStore} from '../../application/employees.store';
+import {LayoutNursingHome} from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
 @Component({
   selector: 'app-staff-form-list',
@@ -21,7 +22,8 @@ import {EmployeesStore} from '../../application/employees.store';
     MatIcon,
     MatIconButton,
     MatButton,
-    Toolbar
+    Toolbar,
+    LayoutNursingHome
   ],
   templateUrl: './staff-form-list.html',
   styleUrl: './staff-form-list.css'
