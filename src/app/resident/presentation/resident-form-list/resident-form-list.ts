@@ -8,6 +8,7 @@ import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
+import {LayoutNursingHome} from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 @Component({
   selector: 'app-resident-form-list',
   standalone: true,
@@ -20,7 +21,8 @@ import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
     MatIcon,
     MatIconButton,
     MatButton,
-    Toolbar
+    Toolbar,
+    LayoutNursingHome
 
   ],
   templateUrl: './resident-form-list.html',

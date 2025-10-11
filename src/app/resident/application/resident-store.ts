@@ -111,6 +111,10 @@ export class ResidentStore {
       next: residents => {
         this._residentSignal.set(residents);
         this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to load medications'));
+        this._loadingSignal.set(false);
       }
     });
   }
@@ -121,7 +125,7 @@ export class ResidentStore {
    * @param fallback - Default fallback message.
    * @returns A formatted error string.
    */
-  formatError(error: any, fallback: string): string {
+   private formatError(error: any, fallback: string): string {
     if (error instanceof Error) {
       return error.message.includes('Resource not found')
         ? `${fallback}: Not Found`
