@@ -7,12 +7,13 @@ import {MatIcon} from '@angular/material/icon';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
 import {DatePipe, DecimalPipe} from '@angular/common';
-import {MatTable, MatTableModule} from '@angular/material/table';
+import { MatTableModule} from '@angular/material/table';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTooltip} from '@angular/material/tooltip';
 import {SelectionModel} from '@angular/cdk/collections';
 import {InventoryStore} from '../../application/inventory-store';
+import {LayoutNursingHome} from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
 @Component({
   selector: 'app-medication-form-list',
@@ -30,7 +31,8 @@ import {InventoryStore} from '../../application/inventory-store';
     MatCheckbox,
     MatPaginatorModule,
     MatTooltip,
-    DecimalPipe
+    DecimalPipe,
+    LayoutNursingHome,
   ],
   templateUrl: './medication-form-list.html',
   styleUrl: './medication-form-list.css'
@@ -105,7 +107,7 @@ export class MedicationFormList {
   }
 
   navigateToNew() {
-    this.router.navigate(['inventory/medication/register']).then();
+    this.router.navigate(['inventory/medication/create']).then();
   }
 
   getStatusClass(medication: any): string {
