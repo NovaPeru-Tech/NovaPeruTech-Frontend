@@ -1,0 +1,86 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar -->
+  <mat-sidenav
+    mode="side"
+    opened
+    [class.collapsed]="isCollapsed()">
+
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <div class="logo-wrapper">
+        <div class="logo-icon">
+          <mat-icon>local_hospital</mat-icon>
+        </div>
+        @if (!isCollapsed()) {
+          <div class="logo-text">
+            <h2>Veyra</h2>
+            <p>Care Management</p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+      @for (option of options; track option.link) {
+        <div
+          class="nav-item"
+          [class.active]="isActive(option.link)"
+          [matTooltip]="isCollapsed() ? option.label : ''"
+          matTooltipPosition="right"
+          (click)="navigateTo(option.link)">
+
+          <div class="nav-icon-wrapper" [style.background-color]="option.color + '20'">
+            <mat-icon [style.color]="option.color">{{ option.icon }}</mat-icon>
+          </div>
+
+          @if (!isCollapsed()) {
+            <span class="nav-label">{{ option.label }}</span>
+          }
+
+          @if (isActive(option.link)) {
+            <div class="active-indicator"></div>
+          }
+        </div>
+      }
+    </nav>
+
+    <!-- Footer Section -->
+    <div class="sidebar-footer">
+      <div class="divider"></div>
+
+      @if (!isCollapsed()) {
+        <div class="footer-content">
+          <div class="footer-info">
+            <mat-icon>code</mat-icon>
+            <div class="footer-text">
+              <span class="company-name">NovaPeru Tech</span>
+              <span class="copyright">© {{ getCurrentYear() }}</span>
+            </div>
+          </div>
+        </div>
+      } @else {
+        <div class="footer-collapsed">
+          <mat-icon>code</mat-icon>
+        </div>
+      }
+    </div>
+
+    <!-- Toggle Button -->
+    <button
+      mat-icon-button
+      class="toggle-btn"
+      (click)="toggleSidebar()"
+      [matTooltip]="isCollapsed() ? 'Expandir' : 'Contraer'"
+      matTooltipPosition="right">
+      <mat-icon>{{ isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+    </button>
+  </mat-sidenav>
+
+  <!-- Main Content - USA NG-CONTENT -->
+  <mat-sidenav-content>
+    <div class="content-wrapper">
+      <ng-content></ng-content>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
