@@ -111,7 +111,7 @@ export class MedicationFormEdit {
       this.medicationId = params['id'] ? +params['id'] : null;
 
       if (!this.medicationId) {
-        this.router.navigate(['inventory/medications/list']).then();
+        this.router.navigate(['inventory/medication/list']).then();
         return;
       }
 
@@ -154,7 +154,7 @@ export class MedicationFormEdit {
         this.form.get('registrationNumber')?.disable();
       } else {
         console.warn('Medication not found');
-        this.router.navigate(['inventory/medications/list']).then();
+        this.router.navigate(['inventory/medication/list']).then();
       }
     });
   }
