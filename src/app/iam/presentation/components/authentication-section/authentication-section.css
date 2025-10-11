@@ -1,39 +1,133 @@
-.button-container {
+.auth-container {
   display: flex;
-  justify-content: flex-start;
-  gap: 20px;
+  flex-direction: column;
+  gap: 24px;
   margin-top: 40px;
+  max-width: 500px;
 }
 
-.administration,
-.familiar {
-  font-size: 18px;
+/* Sign In Section */
+.sign-in-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
 }
 
-button[mat-stroked-button] {
-  padding: 12px 24px;
+.sign-in-text {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+  font-weight: 500;
+}
+
+.sign-in-btn {
+  width: 100%;
+  height: 56px;
   font-size: 16px;
   font-weight: 600;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #5FC2BA 0%, #4A9C94 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(95, 194, 186, 0.3);
+  transition: all 0.3s ease;
+}
+
+.sign-in-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(95, 194, 186, 0.4);
+  background: linear-gradient(135deg, #4A9C94 0%, #5FC2BA 100%);
+}
+
+.sign-in-btn mat-icon {
+  margin-right: 8px;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 8px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.divider span {
+  padding: 0 20px;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
+/* Register Section */
+.register-section {
+  display: flex;
+  gap: 16px;
+}
 
-.familiar button {
-  background-color: #2686B6;
+.register-btn {
+  flex: 1;
+  height: 48px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 2px solid #5FC2BA;
+  color: #5FC2BA;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #5FC2BA;
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(95, 194, 186, 0.2);
 }
 
-.administration button {
-  background-color: #66B3AD;
-  color: white;
-}
+/* Responsive */
 @media (max-width: 768px) {
-  .button-container {
-    justify-content: center;
+  .auth-container {
+    gap: 20px;
+    margin-top: 32px;
   }
 
-  .button-container button {
-    flex: 1 1 100%;
-    max-width: 100%;
+  .sign-in-btn {
+    height: 52px;
+    font-size: 15px;
+  }
+
+  .register-section {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .register-btn {
+    width: 100%;
+    height: 44px;
+    font-size: 13px;
+  }
+
+  .divider span {
+    font-size: 12px;
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sign-in-text {
+    font-size: 14px;
+  }
+
+  .sign-in-btn {
+    height: 48px;
+    font-size: 14px;
   }
 }
