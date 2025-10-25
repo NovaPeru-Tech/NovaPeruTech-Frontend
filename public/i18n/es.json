@@ -1,4 +1,13 @@
 {
+  "nav": {
+    "home": "Inicio",
+    "inventory": "Inventario",
+    "activity": "Actividades",
+    "resident": "Residentes",
+    "employee": "Empleados",
+    "care-management": "Gestión de la atención"
+  },
+
   "toolbar": {
     "logoAlt": "logo"
   },
