@@ -1,0 +1,46 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+  text-align: center;
+  color: #333;
+}
+
+.container-with-spacing {
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 4rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  color: #444;
+}
+
+.container-with-spacing div {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+button[mat-button] {
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #666;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+button[mat-button]:hover {
+  background-color: #f5f5f5;
+}
+
+app-toolbar {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  margin-bottom: 2rem;
+  width: 100%;
+}
