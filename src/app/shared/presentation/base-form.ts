@@ -1,4 +1,4 @@
-import {FormGroup} from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 export class BaseForm {
   /**
@@ -40,7 +40,7 @@ export class BaseForm {
       case 'required':
         return `The field ${controlName} is required`;
       default:
-        return `The field ${controlName}is invalid`;
+        return `The field ${controlName} is invalid`;
     }
   }
 }
