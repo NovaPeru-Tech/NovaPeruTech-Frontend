@@ -8,6 +8,12 @@
     "care-management": "Gestión de la atención"
   },
 
+  "page-not-found": {
+    "title": "Página no encontrada",
+    "content": "La ruta <strong>{{ invalid_path }}</strong> no existe.",
+    "go-home": "Ir al inicio"
+  },
+
   "toolbar": {
     "logoAlt": "logo"
   },
