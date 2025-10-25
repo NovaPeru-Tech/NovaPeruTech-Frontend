@@ -1,55 +1,58 @@
-<mat-sidenav-container class="sidenav-container">
-  <!-- Sidebar -->
-  <mat-sidenav
-    mode="side"
-    opened
-    [class.collapsed]="isCollapsed()">
+<mat-toolbar color="primary" class="toolbar">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <img src="/images/logo/veyra-logo.png" alt="veyra-logo" >
+  <span class="toolbar-title">Veyra</span>
+  <span class="spacer"></span>
+  <app-language-switcher></app-language-switcher>
+</mat-toolbar>
 
-    <!-- Logo Section -->
-    <div class="logo-section">
-      <div class="logo-wrapper">
-        <div class="logo-icon">
-          <mat-icon>local_hospital</mat-icon>
-        </div>
-        @if (!isCollapsed()) {
+<div class="layout-body">
+  <mat-sidenav-container class="sidenav-container">
+    <!-- SIDENAV -->
+    <mat-sidenav
+      #drawer
+      [mode]="sidenavMode"
+      [opened]="sidenavOpened">
+
+      <!-- Logo Section -->
+      <div class="logo-section">
+        <div class="logo-wrapper">
+          <div class="logo-icon">
+            <mat-icon>local_hospital</mat-icon>
+          </div>
           <div class="logo-text">
-            <h2>Veyra</h2>
-            <p>Care Management</p>
+            <h2>{{ "nav.care-management" | translate }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="nav-menu">
+        @for (option of options; track option.link) {
+          <div
+            class="nav-item"
+            [class.active]="isActive(option.link)"
+            [matTooltip]="option.label | translate"
+            matTooltipPosition="right"
+            (click)="navigateTo(option.link)">
+
+            <div class="nav-icon-wrapper" [style.background-color]="option.color + '20'">
+              <mat-icon [style.color]="option.color">{{ option.icon }}</mat-icon>
+            </div>
+
+            <span class="nav-label">{{ option.label | translate }}</span>
+
+            @if (isActive(option.link)) {
+              <div class="active-indicator"></div>
+            }
           </div>
         }
-      </div>
-    </div>
+      </nav>
 
-    <!-- Navigation Menu -->
-    <nav class="nav-menu">
-      @for (option of options; track option.link) {
-        <div
-          class="nav-item"
-          [class.active]="isActive(option.link)"
-          [matTooltip]="isCollapsed() ? option.label : ''"
-          matTooltipPosition="right"
-          (click)="navigateTo(option.link)">
-
-          <div class="nav-icon-wrapper" [style.background-color]="option.color + '20'">
-            <mat-icon [style.color]="option.color">{{ option.icon }}</mat-icon>
-          </div>
-
-          @if (!isCollapsed()) {
-            <span class="nav-label">{{ option.label }}</span>
-          }
-
-          @if (isActive(option.link)) {
-            <div class="active-indicator"></div>
-          }
-        </div>
-      }
-    </nav>
-
-    <!-- Footer Section -->
-    <div class="sidebar-footer">
-      <div class="divider"></div>
-
-      @if (!isCollapsed()) {
+      <!-- Footer Section -->
+      <div class="sidenav-footer">
         <div class="footer-content">
           <div class="footer-info">
             <mat-icon>code</mat-icon>
@@ -59,28 +62,16 @@
             </div>
           </div>
         </div>
-      } @else {
-        <div class="footer-collapsed">
-          <mat-icon>code</mat-icon>
-        </div>
-      }
-    </div>
+      </div>
+    </mat-sidenav>
 
-    <!-- Toggle Button -->
-    <button
-      mat-icon-button
-      class="toggle-btn"
-      (click)="toggleSidebar()"
-      [matTooltip]="isCollapsed() ? 'Expandir' : 'Contraer'"
-      matTooltipPosition="right">
-      <mat-icon>{{ isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
-    </button>
-  </mat-sidenav>
+    <!-- MAIN CONTENT -->
+    <mat-sidenav-content>
+      <div class="content-wrapper">
+        <ng-content></ng-content>
+      </div>
+    </mat-sidenav-content>
 
-  <!-- Main Content - USA NG-CONTENT -->
-  <mat-sidenav-content>
-    <div class="content-wrapper">
-      <ng-content></ng-content>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </mat-sidenav-container>
+</div>
+

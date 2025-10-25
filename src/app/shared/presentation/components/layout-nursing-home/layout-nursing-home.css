@@ -1,18 +1,62 @@
-/* Contenedor principal */
 .sidenav-container {
-  height: 100vh;
-  background-color: #f5f7fa;
+  height: 100%;
   display: flex;
 }
 
 /* ==================== SIDEBAR ==================== */
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 64px;
+  background: #FFFFFF;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar img {
+  height: 50px;
+  width: auto;
+  margin-right: 8px;
+}
+
+.spacer{
+  flex: 1 1 auto;
+}
+
+.toolbar-title {
+  font-weight: 600;
+  font-size: 20px;
+  color: #66B3AD;
+}
+
+.layout-body {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  height: calc(100vh - 64px);
+  overflow: hidden;
+}
+
+.sidenav-container {
+  flex: 1;
+  height: 100%;
+}
+
 mat-sidenav {
   width: 280px;
-  background-color: #2c3e50;
-  color: white;
+  background-color: #f0f8ff;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
   overflow-x: hidden;
+  border-radius: 0;
 }
 
 mat-sidenav.collapsed {
@@ -23,7 +67,6 @@ mat-sidenav.collapsed {
 .logo-section {
   padding: 24px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  min-height: 96px;
 }
 
 .logo-wrapper {
@@ -35,8 +78,8 @@ mat-sidenav.collapsed {
 .logo-icon {
   background: linear-gradient(135deg, #5FC2BA 0%, #4A9C94 100%);
   border-radius: 12px;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,23 +106,15 @@ mat-sidenav.collapsed .logo-text {
 
 .logo-text h2 {
   margin: 0;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
-  color: white;
-  white-space: nowrap;
-}
-
-.logo-text p {
-  margin: 0;
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
-  font-weight: 400;
+  color: #4f4f4f;
   white-space: nowrap;
 }
 
 /* Navigation Menu */
 .nav-menu {
-  padding: 20px 12px;
+  padding: 0 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -97,13 +132,13 @@ mat-sidenav.collapsed .logo-text {
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  color: rgba(255, 255, 255, 0.7);
+  color: #4f4f4f;
   white-space: nowrap;
 }
 
 .nav-item:hover {
   background-color: rgba(255, 255, 255, 0.05);
-  color: white;
+  color: #5FC2BA;
 }
 
 mat-sidenav:not(.collapsed) .nav-item:hover {
@@ -162,17 +197,11 @@ mat-sidenav.collapsed .nav-label {
 }
 
 /* Footer */
-.sidebar-footer {
+.sidenav-footer {
   margin-top: auto;
   padding: 20px 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   min-height: 80px;
-}
-
-.divider {
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.1);
-  margin-bottom: 16px;
 }
 
 .footer-content {
@@ -191,7 +220,7 @@ mat-sidenav.collapsed .footer-content {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: #4f4f4f;
 }
 
 .footer-info mat-icon {
@@ -210,12 +239,12 @@ mat-sidenav.collapsed .footer-content {
 .company-name {
   font-size: 13px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
+  color: #4f4f4f;
 }
 
 .copyright {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #4f4f4f;
 }
 
 .footer-collapsed {
@@ -249,7 +278,7 @@ mat-sidenav.collapsed .footer-collapsed {
   transform: scale(1.1);
 }
 
-/* Content Area - CORREGIDO */
+/* Content Area*/
 mat-sidenav-content {
   background-color: #f5f7fa;
   flex: 1;
