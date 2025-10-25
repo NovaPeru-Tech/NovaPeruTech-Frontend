@@ -1,10 +1,16 @@
 .toolbar{
-  background: #66B3AD;
+  background: #FFFFFF;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
 .toolbar img {
-  height: 100px;
+  height: 50px;
   width: auto;
   margin-right: 8px;
+}
+.title{
+  font-weight: 600;
+  font-size: 20px;
+  color: #66B3AD;
 }
 .spacer{
   flex: 1 1 auto;
