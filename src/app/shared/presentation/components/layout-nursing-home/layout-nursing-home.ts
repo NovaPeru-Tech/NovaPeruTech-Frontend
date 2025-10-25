@@ -1,11 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { LanguageSwitcher } from '../language-switcher/language-switcher';
 
 @Component({
   selector: 'app-layout-nursing-home',
@@ -16,55 +19,43 @@ import { CommonModule } from '@angular/common';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    TranslatePipe,
+    LanguageSwitcher
   ],
   templateUrl: './layout-nursing-home.html',
   styleUrls: ['./layout-nursing-home.css']
 })
 export class LayoutNursingHome {
-  isCollapsed = signal(false);
+  @ViewChild(MatSidenav) drawer!: MatSidenav;
+  sidenavMode: 'side' | 'over' = 'side';
+  sidenavOpened = true;
 
   options = [
-    {
-      label: 'Home',
-      icon: 'home',
-      link: '/nursing-home',
-      color: '#5FC2BA'
-    },
-    {
-      label: 'Inventory',
-      icon: 'inventory_2',
-      link: 'inventory/medication/list',
-      color: '#5FC2BA'
-    },
-    {
-      label: 'Activities',
-      icon: 'assignment',
-      link: '/activities/list',
-      color: '#5FC2BA'
-    },
-    {
-      label: 'Residents',
-      icon: 'person',
-      link: '/resident/list',
-      color: '#5FC2BA'
-    },
-    {
-      label: 'Employees',
-      icon: 'group',
-      link: '/employee/list',
-      color: '#5FC2BA'
-    }
+    { label: 'nav.home',      icon: 'home',        link: '/nursing-home',              color: '#5FC2BA'},
+    { label: 'nav.inventory', icon: 'inventory',   link: '/inventory/medication/list', color: '#5FC2BA'},
+    { label: 'nav.activity',  icon: 'assignment',  link: '/activities/list',           color: '#5FC2BA'},
+    { label: 'nav.resident',  icon: 'person',      link: '/resident/list',             color: '#5FC2BA'},
+    { label: 'nav.employee',  icon: 'group',       link: '/employee/list',             color: '#5FC2BA'}
   ];
 
-  constructor(private router: Router) {}
-
-  toggleSidebar() {
-    this.isCollapsed.update(value => !value);
+  constructor(private router: Router, private observer: BreakpointObserver) {
+    this.observer.observe(['(max-width: 768px)']).subscribe(result => {
+      if (result.matches) {
+        this.sidenavMode = 'over';
+        this.sidenavOpened = false;
+      } else {
+        this.sidenavMode = 'side';
+        this.sidenavOpened = true;
+      }
+    });
   }
 
   navigateTo(link: string) {
-    this.router.navigate([link]);
+    this.router.navigate([link]).then();
+    if (this.sidenavMode === 'over') {
+      this.drawer.toggle().then();
+    }
   }
 
   isActive(link: string): boolean {

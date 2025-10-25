@@ -1,4 +1,19 @@
 {
+  "nav": {
+    "home": "Home",
+    "inventory": "Inventory",
+    "activity": "Activities",
+    "resident": "Residents",
+    "employee": "Employees",
+    "care-management": "Care Management"
+  },
+
+  "page-not-found": {
+    "title": "Page not found",
+    "content": "The path <strong>{{ invalid_path }}</strong> does not exist.",
+    "go-home": "Go Home"
+  },
+
   "toolbar": {
     "logoAlt": "logo"
   },
