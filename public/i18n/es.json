@@ -214,7 +214,9 @@
     "edit": "Editar",
     "delete": "Eliminar",
     "add": "Agregar Nuevo",
-    "no-residents": "No hay residentes registrados."
+    "no-residents": "No hay residentes registrados.",
+    "search": "Buscar",
+    "search-info": "Ingresa el nombre o apellido del residente"
   },
 
   "medication": {
