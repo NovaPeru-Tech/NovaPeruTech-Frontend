@@ -1,5 +1,4 @@
 <app-layout-nursing-home>
-<app-toolbar></app-toolbar>
 <h1 class="title">{{ 'residents.list-title' | translate }}</h1>
 
 <!-- Loading State -->
@@ -23,8 +22,11 @@
       </div>
 
       <div class="resident-image">
-        <img [src]="resident.image || 'assets/default-avatar.png'"
-             [alt]="resident.name + ' ' + resident.lastname">
+        <img [src]="imageLoaded ? resident.image : 'images/shared/veyra-placeholder.png'"
+             (load)="imageLoaded = true"
+             (error)="imageLoaded = false"
+             [alt]="resident.name + ' ' + resident.lastname"
+             [class.loaded]="imageLoaded">
       </div>
 
       <mat-card-content>
@@ -43,25 +45,10 @@
       </mat-card-content>
 
       <button mat-raised-button
-              color="primary"
               class="detail-button"
               (click)="viewDetails(resident.id); $event.stopPropagation()">
         {{ 'residents.details' | translate }}
       </button>
-
-      <div class="card-actions">
-        <button mat-icon-button
-                [attr.aria-label]="'residents.edit' | translate"
-                (click)="editResident(resident.id); $event.stopPropagation()">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button
-                color="warn"
-                [attr.aria-label]="'residents.delete' | translate"
-                (click)="deleteResident(resident.id); $event.stopPropagation()">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
 
     </mat-card>
   } @empty {

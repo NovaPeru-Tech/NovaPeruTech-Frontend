@@ -1,14 +1,13 @@
-import {Component, computed, inject} from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ResidentStore } from '../../application/resident-store';
 import { Router } from '@angular/router';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatError} from '@angular/material/form-field';
-import {MatCard, MatCardContent} from '@angular/material/card';
-import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
-import {LayoutNursingHome} from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatError } from '@angular/material/form-field';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton } from '@angular/material/button';
+import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 @Component({
   selector: 'app-resident-form-list',
   standalone: true,
@@ -19,9 +18,7 @@ import {LayoutNursingHome} from '../../../shared/presentation/components/layout-
     MatCard,
     MatCardContent,
     MatIcon,
-    MatIconButton,
     MatButton,
-    Toolbar,
     LayoutNursingHome
 
   ],
@@ -32,10 +29,12 @@ export class ResidentFormList {
   readonly store = inject(ResidentStore);
   protected router = inject(Router);
   selectedId: number | null = null;
+  imageLoaded = false;
 
   selectResident(id: number) {
     this.selectedId = this.selectedId === id ? null : id;
   }
+
   residents = computed(() => this.store.residents());
 
   viewDetails(id: number) {
@@ -52,6 +51,7 @@ export class ResidentFormList {
   deleteResident(id: number) {
     this.store.deleteResident(id);
   };
+
   navigateToNew(){
     this.router.navigate(['resident/register']).then();
   }
