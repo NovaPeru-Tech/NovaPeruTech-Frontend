@@ -1,85 +1,103 @@
 <app-layout-nursing-home>
-<h1 class="title">{{ 'residents.list-title' | translate }}</h1>
+  <h1 class="title">{{ 'residents.list-title' | translate }}</h1>
 
-<!-- Loading State -->
-@if (store.loading()) {
-  <mat-spinner diameter="40"></mat-spinner>
-}
+  <div class="search-container">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'residents.search' | translate }}</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        [placeholder]="'residents.search-info' | translate"
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)"
+        type="text"/>
+      @if (searchTerm()) {
+        <button matSuffix mat-icon-button (click)="searchTerm.set('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  </div>
 
-<!-- Error State -->
-@if (store.error()) {
-  <mat-error>{{ store.error() }}</mat-error>
-}
-
-<div class="cards-grid">
-  @for (resident of residents(); track resident.id) {
-    <mat-card class="resident-card"
-              [class.selected]="selectedId === resident.id"
-              (click)="selectResident(resident.id)">
-
-      <div class="selection-indicator"
-           [class.active]="selectedId === resident.id">
-      </div>
-
-      <div class="resident-image">
-        <img [src]="imageLoaded ? resident.image : 'images/shared/veyra-placeholder.png'"
-             (load)="imageLoaded = true"
-             (error)="imageLoaded = false"
-             [alt]="resident.name + ' ' + resident.lastname"
-             [class.loaded]="imageLoaded">
-      </div>
-
-      <mat-card-content>
-        <p class="resident-info">
-          <strong>{{ 'residents.lastName' | translate }}:</strong>
-          {{ resident.lastname }}
-        </p>
-        <p class="resident-info">
-          <strong>{{ 'residents.firstName' | translate }}:</strong>
-          {{ resident.name}}
-        </p>
-        <p class="resident-info">
-          <strong>{{ 'residents.dni' | translate }}:</strong>
-          {{ resident.dni}}
-        </p>
-      </mat-card-content>
-
-      <button mat-raised-button
-              class="detail-button"
-              (click)="viewDetails(resident.id); $event.stopPropagation()">
-        {{ 'residents.details' | translate }}
-      </button>
-
-    </mat-card>
-  } @empty {
-    <div class="empty-state">
-      <p>{{ 'residents.no-residents' | translate }}</p>
-    </div>
+  <!-- Loading State -->
+  @if (store.loading()) {
+    <mat-spinner diameter="40"></mat-spinner>
   }
-</div>
 
-<div class="action-buttons">
-  <button mat-raised-button
-          color="warn"
-          [disabled]="!selectedId"
-          (click)="deleteResident(selectedId!)">
-    <mat-icon>delete</mat-icon>
-    {{ 'residents.delete' | translate }}
-  </button>
+  <!-- Error State -->
+  @if (store.error()) {
+    <mat-error>{{ store.error() }}</mat-error>
+  }
 
-  <button mat-raised-button
-          color="primary"
-          [disabled]="!selectedId"
-          (click)="editResident(selectedId!)">
-    <mat-icon>edit</mat-icon>
-    {{ 'residents.edit' | translate }}
-  </button>
+  <div class="cards-grid">
+    @for (resident of filteredResidents(); track resident.id) {
+      <mat-card class="resident-card"
+                [class.selected]="selectedId === resident.id"
+                (click)="selectResident(resident.id)">
 
-  <button mat-raised-button
-          color="accent"
-          (click)="navigateToNew()">
-    <mat-icon>add</mat-icon>
-    {{ 'residents.add' | translate }}
-  </button>
-</div>
+        <div class="selection-indicator"
+             [class.active]="selectedId === resident.id">
+        </div>
+
+        <div class="resident-image">
+          <img [src]="imageLoaded ? resident.image : 'images/shared/veyra-placeholder.png'"
+               (load)="imageLoaded = true"
+               (error)="imageLoaded = false"
+               [alt]="resident.name + ' ' + resident.lastname"
+               [class.loaded]="imageLoaded">
+        </div>
+
+        <mat-card-content>
+          <p class="resident-info">
+            <strong>{{ 'residents.lastName' | translate }}:</strong>
+            {{ resident.lastname }}
+          </p>
+          <p class="resident-info">
+            <strong>{{ 'residents.firstName' | translate }}:</strong>
+            {{ resident.name }}
+          </p>
+          <p class="resident-info">
+            <strong>{{ 'residents.dni' | translate }}:</strong>
+            {{ resident.dni }}
+          </p>
+        </mat-card-content>
+
+        <button mat-raised-button
+                class="detail-button"
+                (click)="viewDetails(resident.id); $event.stopPropagation()">
+          {{ 'residents.details' | translate }}
+        </button>
+
+      </mat-card>
+    } @empty {
+      <div class="empty-state">
+        <p>{{ 'residents.no-residents' | translate }}</p>
+      </div>
+    }
+  </div>
+
+  <div class="action-buttons">
+    <button mat-raised-button
+            color="warn"
+            [disabled]="!selectedId"
+            (click)="deleteResident(selectedId!)">
+      <mat-icon>delete</mat-icon>
+      {{ 'residents.delete' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="primary"
+            [disabled]="!selectedId"
+            (click)="editResident(selectedId!)">
+      <mat-icon>edit</mat-icon>
+      {{ 'residents.edit' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="accent"
+            (click)="navigateToNew()">
+      <mat-icon>add</mat-icon>
+      {{ 'residents.add' | translate }}
+    </button>
+  </div>
 </app-layout-nursing-home>

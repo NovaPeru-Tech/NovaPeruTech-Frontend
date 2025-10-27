@@ -8,6 +8,14 @@ mat-spinner {
   display: block;
 }
 
+.search-container {
+  margin-left: 20px;
+}
+
+.search-container mat-form-field {
+  width: 350px;
+}
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
