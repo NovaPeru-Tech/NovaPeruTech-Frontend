@@ -1,6 +1,7 @@
 .title {
-  text-align: center;
-  margin: 20px 0;
+  margin: 30px 20px;
+  padding-bottom: 8px;
+  border-bottom: #66B3AD 5px solid;
 }
 
 mat-spinner {
