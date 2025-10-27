@@ -17,10 +17,10 @@ mat-spinner {
 
 .resident-card {
   position: relative;
-  border: 2px solid #4a90a4;
   border-radius: 15px;
   padding: 20px;
-  background-color: #e0f2f7;
+  border: 2px solid #f0f8ff;
+  background-color: #f0f8ff;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -28,38 +28,41 @@ mat-spinner {
 .resident-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: 2px solid #56aaE6;
 }
 
 .resident-card.selected {
-  border-color: #2e7d8f;
-  background-color: #d4eef5;
-  box-shadow: 0 0 15px rgba(46, 125, 143, 0.6);
+  border-color: #56aaE6;
+  background-color: #9fd2f1;
+  box-shadow: 0 0 15px rgba(112, 177, 230, 100);
 }
 
 .selection-indicator {
   position: absolute;
   top: 15px;
   left: 15px;
-  width: 24px;
-  height: 24px;
-  border: 3px solid #4a90a4;
-  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #70B1E6;
+  border-radius: 5px;
   background-color: white;
   transition: background-color 0.3s;
   z-index: 2;
 }
 
 .selection-indicator.active {
-  background-color: #4a90a4;
+  background-color: #70B1E6;
 }
 
 .resident-image {
-  width: 100%;
-  height: 180px;
-  background-color: #c4c4c4;
-  border-radius: 10px;
-  margin-bottom: 16px;
+  background-color: #fff5f5;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px;
+  border-radius: 8px;
   overflow: hidden;
+  border: 2px solid #70B1E6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .resident-image img {
@@ -73,18 +76,15 @@ mat-spinner {
   font-size: 14px;
 }
 
+.resident-info strong {
+  color: #0d2e73;
+}
+
 .detail-button {
   width: 100%;
   margin-top: 10px;
-}
-
-.card-actions {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  gap: 4px;
-  z-index: 2;
+  color: #0d2e73 !important;
+  border-radius: 8px;
 }
 
 .action-buttons {
