@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ResidentStore } from '../../application/resident-store';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { LayoutNursingHome } from '../../../shared/presentation/components/layou
 import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule}  from '@angular/forms';
+import { FormsModule }  from '@angular/forms';
 @Component({
   selector: 'app-resident-form-list',
   standalone: true,
@@ -40,7 +40,7 @@ export class ResidentFormList {
   protected router = inject(Router);
 
   selectedId: number | null = null;
-  imageLoaded = false;
+  imageLoadedMap: Record<number, boolean> = {};
   searchTerm = signal('');
   residents = computed(() => this.store.residents());
   filteredResidents = computed(() => {
@@ -55,6 +55,16 @@ export class ResidentFormList {
       return name.startsWith(term) || lastname.startsWith(term);
     });
   });
+
+  onImageLoad(id: number) {
+    this.imageLoadedMap[id] = true;
+  }
+
+  onImageError(event: Event, id: number) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'images/shared/veyra-placeholder.png';
+    this.imageLoadedMap[id] = true;
+  }
 
   removeAccents(word: string) {
     return word.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').trim();

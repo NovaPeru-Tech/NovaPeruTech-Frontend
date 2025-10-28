@@ -40,11 +40,11 @@
         </div>
 
         <div class="resident-image">
-          <img [src]="imageLoaded ? resident.image : 'images/shared/veyra-placeholder.png'"
-               (load)="imageLoaded = true"
-               (error)="imageLoaded = false"
+          <img [src]="resident.image"
+               (load)="onImageLoad(resident.id)"
+               (error)="onImageError($event, resident.id)"
                [alt]="resident.name + ' ' + resident.lastname"
-               [class.loaded]="imageLoaded">
+               [class.loaded]="imageLoadedMap[resident.id]">
         </div>
 
         <mat-card-content>
