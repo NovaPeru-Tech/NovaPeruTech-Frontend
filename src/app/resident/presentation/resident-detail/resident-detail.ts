@@ -1,29 +1,32 @@
-import {Component, computed, inject, signal} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ResidentStore} from '../../application/resident-store';
-import {MatCard} from '@angular/material/card';
-import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatError} from '@angular/material/form-field';
-import {MatDivider} from '@angular/material/divider';
-import {MatChip} from '@angular/material/chips';
-import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
-import {DatePipe} from '@angular/common';
+import { Component, computed, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ResidentStore } from '../../application/resident-store';
+import { MatCard } from '@angular/material/card';
+import { MatButton, MatFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatError } from '@angular/material/form-field';
+import { MatDivider } from '@angular/material/divider';
+import { MatChip } from '@angular/material/chips';
+import { DatePipe } from '@angular/common';
+import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-resident-detail',
   standalone: true,
-  imports: [MatCard,
+  imports: [
+    MatCard,
     MatButton,
     MatIcon,
     MatProgressSpinner,
     MatError,
     MatDivider,
     MatChip,
-    Toolbar,
-    MatIconButton,
-    MatFabButton, DatePipe
+    MatFabButton,
+    DatePipe,
+    LayoutNursingHome,
+    TranslatePipe
   ],
   templateUrl: './resident-detail.html',
   styleUrl: './resident-detail.css'
