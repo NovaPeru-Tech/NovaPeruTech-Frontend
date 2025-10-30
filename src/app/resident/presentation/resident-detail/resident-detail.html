@@ -46,11 +46,20 @@
                   {{ resident()!.name }} {{ resident()!.lastname }}
                 </h1>
                 <mat-chip [class.chip-active]="resident()!.state === 'Active'"
-                          [class.chip-inactive]="resident()!.state !== 'Active'">
-                  <mat-icon>
-                    {{ resident()!.state === 'Active' ? 'check_circle' : 'cancel' }}
-                  </mat-icon>
-                  {{ resident()!.state }}
+                          [class.chip-inactive]="resident()!.state === 'Inactive'"
+                          [class.chip-evalutation]="resident()!.state === 'Under Evaluation'">
+                  <div class="status">
+                    <mat-icon>
+                      {{
+                        resident()!.state === 'Active'
+                          ? 'check_circle'
+                          : resident()!.state === 'Inactive'
+                            ? 'cancel'
+                            : 'hourglass_empty'
+                      }}
+                    </mat-icon>
+                    {{ resident()!.state }}
+                  </div>
                 </mat-chip>
               </div>
 
