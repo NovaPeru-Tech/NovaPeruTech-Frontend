@@ -1,0 +1,103 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ 'residents.list.title' | translate }}</h1>
+
+  <div class="search-container">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'residents.buttons.search' | translate }}</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        [placeholder]="'residents.buttons.search-info' | translate"
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)"
+        type="text"/>
+      @if (searchTerm()) {
+        <button matSuffix mat-icon-button (click)="searchTerm.set('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  </div>
+
+  <!-- Loading State -->
+  @if (store.loading()) {
+    <mat-spinner diameter="40"></mat-spinner>
+  }
+
+  <!-- Error State -->
+  @if (store.error()) {
+    <mat-error>{{ store.error() }}</mat-error>
+  }
+
+  <div class="cards-grid">
+    @for (resident of filteredResidents(); track resident.id) {
+      <mat-card class="resident-card"
+                [class.selected]="selectedId === resident.id"
+                (click)="selectResident(resident.id)">
+
+        <div class="selection-indicator"
+             [class.active]="selectedId === resident.id">
+        </div>
+
+        <div class="resident-image">
+          <img [src]="resident.image"
+               (load)="onImageLoad(resident.id)"
+               (error)="onImageError($event, resident.id)"
+               [alt]="resident.name + ' ' + resident.lastname"
+               [class.loaded]="imageLoadedMap[resident.id]">
+        </div>
+
+        <mat-card-content>
+          <p class="resident-info">
+            <strong>{{ 'residents.last-name' | translate }}:</strong>
+            {{ resident.lastname }}
+          </p>
+          <p class="resident-info">
+            <strong>{{ 'residents.first-name' | translate }}:</strong>
+            {{ resident.name }}
+          </p>
+          <p class="resident-info">
+            <strong>{{ 'residents.dni' | translate }}:</strong>
+            {{ resident.dni }}
+          </p>
+        </mat-card-content>
+
+        <button mat-raised-button
+                class="detail-button"
+                (click)="viewDetails(resident.id); $event.stopPropagation()">
+          {{ 'residents.buttons.details' | translate }}
+        </button>
+
+      </mat-card>
+    } @empty {
+      <div class="empty-state">
+        <p>{{ 'residents.error.no-residents' | translate }}</p>
+      </div>
+    }
+  </div>
+
+  <div class="action-buttons">
+    <button mat-raised-button
+            color="warn"
+            [disabled]="!selectedId"
+            (click)="deleteResident(selectedId!)">
+      <mat-icon>delete</mat-icon>
+      {{ 'residents.buttons.delete' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="primary"
+            [disabled]="!selectedId"
+            (click)="editResident(selectedId!)">
+      <mat-icon>edit</mat-icon>
+      {{ 'residents.buttons.edit' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="accent"
+            (click)="navigateToNew()">
+      <mat-icon>add</mat-icon>
+      {{ 'residents.buttons.add' | translate }}
+    </button>
+  </div>
+</app-layout-nursing-home>

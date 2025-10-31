@@ -2,7 +2,7 @@
  * Represents a resident with personal, medical, mobility, contact, and legal information.
  * This class encapsulates all relevant data for managing residents in a care or facility system.
  */
-export class Residents {
+export class Resident {
   // Basic Information
   private _id: number;
   private _state: string;
@@ -51,7 +51,7 @@ export class Residents {
   private _legalGuardian?: string;
   private _guardianPhone?: string;
 
-  constructor(residents: {
+  constructor(resident: {
     id: number;
     state: string;
     name: string;
@@ -94,54 +94,54 @@ export class Residents {
     legalGuardian?: string;
     guardianPhone?: string;
   }) {
-    this._id = residents.id;
-    this._state = residents.state;
-    this._name = residents.name;
-    this._lastname = residents.lastname;
-    this._dni = residents.dni;
-    this._birthDate = residents.birthDate;
-    this._age = this.calculateAge(residents.birthDate);
-    this._phoneNumber = residents.phoneNumber;
-    this._email = residents.email;
-    this._bloodType = residents.bloodType;
-    this._room = residents.room;
-    this._image = residents.image;
+    this._id = resident.id;
+    this._state = resident.state;
+    this._name = resident.name;
+    this._lastname = resident.lastname;
+    this._dni = resident.dni;
+    this._birthDate = resident.birthDate;
+    this._age = this.calculateAge(resident.birthDate);
+    this._phoneNumber = resident.phoneNumber;
+    this._email = resident.email;
+    this._bloodType = resident.bloodType;
+    this._room = resident.room;
+    this._image = resident.image;
 
     // Medical information
-    this._allergies = residents.allergies;
-    this._chronicDiseases = residents.chronicDiseases;
-    this._currentMedications = residents.currentMedications;
-    this._specialDiet = residents.specialDiet;
+    this._allergies = resident.allergies;
+    this._chronicDiseases = resident.chronicDiseases;
+    this._currentMedications = resident.currentMedications;
+    this._specialDiet = resident.specialDiet;
 
     // Mobility and dependency
-    this._mobilityLevel = residents.mobilityLevel;
-    this._dependencyLevel = residents.dependencyLevel;
-    this._needsBathingAssistance = residents.needsBathingAssistance;
-    this._needsFeedingAssistance = residents.needsFeedingAssistance;
-    this._needsDressingAssistance = residents.needsDressingAssistance;
+    this._mobilityLevel = resident.mobilityLevel;
+    this._dependencyLevel = resident.dependencyLevel;
+    this._needsBathingAssistance = resident.needsBathingAssistance;
+    this._needsFeedingAssistance = resident.needsFeedingAssistance;
+    this._needsDressingAssistance = resident.needsDressingAssistance;
 
     // Emergency contacts
-    this._emergencyContactName = residents.emergencyContactName;
-    this._emergencyPhone = residents.emergencyPhone;
-    this._contactRelation = residents.contactRelation;
-    this._secondaryContact = residents.secondaryContact;
-    this._secondaryPhone = residents.secondaryPhone;
+    this._emergencyContactName = resident.emergencyContactName;
+    this._emergencyPhone = resident.emergencyPhone;
+    this._contactRelation = resident.contactRelation;
+    this._secondaryContact = resident.secondaryContact;
+    this._secondaryPhone = resident.secondaryPhone;
 
     // Administrative
-    this._admissionDate = residents.admissionDate;
-    this._attendingPhysician = residents.attendingPhysician;
-    this._medicalInsurance = residents.medicalInsurance;
-    this._socialSecurityNumber = residents.socialSecurityNumber;
+    this._admissionDate = resident.admissionDate;
+    this._attendingPhysician = resident.attendingPhysician;
+    this._medicalInsurance = resident.medicalInsurance;
+    this._socialSecurityNumber = resident.socialSecurityNumber;
 
     // Legal
-    this._legalGuardian = residents.legalGuardian;
-    this._guardianPhone = residents.guardianPhone;
+    this._legalGuardian = resident.legalGuardian;
+    this._guardianPhone = resident.guardianPhone;
   }
 
   /**
-   * Calculates the current age based on birth date.
+   * Calculates the current age of the resident based on birthdate.
    * @private
-   * @param {Date} birthDate - The resident's birth date.
+   * @param {Date} birthDate - The resident's birthdate.
    * @returns {number} Calculated age.
    */
   private calculateAge(birthDate: Date): number {

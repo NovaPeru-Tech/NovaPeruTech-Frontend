@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BaseApi } from '../../shared/infrastructure/base-api';
 import { HttpClient } from '@angular/common/http';
-import { ResidentApiEndpoint } from './resident-api-endpoint';
-import { Residents } from '../domain/model/residents.entity';
+import { ResidentsApiEndpoint } from './residents-api-endpoint';
+import { Resident } from '../domain/model/resident.entity';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,8 +12,8 @@ import { Observable } from 'rxjs';
  * Service class to handle Resident API operations.
  * Provides CRUD methods for managing residents through HTTP requests.
  */
-export class ResidentApi extends BaseApi {
-  private readonly _residentsApiEndPoint: ResidentApiEndpoint;
+export class ResidentsApi extends BaseApi {
+  private readonly _residentsApiEndPoint: ResidentsApiEndpoint;
 
   /**
    * Initializes the Resident API service with the required HTTP client.
@@ -21,7 +21,7 @@ export class ResidentApi extends BaseApi {
    */
   constructor(http: HttpClient) {
     super();
-    this._residentsApiEndPoint = new ResidentApiEndpoint(http);
+    this._residentsApiEndPoint = new ResidentsApiEndpoint(http);
   }
 
   /**
@@ -29,7 +29,7 @@ export class ResidentApi extends BaseApi {
    * @param resident - Resident entity to be created.
    * @returns Observable with the created resident.
    */
-  createResident(resident: Residents): Observable<Residents> {
+  createResident(resident: Resident): Observable<Resident> {
     return this._residentsApiEndPoint.create(resident);
   }
 
@@ -38,7 +38,7 @@ export class ResidentApi extends BaseApi {
    * @param Resident - Resident entity with updated information.
    * @returns Observable with the updated resident.
    */
-  updateResident(Resident: Residents): Observable<Residents> {
+  updateResident(Resident: Resident): Observable<Resident> {
     return this._residentsApiEndPoint.update(Resident, Resident.id);
   }
 

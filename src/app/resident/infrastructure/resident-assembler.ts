@@ -1,18 +1,18 @@
 import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
-import { ResidentResource, ResidentResponse } from './resident-response';
-import { Residents } from '../domain/model/residents.entity';
+import { ResidentsResource, ResidentsResponse } from './residents-response';
+import { Resident } from '../domain/model/resident.entity';
 
 /**
  * Handles the transformation between Resident entities and API resources/responses.
  */
-export class ResidentAssembler implements BaseAssembler<Residents, ResidentResource, ResidentResponse> {
+export class ResidentAssembler implements BaseAssembler<Resident, ResidentsResource, ResidentsResponse> {
 
   /**
-   * Converts a ResidentResponse to a list of Resident entities.
+   * Converts a ResidentsResponse to a list of Resident entities.
    * @param response - API response containing resident data.
    * @returns List of Resident entities.
    */
-  toEntitiesFromResponse(response: ResidentResponse): Residents[] {
+  toEntitiesFromResponse(response: ResidentsResponse): Resident[] {
     return response.resident.map(resident => this.toEntityFromResource(resident));
   }
 
@@ -21,8 +21,8 @@ export class ResidentAssembler implements BaseAssembler<Residents, ResidentResou
    * @param resource - Resource object from API.
    * @returns Resident entity.
    */
-  toEntityFromResource(resource: ResidentResource): Residents {
-    return new Residents({
+  toEntityFromResource(resource: ResidentsResource): Resident {
+    return new Resident({
       id: resource.id,
       state: resource.state,
       name: resource.name,
@@ -68,7 +68,7 @@ export class ResidentAssembler implements BaseAssembler<Residents, ResidentResou
    * @param entity - Resident entity.
    * @returns Resident resource object.
    */
-  toResourceFromEntity(entity: Residents): ResidentResource {
+  toResourceFromEntity(entity: Resident): ResidentsResource {
     return {
       // Basic Information
       id: entity.id,
@@ -110,6 +110,6 @@ export class ResidentAssembler implements BaseAssembler<Residents, ResidentResou
       // Legal Info
       legalGuardian: entity.legalGuardian,
       guardianPhone: entity.guardianPhone,
-    } as ResidentResource;
+    } as ResidentsResource;
   }
 }

@@ -1,0 +1,573 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ (isEdit? 'residents.form.edit-title': 'residents.form.new-title') | translate }}</h1>
+
+  <div class="form-wrapper">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="resident-form">
+      <mat-card class="header-card">
+        <div class="form-row">
+        <!-- Photo Upload -->
+        <div class="image-upload-section">
+          <label class="image-label">
+            {{ 'residents.image' | translate }}
+            <span class="required">*</span>
+          </label>
+
+          <div class="image-upload-container">
+            @if (!imagePreview) {
+              <div class="upload-placeholder">
+                <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none">
+                <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">
+                  <mat-icon>add_photo_alternate</mat-icon>
+                  {{ 'residents.form.select-image' | translate }}
+                </button>
+                <p class="upload-hint">JPG, PNG - {{ 'residents.form.max-size' | translate }}</p>
+              </div>
+            } @else {
+              <div class="image-preview-container">
+                <img [src]="imagePreview" alt="Preview" class="image-preview">
+                <button mat-icon-button color="warn" type="button" class="remove-image-btn" (click)="removeImage()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            }
+          </div>
+
+          @if (form.get('image')?.touched && form.get('image')!.hasError('required')) {
+            <mat-error class="image-error">
+              {{ 'residents.error.image-required' | translate }}
+            </mat-error>
+          }
+        </div>
+        <div class="row">
+          <mat-form-field>
+            <mat-label>{{ 'residents.first-name' | translate }}</mat-label>
+            <input matInput formControlName="name" required>
+            @if (form.get('name')?.touched && form.get('name')!.hasError('required')) {
+              <mat-error>{{ 'residents.error.name-required' | translate }}</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{ 'residents.last-name' | translate }}</mat-label>
+            <input matInput formControlName="lastname" required>
+            @if (form.get('lastname')?.touched && form.get('lastname')!.hasError('required')) {
+              <mat-error>{{ 'residents.error.last-name-required' | translate }}</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'residents.state' | translate }}</mat-label>
+            <mat-select formControlName="state" required>
+              @for (status of stateOptions; track status) {
+                <mat-option [value]="status">{{ status }}</mat-option>
+              }
+            </mat-select>
+            @if (form.get('state')?.touched && form.get('state')!.hasError('required')) {
+              <mat-error>{{ 'residents.error.state-required' | translate }}</mat-error>
+            }
+          </mat-form-field>
+        </div>
+          </div>
+      </mat-card>
+      <!-- Basic Information Section -->
+      <div class="section-divider">
+        <mat-icon>person</mat-icon>
+        <span>{{ 'residents.basic-info' | translate }}</span>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper personal">
+              <mat-icon>person</mat-icon>
+            </div>
+            <h3>{{ 'residents.personal-info' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <mat-form-field>
+                <mat-label>{{ 'dni' | translate }}</mat-label>
+                <input matInput formControlName="dni" required>
+                @if (form.get('dni')?.touched && form.get('dni')!.hasError('required')) {
+                  <mat-error>{{ 'residents.error.dni-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row">
+              <div class="calendar-section">
+                <label class="section-label">
+                  {{ 'residents.birthdate' | translate }}
+                  <span class="required">*</span>
+                </label>
+
+                <mat-calendar
+                  [selected]="form.value.birthDate"
+                  (selectedChange)="onBirthDateSelected($event)"
+                  [maxDate]="maxDate"
+                  [startAt]="startDate">
+                </mat-calendar>
+
+                @if (form.value.birthDate) {
+                  <div class="selected-date">
+                    <mat-icon>event</mat-icon>
+                    <span>{{ form.value.birthDate | date:'dd/MM/yyyy' }}</span>
+                  </div>
+                }
+
+                @if (form.get('birthDate')?.touched && form.get('birthDate')!.hasError('required')) {
+                  <mat-error>{{ 'residents.error.birthdate-required' | translate }}</mat-error>
+                }
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.blood-type' | translate }}</mat-label>
+                <mat-select formControlName="bloodType" required>
+                  @for (type of bloodTypes; track type) {
+                    <mat-option [value]="type">{{ type }}</mat-option>
+                  }
+                </mat-select>
+                @if (form.get('bloodType')?.touched && form.get('bloodType')!.hasError('required')) {
+                  <mat-error>{{ 'residents.error.blood-type-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper contact">
+              <mat-icon>contact_phone</mat-icon>
+            </div>
+            <h3>{{ 'residents.contact' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.phone' | translate }}</mat-label>
+                <input matInput formControlName="phoneNumber" required>
+                @if (form.get('phoneNumber')?.touched && form.get('phoneNumber')!.hasError('required')) {
+                  <mat-error>{{ 'residents.error.phone-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.email' | translate }}</mat-label>
+                <input matInput type="email" formControlName="email" required>
+                @if (form.get('email')?.touched && form.get('email')!.hasError('required')) {
+                  <mat-error>{{ 'residents.error.email-required' | translate }}</mat-error>
+                }
+                @if (form.get('email')?.touched && form.get('email')!.hasError('email')) {
+                  <mat-error>{{ 'residents.error.email-invalid' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper location">
+              <mat-icon>meeting_room</mat-icon>
+            </div>
+            <h3>{{ 'residents.location' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.room' | translate }}</mat-label>
+                <input matInput formControlName="room" required>
+                @if (form.get('room')?.touched && form.get('room')!.hasError('required')) {
+                  <mat-error>{{ 'residents.error.room-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+        </mat-card>
+      </div>
+
+      <!-- Medical Information Section -->
+      <div class="section-divider">
+        <mat-icon>medical_services</mat-icon>
+        <span>{{ 'residents.medical-info' | translate }}</span>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper medical">
+              <mat-icon>healing</mat-icon>
+            </div>
+            <h3>{{ 'residents.allergies' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field>
+              <mat-label>{{ 'residents.allergies' | translate }}</mat-label>
+              <textarea matInput formControlName="allergies" rows="2"
+                        placeholder="{{ 'residents.form.allergies-placeholder' | translate }}"></textarea>
+              <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+            </mat-form-field>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper medical">
+              <mat-icon>medication</mat-icon>
+            </div>
+            <h3>{{ 'residents.current-medications' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field>
+              <mat-label>{{ 'residents.current-medications' | translate }}</mat-label>
+              <textarea matInput formControlName="currentMedications" rows="3"
+                        placeholder="{{ 'residents.form.medications-placeholder' | translate }}"></textarea>
+              <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+            </mat-form-field>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper medical">
+              <mat-icon>restaurant</mat-icon>
+            </div>
+            <h3>{{ 'residents.special-diet' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field>
+              <mat-label>{{ 'residents.special-diet' | translate }}</mat-label>
+              <input matInput formControlName="specialDiet" placeholder="{{ 'residents.form.diet-placeholder' | translate }}">
+              <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+            </mat-form-field>
+          </div>
+        </mat-card>
+      </div>
+
+      <mat-card class="full-width-card">
+        <div class="card-header-custom">
+          <div class="icon-wrapper medical">
+            <mat-icon>local_hospital</mat-icon>
+          </div>
+          <h3>{{ 'residents.chronic-diseases' | translate }}</h3>
+        </div>
+        <div class="card-body">
+          <mat-form-field>
+            <mat-label>{{ 'residents.chronic-diseases' | translate }}</mat-label>
+            <mat-chip-grid #chipGrid>
+              @for (disease of form.value.chronicDiseases; track disease) {
+                <mat-chip-row (removed)="removeChronicDisease(disease)">
+                  {{ disease }}
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip-row>
+              }
+              <input placeholder="{{ 'residents.form.add-disease' | translate }}"
+                     [matChipInputFor]="chipGrid"
+                     (matChipInputTokenEnd)="addChronicDisease($event)">
+            </mat-chip-grid>
+            <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+          </mat-form-field>
+        </div>
+      </mat-card>
+
+      <!-- Mobility and Dependency Section -->
+      <div class="section-divider">
+        <mat-icon>accessible</mat-icon>
+        <span>{{ 'residents.mobility-dependency' | translate }}</span>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper mobility">
+              <mat-icon>directions_walk</mat-icon>
+            </div>
+            <h3>{{ 'residents.mobility-level' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field>
+              <mat-label>{{ 'residents.mobility-level' | translate }}</mat-label>
+              <mat-select formControlName="mobilityLevel" required>
+                @for (level of mobilityLevels; track level) {
+                  <mat-option [value]="level">{{ level }}</mat-option>
+                }
+              </mat-select>
+              @if (form.get('mobilityLevel')?.touched && form.get('mobilityLevel')!.hasError('required')) {
+                <mat-error>{{ 'residents.error.mobility-level-required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper mobility">
+              <mat-icon>supervised_user_circle</mat-icon>
+            </div>
+            <h3>{{ 'residents.dependency-level' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field>
+              <mat-label>{{ 'residents.dependency-level' | translate }}</mat-label>
+              <mat-select formControlName="dependencyLevel" required>
+                @for (level of dependencyLevels; track level) {
+                  <mat-option [value]="level">{{ level }}</mat-option>
+                }
+              </mat-select>
+              @if (form.get('dependencyLevel')?.touched && form.get('dependencyLevel')!.hasError('required')) {
+                <mat-error>{{ 'residents.error.dependency-level-required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper mobility">
+              <mat-icon>supervised_user_circle</mat-icon>
+            </div>
+            <h3>{{ 'residents.assistance-needs' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="checkboxes-section">
+              <label class="checkbox-title">{{ 'residents.form.needs-assistance' | translate }}:</label>
+              <mat-checkbox formControlName="needsBathingAssistance">
+                {{ 'residents.bathing-assistance' | translate }}
+              </mat-checkbox>
+              <mat-checkbox formControlName="needsFeedingAssistance">
+                {{ 'residents.feeding-assistance' | translate }}
+              </mat-checkbox>
+              <mat-checkbox formControlName="needsDressingAssistance">
+                {{ 'residents.dressing-assistance' | translate }}
+              </mat-checkbox>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <!-- Emergency Contacts Section -->
+      <div class="section-divider">
+        <mat-icon>emergency</mat-icon>
+        <span>{{ 'residents.emergency-contacts' | translate }}</span>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper emergency">
+              <mat-icon>contact_emergency</mat-icon>
+            </div>
+            <h3>{{ 'residents.main-contact' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.emergency-contact-name' | translate }}</mat-label>
+                <input matInput formControlName="emergencyContactName" required>
+                @if (form.get('emergencyContactName')?.touched && form.get('emergencyContactName')!.hasError('required')) {
+                  <mat-error>{{ 'residents.error.emergency-contact-name-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.emergency-phone' | translate }}</mat-label>
+                <input matInput formControlName="emergencyPhone" required>
+                @if (form.get('emergencyPhone')?.touched && form.get('emergencyPhone')!.hasError('required')) {
+                  <mat-error>{{ 'residents.error.emergency-phone-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.contact-relation' | translate }}</mat-label>
+                <mat-select formControlName="contactRelation" required>
+                  @for (relation of contactRelations; track relation) {
+                    <mat-option [value]="relation">{{ relation }}</mat-option>
+                  }
+                </mat-select>
+                @if (form.get('contactRelation')?.touched && form.get('contactRelation')!.hasError('required')) {
+                  <mat-error>{{ 'residents.error.contact-relation-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper emergency">
+              <mat-icon>contact_phone</mat-icon>
+            </div>
+            <h3>{{ 'residents.secondary-contact' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.secondary-contact' | translate }}</mat-label>
+                <input matInput formControlName="secondaryContact">
+                <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.secondary-phone' | translate }}</mat-label>
+                <input matInput formControlName="secondaryPhone">
+                <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <!-- Administrative Information Section -->
+      <div class="section-divider">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>{{ 'residents.administrative-info' | translate }}</span>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper admin">
+              <mat-icon>event</mat-icon>
+            </div>
+            <h3>{{ 'residents.dates' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="calendar-section">
+              <label class="section-label">
+                {{ 'residents.admission-date' | translate }}
+                <span class="required">*</span>
+              </label>
+
+              <mat-calendar
+                [selected]="form.value.admissionDate"
+                (selectedChange)="onAdmissionDateSelected($event)"
+                [minDate]="minAdmissionDate">
+              </mat-calendar>
+
+              @if (form.value.admissionDate) {
+                <div class="selected-date">
+                  <mat-icon>event</mat-icon>
+                  <span>{{ form.value.admissionDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+              }
+
+              @if (form.get('admissionDate')?.touched && form.get('admissionDate')!.hasError('required')) {
+                <mat-error>{{ 'residents.error.admission-date-required' | translate }}</mat-error>
+              }
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper admin">
+              <mat-icon>medical_information</mat-icon>
+            </div>
+            <h3>{{ 'residents.attending-physician' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field>
+              <mat-label>{{ 'residents.attending-physician' | translate }}</mat-label>
+              <input matInput formControlName="attendingPhysician" required>
+              @if (form.get('attendingPhysician')?.touched && form.get('attendingPhysician')!.hasError('required')) {
+                <mat-error>{{ 'residents.error.attending-physician-required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper admin">
+              <mat-icon>health_and_safety</mat-icon>
+            </div>
+            <h3>{{ 'residents.medical-insurance' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field>
+              <mat-label>{{ 'residents.medical-insurance' | translate }}</mat-label>
+              <input matInput formControlName="medicalInsurance">
+              <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+            </mat-form-field>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper admin">
+              <mat-icon>security</mat-icon>
+            </div>
+            <h3>{{ 'residents.social-security' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field>
+              <mat-label>{{ 'residents.social-security-number' | translate }}</mat-label>
+              <input matInput formControlName="socialSecurityNumber">
+              <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+            </mat-form-field>
+          </div>
+        </mat-card>
+      </div>
+
+      <!-- Legal Information Section -->
+      <div class="section-divider">
+        <mat-icon>gavel</mat-icon>
+        <span>{{ 'residents.legal-info' | translate }}</span>
+      </div>
+
+      <mat-card class="full-width-card">
+        <div class="card-header-custom">
+          <div class="icon-wrapper legal">
+            <mat-icon>account_balance</mat-icon>
+          </div>
+          <h3>{{ 'residents.legal-guardian' | translate }}</h3>
+        </div>
+        <div class="card-body">
+          <div class="info-grid-inline">
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.legal-guardian' | translate }}</mat-label>
+                <input matInput formControlName="legalGuardian">
+                <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+              </mat-form-field>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'residents.guardian-phone' | translate }}</mat-label>
+                <input matInput formControlName="guardianPhone">
+                <mat-hint>{{ 'residents.form.optional' | translate }}</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+      <div class="space"></div>
+
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" type="button" (click)="onCancel()">
+          <mat-icon>cancel</mat-icon>
+          {{ 'residents.buttons.cancel' | translate }}
+        </button>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+          <mat-icon>save</mat-icon>
+          {{ (isEdit? 'residents.buttons.update' : 'residents.buttons.register') | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout-nursing-home>

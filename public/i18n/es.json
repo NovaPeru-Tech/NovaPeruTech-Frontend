@@ -7,13 +7,11 @@
     "employee": "Empleados",
     "care-management": "Gestión de la atención"
   },
-
   "page-not-found": {
     "title": "Página no encontrada",
     "content": "La ruta <strong>{{ invalid_path }}</strong> no existe.",
     "go-home": "Ir al inicio"
   },
-
   "toolbar": {
     "logoAlt": "logo"
   },
@@ -30,7 +28,6 @@
     "administrator": "Administrador",
     "family": "Familia"
   },
-
   "nursingHome": {
     "new": {
       "title": "Registrar Residencia"
@@ -54,56 +51,6 @@
       "description-required": "La descripción es requerida"
     }
   },
-
-  "resident": {
-    "new": {
-      "title": "Nuevo Residente"
-    },
-    "edit": {
-      "title": "Editar Residente"
-    },
-    "basic-info": "Información Básica",
-    "medical-info": "Información Médica",
-    "mobility-dependency": "Movilidad y Dependencia",
-    "emergency-contacts": "Contactos de Emergencia",
-    "administrative-info": "Información Administrativa",
-    "legal-info": "Información Legal",
-    "register": "Registrar Residente",
-    "update": "Actualizar",
-    "cancel": "Cancelar",
-    "select-image": "Seleccionar Imagen",
-    "max-size": "Máximo 5MB",
-    "optional": "Opcional",
-    "allergies-placeholder": "Ejemplo: Penicilina, polen, mariscos...",
-    "add-disease": "Agregar enfermedad",
-    "medications-placeholder": "Ejemplo: Metformina, Gabapentina, Paracetamol...",
-    "diet-placeholder": "Ejemplo: Sin sal, diabética, vegetariana...",
-    "needs-assistance": "Necesita asistencia para",
-    "bathing-assistance": "Baño",
-    "feeding-assistance": "Alimentación",
-    "dressing-assistance": "Vestimenta",
-    "error": {
-      "state-required": "El estado es requerido",
-      "name-required": "El nombre es requerido",
-      "lastname-required": "El apellido es requerido",
-      "dni-required": "El DNI es requerido",
-      "birthDate-required": "La fecha de nacimiento es requerida",
-      "room-required": "La habitación es requerida",
-      "image-required": "La imagen es requerida",
-      "phoneNumber-required": "El teléfono es requerido",
-      "email-required": "El email es requerido",
-      "email-invalid": "Email inválido",
-      "bloodType-required": "El tipo de sangre es requerido",
-      "mobilityLevel-required": "El nivel de movilidad es requerido",
-      "dependencyLevel-required": "El nivel de dependencia es requerido",
-      "emergencyContactName-required": "El nombre del contacto de emergencia es requerido",
-      "emergencyPhone-required": "El teléfono de emergencia es requerido",
-      "contactRelation-required": "La relación del contacto es requerida",
-      "admissionDate-required": "La fecha de admisión es requerida",
-      "attendingPhysician-required": "El médico tratante es requerido"
-    }
-  },
-
   "staff": {
     "list-title": "Lista de Empleados",
     "lastName": "Apellido",
@@ -163,7 +110,6 @@
       "emergencyContactPhone-required": "El teléfono de emergencia es requerido"
     }
   },
-
   "state": "Estado",
   "name": "Nombre",
   "lastname": "Apellido",
@@ -204,19 +150,6 @@
   "emergencyContactPhone": "Teléfono de Contacto de Emergencia",
   "add": "Agregar",
   "cancel": "Cancelar",
-
-  "residents": {
-    "list-title": "Lista de Residentes",
-    "lastName": "Apellido",
-    "firstName": "Nombre",
-    "dni": "DNI",
-    "details": "Ver Detalles",
-    "edit": "Editar",
-    "delete": "Eliminar",
-    "add": "Agregar Nuevo",
-    "no-residents": "No hay residentes registrados."
-  },
-
   "medication": {
     "new": {
       "title": "Nuevo Medicamento"
@@ -229,7 +162,6 @@
     "batch-supplier-info": "Información de Lote y Proveedor",
     "storage-info": "Información de Almacenamiento",
     "additional-info": "Información Adicional",
-
     "name": "Nombre del Medicamento",
     "image": "Imagen",
     "type": "Tipo",
@@ -253,13 +185,11 @@
     "storageConditions": "Condiciones de Almacenamiento",
     "contraindications": "Contraindicaciones",
     "specialNotes": "Notas Especiales",
-
     "special-requirements": "Requisitos Especiales",
     "add-storage-condition": "Agregar condición",
     "add-contraindication": "Agregar contraindicación",
     "storage-conditions-hint": "Ej: Mantener en lugar fresco, Proteger de la luz",
     "specialNotes-placeholder": "Ej: Agitar antes de usar, Mantener fuera del alcance de los niños...",
-
     "register": "Registrar Medicamento",
     "update": "Actualizar Medicamento",
     "cancel": "Cancelar",
@@ -268,7 +198,6 @@
     "max-size": "Máximo 5MB",
     "optional": "Opcional",
     "loading": "Cargando medicamento...",
-
     "stock-status": "Estado de Stock",
     "expiration": "Vencimiento",
     "total-value": "Valor Total",
@@ -285,7 +214,6 @@
     "technical-details": "Detalles Técnicos",
     "back-to-list": "Volver a la Lista",
     "edit-medication": "Editar Medicamento",
-
     "error": {
       "name-required": "El nombre es requerido",
       "type-required": "El tipo es requerido",
@@ -306,7 +234,6 @@
       "administrationRoute-required": "La vía de administración es requerida"
     }
   },
-
   "medications": {
     "list-title": "Lista de Medicamentos",
     "name": "Nombre",
@@ -322,5 +249,111 @@
     "delete": "Eliminar",
     "add": "Agregar Nuevo",
     "no-medications": "No hay medicamentos registrados."
+  },
+  "residents": {
+    "loading": "Cargando información...",
+    "list": {
+      "title": "Residentes"
+    },
+    "detail": {
+      "title": "Detalles del residente"
+    },
+    "medical-history": "Historial médico",
+    "medical-history-desc": "Accede al historial médico completo con diagnósticos, tratamientos y notas clínicas del residente.",
+    "basic-info": "Información básica",
+    "personal-info": "Información personal",
+    "medical-info": "Información médica",
+    "mobility-dependency": "Movilidad y dependencia",
+    "administrative-info": "Información administrativa",
+    "legal-info": "Información legal",
+    "contact": "Contacto",
+    "location": "Ubicación",
+    "dates": "Fechas",
+    "assistance-needs": "Necesidades de asistencia",
+    "first-name": "Nombre",
+    "last-name": "Apellido",
+    "dni": "DNI",
+    "image": "Imagen",
+    "birthdate": "Fecha de nacimiento",
+    "blood-type": "Tipo de sangre",
+    "phone": "Teléfono",
+    "email": "Correo electrónico",
+    "room": "Habitación",
+    "state": "Estado",
+    "admission-date": "Fecha de ingreso",
+    "allergies": "Alergias",
+    "no-allergies": "No hay alergias registradas",
+    "chronic-diseases": "Enfermedades crónicas",
+    "current-medications": "Medicamentos actuales",
+    "no-medications": "No hay medicamentos registrados",
+    "special-diet": "Dieta especial",
+    "normal-diet": "Dieta normal",
+    "attending-physician": "Médico tratante",
+    "medical-insurance": "Seguro médico",
+    "social-security-number": "Número de seguro social",
+    "legal-guardian": "Tutor legal",
+    "guardian-phone": "Teléfono del tutor",
+    "mobility-level": "Nivel de movilidad",
+    "dependency-level": "Nivel de dependencia",
+    "bathing-assistance": "Baño",
+    "feeding-assistance": "Alimentación",
+    "dressing-assistance": "Vestimenta",
+    "emergency-contacts": "Contactos de emergencia",
+    "emergency-contact-name": "Nombre del contacto de emergencia",
+    "emergency-phone": "Teléfono de emergencia",
+    "contact-relation": "Relación",
+    "main-contact": "Contacto principal",
+    "secondary-contact": "Contacto secundario",
+    "secondary-name": "Nombre del contacto secundario",
+    "secondary-phone": "Teléfono secundario",
+    "form": {
+      "new-title": "Nuevo residente",
+      "edit-title": "Editar residente",
+      "select-image": "Seleccionar imagen",
+      "max-size": "Máximo 5 MB",
+      "optional": "Opcional",
+      "allergies-placeholder": "Ejemplo: Penicilina, polen, mariscos...",
+      "add-disease": "Agregar enfermedad",
+      "medications-placeholder": "Ejemplo: Metformina, Gabapentina, Paracetamol...",
+      "diet-placeholder": "Ejemplo: Baja en sodio, diabética, vegetariana...",
+      "needs-assistance": "Necesita ayuda con",
+      "emergency-contact-name": "Nombre del contacto de emergencia"
+    },
+    "buttons": {
+      "add": "Agregar nuevo",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "details": "Ver detalles",
+      "edit": "Editar",
+      "go-back": "Volver",
+      "register": "Registrar residente",
+      "search": "Buscar",
+      "search-info": "Ingrese el nombre o apellido del residente",
+      "update": "Actualizar residente",
+      "return-list": "Volver a la lista"
+    },
+    "error": {
+      "no-residents": "No hay residentes registrados.",
+      "admission-date-required": "La fecha de ingreso es obligatoria",
+      "attending-physician-required": "El médico tratante es obligatorio",
+      "birthdate-required": "La fecha de nacimiento es obligatoria",
+      "blood-type-required": "El tipo de sangre es obligatorio",
+      "contact-relation-required": "La relación del contacto es obligatoria",
+      "dependency-level-required": "El nivel de dependencia es obligatorio",
+      "dni-required": "El DNI es obligatorio",
+      "email-invalid": "Correo electrónico inválido",
+      "email-required": "El correo electrónico es obligatorio",
+      "emergency-contact-name-required": "El nombre del contacto de emergencia es obligatorio",
+      "emergency-phone-required": "El teléfono de emergencia es obligatorio",
+      "image-required": "La imagen es obligatoria",
+      "last-name-required": "El apellido es obligatorio",
+      "mobility-level-required": "El nivel de movilidad es obligatorio",
+      "name-required": "El nombre es obligatorio",
+      "phone-required": "El teléfono es obligatorio",
+      "room-required": "La habitación es obligatoria",
+      "state-required": "El estado es obligatorio",
+      "not-found-title": "Residente no encontrado",
+      "not-found-message": "No se pudo encontrar la información del residente solicitado."
+    }
   }
 }

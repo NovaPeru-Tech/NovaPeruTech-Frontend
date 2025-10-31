@@ -3,7 +3,7 @@ import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-res
 /**
  * Resident detailed information including personal, medical, and contact data.
  */
-export interface ResidentResource extends BaseResource {
+export interface ResidentsResource extends BaseResource {
   id: number; // Unique resident ID
   state: string; // Current status
   name: string; // First name
@@ -45,6 +45,6 @@ export interface ResidentResource extends BaseResource {
 /**
  * API response containing a list of residents.
  */
-export interface ResidentResponse extends BaseResponse {
-  resident: ResidentResource[]; // Resident list
+export interface ResidentsResponse extends BaseResponse {
+  resident: ResidentsResource[]; // Resident list
 }

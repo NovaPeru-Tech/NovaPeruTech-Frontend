@@ -7,13 +7,11 @@
     "employee": "Employees",
     "care-management": "Care Management"
   },
-
   "page-not-found": {
     "title": "Page not found",
     "content": "The path <strong>{{ invalid_path }}</strong> does not exist.",
     "go-home": "Go Home"
   },
-
   "toolbar": {
     "logoAlt": "logo"
   },
@@ -30,7 +28,6 @@
     "administrator": "Administrator",
     "family": "Family"
   },
-
   "nursingHome": {
     "new": {
       "title": "Register Nursing Home"
@@ -54,56 +51,6 @@
       "description-required": "Description is required"
     }
   },
-
-  "resident": {
-    "new": {
-      "title": "New Resident"
-    },
-    "edit": {
-      "title": "Edit Resident"
-    },
-    "basic-info": "Basic Information",
-    "medical-info": "Medical Information",
-    "mobility-dependency": "Mobility and Dependency",
-    "emergency-contacts": "Emergency Contacts",
-    "administrative-info": "Administrative Information",
-    "legal-info": "Legal Information",
-    "register": "Register Resident",
-    "update": "Update",
-    "cancel": "Cancel",
-    "select-image": "Select Image",
-    "max-size": "Maximum 5MB",
-    "optional": "Optional",
-    "allergies-placeholder": "Example: Penicillin, pollen, seafood...",
-    "add-disease": "Add disease",
-    "medications-placeholder": "Example: Metformin, Gabapentin, Paracetamol...",
-    "diet-placeholder": "Example: Low sodium, diabetic, vegetarian...",
-    "needs-assistance": "Needs assistance with",
-    "bathing-assistance": "Bathing",
-    "feeding-assistance": "Feeding",
-    "dressing-assistance": "Dressing",
-    "error": {
-      "state-required": "State is required",
-      "name-required": "Name is required",
-      "lastname-required": "Last name is required",
-      "dni-required": "ID number is required",
-      "birthDate-required": "Birth date is required",
-      "room-required": "Room is required",
-      "image-required": "Image is required",
-      "phoneNumber-required": "Phone is required",
-      "email-required": "Email is required",
-      "email-invalid": "Invalid email",
-      "bloodType-required": "Blood type is required",
-      "mobilityLevel-required": "Mobility level is required",
-      "dependencyLevel-required": "Dependency level is required",
-      "emergencyContactName-required": "Emergency contact name is required",
-      "emergencyPhone-required": "Emergency phone is required",
-      "contactRelation-required": "Contact relation is required",
-      "admissionDate-required": "Admission date is required",
-      "attendingPhysician-required": "Attending physician is required"
-    }
-  },
-
   "staff": {
     "list-title": "Staff List",
     "lastName": "Last Name",
@@ -163,7 +110,6 @@
       "emergencyContactPhone-required": "Emergency phone is required"
     }
   },
-
   "state": "State",
   "name": "Name",
   "lastname": "Last Name",
@@ -204,19 +150,6 @@
   "emergencyContactPhone": "Emergency Contact Phone",
   "add": "Add",
   "cancel": "Cancel",
-
-  "residents": {
-    "list-title": "Residents List",
-    "lastName": "Last Name",
-    "firstName": "First Name",
-    "dni": "ID",
-    "details": "View Details",
-    "edit": "Edit",
-    "delete": "Delete",
-    "add": "Add New",
-    "no-residents": "No residents registered."
-  },
-
   "medication": {
     "new": {
       "title": "New Medication"
@@ -229,7 +162,6 @@
     "batch-supplier-info": "Batch and Supplier Information",
     "storage-info": "Storage Information",
     "additional-info": "Additional Information",
-
     "name": "Medication Name",
     "image": "Image",
     "type": "Type",
@@ -253,13 +185,11 @@
     "storageConditions": "Storage Conditions",
     "contraindications": "Contraindications",
     "specialNotes": "Special Notes",
-
     "special-requirements": "Special Requirements",
     "add-storage-condition": "Add condition",
     "add-contraindication": "Add contraindication",
     "storage-conditions-hint": "E.g.: Keep in cool place, Protect from light",
     "specialNotes-placeholder": "E.g.: Shake before use, Keep out of reach of children...",
-
     "register": "Register Medication",
     "update": "Update Medication",
     "cancel": "Cancel",
@@ -268,7 +198,6 @@
     "max-size": "Maximum 5MB",
     "optional": "Optional",
     "loading": "Loading medication...",
-
     "stock-status": "Stock Status",
     "expiration": "Expiration",
     "total-value": "Total Value",
@@ -285,7 +214,6 @@
     "technical-details": "Technical Details",
     "back-to-list": "Back to List",
     "edit-medication": "Edit Medication",
-
     "error": {
       "name-required": "Name is required",
       "type-required": "Type is required",
@@ -306,7 +234,6 @@
       "administrationRoute-required": "Administration route is required"
     }
   },
-
   "medications": {
     "list-title": "Medications List",
     "name": "Name",
@@ -322,5 +249,110 @@
     "delete": "Delete",
     "add": "Add New",
     "no-medications": "No medications registered."
+  },
+  "residents": {
+    "loading": "Loading information...",
+    "list": {
+      "title": "Residents"
+    },
+    "detail": {
+      "title": "Resident Details"
+    },
+    "medical-history": "Medical Records",
+    "medical-history-desc": "Access the full medical history with diagnoses, treatments, and clinical notes of the resident.",
+    "basic-info": "Basic Information",
+    "personal-info": "Personal Information",
+    "medical-info": "Medical Information",
+    "mobility-dependency": "Mobility and Dependency",
+    "administrative-info": "Administrative Information",
+    "legal-info": "Legal Information",
+    "contact": "Contact",
+    "location": "Location",
+    "dates": "Dates",
+    "assistance-needs": "Assistance Needs",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "dni": "ID",
+    "image": "Image",
+    "birthdate": "Birth Date",
+    "blood-type": "Blood Type",
+    "phone": "Phone",
+    "email": "Email",
+    "room": "Room",
+    "state": "State",
+    "admission-date": "Admission Date",
+    "allergies": "Allergies",
+    "no-allergies": "No registered allergies",
+    "chronic-diseases": "Chronic Diseases",
+    "current-medications": "Current Medications",
+    "no-medications": "No registered medications",
+    "special-diet": "Special Diet",
+    "normal-diet": "Normal diet",
+    "attending-physician": "Attending Physician",
+    "medical-insurance": "Medical Insurance",
+    "social-security-number": "Social Security Number",
+    "legal-guardian": "Legal Guardian",
+    "guardian-phone": "Guardian Phone",
+    "mobility-level": "Mobility Level",
+    "dependency-level": "Dependency Level",
+    "bathing-assistance": "Bathing",
+    "feeding-assistance": "Feeding",
+    "dressing-assistance": "Dressing",
+    "emergency-contacts": "Emergency Contacts",
+    "emergency-contact-name": "Emergency Contact Name",
+    "emergency-phone": "Emergency Phone",
+    "contact-relation": "Relationship",
+    "main-contact": "Main Contact",
+    "secondary-contact": "Secondary Contact",
+    "secondary-name": "Secondary Contact Name",
+    "secondary-phone": "Secondary Phone",
+    "form": {
+      "new-title": "New Resident",
+      "edit-title": "Edit Resident",
+      "select-image": "Select Image",
+      "max-size": "Maximum 5MB",
+      "optional": "Optional",
+      "allergies-placeholder": "Example: Penicillin, pollen, seafood...",
+      "add-disease": "Add disease",
+      "medications-placeholder": "Example: Metformin, Gabapentin, Paracetamol...",
+      "diet-placeholder": "Example: Low sodium, diabetic, vegetarian...",
+      "needs-assistance": "Needs assistance with"
+    },
+    "buttons": {
+      "add": "Add New",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "details": "View details",
+      "edit": "Edit",
+      "go-back": "Go Back",
+      "register": "Register Resident",
+      "search": "Search",
+      "search-info": "Enter the resident's first or last name",
+      "update": "Update Resident",
+      "return-list": "Return to List"
+    },
+    "error": {
+      "no-residents": "No residents registered.",
+      "admission-date-required": "Admission date is required",
+      "attending-physician-required": "Attending physician is required",
+      "birthdate-required": "Birth date is required",
+      "blood-type-required": "Blood type is required",
+      "contact-relation-required": "Contact relation is required",
+      "dependency-level-required": "Dependency level is required",
+      "dni-required": "ID number is required",
+      "email-invalid": "Invalid email",
+      "email-required": "Email is required",
+      "emergency-contact-name-required": "Emergency contact name is required",
+      "emergency-phone-required": "Emergency phone is required",
+      "image-required": "Image is required",
+      "last-name-required": "Last name is required",
+      "mobility-level-required": "Mobility level is required",
+      "name-required": "Name is required",
+      "phone-required": "Phone is required",
+      "room-required": "Room is required",
+      "state-required": "State is required",
+      "not-found-title": "Resident not found",
+      "not-found-message": "The information for the requested resident could not be found."
+    }
   }
 }
