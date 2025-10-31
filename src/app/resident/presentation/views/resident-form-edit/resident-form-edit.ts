@@ -1,15 +1,15 @@
 import {Component, computed, inject} from '@angular/core';
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ResidentsStore} from '../../application/residents-store';
+import {ResidentsStore} from '../../../application/residents-store';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Resident} from '../../domain/model/resident.entity';
+import {Resident} from '../../../domain/model/resident.entity';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
+import {Toolbar} from '../../../../shared/presentation/components/toolbar/toolbar';
 import {MatChipGrid, MatChipInput, MatChipInputEvent, MatChipRow} from '@angular/material/chips';
 import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
 import {MatSelect} from '@angular/material/select';

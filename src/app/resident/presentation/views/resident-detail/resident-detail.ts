@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResidentsStore } from '../../application/residents-store';
+import { ResidentsStore } from '../../../application/residents-store';
 import { MatCard } from '@angular/material/card';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -9,7 +9,7 @@ import { MatError } from '@angular/material/form-field';
 import { MatDivider } from '@angular/material/divider';
 import { MatChip } from '@angular/material/chips';
 import { DatePipe } from '@angular/common';
-import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({

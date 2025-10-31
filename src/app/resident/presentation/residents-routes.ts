@@ -2,13 +2,13 @@ import { Routes } from '@angular/router';
 
 // Lazy-loaded components
 const residentRegister = () =>
-  import('./resident-form-create/resident-form-create').then(m => m.ResidentFormCreate);
+  import('./views/resident-form-create/resident-form-create').then(m => m.ResidentFormCreate);
 const residentList = () =>
-  import('./resident-list/resident-list').then(m => m.ResidentList);
+  import('./views/resident-list/resident-list').then(m => m.ResidentList);
 const residentUpdate = () =>
-  import('./resident-form-edit/resident-form-edit').then(m => m.ResidentFormEdit);
+  import('./views/resident-form-edit/resident-form-edit').then(m => m.ResidentFormEdit);
 const residentDetail = () =>
-  import('./resident-detail/resident-detail').then(m => m.ResidentDetail);
+  import('./views/resident-detail/resident-detail').then(m => m.ResidentDetail);
 
 const baseTitle = 'Veyra';
 const residentsRoutes: Routes = [
