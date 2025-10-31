@@ -1,7 +1,6 @@
 <app-layout-nursing-home>
+  <h1 class="title">{{ 'resident.new.title' | translate }}</h1>
   <div class="form-wrapper">
-    <h1 class="title">{{ 'resident.new.title' | translate }}</h1>
-
     <form [formGroup]="form" (ngSubmit)="submit()" class="resident-form">
       <mat-card class="header-card">
         <div class="form-row">
