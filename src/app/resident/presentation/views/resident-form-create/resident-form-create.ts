@@ -1,22 +1,22 @@
-import {Component, inject} from '@angular/core';
-import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import { Router} from '@angular/router';
-import {Resident} from '../../../domain/model/resident.entity';
-import {ResidentsStore} from '../../../application/residents-store';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatError, MatFormField, MatHint} from '@angular/material/form-field';
-import {MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {Toolbar} from '../../../../shared/presentation/components/toolbar/toolbar';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
-
-import {MatCalendar} from '@angular/material/datepicker';
-import {MatChipGrid, MatChipInput, MatChipInputEvent, MatChipRemove, MatChipRow} from '@angular/material/chips';
-import {MatCheckbox} from '@angular/material/checkbox';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Resident } from '../../../domain/model/resident.entity';
+import { ResidentsStore } from '../../../application/residents-store';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatError, MatFormField, MatHint } from '@angular/material/form-field';
+import { MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatCalendar } from '@angular/material/datepicker';
+import { MatChipGrid, MatChipInput, MatChipInputEvent, MatChipRemove, MatChipRow } from '@angular/material/chips';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { MatSelect, MatOption } from '@angular/material/select';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {DatePipe} from '@angular/common';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
+import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+
 @Component({
   selector: 'app-resident-form-create',
   imports: [
@@ -30,7 +30,6 @@ import {DatePipe} from '@angular/common';
     MatButton,
     MatIconButton,
     MatIcon,
-    Toolbar,
     MatSelect,
     MatOption,
     MatChipRemove,
@@ -40,7 +39,8 @@ import {DatePipe} from '@angular/common';
     MatHint,
     MatCheckbox,
     MatCalendar,
-    DatePipe
+    DatePipe,
+    LayoutNursingHome
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './resident-form-create.html',
@@ -212,6 +212,7 @@ export class ResidentFormCreate {
       });
     }
   }
+
   onBirthDateSelected(date: Date | null): void {
     this.form.patchValue({ birthDate: date });
     this.form.get('birthDate')?.markAsTouched();
