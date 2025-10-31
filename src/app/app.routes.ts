@@ -8,7 +8,7 @@ const iamRoutes = () =>
 const nursingHomeRoutes = () =>
   import('./nursingHome/presentation/nursing-home-routers').then(m => m.NursingHomeRouters);
 const residentRoutes = () =>
-  import('./resident/presentation/resident-router').then(m => m.ResidentRouter);
+  import('./resident/presentation/residents-routes').then(m => m.residentsRoutes);
 const employeeRoutes = () =>
   import('./employees/presentation/employee-routers').then(m => m.EmployeeRouters);
 const inventoryRoutes = () =>
@@ -19,7 +19,7 @@ export const routes: Routes = [
   { path: 'home',      component: Home,             title:`Home | ${baseTitle}` },
   { path: 'auth',      loadChildren: iamRoutes },
   { path: '',          loadChildren: nursingHomeRoutes },
-  { path: '',          loadChildren: residentRoutes },
+  { path: 'residents', loadChildren: residentRoutes },
   { path: '',          loadChildren: employeeRoutes },
   { path: 'inventory', loadChildren: inventoryRoutes },
   { path: '',          redirectTo: '/home',         pathMatch:'full' },

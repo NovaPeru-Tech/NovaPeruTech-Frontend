@@ -75,11 +75,11 @@ export class ResidentFormList {
   }
 
   viewDetails(id: number) {
-    this.router.navigate(['resident', id, 'detail']).then();
+    this.router.navigate(['residents/list', id, 'detail']).then();
   }
 
   editResident(id: number) {
-    this.router.navigate(['resident', id, 'edit']).then();
+    this.router.navigate(['residents/list', id, 'edit']).then();
     if (this.selectedId === id) {
       this.selectedId = null;
     }
@@ -90,6 +90,6 @@ export class ResidentFormList {
   };
 
   navigateToNew(){
-    this.router.navigate(['resident/register']).then();
+    this.router.navigate(['residents/list/new']).then();
   }
 }
