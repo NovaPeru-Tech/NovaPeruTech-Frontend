@@ -16,6 +16,8 @@ import { MatSelect, MatOption } from '@angular/material/select';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { MatCard } from '@angular/material/card';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-resident-form-create',
@@ -40,7 +42,9 @@ import { LayoutNursingHome } from '../../../../shared/presentation/components/la
     MatCheckbox,
     MatCalendar,
     DatePipe,
-    LayoutNursingHome
+    LayoutNursingHome,
+    MatCard,
+    MatDivider
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './resident-form-create.html',
