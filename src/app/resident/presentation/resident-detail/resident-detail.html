@@ -31,8 +31,11 @@
             <div class="photo-section">
               <div class="photo-wrapper">
                 <div class="photo-frame">
-                  <img [src]="resident()!.image || 'assets/default-avatar.png'"
-                       [alt]="resident()!.name + ' ' + resident()!.lastname">
+                  <img [src]="resident()!.image"
+                       (load)="onImageLoad(resident()!.id)"
+                       (error)="onImageError($event, resident()!.id)"
+                       [alt]="resident.name + ' ' + resident()!.lastname"
+                       [class.loaded]="imageLoadedMap[resident()!.id]">
                 </div>
                 <div class="photo-badge">
                   <mat-icon>verified</mat-icon>

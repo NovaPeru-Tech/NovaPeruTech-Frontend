@@ -36,6 +36,7 @@ export class ResidentDetail {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
+  imageLoadedMap: Record<number, boolean> = {};
   residentId = signal<number | null>(null);
 
   resident = computed(() => {
@@ -54,6 +55,16 @@ export class ResidentDetail {
         this.router.navigate(['/resident/list']).then();
       }
     });
+  }
+
+  onImageLoad(id: number) {
+    this.imageLoadedMap[id] = true;
+  }
+
+  onImageError(event: Event, id: number) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'images/shared/veyra-placeholder.png';
+    this.imageLoadedMap[id] = true;
   }
 
   goBack() {
