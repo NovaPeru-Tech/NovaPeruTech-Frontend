@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ResidentStore } from '../../application/resident-store';
+import { ResidentsStore } from '../../application/residents-store';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -36,7 +36,7 @@ import { FormsModule }  from '@angular/forms';
   styleUrl: './resident-form-list.css'
 })
 export class ResidentFormList {
-  readonly store = inject(ResidentStore);
+  readonly store = inject(ResidentsStore);
   protected router = inject(Router);
 
   selectedId: number | null = null;

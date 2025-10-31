@@ -1,6 +1,6 @@
 import { computed, Injectable, Signal, signal } from '@angular/core';
-import { Residents } from '../domain/model/residents.entity';
-import { ResidentApi } from '../infrastructure/resident-api';
+import { Resident } from '../domain/model/resident.entity';
+import { ResidentsApi } from '../infrastructure/residents-api';
 import { retry } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -11,8 +11,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
  * Store service that manages resident state using Angular signals.
  * Handles API calls, loading states, and error management.
  */
-export class ResidentStore {
-  private readonly _residentSignal = signal<Residents[]>([]);
+export class ResidentsStore {
+  private readonly _residentSignal = signal<Resident[]>([]);
   private readonly _loadingSignal = signal<boolean>(false);
   private readonly _errorSignal = signal<string | null>(null);
 
@@ -29,7 +29,7 @@ export class ResidentStore {
    * Initializes the store and automatically loads all residents.
    * @param ResidentApi - Service used to perform API operations.
    */
-  constructor(private ResidentApi: ResidentApi) {
+  constructor(private ResidentApi: ResidentsApi) {
     this.loadResidents();
   }
 
@@ -38,7 +38,7 @@ export class ResidentStore {
    * @param id - Resident unique identifier.
    * @returns A computed signal of the selected resident.
    */
-  getResidentById(id: number): Signal<Residents | undefined> {
+  getResidentById(id: number): Signal<Resident | undefined> {
     return computed(() => id ? this.residents().find(r => r.id === id) : undefined);
   }
 
@@ -46,7 +46,7 @@ export class ResidentStore {
    * Creates a new resident and updates the store state.
    * @param Resident - Resident entity to create.
    */
-  addResident(Resident: Residents): void {
+  addResident(Resident: Resident): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
     this.ResidentApi.createResident(Resident).pipe(retry(2)).subscribe({
@@ -65,7 +65,7 @@ export class ResidentStore {
    * Updates an existing resident and refreshes the store.
    * @param resident - Resident entity with updated information.
    */
-  updateResident(resident: Residents) {
+  updateResident(resident: Resident) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
     this.ResidentApi.updateResident(resident).pipe(retry(2)).subscribe({

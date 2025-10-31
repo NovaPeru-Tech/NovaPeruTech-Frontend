@@ -1,8 +1,8 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router} from '@angular/router';
-import {Residents} from '../../domain/model/residents.entity';
-import {ResidentStore} from '../../application/resident-store';
+import {Resident} from '../../domain/model/resident.entity';
+import {ResidentsStore} from '../../application/residents-store';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField, MatHint} from '@angular/material/form-field';
 import {MatLabel} from '@angular/material/form-field';
@@ -48,7 +48,7 @@ import {DatePipe} from '@angular/common';
 })
 export class ResidentFormCreate {
   private fb=inject(FormBuilder);
-  private store= inject(ResidentStore);
+  private store= inject(ResidentsStore);
   private router=inject(Router);
   imagePreview: string | null = null;
   selectedFile: File | null = null;
@@ -145,7 +145,7 @@ export class ResidentFormCreate {
       this.form.markAllAsTouched();
       return;
     }
-    const newResident: Residents = new Residents({
+    const newResident: Resident = new Resident({
       id: 0,
 
       state: this.form.value.state!,

@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResidentStore } from '../../application/resident-store';
+import { ResidentsStore } from '../../application/residents-store';
 import { MatCard } from '@angular/material/card';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -32,7 +32,7 @@ import {TranslatePipe} from '@ngx-translate/core';
   styleUrl: './resident-detail.css'
 })
 export class ResidentDetail {
-  protected store = inject(ResidentStore);
+  protected store = inject(ResidentsStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 

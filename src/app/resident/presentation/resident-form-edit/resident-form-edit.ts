@@ -1,8 +1,8 @@
 import {Component, computed, inject} from '@angular/core';
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ResidentStore} from '../../application/resident-store';
+import {ResidentsStore} from '../../application/residents-store';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Residents} from '../../domain/model/residents.entity';
+import {Resident} from '../../domain/model/resident.entity';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
@@ -49,7 +49,7 @@ import {MatCheckbox} from '@angular/material/checkbox';
 })
 export class ResidentFormEdit {
   private fb = inject(FormBuilder);
-  protected store = inject(ResidentStore);
+  protected store = inject(ResidentsStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -257,7 +257,7 @@ export class ResidentFormEdit {
       return;
     }
     const formValue = this.form.getRawValue();
-    const updatedResident: Residents = new Residents({
+    const updatedResident: Resident = new Resident({
       id: this.residentId,
       state: formValue.state!,
       name: formValue.name!,
