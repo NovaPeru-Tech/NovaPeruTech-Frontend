@@ -560,6 +560,13 @@
 
   <div class="action-buttons">
     <button mat-raised-button
+            color="accent"
+            (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'resident-detail.go-back' | translate }}
+    </button>
+
+    <button mat-raised-button
             color="warn"
             (click)="deleteResident()">
       <mat-icon>delete</mat-icon>
