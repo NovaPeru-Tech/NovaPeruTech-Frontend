@@ -1,9 +1,7 @@
 .detail-container {
-  max-width: 1400px;
   margin: 0 auto;
   padding: 24px;
   background-color: #f8f9fa;
-  min-height: calc(100vh - 64px);
 }
 
 /* Loading */
