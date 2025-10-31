@@ -4,7 +4,7 @@ import { Routes } from '@angular/router';
 const residentRegister = () =>
   import('./resident-form-create/resident-form-create').then(m => m.ResidentFormCreate);
 const residentList = () =>
-  import('./resident-form-list/resident-form-list').then(m => m.ResidentFormList);
+  import('./resident-list/resident-list').then(m => m.ResidentList);
 const residentUpdate = () =>
   import('./resident-form-edit/resident-form-edit').then(m => m.ResidentFormEdit);
 const residentDetail = () =>

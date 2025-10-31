@@ -13,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule }  from '@angular/forms';
 @Component({
-  selector: 'app-resident-form-list',
+  selector: 'app-resident-list',
   standalone: true,
   imports: [
     TranslatePipe,
@@ -32,10 +32,10 @@ import { FormsModule }  from '@angular/forms';
     MatInputModule,
     MatFormFieldModule
   ],
-  templateUrl: './resident-form-list.html',
-  styleUrl: './resident-form-list.css'
+  templateUrl: './resident-list.html',
+  styleUrl: './resident-list.css'
 })
-export class ResidentFormList {
+export class ResidentList {
   readonly store = inject(ResidentsStore);
   protected router = inject(Router);
 
