@@ -528,10 +528,6 @@ mat-card.info-card {
     width: 100%;
   }
 
-  .info-grid {
-    grid-template-columns: 1fr;
-  }
-
   .medical-content {
     flex-direction: column;
     text-align: center;
