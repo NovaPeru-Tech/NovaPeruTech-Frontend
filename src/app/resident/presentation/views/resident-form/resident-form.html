@@ -1,5 +1,6 @@
 <app-layout-nursing-home>
-  <h1 class="title">{{ 'resident.new.title' | translate }}</h1>
+  <h1 class="title">{{ (isEdit? 'resident.edit.title': 'resident.new.title') | translate }}</h1>
+
   <div class="form-wrapper">
     <form [formGroup]="form" (ngSubmit)="submit()" class="resident-form">
       <mat-card class="header-card">
@@ -555,18 +556,18 @@
         </div>
       </mat-card>
       <div class="space"></div>
+
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" type="button" (click)="onCancel()">
+          <mat-icon>cancel</mat-icon>
+          {{ 'resident.cancel' | translate }}
+        </button>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+          <mat-icon>save</mat-icon>
+          {{ (isEdit? 'resident.update' : 'resident.register') | translate }}
+        </button>
+      </div>
     </form>
-  </div>
-
-  <div class="action-buttons">
-    <button mat-raised-button color="primary" type="button" (click)="onCancel()">
-      <mat-icon>cancel</mat-icon>
-      {{ 'resident.cancel' | translate }}
-    </button>
-
-    <button mat-raised-button color="primary" type="submit">
-      <mat-icon>save</mat-icon>
-      {{ 'resident.register' | translate }}
-    </button>
   </div>
 </app-layout-nursing-home>
