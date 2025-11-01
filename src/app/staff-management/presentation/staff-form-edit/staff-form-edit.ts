@@ -1,7 +1,7 @@
 import {Component, computed, inject} from '@angular/core';
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Staff} from '../../domain/model/staff.entity';
+import {StaffMember} from '../../domain/model/staff-member.entity';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
@@ -245,7 +245,7 @@ export class StaffFormEdit {
     }
 
     const formValue = this.form.getRawValue();
-    const updatedStaff: Staff = new Staff({
+    const updatedStaff: StaffMember = new StaffMember({
       id: this.staffId,
 
       // Basic Information

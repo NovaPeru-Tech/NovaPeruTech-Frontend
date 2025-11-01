@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {Staff} from '../../domain/model/staff.entity';
+import {StaffMember} from '../../domain/model/staff-member.entity';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField, MatHint} from '@angular/material/form-field';
 import {MatLabel} from '@angular/material/form-field';
@@ -129,7 +129,7 @@ export class StaffFormCreate {
       return;
     }
 
-    const newStaff: Staff = new Staff({
+    const newStaff: StaffMember = new StaffMember({
       id: 0,
 
       state: this.form.value.state!,

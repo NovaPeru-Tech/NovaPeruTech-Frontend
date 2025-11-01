@@ -1,5 +1,5 @@
 import {computed, Injectable, Signal, signal} from '@angular/core';
-import {Staff} from '../domain/model/staff.entity';
+import {StaffMember} from '../domain/model/staff-member.entity';
 import {EmployeesApi} from '../infrastructure/employees-api';
 import {retry} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -8,7 +8,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   providedIn: 'root'
 })
 export class EmployeesStore {
-  private readonly _staffSignal= signal<Staff[]>([]);
+  private readonly _staffSignal= signal<StaffMember[]>([]);
   private readonly _loadingSignal=signal<boolean>(false);
   private readonly _errorSignal=signal<string|null>(null);
   readonly error=this._errorSignal.asReadonly();
@@ -18,7 +18,7 @@ export class EmployeesStore {
   constructor(private EmployeeApi:EmployeesApi) {
 this.loadStaff();
   }
-  addStaff(Staff:Staff){
+  addStaff(Staff:StaffMember){
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
     this.EmployeeApi.createEmployee(Staff).pipe(retry(2)).subscribe({
@@ -34,7 +34,7 @@ this.loadStaff();
 
 
   }
-  getStaffById(id:number):Signal<Staff|undefined>{
+  getStaffById(id:number):Signal<StaffMember|undefined>{
     return computed(()=>id?this.staffs().find(s=>s.id===id):undefined);
   }
  deleteStaff(id:number):void{
@@ -50,7 +50,7 @@ this.loadStaff();
       }
     })
   }
-  updateStaff( staff:Staff){
+  updateStaff( staff:StaffMember){
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
     this.EmployeeApi.updateEmployee(staff).pipe(retry(2)).subscribe({

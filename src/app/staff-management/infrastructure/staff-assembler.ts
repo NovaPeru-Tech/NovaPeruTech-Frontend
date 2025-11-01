@@ -1,14 +1,14 @@
 import {BaseAssembler} from '../../shared/infrastructure/base-assembler';
-import {Staff} from '../domain/model/staff.entity';
+import {StaffMember} from '../domain/model/staff-member.entity';
 import {StaffResource, StaffResponse} from './staff-response';
 
-export class StaffAssembler  implements BaseAssembler<Staff, StaffResource, StaffResponse>{
-  toEntitiesFromResponse(response: StaffResponse): Staff[] {
+export class StaffAssembler  implements BaseAssembler<StaffMember, StaffResource, StaffResponse>{
+  toEntitiesFromResponse(response: StaffResponse): StaffMember[] {
     return response.staff.map(staff=>this.toEntityFromResource(staff));
   }
 
-  toEntityFromResource(resource: StaffResource): Staff {
- return new Staff({
+  toEntityFromResource(resource: StaffResource): StaffMember {
+ return new StaffMember({
    id:resource.id,
   state:resource.state,
    name:resource.name,
@@ -36,7 +36,7 @@ export class StaffAssembler  implements BaseAssembler<Staff, StaffResource, Staf
  });
   }
 
-  toResourceFromEntity(entity: Staff): StaffResource {
+  toResourceFromEntity(entity: StaffMember): StaffResource {
     return {
       id: entity.id,
       state:entity.state,
