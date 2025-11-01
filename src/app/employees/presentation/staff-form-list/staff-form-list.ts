@@ -1,14 +1,13 @@
-import {Component, computed, inject} from '@angular/core';
-import {Router} from '@angular/router';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatError} from '@angular/material/form-field';
-import {MatCard, MatCardContent} from '@angular/material/card';
-import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
-import {EmployeesStore} from '../../application/employees.store';
-import {LayoutNursingHome} from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { Component, computed, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatError } from '@angular/material/form-field';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { EmployeesStore } from '../../application/employees.store';
+import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
 @Component({
   selector: 'app-staff-form-list',
@@ -22,7 +21,6 @@ import {LayoutNursingHome} from '../../../shared/presentation/components/layout-
     MatIcon,
     MatIconButton,
     MatButton,
-    Toolbar,
     LayoutNursingHome
   ],
   templateUrl: './staff-form-list.html',

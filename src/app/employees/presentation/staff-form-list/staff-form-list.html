@@ -1,109 +1,108 @@
 <app-layout-nursing-home>
-<app-toolbar></app-toolbar>
-<h1 class="title">{{ 'staff.list-title' | translate }}</h1>
+  <h1 class="title">{{ 'staff.list-title' | translate }}</h1>
 
-<!-- Loading State -->
-@if (store.loading()) {
-  <mat-spinner diameter="40"></mat-spinner>
-}
-
-<!-- Error State -->
-@if (store.error()) {
-  <mat-error>{{ store.error() }}</mat-error>
-}
-
-<!-- Grid de Tarjetas de Empleados -->
-<div class="cards-grid">
-  @for (staffMember of staff(); track staffMember.id) {
-    <mat-card class="staff-card"
-              [class.selected]="selectedId === staffMember.id"
-              (click)="selectStaff(staffMember.id)">
-
-      <!-- Indicador de selección (círculo superior izquierdo) -->
-      <div class="selection-indicator"
-           [class.active]="selectedId === staffMember.id">
-      </div>
-
-      <!-- Foto del empleado -->
-      <div class="staff-image">
-        <img [src]="staffMember.image || 'assets/default-avatar.png'"
-             [alt]="staffMember.name + ' ' + staffMember.lastname">
-      </div>
-
-      <!-- Información del empleado -->
-      <mat-card-content>
-        <p class="staff-info">
-          <strong>{{ 'staff.lastName' | translate }}:</strong>
-          {{ staffMember.lastname }}
-        </p>
-        <p class="staff-info">
-          <strong>{{ 'staff.firstName' | translate }}:</strong>
-          {{ staffMember.name}}
-        </p>
-        <p class="staff-info">
-          <strong>{{ 'staff.dni' | translate }}:</strong>
-          {{ staffMember.dni}}
-        </p>
-        <p class="staff-info">
-          <strong>{{ 'post' | translate }}:</strong>
-          {{ staffMember.post}}
-        </p>
-      </mat-card-content>
-
-      <!-- Botón Detalle -->
-      <button mat-raised-button
-              color="primary"
-              class="detail-button"
-              (click)="viewDetails(staffMember.id); $event.stopPropagation()">
-        {{ 'staff.details' | translate }}
-      </button>
-
-      <!-- Acciones rápidas (esquina superior derecha) -->
-      <div class="card-actions">
-        <button mat-icon-button
-                [attr.aria-label]="'staff.edit' | translate"
-                (click)="editStaff(staffMember.id); $event.stopPropagation()">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button
-                color="warn"
-                [attr.aria-label]="'staff.delete' | translate"
-                (click)="deleteStaff(staffMember.id); $event.stopPropagation()">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-
-    </mat-card>
-  } @empty {
-    <div class="empty-state">
-      <p>{{ 'staff.no-staff' | translate }}</p>
-    </div>
+  <!-- Loading State -->
+  @if (store.loading()) {
+    <mat-spinner diameter="40"></mat-spinner>
   }
-</div>
 
-<!-- Botones de acción globales -->
-<div class="action-buttons">
-  <button mat-raised-button
-          color="warn"
-          [disabled]="!selectedId"
-          (click)="deleteStaff(selectedId!)">
-    <mat-icon>delete</mat-icon>
-    {{ 'staff.delete' | translate }}
-  </button>
+  <!-- Error State -->
+  @if (store.error()) {
+    <mat-error>{{ store.error() }}</mat-error>
+  }
 
-  <button mat-raised-button
-          color="primary"
-          [disabled]="!selectedId"
-          (click)="editStaff(selectedId!)">
-    <mat-icon>edit</mat-icon>
-    {{ 'staff.edit' | translate }}
-  </button>
+  <!-- Grid de Tarjetas de Empleados -->
+  <div class="cards-grid">
+    @for (staffMember of staff(); track staffMember.id) {
+      <mat-card class="staff-card"
+                [class.selected]="selectedId === staffMember.id"
+                (click)="selectStaff(staffMember.id)">
 
-  <button mat-raised-button
-          color="accent"
-          (click)="navigateToNew()">
-    <mat-icon>add</mat-icon>
-    {{ 'staff.add' | translate }}
-  </button>
-</div>
+        <!-- Indicador de selección (círculo superior izquierdo) -->
+        <div class="selection-indicator"
+             [class.active]="selectedId === staffMember.id">
+        </div>
+
+        <!-- Foto del empleado -->
+        <div class="staff-image">
+          <img [src]="staffMember.image || 'assets/default-avatar.png'"
+               [alt]="staffMember.name + ' ' + staffMember.lastname">
+        </div>
+
+        <!-- Información del empleado -->
+        <mat-card-content>
+          <p class="staff-info">
+            <strong>{{ 'staff.lastName' | translate }}:</strong>
+            {{ staffMember.lastname }}
+          </p>
+          <p class="staff-info">
+            <strong>{{ 'staff.firstName' | translate }}:</strong>
+            {{ staffMember.name }}
+          </p>
+          <p class="staff-info">
+            <strong>{{ 'staff.dni' | translate }}:</strong>
+            {{ staffMember.dni }}
+          </p>
+          <p class="staff-info">
+            <strong>{{ 'post' | translate }}:</strong>
+            {{ staffMember.post }}
+          </p>
+        </mat-card-content>
+
+        <!-- Botón Detalle -->
+        <button mat-raised-button
+                color="primary"
+                class="detail-button"
+                (click)="viewDetails(staffMember.id); $event.stopPropagation()">
+          {{ 'staff.details' | translate }}
+        </button>
+
+        <!-- Acciones rápidas (esquina superior derecha) -->
+        <div class="card-actions">
+          <button mat-icon-button
+                  [attr.aria-label]="'staff.edit' | translate"
+                  (click)="editStaff(staffMember.id); $event.stopPropagation()">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button
+                  color="warn"
+                  [attr.aria-label]="'staff.delete' | translate"
+                  (click)="deleteStaff(staffMember.id); $event.stopPropagation()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+      </mat-card>
+    } @empty {
+      <div class="empty-state">
+        <p>{{ 'staff.no-staff' | translate }}</p>
+      </div>
+    }
+  </div>
+
+  <!-- Botones de acción globales -->
+  <div class="action-buttons">
+    <button mat-raised-button
+            color="warn"
+            [disabled]="!selectedId"
+            (click)="deleteStaff(selectedId!)">
+      <mat-icon>delete</mat-icon>
+      {{ 'staff.delete' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="primary"
+            [disabled]="!selectedId"
+            (click)="editStaff(selectedId!)">
+      <mat-icon>edit</mat-icon>
+      {{ 'staff.edit' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="accent"
+            (click)="navigateToNew()">
+      <mat-icon>add</mat-icon>
+      {{ 'staff.add' | translate }}
+    </button>
+  </div>
 </app-layout-nursing-home>
