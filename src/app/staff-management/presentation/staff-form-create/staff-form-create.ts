@@ -14,7 +14,7 @@ import {MatChipGrid, MatChipInput, MatChipInputEvent, MatChipRemove, MatChipRow}
 import {MatSelect, MatOption} from '@angular/material/select';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {DatePipe} from '@angular/common';
-import {EmployeesStore} from '../../application/employees.store';
+import {StaffManagementStore} from '../../application/staff-management.store';
 
 @Component({
   selector: 'app-staff-form-create',
@@ -46,7 +46,7 @@ import {EmployeesStore} from '../../application/employees.store';
 })
 export class StaffFormCreate {
   private fb = inject(FormBuilder);
-  private store = inject(EmployeesStore);
+  private store = inject(StaffManagementStore);
   private router = inject(Router);
 
   imagePreview: string | null = null;
@@ -157,7 +157,7 @@ export class StaffFormCreate {
       emergencyContactPhone: this.form.value.emergencyContactPhone!,
     });
 
-    this.store.addStaff(newStaff);
+    this.store.addStaffMember(newStaff);
     this.router.navigate(['/employee/list']).then();
   }
 

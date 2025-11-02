@@ -9,7 +9,7 @@ import {MatDivider} from '@angular/material/divider';
 import {MatChip} from '@angular/material/chips';
 import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
 import {DatePipe} from '@angular/common';
-import {EmployeesStore} from '../../application/employees.store';
+import {StaffManagementStore} from '../../application/staff-management.store';
 
 @Component({
   selector: 'app-staff-detail',
@@ -31,7 +31,7 @@ import {EmployeesStore} from '../../application/employees.store';
   styleUrl: './staff-detail.css'
 })
 export class StaffDetail {
-  protected store = inject(EmployeesStore);
+  protected store = inject(StaffManagementStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -40,7 +40,7 @@ export class StaffDetail {
   staff = computed(() => {
     const id = this.staffId();
     if (!id) return undefined;
-    const staffSignal = this.store.getStaffById(id);
+    const staffSignal = this.store.getStaffMemberById(id);
     return staffSignal();
   });
 

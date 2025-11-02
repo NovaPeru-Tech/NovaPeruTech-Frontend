@@ -6,7 +6,7 @@ import { MatError } from '@angular/material/form-field';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { EmployeesStore } from '../../application/employees.store';
+import { StaffManagementStore } from '../../application/staff-management.store';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
 @Component({
@@ -27,7 +27,7 @@ import { LayoutNursingHome } from '../../../shared/presentation/components/layou
   styleUrl: './staff-form-list.css'
 })
 export class StaffFormList {
-  readonly store = inject(EmployeesStore);
+  readonly store = inject(StaffManagementStore);
   protected router = inject(Router);
   selectedId: number | null = null;
 
@@ -35,7 +35,7 @@ export class StaffFormList {
     this.selectedId = this.selectedId === id ? null : id;
   }
 
-  staff = computed(() => this.store.staffs());
+  staff = computed(() => this.store.staffMembers());
 
   viewDetails(id: number) {
     this.router.navigate(['employee', id, 'detail']).then();

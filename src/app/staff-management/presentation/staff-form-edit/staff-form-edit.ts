@@ -14,7 +14,7 @@ import {MatOption, provideNativeDateAdapter} from '@angular/material/core';
 import {MatSelect} from '@angular/material/select';
 import {MatCalendar} from '@angular/material/datepicker';
 import {DatePipe} from '@angular/common';
-import {EmployeesStore} from '../../application/employees.store';
+import {StaffManagementStore} from '../../application/staff-management.store';
 
 @Component({
   selector: 'app-staff-form-edit',
@@ -47,7 +47,7 @@ import {EmployeesStore} from '../../application/employees.store';
 })
 export class StaffFormEdit {
   private fb = inject(FormBuilder);
-  protected store = inject(EmployeesStore);
+  protected store = inject(StaffManagementStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -96,7 +96,7 @@ export class StaffFormEdit {
 
   staff = computed(() => {
     if (!this.staffId) return undefined;
-    const staffSignal = this.store.getStaffById(this.staffId);
+    const staffSignal = this.store.getStaffMemberById(this.staffId);
     return staffSignal();
   });
 
@@ -109,7 +109,7 @@ export class StaffFormEdit {
         return;
       }
 
-      const staffMember = this.store.getStaffById(this.staffId)();
+      const staffMember = this.store.getStaffMemberById(this.staffId)();
 
       if (staffMember) {
         this.form.patchValue({
