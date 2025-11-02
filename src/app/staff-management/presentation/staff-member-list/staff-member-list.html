@@ -56,22 +56,6 @@
                 (click)="viewDetails(staffMember.id); $event.stopPropagation()">
           {{ 'staff.details' | translate }}
         </button>
-
-        <!-- Acciones rápidas (esquina superior derecha) -->
-        <div class="card-actions">
-          <button mat-icon-button
-                  [attr.aria-label]="'staff.edit' | translate"
-                  (click)="editStaff(staffMember.id); $event.stopPropagation()">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button
-                  color="warn"
-                  [attr.aria-label]="'staff.delete' | translate"
-                  (click)="deleteStaff(staffMember.id); $event.stopPropagation()">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-
       </mat-card>
     } @empty {
       <div class="empty-state">
