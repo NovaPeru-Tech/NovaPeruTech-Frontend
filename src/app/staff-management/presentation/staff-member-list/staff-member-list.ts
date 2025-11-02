@@ -23,10 +23,10 @@ import { LayoutNursingHome } from '../../../shared/presentation/components/layou
     MatButton,
     LayoutNursingHome
   ],
-  templateUrl: './staff-form-list.html',
-  styleUrl: './staff-form-list.css'
+  templateUrl: './staff-member-list.html',
+  styleUrl: './staff-member-list.css'
 })
-export class StaffFormList {
+export class StaffMemberList {
   readonly store = inject(StaffManagementStore);
   protected router = inject(Router);
   selectedId: number | null = null;
