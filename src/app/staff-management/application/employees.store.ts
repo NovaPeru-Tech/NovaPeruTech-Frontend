@@ -1,6 +1,6 @@
 import {computed, Injectable, Signal, signal} from '@angular/core';
 import {StaffMember} from '../domain/model/staff-member.entity';
-import {EmployeesApi} from '../infrastructure/employees-api';
+import {StaffManagementApi} from '../infrastructure/staff-management-api';
 import {retry} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -15,7 +15,7 @@ export class EmployeesStore {
   readonly loading=this._loadingSignal.asReadonly();
   readonly staffs=this._staffSignal.asReadonly();
 
-  constructor(private EmployeeApi:EmployeesApi) {
+  constructor(private EmployeeApi:StaffManagementApi) {
 this.loadStaff();
   }
   addStaff(Staff:StaffMember){
