@@ -10,7 +10,7 @@ import { StaffManagementStore } from '../../application/staff-management.store';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
 @Component({
-  selector: 'app-staff-form-list',
+  selector: 'app-staff-member-list',
   standalone: true,
   imports: [
     TranslatePipe,
