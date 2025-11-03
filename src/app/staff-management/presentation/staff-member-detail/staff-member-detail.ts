@@ -10,6 +10,7 @@ import { MatChip } from '@angular/material/chips';
 import { DatePipe } from '@angular/common';
 import { StaffManagementStore } from '../../application/staff-management.store';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-staff-member-detail',
@@ -25,7 +26,8 @@ import { LayoutNursingHome } from '../../../shared/presentation/components/layou
     MatIconButton,
     MatFabButton,
     DatePipe,
-    LayoutNursingHome
+    LayoutNursingHome,
+    TranslatePipe
   ],
   templateUrl: './staff-member-detail.html',
   styleUrl: './staff-member-detail.css'
@@ -59,14 +61,14 @@ export class StaffMemberDetail {
     this.router.navigate(['/employee/list']).then();
   }
 
-  editStaff() {
+  editStaffMember() {
     const id = this.staffId();
     if (id) {
       this.router.navigate(['staff', id, 'edit']).then();
     }
   }
 
-  deleteStaff() {
+  deleteStaffMember() {
     const id = this.staffId();
     if (id && confirm('¿Está seguro de eliminar este empleado?')) {
       this.store.deleteStaff(id);
@@ -74,7 +76,7 @@ export class StaffMemberDetail {
     }
   }
 
-  viewEmployeeRecords() {
+  viewEmploymentRecord() {
     const id = this.staffId();
     if (id) {
       this.router.navigate(['staff', id, 'records']).then();

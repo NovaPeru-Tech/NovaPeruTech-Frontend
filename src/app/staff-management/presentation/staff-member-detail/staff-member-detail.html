@@ -19,10 +19,12 @@
 
       <!-- Botón Volver arriba -->
       <div class="top-actions">
-        <button mat-icon-button (click)="goBack()" class="back-btn">
+        <button mat-raised-button
+                color="accent"
+                (click)="goBack()">
           <mat-icon>arrow_back</mat-icon>
+          {{ 'staff-management.buttons.go-back' | translate }}
         </button>
-        <span class="breadcrumb">Personal / Detalles</span>
       </div>
 
       <div class="detail-layout">
@@ -82,22 +84,14 @@
             </div>
           </div>
 
-        <mat-divider></mat-divider>
-        <div class="card-actions">
-          <button mat-raised-button color="primary" (click)="editStaff()" class="action-btn">
-            <mat-icon>edit</mat-icon>
-            Editar Información
-          </button>
-          <button mat-stroked-button color="accent" (click)="viewEmployeeRecords()" class="action-btn">
-            <mat-icon>folder_shared</mat-icon>
-            Expediente Laboral
-          </button>
-          <button mat-stroked-button color="warn" (click)="deleteStaff()" class="action-btn">
-            <mat-icon>delete_outline</mat-icon>
-            Eliminar
-          </button>
-        </div>
-      </mat-card>
+          <mat-divider></mat-divider>
+          <div class="card-actions">
+            <button mat-raised-button color="accent" (click)="viewEmploymentRecord()" class="action-btn">
+              <mat-icon>folder_shared</mat-icon>
+              Expediente Laboral
+            </button>
+          </div>
+        </mat-card>
 
         <!-- Sección: Información Personal -->
         <div class="section-title">
@@ -346,13 +340,12 @@
             </div>
             <button mat-fab
                     color="accent"
-                    (click)="viewEmployeeRecords()"
+                    (click)="viewEmploymentRecord()"
                     class="records-fab">
               <mat-icon>arrow_forward</mat-icon>
             </button>
           </div>
         </mat-card>
-
       </div>
     } @else {
       <div class="not-found">
@@ -367,5 +360,28 @@
         </button>
       </div>
     }
+  </div>
+
+  <div class="action-buttons">
+    <button mat-raised-button
+            color="accent"
+            (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'staff-management.buttons.go-back' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="warn"
+            (click)="deleteStaffMember()">
+      <mat-icon>delete</mat-icon>
+      {{ 'staff-management.buttons.delete' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="primary"
+            (click)="editStaffMember()">
+      <mat-icon>edit</mat-icon>
+      {{ 'staff-management.buttons.edit' | translate }}
+    </button>
   </div>
 </app-layout-nursing-home>

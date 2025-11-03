@@ -39,6 +39,10 @@
   align-items: center;
   gap: 16px;
   margin-bottom: 24px;
+  padding: 16px 24px;
+  background: #f0f8ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .back-btn {
@@ -201,19 +205,20 @@
   display: flex;
   gap: 12px;
   padding: 20px 32px;
-  background-color: #f8f9fa;
+  background-color: #f0f8ff;
   flex-wrap: wrap;
 }
 
 .action-btn {
   flex: 1;
   min-width: 180px;
-  height: 44px;
+  min-height: 44px;
   font-weight: 500;
+  border-radius: 8px;
 }
 
-.action-btn mat-icon {
-  margin-right: 8px;
+.card-actions button{
+  color: #0d2e73;
 }
 
 /* Section Title */
@@ -510,6 +515,19 @@
 .not-found p {
   color: #666;
   margin-bottom: 24px;
+}
+
+.action-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background: #f0f8ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 100;
 }
 
 /* Responsive */
