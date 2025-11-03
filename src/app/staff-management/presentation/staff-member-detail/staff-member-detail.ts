@@ -12,7 +12,7 @@ import {DatePipe} from '@angular/common';
 import {StaffManagementStore} from '../../application/staff-management.store';
 
 @Component({
-  selector: 'app-staff-detail',
+  selector: 'app-staff-member-detail',
   standalone: true,
   imports: [
     MatCard,
@@ -27,10 +27,10 @@ import {StaffManagementStore} from '../../application/staff-management.store';
     MatFabButton,
     DatePipe
   ],
-  templateUrl: './staff-detail.html',
-  styleUrl: './staff-detail.css'
+  templateUrl: './staff-member-detail.html',
+  styleUrl: './staff-member-detail.css'
 })
-export class StaffDetail {
+export class StaffMemberDetail {
   protected store = inject(StaffManagementStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
