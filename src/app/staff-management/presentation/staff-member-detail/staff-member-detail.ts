@@ -1,15 +1,15 @@
-import {Component, computed, inject, signal} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MatCard} from '@angular/material/card';
-import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatError} from '@angular/material/form-field';
-import {MatDivider} from '@angular/material/divider';
-import {MatChip} from '@angular/material/chips';
-import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
-import {DatePipe} from '@angular/common';
-import {StaffManagementStore} from '../../application/staff-management.store';
+import { Component, computed, inject, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatCard } from '@angular/material/card';
+import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatError } from '@angular/material/form-field';
+import { MatDivider } from '@angular/material/divider';
+import { MatChip } from '@angular/material/chips';
+import { DatePipe } from '@angular/common';
+import { StaffManagementStore } from '../../application/staff-management.store';
+import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
 @Component({
   selector: 'app-staff-member-detail',
@@ -22,10 +22,10 @@ import {StaffManagementStore} from '../../application/staff-management.store';
     MatError,
     MatDivider,
     MatChip,
-    Toolbar,
     MatIconButton,
     MatFabButton,
-    DatePipe
+    DatePipe,
+    LayoutNursingHome
   ],
   templateUrl: './staff-member-detail.html',
   styleUrl: './staff-member-detail.css'
