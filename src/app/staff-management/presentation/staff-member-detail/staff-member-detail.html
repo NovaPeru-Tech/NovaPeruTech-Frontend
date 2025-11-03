@@ -17,7 +17,7 @@
       </mat-error>
     }
 
-    @if (staff()) {
+    @if (staffMember()) {
 
       <!-- Botón Volver arriba -->
       <div class="top-actions">
@@ -37,8 +37,11 @@
             <div class="photo-section">
               <div class="photo-wrapper">
                 <div class="photo-frame">
-                  <img [src]="staff()!.image || 'assets/default-avatar.png'"
-                       [alt]="staff()!.name + ' ' + staff()!.lastname">
+                  <img [src]="staffMember()!.image"
+                       (load)="onImageLoad(staffMember()!.id)"
+                       (error)="onImageError($event, staffMember()!.id)"
+                       [alt]="staffMember()!.name + ' ' + staffMember()!.lastname"
+                       [class.loaded]="imageLoadedMap[staffMember()!.id]">
                 </div>
                 <div class="photo-badge">
                   <mat-icon>verified</mat-icon>
@@ -49,15 +52,15 @@
             <div class="main-info">
               <div class="name-section">
                 <h1 class="staff-name">
-                  {{ staff()!.name }} {{ staff()!.lastname }}
+                  {{ staffMember()!.name }} {{ staffMember()!.lastname }}
                 </h1>
-                <mat-chip [class.chip-active]="staff()!.state === 'Active'"
-                          [class.chip-inactive]="staff()!.state !== 'Active'">
+                <mat-chip [class.chip-active]="staffMember()!.state === 'Active'"
+                          [class.chip-inactive]="staffMember()!.state !== 'Active'">
                   <div class="status">
                     <mat-icon class>
-                      {{ staff()!.state === 'Active' ? 'check_circle' : 'cancel' }}
+                      {{ staffMember()!.state === 'Active' ? 'check_circle' : 'cancel' }}
                     </mat-icon>
-                    {{ staff()!.state }}
+                    {{ staffMember()!.state }}
                   </div>
                 </mat-chip>
               </div>
@@ -67,21 +70,21 @@
                   <mat-icon>badge</mat-icon>
                   <div>
                     <span class="info-label">DNI</span>
-                    <span class="info-value">{{ staff()!.dni }}</span>
+                    <span class="info-value">{{ staffMember()!.dni }}</span>
                   </div>
                 </div>
                 <div class="info-item">
                   <mat-icon>work</mat-icon>
                   <div>
                     <span class="info-label">Cargo</span>
-                    <span class="info-value">{{ staff()!.post }}</span>
+                    <span class="info-value">{{ staffMember()!.post }}</span>
                   </div>
                 </div>
                 <div class="info-item">
                   <mat-icon>schedule</mat-icon>
                   <div>
                     <span class="info-label">Turno</span>
-                    <span class="info-value">{{ staff()!.workShift }}</span>
+                    <span class="info-value">{{ staffMember()!.workShift }}</span>
                   </div>
                 </div>
               </div>
@@ -117,7 +120,7 @@
                   <mat-icon>badge</mat-icon>
                   DNI
                 </div>
-                <div class="detail-value">{{ staff()!.dni }}</div>
+                <div class="detail-value">{{ staffMember()!.dni }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="detail-row">
@@ -125,7 +128,7 @@
                   <mat-icon>cake</mat-icon>
                   Fecha de Nacimiento
                 </div>
-                <div class="detail-value">{{ staff()!.birthDate | date:'dd/MM/yyyy' }}</div>
+                <div class="detail-value">{{ staffMember()!.birthDate | date:'dd/MM/yyyy' }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="detail-row">
@@ -133,16 +136,16 @@
                   <mat-icon>calendar_today</mat-icon>
                   Edad
                 </div>
-                <div class="detail-value">{{ staff()!.age }} años</div>
+                <div class="detail-value">{{ staffMember()!.age }} años</div>
               </div>
-              @if (staff()!.nationality) {
+              @if (staffMember()!.nationality) {
                 <mat-divider></mat-divider>
                 <div class="detail-row">
                   <div class="detail-label">
                     <mat-icon>flag</mat-icon>
                     Nacionalidad
                   </div>
-                  <div class="detail-value">{{ staff()!.nationality }}</div>
+                  <div class="detail-value">{{ staffMember()!.nationality }}</div>
                 </div>
               }
             </div>
@@ -161,7 +164,7 @@
                   <mat-icon>phone</mat-icon>
                   Teléfono
                 </div>
-                <div class="detail-value">{{ staff()!.phoneNumber }}</div>
+                <div class="detail-value">{{ staffMember()!.phoneNumber }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="detail-row">
@@ -169,7 +172,7 @@
                   <mat-icon>email</mat-icon>
                   Correo
                 </div>
-                <div class="detail-value email-value">{{ staff()!.email }}</div>
+                <div class="detail-value email-value">{{ staffMember()!.email }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="detail-row">
@@ -177,7 +180,7 @@
                   <mat-icon>home</mat-icon>
                   Dirección
                 </div>
-                <div class="detail-value">{{ staff()!.address }}</div>
+                <div class="detail-value">{{ staffMember()!.address }}</div>
               </div>
             </div>
           </mat-card>
@@ -205,7 +208,7 @@
                 </div>
                 <div class="detail-value post-badge">
                   <mat-icon>work</mat-icon>
-                  {{ staff()!.post }}
+                  {{ staffMember()!.post }}
                 </div>
               </div>
               <mat-divider></mat-divider>
@@ -214,7 +217,7 @@
                   <mat-icon>description</mat-icon>
                   Tipo de Contrato
                 </div>
-                <div class="detail-value">{{ staff()!.typeOfContract }}</div>
+                <div class="detail-value">{{ staffMember()!.typeOfContract }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="detail-row">
@@ -223,7 +226,7 @@
                   Turno de Trabajo
                 </div>
                 <div class="detail-value shift-badge">
-                  {{ staff()!.workShift }}
+                  {{ staffMember()!.workShift }}
                 </div>
               </div>
             </div>
@@ -242,26 +245,26 @@
                   <mat-icon>login</mat-icon>
                   Fecha de Contratación
                 </div>
-                <div class="detail-value">{{ staff()!.contractDate | date:'dd/MM/yyyy' }}</div>
+                <div class="detail-value">{{ staffMember()!.contractDate | date:'dd/MM/yyyy' }}</div>
               </div>
-              @if (staff()!.contractEndDate) {
+              @if (staffMember()!.contractEndDate) {
                 <mat-divider></mat-divider>
                 <div class="detail-row">
                   <div class="detail-label">
                     <mat-icon>logout</mat-icon>
                     Fin de Contrato
                   </div>
-                  <div class="detail-value">{{ staff()!.contractEndDate | date:'dd/MM/yyyy' }}</div>
+                  <div class="detail-value">{{ staffMember()!.contractEndDate | date:'dd/MM/yyyy' }}</div>
                 </div>
               }
-              @if (staff()!.terminationDate) {
+              @if (staffMember()!.terminationDate) {
                 <mat-divider></mat-divider>
                 <div class="detail-row">
                   <div class="detail-label">
                     <mat-icon>event_busy</mat-icon>
                     Fecha de Terminación
                   </div>
-                  <div class="detail-value termination-date">{{ staff()!.terminationDate | date:'dd/MM/yyyy' }}</div>
+                  <div class="detail-value termination-date">{{ staffMember()!.terminationDate | date:'dd/MM/yyyy' }}</div>
                 </div>
               }
             </div>
@@ -269,7 +272,7 @@
         </div>
 
         <!-- Sección: Información Profesional -->
-        @if (staff()!.certifications && staff()!.certifications.length > 0) {
+        @if (staffMember()!.certifications && staffMember()!.certifications.length > 0) {
           <div class="section-title">
             <mat-icon>school</mat-icon>
             <h2>Información Profesional</h2>
@@ -284,7 +287,7 @@
             </div>
             <div class="card-body">
               <div class="chips-container">
-                @for (certification of staff()!.certifications; track certification) {
+                @for (certification of staffMember()!.certifications; track certification) {
                   <mat-chip class="certification-chip">
                     <mat-icon>verified</mat-icon>
                     {{ certification }}
@@ -315,7 +318,7 @@
                   <mat-icon>person</mat-icon>
                   Nombre
                 </div>
-                <div class="detail-value">{{ staff()!.emergencyContactName }}</div>
+                <div class="detail-value">{{ staffMember()!.emergencyContactName }}</div>
               </div>
               <mat-divider></mat-divider>
               <div class="detail-row">
@@ -323,7 +326,7 @@
                   <mat-icon>phone</mat-icon>
                   Teléfono
                 </div>
-                <div class="detail-value">{{ staff()!.emergencyContactPhone }}</div>
+                <div class="detail-value">{{ staffMember()!.emergencyContactPhone }}</div>
               </div>
             </div>
           </mat-card>

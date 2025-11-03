@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCard } from '@angular/material/card';
-import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
+import { MatButton, MatFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatError } from '@angular/material/form-field';
@@ -10,7 +10,7 @@ import { MatChip } from '@angular/material/chips';
 import { DatePipe } from '@angular/common';
 import { StaffManagementStore } from '../../application/staff-management.store';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
-import {TranslatePipe} from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-staff-member-detail',
@@ -23,7 +23,6 @@ import {TranslatePipe} from '@ngx-translate/core';
     MatError,
     MatDivider,
     MatChip,
-    MatIconButton,
     MatFabButton,
     DatePipe,
     LayoutNursingHome,
@@ -37,19 +36,19 @@ export class StaffMemberDetail {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  staffId = signal<number | null>(null);
-
-  staff = computed(() => {
-    const id = this.staffId();
+  imageLoadedMap: Record<number, boolean> = {};
+  staffMemberId = signal<number | null>(null);
+  staffMember = computed(() => {
+    const id = this.staffMemberId();
     if (!id) return undefined;
-    const staffSignal = this.store.getStaffMemberById(id);
-    return staffSignal();
+    const staffMemberSignal = this.store.getStaffMemberById(id);
+    return staffMemberSignal();
   });
 
   constructor() {
     this.route.params.subscribe(params => {
       const id = params['id'] ? +params['id'] : null;
-      this.staffId.set(id);
+      this.staffMemberId.set(id);
 
       if (!id) {
         this.router.navigate(['/employee/list']).then();
@@ -57,19 +56,29 @@ export class StaffMemberDetail {
     });
   }
 
+  onImageLoad(id: number) {
+    this.imageLoadedMap[id] = true;
+  }
+
+  onImageError(event: Event, id: number) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'images/shared/veyra-placeholder.png';
+    this.imageLoadedMap[id] = true;
+  }
+
   goBack() {
     this.router.navigate(['/employee/list']).then();
   }
 
   editStaffMember() {
-    const id = this.staffId();
+    const id = this.staffMemberId();
     if (id) {
       this.router.navigate(['staff', id, 'edit']).then();
     }
   }
 
   deleteStaffMember() {
-    const id = this.staffId();
+    const id = this.staffMemberId();
     if (id && confirm('¿Está seguro de eliminar este empleado?')) {
       this.store.deleteStaff(id);
       this.router.navigate(['/staff/list']).then();
@@ -77,7 +86,7 @@ export class StaffMemberDetail {
   }
 
   viewEmploymentRecord() {
-    const id = this.staffId();
+    const id = this.staffMemberId();
     if (id) {
       this.router.navigate(['staff', id, 'records']).then();
     }
