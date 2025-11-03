@@ -51,10 +51,12 @@
                 </h1>
                 <mat-chip [class.chip-active]="staff()!.state === 'Active'"
                           [class.chip-inactive]="staff()!.state !== 'Active'">
-                  <mat-icon>
-                    {{ staff()!.state === 'Active' ? 'check_circle' : 'cancel' }}
-                  </mat-icon>
-                  {{ staff()!.state }}
+                  <div class="status">
+                    <mat-icon class>
+                      {{ staff()!.state === 'Active' ? 'check_circle' : 'cancel' }}
+                    </mat-icon>
+                    {{ staff()!.state }}
+                  </div>
                 </mat-chip>
               </div>
 
