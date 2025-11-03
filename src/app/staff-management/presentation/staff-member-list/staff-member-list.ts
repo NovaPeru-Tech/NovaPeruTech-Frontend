@@ -37,6 +37,7 @@ export class StaffMemberList {
   protected router = inject(Router);
 
   selectedId: number | null = null;
+  imageLoadedMap: Record<number, boolean> = {};
   searchTerm = signal('');
   staffMembers = computed(() => this.store.staffMembers());
   filteredStaffMembers = computed(() => {
@@ -51,6 +52,16 @@ export class StaffMemberList {
       return name.startsWith(term) || lastname.startsWith(term);
     });
   });
+
+  onImageLoad(id: number) {
+    this.imageLoadedMap[id] = true;
+  }
+
+  onImageError(event: Event, id: number) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'images/shared/veyra-placeholder.png';
+    this.imageLoadedMap[id] = true;
+  }
 
   removeAccents(text: string) {
     return text.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').trim();

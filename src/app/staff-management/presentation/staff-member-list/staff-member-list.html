@@ -44,7 +44,10 @@
         <!-- Foto del empleado -->
         <div class="staff-image">
           <img [src]="staffMember.image || 'assets/default-avatar.png'"
-               [alt]="staffMember.name + ' ' + staffMember.lastname">
+               (load)="onImageLoad(staffMember.id)"
+               (error)="onImageError($event, staffMember.id)"
+               [alt]="staffMember.name + ' ' + staffMember.lastname"
+               [class.loaded]="imageLoadedMap[staffMember.id]">
         </div>
 
         <!-- Información del empleado -->
