@@ -597,4 +597,33 @@ mat-card.info-card {
     width: 100%;
     justify-content: center;
   }
+
+  .records-card {
+    margin-bottom: 130px;
+  }
+
+  .action-buttons {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 24px;
+    gap: 10px;
+    width: 100%;
+    max-width: 280px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .action-buttons button,
+  .action-buttons .mat-button,
+  .action-buttons .mat-raised-button {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons {
+    max-width: 235px;
+  }
 }
