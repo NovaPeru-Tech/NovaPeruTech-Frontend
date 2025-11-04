@@ -8,13 +8,13 @@ import { MatInput } from '@angular/material/input';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { Toolbar } from '../../../shared/presentation/components/toolbar/toolbar';
 import { MatChipGrid, MatChipInput, MatChipInputEvent, MatChipRow } from '@angular/material/chips';
 import { MatOption, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatCalendar } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { StaffManagementStore } from '../../application/staff-management.store';
+import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
 @Component({
   selector: 'app-staff-member-form',
@@ -31,7 +31,6 @@ import { StaffManagementStore } from '../../application/staff-management.store';
     MatIconButton,
     MatIcon,
     MatProgressSpinner,
-    Toolbar,
     MatSelect,
     MatOption,
     MatHint,
@@ -39,7 +38,8 @@ import { StaffManagementStore } from '../../application/staff-management.store';
     MatChipGrid,
     MatChipInput,
     MatCalendar,
-    DatePipe
+    DatePipe,
+    LayoutNursingHome
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './staff-member-form.html',
