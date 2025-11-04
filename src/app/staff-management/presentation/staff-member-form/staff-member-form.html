@@ -1,8 +1,7 @@
 <app-toolbar></app-toolbar>
+<h1 class="title">{{ (isEdit?'staff.edit.title': 'staff.new.title') | translate }}</h1>
 
 <div class="form-wrapper">
-  <h1 class="title">{{ 'staff.edit.title' | translate }}</h1>
-
   @if (store.loading()) {
     <div class="loading-container">
       <mat-spinner diameter="40"></mat-spinner>
@@ -38,7 +37,7 @@
     <div class="form-row">
       <mat-form-field>
         <mat-label>{{ 'name' | translate }}</mat-label>
-        <input matInput formControlName="name" readonly>
+        <input matInput formControlName="name" required>
         @if (form.get('name')?.touched && form.get('name')!.hasError('required')) {
           <mat-error>{{ 'staff.error.name-required' | translate }}</mat-error>
         }
@@ -46,7 +45,7 @@
 
       <mat-form-field>
         <mat-label>{{ 'lastname' | translate }}</mat-label>
-        <input matInput formControlName="lastname" readonly>
+        <input matInput formControlName="lastname" required>
         @if (form.get('lastname')?.touched && form.get('lastname')!.hasError('required')) {
           <mat-error>{{ 'staff.error.lastname-required' | translate }}</mat-error>
         }
@@ -56,7 +55,7 @@
     <div class="form-row">
       <mat-form-field>
         <mat-label>{{ 'dni' | translate }}</mat-label>
-        <input matInput formControlName="dni" readonly>
+        <input matInput formControlName="dni" required>
         @if (form.get('dni')?.touched && form.get('dni')!.hasError('required')) {
           <mat-error>{{ 'staff.error.dni-required' | translate }}</mat-error>
         }
@@ -69,15 +68,16 @@
       </mat-form-field>
     </div>
 
-    <div class="calendar-section readonly-calendar">
+    <div class="calendar-section">
       <label class="section-label">
         {{ 'birthDate' | translate }}
         <span class="required">*</span>
-        <span class="readonly-badge">{{ 'staff.readonly' | translate }}</span>
+        @if (isEdit){ <span class="readonly-badge">{{ 'staff.readonly' | translate }}</span> }
       </label>
 
       <mat-calendar
         [selected]="form.value.birthDate"
+        (selectedChange)="onBirthDateSelected($event)"
         [maxDate]="maxDate"
         [startAt]="startDate">
       </mat-calendar>
@@ -87,6 +87,10 @@
           <mat-icon>event</mat-icon>
           <span>{{ form.value.birthDate | date:'dd/MM/yyyy' }}</span>
         </div>
+      }
+
+      @if (form.get('birthDate')?.touched && form.get('birthDate')!.hasError('required')) {
+        <mat-error>{{ 'residents.error.birthdate-required' | translate }}</mat-error>
       }
     </div>
 
