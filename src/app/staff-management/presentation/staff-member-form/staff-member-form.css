@@ -382,6 +382,35 @@ mat-chip-row {
   ::ng-deep .calendar-section .mat-calendar {
     max-width: 100%;
   }
+
+  .space {
+    padding-bottom: 100px;
+  }
+
+  .action-buttons {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 24px;
+    gap: 10px;
+    width: 100%;
+    max-width: 280px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .action-buttons button,
+  .action-buttons .mat-button,
+  .action-buttons .mat-raised-button {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons {
+    max-width: 235px;
+  }
 }
 
 /* Material Design enhancements */
