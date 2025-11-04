@@ -7,11 +7,9 @@
 }
 
 .title {
-  text-align: center;
-  margin-bottom: 32px;
-  color: #333;
-  font-size: 28px;
-  font-weight: 600;
+  margin: 30px 20px 0 20px;
+  padding-bottom: 8px;
+  border-bottom: #66B3AD 5px solid;
 }
 
 /* Loading and Error States */
