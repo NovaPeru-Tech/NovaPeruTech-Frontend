@@ -15,6 +15,8 @@ import { MatCalendar } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { StaffManagementStore } from '../../application/staff-management.store';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { MatCard } from '@angular/material/card';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-staff-member-form',
@@ -39,7 +41,9 @@ import { LayoutNursingHome } from '../../../shared/presentation/components/layou
     MatChipInput,
     MatCalendar,
     DatePipe,
-    LayoutNursingHome
+    LayoutNursingHome,
+    MatCard,
+    MatDivider
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './staff-member-form.html',
