@@ -558,8 +558,17 @@ mat-card.info-card {
     font-size: 24px;
   }
 
-  .quick-info {
-    grid-template-columns: 1fr;
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .info-item div {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
   }
 
   .card-actions {
@@ -625,5 +634,11 @@ mat-card.info-card {
 @media (max-width: 480px) {
   .action-buttons {
     max-width: 235px;
+  }
+}
+
+@media (max-width: 375px) {
+  .name-section{
+    flex-direction: column;
   }
 }
