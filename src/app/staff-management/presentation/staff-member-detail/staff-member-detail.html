@@ -6,7 +6,7 @@
     @if (store.loading()) {
       <div class="loading-wrapper">
         <mat-spinner diameter="50"></mat-spinner>
-        <p>Cargando información...</p>
+        <p>{{ 'staff-management.loading' | translate }}</p>
       </div>
     }
 
@@ -69,21 +69,21 @@
                 <div class="info-item">
                   <mat-icon>badge</mat-icon>
                   <div>
-                    <span class="info-label">DNI</span>
+                    <span class="info-label">{{ 'staff-management.dni' | translate }}</span>
                     <span class="info-value">{{ staffMember()!.dni }}</span>
                   </div>
                 </div>
                 <div class="info-item">
                   <mat-icon>work</mat-icon>
                   <div>
-                    <span class="info-label">Cargo</span>
+                    <span class="info-label">{{ 'staff-management.post' | translate }}</span>
                     <span class="info-value">{{ staffMember()!.post }}</span>
                   </div>
                 </div>
                 <div class="info-item">
                   <mat-icon>schedule</mat-icon>
                   <div>
-                    <span class="info-label">Turno</span>
+                    <span class="info-label">{{ 'staff-management.type-of-contract' | translate }}</span>
                     <span class="info-value">{{ staffMember()!.workShift }}</span>
                   </div>
                 </div>
@@ -95,7 +95,7 @@
           <div class="card-actions">
             <button mat-raised-button color="accent" (click)="viewEmploymentRecord()" class="action-btn">
               <mat-icon>folder_shared</mat-icon>
-              Expediente Laboral
+              {{ 'staff-management.record' | translate }}
             </button>
           </div>
         </mat-card>
@@ -103,7 +103,7 @@
         <!-- Sección: Información Personal -->
         <div class="section-title">
           <mat-icon>person</mat-icon>
-          <h2>Información Personal</h2>
+          <h2>{{ 'staff-management.basic-info' | translate }}</h2>
         </div>
 
         <div class="info-grid">
@@ -112,13 +112,13 @@
               <div class="icon-wrapper personal">
                 <mat-icon>person</mat-icon>
               </div>
-              <h3>Datos Personales</h3>
+              <h3>{{ 'staff-management.personal-info' | translate }}</h3>
             </div>
             <div class="card-body">
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>badge</mat-icon>
-                  DNI
+                  {{ 'staff-management.dni' | translate }}
                 </div>
                 <div class="detail-value">{{ staffMember()!.dni }}</div>
               </div>
@@ -126,7 +126,7 @@
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>cake</mat-icon>
-                  Fecha de Nacimiento
+                  {{ 'staff-management.birthDate' | translate }}
                 </div>
                 <div class="detail-value">{{ staffMember()!.birthDate | date:'dd/MM/yyyy' }}</div>
               </div>
@@ -134,7 +134,7 @@
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>calendar_today</mat-icon>
-                  Edad
+                  {{ 'staff-management.age' | translate }}
                 </div>
                 <div class="detail-value">{{ staffMember()!.age }} años</div>
               </div>
@@ -143,7 +143,7 @@
                 <div class="detail-row">
                   <div class="detail-label">
                     <mat-icon>flag</mat-icon>
-                    Nacionalidad
+                    {{ 'staff-management.nationality' | translate }}
                   </div>
                   <div class="detail-value">{{ staffMember()!.nationality }}</div>
                 </div>
@@ -156,13 +156,13 @@
               <div class="icon-wrapper contact">
                 <mat-icon>contact_phone</mat-icon>
               </div>
-              <h3>Información de Contacto</h3>
+              <h3>{{ 'staff-management.contact-info' | translate }}</h3>
             </div>
             <div class="card-body">
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>phone</mat-icon>
-                  Teléfono
+                  {{ 'staff-management.phone' | translate }}
                 </div>
                 <div class="detail-value">{{ staffMember()!.phoneNumber }}</div>
               </div>
@@ -170,7 +170,7 @@
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>email</mat-icon>
-                  Correo
+                  {{ 'staff-management.email' | translate }}
                 </div>
                 <div class="detail-value email-value">{{ staffMember()!.email }}</div>
               </div>
@@ -178,7 +178,7 @@
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>home</mat-icon>
-                  Dirección
+                  {{ 'staff-management.address' | translate }}
                 </div>
                 <div class="detail-value">{{ staffMember()!.address }}</div>
               </div>
@@ -189,7 +189,7 @@
         <!-- Sección: Información Laboral -->
         <div class="section-title">
           <mat-icon>work</mat-icon>
-          <h2>Información Laboral</h2>
+          <h2>{{ 'staff-management.employment-info' | translate }}</h2>
         </div>
 
         <div class="info-grid">
@@ -198,13 +198,13 @@
               <div class="icon-wrapper employment">
                 <mat-icon>badge</mat-icon>
               </div>
-              <h3>Cargo y Contrato</h3>
+              <h3>{{ 'staff-management.position-contract' | translate }}</h3>
             </div>
             <div class="card-body">
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>work_outline</mat-icon>
-                  Cargo
+                  {{ 'staff-management.position' | translate }}
                 </div>
                 <div class="detail-value post-badge">
                   <mat-icon>work</mat-icon>
@@ -215,7 +215,7 @@
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>description</mat-icon>
-                  Tipo de Contrato
+                  {{ 'staff-management.type-of-contract' | translate }}
                 </div>
                 <div class="detail-value">{{ staffMember()!.typeOfContract }}</div>
               </div>
@@ -223,7 +223,7 @@
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>schedule</mat-icon>
-                  Turno de Trabajo
+                  {{ 'staff-management.work-shift' | translate }}
                 </div>
                 <div class="detail-value shift-badge">
                   {{ staffMember()!.workShift }}
@@ -237,13 +237,13 @@
               <div class="icon-wrapper employment">
                 <mat-icon>event</mat-icon>
               </div>
-              <h3>Fechas Contractuales</h3>
+              <h3>{{ 'staff-management.contractual-date' | translate }}</h3>
             </div>
             <div class="card-body">
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>login</mat-icon>
-                  Fecha de Contratación
+                  {{ 'staff-management.contract-date' | translate }}
                 </div>
                 <div class="detail-value">{{ staffMember()!.contractDate | date:'dd/MM/yyyy' }}</div>
               </div>
@@ -252,7 +252,7 @@
                 <div class="detail-row">
                   <div class="detail-label">
                     <mat-icon>logout</mat-icon>
-                    Fin de Contrato
+                    {{ 'staff-management.contract-end-date' | translate }}
                   </div>
                   <div class="detail-value">{{ staffMember()!.contractEndDate | date:'dd/MM/yyyy' }}</div>
                 </div>
@@ -262,7 +262,7 @@
                 <div class="detail-row">
                   <div class="detail-label">
                     <mat-icon>event_busy</mat-icon>
-                    Fecha de Terminación
+                    {{ 'staff-management.termination-date' | translate }}
                   </div>
                   <div class="detail-value termination-date">{{ staffMember()!.terminationDate | date:'dd/MM/yyyy' }}</div>
                 </div>
@@ -275,7 +275,7 @@
         @if (staffMember()!.certifications && staffMember()!.certifications.length > 0) {
           <div class="section-title">
             <mat-icon>school</mat-icon>
-            <h2>Información Profesional</h2>
+            <h2>{{ 'staff-management.professional-info' | translate }}</h2>
           </div>
 
           <mat-card class="full-width-card">
@@ -283,7 +283,7 @@
               <div class="icon-wrapper professional">
                 <mat-icon>workspace_premium</mat-icon>
               </div>
-              <h3>Certificaciones y Credenciales</h3>
+              <h3>{{ 'staff-management.certifications' | translate }}</h3>
             </div>
             <div class="card-body">
               <div class="chips-container">
@@ -301,7 +301,7 @@
         <!-- Sección: Contactos de Emergencia -->
         <div class="section-title">
           <mat-icon>emergency</mat-icon>
-          <h2>Contactos de Emergencia</h2>
+          <h2>{{ 'staff-management.emergency-contacts' | translate }}</h2>
         </div>
 
         <div class="info-grid">
@@ -310,13 +310,13 @@
               <div class="icon-wrapper emergency">
                 <mat-icon>contact_emergency</mat-icon>
               </div>
-              <h3>Contacto de Emergencia</h3>
+              <h3>{{ 'staff-management.emergency-contact' | translate }}</h3>
             </div>
             <div class="card-body">
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>person</mat-icon>
-                  Nombre
+                  {{ 'staff-management.emergencyContactName' | translate }}
                 </div>
                 <div class="detail-value">{{ staffMember()!.emergencyContactName }}</div>
               </div>
@@ -324,7 +324,7 @@
               <div class="detail-row">
                 <div class="detail-label">
                   <mat-icon>phone</mat-icon>
-                  Teléfono
+                  {{ 'staff-management.emergencyContactPhone' | translate }}
                 </div>
                 <div class="detail-value">{{ staffMember()!.emergencyContactPhone }}</div>
               </div>
@@ -339,10 +339,9 @@
               <mat-icon>folder_shared</mat-icon>
             </div>
             <div class="records-text">
-              <h3>Expediente Laboral</h3>
+              <h3>{{ 'staff-management.record' | translate }}</h3>
               <p>
-                Accede al expediente completo del empleado con historial de evaluaciones,
-                capacitaciones y documentos laborales.
+                {{ 'staff-management.record-info' | translate }}
               </p>
             </div>
             <button mat-fab
@@ -359,11 +358,11 @@
         <div class="not-found-icon-wrapper">
           <mat-icon class="not-found-icon">person_off</mat-icon>
         </div>
-        <h2>Empleado no encontrado</h2>
-        <p>No se pudo encontrar la información del empleado solicitado</p>
+        <h2>{{ 'staff-management.error.not-found' | translate }}</h2>
+        <p>{{ 'staff-management.error.not-found-message' | translate }}</p>
         <button mat-raised-button color="primary" (click)="goBack()">
           <mat-icon>arrow_back</mat-icon>
-          Volver a la Lista
+          {{ 'staff-management.buttons.back-to-list' | translate }}
         </button>
       </div>
     }
