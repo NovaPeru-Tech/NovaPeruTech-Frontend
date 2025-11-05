@@ -1,5 +1,5 @@
 <app-layout-nursing-home>
-  <h1 class="title">{{ 'staff.list-title' | translate }}</h1>
+  <h1 class="title">{{ 'staff-management.list.title' | translate }}</h1>
 
   <div class="search-container">
     <mat-form-field appearance="outline">
@@ -53,19 +53,19 @@
         <!-- Información del empleado -->
         <mat-card-content>
           <p class="staff-info">
-            <strong>{{ 'staff.lastName' | translate }}:</strong>
+            <strong>{{ 'staff-management.last-name' | translate }}:</strong>
             {{ staffMember.lastname }}
           </p>
           <p class="staff-info">
-            <strong>{{ 'staff.firstName' | translate }}:</strong>
+            <strong>{{ 'staff-management.first-name' | translate }}:</strong>
             {{ staffMember.name }}
           </p>
           <p class="staff-info">
-            <strong>{{ 'staff.dni' | translate }}:</strong>
+            <strong>{{ 'staff-management.dni' | translate }}:</strong>
             {{ staffMember.dni }}
           </p>
           <p class="staff-info">
-            <strong>{{ 'post' | translate }}:</strong>
+            <strong>{{ 'staff-management.post' | translate }}:</strong>
             {{ staffMember.post }}
           </p>
         </mat-card-content>
@@ -75,12 +75,12 @@
                 color="primary"
                 class="detail-button"
                 (click)="viewDetails(staffMember.id); $event.stopPropagation()">
-          {{ 'staff.details' | translate }}
+          {{ 'staff-management.buttons.details' | translate }}
         </button>
       </mat-card>
     } @empty {
       <div class="empty-state">
-        <p>{{ 'staff.no-staff' | translate }}</p>
+        <p>{{ 'staff-management.error.no-staff' | translate }}</p>
       </div>
     }
   </div>
@@ -92,7 +92,7 @@
             [disabled]="!selectedId"
             (click)="deleteStaff(selectedId!)">
       <mat-icon>delete</mat-icon>
-      {{ 'staff.delete' | translate }}
+      {{ 'staff-management.buttons.delete' | translate }}
     </button>
 
     <button mat-raised-button
@@ -100,14 +100,14 @@
             [disabled]="!selectedId"
             (click)="editStaff(selectedId!)">
       <mat-icon>edit</mat-icon>
-      {{ 'staff.edit' | translate }}
+      {{ 'staff-management.buttons.edit' | translate }}
     </button>
 
     <button mat-raised-button
             color="accent"
             (click)="navigateToNew()">
       <mat-icon>add</mat-icon>
-      {{ 'staff.add' | translate }}
+      {{ 'staff-management.buttons.add' | translate }}
     </button>
   </div>
 </app-layout-nursing-home>
