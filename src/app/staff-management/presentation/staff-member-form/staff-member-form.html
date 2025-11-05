@@ -1,5 +1,5 @@
 <app-layout-nursing-home>
-  <h1 class="title">{{ (isEdit ? 'staff.edit.title' : 'staff.new.title') | translate }}</h1>
+  <h1 class="title">{{ (isEdit ? 'staff-management.edit.title' : 'staff-management.new.title') | translate }}</h1>
 
   <div class="form-wrapper">
     @if (store.loading()) {
@@ -20,7 +20,7 @@
           <!-- Photo Upload -->
           <div class="image-upload-section">
             <label class="image-label">
-              {{ 'image' | translate }}
+              {{ 'staff-management.image' | translate }}
               <span class="required">*</span>
             </label>
 
@@ -31,9 +31,9 @@
                          style="display: none">
                   <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">
                     <mat-icon>add_photo_alternate</mat-icon>
-                    {{ 'staff.select-image' | translate }}
+                    {{ 'staff-management.form.select-image' | translate }}
                   </button>
-                  <p class="upload-hint">JPG, PNG - {{ 'staff.max-size' | translate }}</p>
+                  <p class="upload-hint">JPG, PNG - {{ 'staff-management.form.max-size' | translate }}</p>
                 </div>
               } @else {
                 <div class="image-preview-container">
@@ -47,35 +47,35 @@
 
             @if (form.get('image')?.touched && form.get('image')!.hasError('required')) {
               <mat-error class="image-error">
-                {{ 'staff.error.image-required' | translate }}
+                {{ 'staff-management.error.image-required' | translate }}
               </mat-error>
             }
           </div>
           <div class="row">
             <mat-form-field>
-              <mat-label>{{ 'residents.first-name' | translate }}</mat-label>
+              <mat-label>{{ 'staff-management.first-name' | translate }}</mat-label>
               <input matInput formControlName="name" required>
               @if (form.get('name')?.touched && form.get('name')!.hasError('required')) {
-                <mat-error>{{ 'residents.error.name-required' | translate }}</mat-error>
+                <mat-error>{{ 'staff-management.error.name-required' | translate }}</mat-error>
               }
             </mat-form-field>
 
             <mat-form-field>
-              <mat-label>{{ 'residents.last-name' | translate }}</mat-label>
+              <mat-label>{{ 'staff-management.last-name' | translate }}</mat-label>
               <input matInput formControlName="lastname" required>
               @if (form.get('lastname')?.touched && form.get('lastname')!.hasError('required')) {
-                <mat-error>{{ 'residents.error.last-name-required' | translate }}</mat-error>
+                <mat-error>{{ 'staff-management.error.last-name-required' | translate }}</mat-error>
               }
             </mat-form-field>
             <mat-form-field>
-              <mat-label>{{ 'residents.state' | translate }}</mat-label>
+              <mat-label>{{ 'staff-management.state' | translate }}</mat-label>
               <mat-select formControlName="state" required>
                 @for (status of stateOptions; track status) {
                   <mat-option [value]="status">{{ status }}</mat-option>
                 }
               </mat-select>
               @if (form.get('state')?.touched && form.get('state')!.hasError('required')) {
-                <mat-error>{{ 'residents.error.state-required' | translate }}</mat-error>
+                <mat-error>{{ 'staff-management.error.state-required' | translate }}</mat-error>
               }
             </mat-form-field>
           </div>
@@ -84,7 +84,7 @@
 
       <div class="section-divider">
         <mat-icon>person</mat-icon>
-        <span>{{ 'staff.basic-info' | translate }}</span>
+        <span>{{ 'staff-management.basic-info' | translate }}</span>
       </div>
 
       <div class="info-grid">
@@ -93,15 +93,15 @@
             <div class="icon-wrapper personal">
               <mat-icon>person</mat-icon>
             </div>
-            <h3>Datos Personales</h3>
+            <h3>{{ 'staff-management.personal-info' | translate }}</h3>
           </div>
           <div class="card-body">
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'dni' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.dni' | translate }}</mat-label>
                 <input matInput formControlName="dni" required>
                 @if (form.get('dni')?.touched && form.get('dni')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.dni-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.dni-required' | translate }}</mat-error>
                 }
               </mat-form-field>
             </div>
@@ -109,10 +109,10 @@
             <div class="detail-row">
               <div class="calendar-section">
                 <label class="section-label">
-                  {{ 'birthDate' | translate }}
+                  {{ 'staff-management.birthDate' | translate }}
                   <span class="required">*</span>
                   @if (isEdit) {
-                    <span class="readonly-badge">{{ 'staff.readonly' | translate }}</span>
+                    <span class="readonly-badge">{{ 'staff-management.readonly' | translate }}</span>
                   }
                 </label>
 
@@ -131,16 +131,16 @@
                 }
 
                 @if (form.get('birthDate')?.touched && form.get('birthDate')!.hasError('required')) {
-                  <mat-error>{{ 'residents.error.birthdate-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.birthDate-required' | translate }}</mat-error>
                 }
               </div>
             </div>
             <mat-divider></mat-divider>
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'nationality' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.nationality' | translate }}</mat-label>
                 <input matInput formControlName="nationality">
-                <mat-hint>{{ 'staff.optional' | translate }}</mat-hint>
+                <mat-hint>{{ 'staff-management.form.optional' | translate }}</mat-hint>
               </mat-form-field>
             </div>
           </div>
@@ -151,38 +151,38 @@
             <div class="icon-wrapper contact">
               <mat-icon>contact_phone</mat-icon>
             </div>
-            <h3>Información de Contacto</h3>
+            <h3>{{ 'staff-management.contact-info' | translate }}</h3>
           </div>
           <div class="card-body">
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'phoneNumber' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.phone' | translate }}</mat-label>
                 <input matInput formControlName="phoneNumber" required>
                 @if (form.get('phoneNumber')?.touched && form.get('phoneNumber')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.phoneNumber-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.phoneNumber-required' | translate }}</mat-error>
                 }
               </mat-form-field>
             </div>
             <mat-divider></mat-divider>
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'email' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.email' | translate }}</mat-label>
                 <input matInput type="email" formControlName="email" required>
                 @if (form.get('email')?.touched && form.get('email')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.email-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.email-required' | translate }}</mat-error>
                 }
                 @if (form.get('email')?.touched && form.get('email')!.hasError('email')) {
-                  <mat-error>{{ 'staff.error.email-invalid' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.email-invalid' | translate }}</mat-error>
                 }
               </mat-form-field>
             </div>
             <mat-divider></mat-divider>
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'address' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.address' | translate }}</mat-label>
                 <textarea matInput formControlName="address" rows="2" required></textarea>
                 @if (form.get('address')?.touched && form.get('address')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.address-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.address-required' | translate }}</mat-error>
                 }
               </mat-form-field>
             </div>
@@ -193,7 +193,7 @@
       <!-- Employment Information Section -->
       <div class="section-divider">
         <mat-icon>work</mat-icon>
-        <span>{{ 'staff.employment-info' | translate }}</span>
+        <span>{{ 'staff-management.employment-info' | translate }}</span>
       </div>
 
       <div class="info-grid">
@@ -202,47 +202,47 @@
             <div class="icon-wrapper employment">
               <mat-icon>badge</mat-icon>
             </div>
-            <h3>Cargo y Contrato</h3>
+            <h3>{{ 'staff-management.position-contract' | translate }}</h3>
           </div>
           <div class="card-body">
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'post' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.position' | translate }}</mat-label>
                 <mat-select formControlName="post" required>
                   @for (position of postOptions; track position) {
                     <mat-option [value]="position">{{ position }}</mat-option>
                   }
                 </mat-select>
                 @if (form.get('post')?.touched && form.get('post')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.post-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.post-required' | translate }}</mat-error>
                 }
               </mat-form-field>
             </div>
             <mat-divider></mat-divider>
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'typeOfContract' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.type-of-contract' | translate }}</mat-label>
                 <mat-select formControlName="typeOfContract" required>
                   @for (contractType of typeOfContractOptions; track contractType) {
                     <mat-option [value]="contractType">{{ contractType }}</mat-option>
                   }
                 </mat-select>
                 @if (form.get('typeOfContract')?.touched && form.get('typeOfContract')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.typeOfContract-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.typeOfContract-required' | translate }}</mat-error>
                 }
               </mat-form-field>
             </div>
             <mat-divider></mat-divider>
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'workShift' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.work-shift' | translate }}</mat-label>
                 <mat-select formControlName="workShift" required>
                   @for (shift of workShiftOptions; track shift) {
                     <mat-option [value]="shift">{{ shift }}</mat-option>
                   }
                 </mat-select>
                 @if (form.get('workShift')?.touched && form.get('workShift')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.workShift-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.workShift-required' | translate }}</mat-error>
                 }
               </mat-form-field>
             </div>
@@ -254,13 +254,13 @@
             <div class="icon-wrapper employment">
               <mat-icon>event</mat-icon>
             </div>
-            <h3>Fechas Contractuales</h3>
+            <h3>{{ 'staff-management.contractual-date' | translate }}</h3>
           </div>
           <div class="card-body">
             <div class="detail-row">
               <div class="calendar-section">
                 <label class="section-label">
-                  {{ 'contractDate' | translate }}
+                  {{ 'staff-management.contract-date' | translate }}
                   <span class="required">*</span>
                 </label>
 
@@ -278,7 +278,7 @@
                 }
 
                 @if (form.get('contractDate')?.touched && form.get('contractDate')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.contractDate-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.contractDate-required' | translate }}</mat-error>
                 }
               </div>
             </div>
@@ -286,7 +286,7 @@
             <div class="detail-row">
               <div class="calendar-section">
                 <label class="section-label">
-                  {{ 'contractEndDate' | translate }}
+                  {{ 'staff-management.contract-end-date' | translate }}
                 </label>
 
                 <mat-calendar
@@ -301,14 +301,14 @@
                     <span>{{ form.value.contractEndDate | date:'dd/MM/yyyy' }}</span>
                   </div>
                 }
-                <mat-hint>{{ 'staff.optional' | translate }}</mat-hint>
+                <mat-hint>{{ 'staff-management.form.optional' | translate }}</mat-hint>
               </div>
             </div>
             <mat-divider></mat-divider>
             <div class="detail-row">
               <div class="calendar-section">
                 <label class="section-label">
-                  {{ 'terminationDate' | translate }}
+                  {{ 'staff-management.termination-date' | translate }}
                 </label>
 
                 <mat-calendar
@@ -323,7 +323,7 @@
                     <span>{{ form.value.terminationDate | date:'dd/MM/yyyy' }}</span>
                   </div>
                 }
-                <mat-hint>{{ 'staff.optional' | translate }}</mat-hint>
+                <mat-hint>{{ 'staff-management.form.optional' | translate }}</mat-hint>
               </div>
             </div>
           </div>
@@ -333,7 +333,7 @@
       <!-- Professional Information Section -->
       <div class="section-divider">
         <mat-icon>school</mat-icon>
-        <span>{{ 'staff.professional-info' | translate }}</span>
+        <span>{{ 'staff-management.professional-info' | translate }}</span>
       </div>
 
       <mat-card class="full-width-card">
@@ -341,11 +341,11 @@
           <div class="icon-wrapper professional">
             <mat-icon>workspace_premium</mat-icon>
           </div>
-          <h3>Certificaciones y Credenciales</h3>
+          <h3>{{ 'staff-management.certifications' | translate }}</h3>
         </div>
         <div class="card-body">
           <mat-form-field>
-            <mat-label>{{ 'certifications' | translate }}</mat-label>
+            <mat-label>{{ 'staff-management.certifications' | translate }}</mat-label>
             <mat-chip-grid #chipGrid>
               @for (certification of form.value.certifications; track certification) {
                 <mat-chip-row (removed)="removeCertification(certification)">
@@ -355,11 +355,11 @@
                   </button>
                 </mat-chip-row>
               }
-              <input placeholder="{{ 'staff.add-certification' | translate }}"
+              <input placeholder="{{ 'staff-management.form.add-certification' | translate }}"
                      [matChipInputFor]="chipGrid"
                      (matChipInputTokenEnd)="addCertification($event)">
             </mat-chip-grid>
-            <mat-hint>{{ 'staff.optional' | translate }}</mat-hint>
+            <mat-hint>{{ 'staff-management.form.optional' | translate }}</mat-hint>
           </mat-form-field>
         </div>
       </mat-card>
@@ -367,7 +367,7 @@
       <!-- Emergency Contacts Section -->
       <div class="section-divider">
         <mat-icon>emergency</mat-icon>
-        <span>{{ 'staff.emergency-contacts' | translate }}</span>
+        <span>{{ 'staff-management.emergency-contacts' | translate }}</span>
       </div>
 
       <div class="info-grid">
@@ -376,25 +376,25 @@
             <div class="icon-wrapper emergency">
               <mat-icon>contact_emergency</mat-icon>
             </div>
-            <h3>Contacto de Emergencia</h3>
+            <h3>{{ 'staff-management.emergency-contact' | translate }}</h3>
           </div>
           <div class="card-body">
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'emergencyContactName' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.emergencyContactName' | translate }}</mat-label>
                 <input matInput formControlName="emergencyContactName" required>
                 @if (form.get('emergencyContactName')?.touched && form.get('emergencyContactName')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.emergencyContactName-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.emergencyContactName-required' | translate }}</mat-error>
                 }
               </mat-form-field>
             </div>
             <mat-divider></mat-divider>
             <div class="detail-row">
               <mat-form-field>
-                <mat-label>{{ 'emergencyContactPhone' | translate }}</mat-label>
+                <mat-label>{{ 'staff-management.emergencyContactPhone' | translate }}</mat-label>
                 <input matInput formControlName="emergencyContactPhone" required>
                 @if (form.get('emergencyContactPhone')?.touched && form.get('emergencyContactPhone')!.hasError('required')) {
-                  <mat-error>{{ 'staff.error.emergencyContactPhone-required' | translate }}</mat-error>
+                  <mat-error>{{ 'staff-management.error.emergencyContactPhone-required' | translate }}</mat-error>
                 }
               </mat-form-field>
             </div>
@@ -408,12 +408,12 @@
       <div class="action-buttons">
         <button mat-raised-button type="button" (click)="onCancel()">
           <mat-icon>cancel</mat-icon>
-          {{ 'staff.cancel' | translate }}
+          {{ 'staff-management.buttons.cancel' | translate }}
         </button>
 
         <button mat-raised-button color="primary" type="submit">
           <mat-icon>save</mat-icon>
-          {{ 'staff.update' | translate }}
+          {{ (isEdit ? 'staff-management.buttons.update' : 'staff-management.buttons.register') | translate }}
         </button>
       </div>
 
