@@ -6,8 +6,8 @@ import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { StaffManagementStore } from '../../application/staff-management.store';
-import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { StaffStore } from '../../../application/staff.store';
+import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatInput } from '@angular/material/input';
 
 @Component({
@@ -33,7 +33,7 @@ import { MatInput } from '@angular/material/input';
   styleUrl: './staff-member-list.css'
 })
 export class StaffMemberList {
-  readonly store = inject(StaffManagementStore);
+  readonly store = inject(StaffStore);
   protected router = inject(Router);
 
   selectedId: number | null = null;
@@ -83,7 +83,7 @@ export class StaffMemberList {
   }
 
   deleteStaff(id: number) {
-    this.store.deleteStaff(id);
+    this.store.deleteStaffMember(id);
   }
 
   navigateToNew() {

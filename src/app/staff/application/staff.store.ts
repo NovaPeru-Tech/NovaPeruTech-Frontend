@@ -1,13 +1,13 @@
 import { computed, Injectable, Signal, signal } from '@angular/core';
 import { StaffMember } from '../domain/model/staff-member.entity';
-import { StaffManagementApi } from '../infrastructure/staff-management-api';
+import { StaffApi } from '../infrastructure/staff-api';
 import { retry } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StaffManagementStore {
+export class StaffStore {
   private readonly _staffMemberSignal = signal<StaffMember[]>([]);
   private readonly _loadingSignal = signal<boolean>(false);
   private readonly _errorSignal = signal<string | null>(null);
@@ -15,14 +15,14 @@ export class StaffManagementStore {
   readonly loading = this._loadingSignal.asReadonly();
   readonly staffMembers = this._staffMemberSignal.asReadonly();
 
-  constructor(private staffManagementApi: StaffManagementApi) {
+  constructor(private staffApi: StaffApi) {
     this.loadStaffMembers();
   }
 
   addStaffMember(staffMember: StaffMember) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.staffManagementApi.createStaffMember(staffMember).pipe(retry(2)).subscribe({
+    this.staffApi.createStaffMember(staffMember).pipe(retry(2)).subscribe({
       next: createdStaffMember => {
         this._staffMemberSignal.update(staffMembers => [...staffMembers, createdStaffMember]);
         this._loadingSignal.set(false);
@@ -38,10 +38,10 @@ export class StaffManagementStore {
     return computed(() => id ? this.staffMembers().find(s => s.id === id) : undefined);
   }
 
-  deleteStaff(id: number): void {
+  deleteStaffMember(id: number): void {
     this._loadingSignal.set(false);
     this._errorSignal.set(null);
-    this.staffManagementApi.deleteStaffMember(id).pipe(retry(2)).subscribe({
+    this.staffApi.deleteStaffMember(id).pipe(retry(2)).subscribe({
       next: () => {
         this._staffMemberSignal.update(staffMembers => staffMembers.filter(s => s.id !== id));
       },
@@ -52,10 +52,10 @@ export class StaffManagementStore {
     })
   }
 
-  updateStaff(staffMember: StaffMember) {
+  updateStaffMember(staffMember: StaffMember) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.staffManagementApi.updateStaffMember(staffMember).pipe(retry(2)).subscribe({
+    this.staffApi.updateStaffMember(staffMember).pipe(retry(2)).subscribe({
       next: updatedStaffMember => {
         this._staffMemberSignal.update(staffMembers => staffMembers.map(s => s.id == updatedStaffMember.id ? updatedStaffMember : s));
         this._loadingSignal.set(false);
@@ -70,7 +70,7 @@ export class StaffManagementStore {
   loadStaffMembers() {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.staffManagementApi.getStaffMembers().pipe(takeUntilDestroyed()).subscribe({
+    this.staffApi.getStaffMembers().pipe(takeUntilDestroyed()).subscribe({
       next: staffMember => {
         this._staffMemberSignal.set(staffMember);
         this._loadingSignal.set(false);

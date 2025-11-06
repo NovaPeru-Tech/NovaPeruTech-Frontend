@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StaffMember } from '../../domain/model/staff-member.entity';
+import { StaffMember } from '../../../domain/model/staff-member.entity';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatError, MatFormField, MatHint, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -13,8 +13,8 @@ import { MatOption, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatCalendar } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
-import { StaffManagementStore } from '../../application/staff-management.store';
-import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { StaffStore } from '../../../application/staff.store';
+import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatCard } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 
@@ -51,7 +51,7 @@ import { MatDivider } from '@angular/material/divider';
 })
 export class StaffMemberForm {
   private fb = inject(FormBuilder);
-  protected store = inject(StaffManagementStore);
+  protected store = inject(StaffStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -259,7 +259,7 @@ export class StaffMemberForm {
         emergencyContactPhone: formValue.emergencyContactPhone!,
       });
 
-      this.store.updateStaff(staffMember);
+      this.store.updateStaffMember(staffMember);
     } else {
       const staffMember: StaffMember = new StaffMember({
         id: this.staffMemberId ?? 0,

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class StaffManagementApi extends BaseApi {
+export class StaffApi extends BaseApi {
   private readonly _staffMembersApiEndpoint: StaffMembersApiEndpoint;
 
   constructor(http:HttpClient) {

@@ -8,8 +8,8 @@ import { MatError } from '@angular/material/form-field';
 import { MatDivider } from '@angular/material/divider';
 import { MatChip } from '@angular/material/chips';
 import { DatePipe } from '@angular/common';
-import { StaffManagementStore } from '../../application/staff-management.store';
-import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { StaffStore } from '../../../application/staff.store';
+import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -32,7 +32,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './staff-member-detail.css'
 })
 export class StaffMemberDetail {
-  protected store = inject(StaffManagementStore);
+  protected store = inject(StaffStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -80,7 +80,7 @@ export class StaffMemberDetail {
   deleteStaffMember() {
     const id = this.staffMemberId();
     if (id && confirm('¿Está seguro de eliminar este empleado?')) {
-      this.store.deleteStaff(id);
+      this.store.deleteStaffMember(id);
       this.router.navigate(['/staff/list']).then();
     }
   }
