@@ -4,7 +4,7 @@
     "inventory": "Inventory",
     "activity": "Activities",
     "resident": "Residents",
-    "employee": "Employees",
+    "staff": "Staff",
     "care-management": "Care Management"
   },
   "page-not-found": {
