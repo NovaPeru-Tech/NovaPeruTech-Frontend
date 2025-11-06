@@ -1,9 +1,3 @@
-:host {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
 .content-with-toolbar {
   flex-direction: column;
   height: 100%;
@@ -25,28 +19,9 @@
 
 /* ... resto de tus estilos existentes ... */
 .list-container {
-  max-width: 1400px;
+  padding: 20px;
   margin: 0 auto;
-  padding: 24px;
   background-color: #f5f7fa;
-  min-height: 100vh;
-}
-
-/* Header Section */
-.header-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.header-section button {
-  height: 44px;
-  font-weight: 500;
-}
-
-.header-section button mat-icon {
-  margin-right: 8px;
 }
 
 /* Loading and Error */
@@ -76,20 +51,20 @@
 /* Table Styling */
 .medications-table {
   width: 100%;
-  background: white;
+  background: #f0f8ff;
 }
 
 /* Header */
 ::ng-deep .mat-mdc-header-row {
   background: linear-gradient(135deg, #5f9ea0 0%, #4a8385 100%);
   height: 56px;
+  color: white;
 }
 
 ::ng-deep .mat-mdc-header-cell {
-  color: white !important;
+  color: #0d2e73 !important;
   font-weight: 600 !important;
   font-size: 14px !important;
-  border-bottom: none !important;
 }
 
 /* Rows */
@@ -100,24 +75,23 @@
 }
 
 ::ng-deep .mat-mdc-row:hover {
-  background-color: #f5f7fa;
+  background-color: #9fd2f1;
 }
 
 ::ng-deep .mat-mdc-row.selected-row {
-  background-color: #e3f2fd;
+  background-color: #9fd2f1;
 }
 
 ::ng-deep .mat-mdc-cell {
   color: #333;
   font-size: 14px;
-  padding: 12px 16px;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 16px !important;
 }
 
 /* Name Cell */
 .name-cell {
   font-weight: 600;
-  color: #1976d2;
+  color: #333;
 }
 
 .name-wrapper {
@@ -175,22 +149,28 @@
   background-color: #fff3e0;
 }
 
-/* Actions Cell */
-.actions-cell {
-  text-align: right;
-}
-
 .actions-cell button {
-  color: #1976d2;
+  color: #0d2e73;
 }
 
 /* Checkbox Styling */
-::ng-deep .mat-mdc-checkbox .mdc-checkbox__background {
-  border-color: white;
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__background,
+::ng-deep .mat-mdc-header-cell .mat-mdc-checkbox .mdc-checkbox__background {
+  border: 2px solid #70B1E6 !important;
 }
 
-::ng-deep .mat-mdc-header-cell .mat-mdc-checkbox .mdc-checkbox__background {
-  border-color: white !important;
+::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background,
+::ng-deep .mat-mdc-header-cell .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background {
+  background-color: #70B1E6 !important;
+}
+
+::ng-deep .mdc-checkbox__checkmark-path {
+  stroke: white !important;
+}
+
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__ripple::before,
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__ripple::after {
+  background-color: #70B1E6 !important;
 }
 
 /* Empty State */
@@ -216,12 +196,13 @@
 /* Paginator */
 ::ng-deep .mat-mdc-paginator {
   background: #f8f9fa;
-  border-top: 2px solid #e0e0e0;
-}
-
-::ng-deep .mat-mdc-paginator-container {
-  padding: 12px 16px;
+  border-top: 1px solid #596463;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 8px;
+  padding: 10px;
 }
 
 /* Floating Actions */
@@ -239,31 +220,13 @@
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .table-container {
+@media (max-width: 1240px) {
+  .table {
     overflow-x: auto;
-  }
-
-  .medications-table {
-    min-width: 1000px;
   }
 }
 
 @media (max-width: 768px) {
-  .list-container {
-    padding: 16px;
-  }
-
-  .header-section {
-    flex-direction: column;
-    gap: 16px;
-    align-items: stretch;
-  }
-
-  .header-section button {
-    width: 100%;
-  }
-
   .floating-actions {
     bottom: 16px;
     right: 16px;
@@ -282,33 +245,10 @@
     white-space: nowrap;
     flex: 1 1 auto;
   }
-
-  ::ng-deep .mat-mdc-row {
-    height: auto;
-    min-height: 60px;
-  }
-
-  ::ng-deep .mat-mdc-cell {
-    padding: 12px 8px;
-    font-size: 13px;
-  }
 }
 
 @media (max-width: 480px) {
   .floating-actions {
     max-width: 235px;
-  }
-}
-
-/* Print Styles */
-@media print {
-  .header-section button,
-  .floating-actions,
-  .actions-cell {
-    display: none !important;
-  }
-
-  .table-container {
-    box-shadow: none;
   }
 }
