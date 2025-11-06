@@ -1,14 +1,14 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import {MatError, MatFormField, MatLabel, MatPrefix, MatSuffix} from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { StaffManagementStore } from '../../application/staff-management.store';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
-import {MatInput} from '@angular/material/input';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-staff-member-list',
@@ -72,11 +72,11 @@ export class StaffMemberList {
   }
 
   viewDetails(id: number) {
-    this.router.navigate(['employee', id, 'detail']).then();
+    this.router.navigate(['staff/list', id, 'detail']).then();
   }
 
   editStaff(id: number) {
-    this.router.navigate(['employee', id, 'edit']).then();
+    this.router.navigate(['staff/list', id, 'edit']).then();
     if (this.selectedId === id) {
       this.selectedId = null;
     }
@@ -87,6 +87,6 @@ export class StaffMemberList {
   }
 
   navigateToNew() {
-    this.router.navigate(['employee/register']).then();
+    this.router.navigate(['staff/list/new']).then();
   }
 }
