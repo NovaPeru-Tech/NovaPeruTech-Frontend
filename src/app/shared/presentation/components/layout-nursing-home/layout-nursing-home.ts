@@ -35,8 +35,8 @@ export class LayoutNursingHome {
     { label: 'nav.home',      icon: 'home',        link: '/nursing-home',              color: '#5FC2BA'},
     { label: 'nav.inventory', icon: 'inventory',   link: '/inventory/medication/list', color: '#5FC2BA'},
     { label: 'nav.activity',  icon: 'assignment',  link: '/activities/list',           color: '#5FC2BA'},
-    { label: 'nav.resident',  icon: 'person',      link: '/resident/list',             color: '#5FC2BA'},
-    { label: 'nav.employee',  icon: 'group',       link: '/employee/list',             color: '#5FC2BA'}
+    { label: 'nav.resident',  icon: 'person',      link: '/residents/list',            color: '#5FC2BA'},
+    { label: 'nav.staff',     icon: 'group',       link: '/staff/list',                color: '#5FC2BA'}
   ];
 
   constructor(private router: Router, private observer: BreakpointObserver) {

@@ -1,4 +1,4 @@
-export class Staff {
+export class StaffMember {
   // Basic Information
   private _id: number;
   private _state: string;
@@ -30,7 +30,7 @@ export class Staff {
   private _emergencyContactName: string;
   private _emergencyContactPhone: string;
 
-  constructor(staff: {
+  constructor(staffMember: {
     id: number;
     state: string;
     name: string;
@@ -52,27 +52,27 @@ export class Staff {
     emergencyContactName: string;
     emergencyContactPhone: string;
   }) {
-    this._id = staff.id;
-    this._state = staff.state;
-    this._name = staff.name;
-    this._lastname = staff.lastname;
-    this._dni = staff.dni;
-    this._birthDate = staff.birthDate;
-    this._age = this.calculateAge(staff.birthDate);
-    this._nationality = staff.nationality;
-    this._phoneNumber = staff.phoneNumber;
-    this._email = staff.email;
-    this._address = staff.address;
-    this._image = staff.image;
-    this._contractDate = staff.contractDate;
-    this._contractEndDate = staff.contractEndDate;
-    this._terminationDate = staff.terminationDate;
-    this._post = staff.post;
-    this._typeOfContract = staff.typeOfContract;
-    this._workShift = staff.workShift;
-    this._certifications = staff.certifications;
-    this._emergencyContactName = staff.emergencyContactName;
-    this._emergencyContactPhone = staff.emergencyContactPhone;
+    this._id = staffMember.id;
+    this._state = staffMember.state;
+    this._name = staffMember.name;
+    this._lastname = staffMember.lastname;
+    this._dni = staffMember.dni;
+    this._birthDate = staffMember.birthDate;
+    this._age = this.calculateAge(staffMember.birthDate);
+    this._nationality = staffMember.nationality;
+    this._phoneNumber = staffMember.phoneNumber;
+    this._email = staffMember.email;
+    this._address = staffMember.address;
+    this._image = staffMember.image;
+    this._contractDate = staffMember.contractDate;
+    this._contractEndDate = staffMember.contractEndDate;
+    this._terminationDate = staffMember.terminationDate;
+    this._post = staffMember.post;
+    this._typeOfContract = staffMember.typeOfContract;
+    this._workShift = staffMember.workShift;
+    this._certifications = staffMember.certifications;
+    this._emergencyContactName = staffMember.emergencyContactName;
+    this._emergencyContactPhone = staffMember.emergencyContactPhone;
   }
 
   private calculateAge(birthDate: Date): number {
