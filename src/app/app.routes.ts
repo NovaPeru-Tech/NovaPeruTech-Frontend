@@ -9,8 +9,8 @@ const nursingHomeRoutes = () =>
   import('./nursingHome/presentation/nursing-home-routers').then(m => m.NursingHomeRouters);
 const residentRoutes = () =>
   import('./resident/presentation/residents-routes').then(m => m.residentsRoutes);
-const employeeRoutes = () =>
-  import('./staff-management/presentation/staff-management-routes').then(m => m.StaffManagementRoutes);
+const staffManagementRoutes = () =>
+  import('./staff-management/presentation/staff-management-routes').then(m => m.staffManagementRoutes);
 const inventoryRoutes = () =>
   import('./inventory/presentation/Inventory-router').then(m => m.InventoryRouter);
 
@@ -20,7 +20,7 @@ export const routes: Routes = [
   { path: 'auth',      loadChildren: iamRoutes },
   { path: '',          loadChildren: nursingHomeRoutes },
   { path: 'residents', loadChildren: residentRoutes },
-  { path: '',          loadChildren: employeeRoutes },
+  { path: 'staff',     loadChildren: staffManagementRoutes },
   { path: 'inventory', loadChildren: inventoryRoutes },
   { path: '',          redirectTo: '/home',         pathMatch:'full' },
   { path: '**',        loadComponent: pageNotFound, title:`Page Not Found | ${baseTitle}`}
