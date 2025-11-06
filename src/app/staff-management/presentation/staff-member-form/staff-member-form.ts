@@ -223,42 +223,77 @@ export class StaffMemberForm {
   submit() {
     if (this.form.invalid) return;
 
-    const staffMember: StaffMember = new StaffMember({
-      id: this.staffMemberId ?? 0,
-
-      // Basic Information
-      state: this.form.value.state!,
-      name: this.form.value.name!,
-      lastname: this.form.value.lastname!,
-      dni: this.form.value.dni!,
-      birthDate: this.form.value.birthDate!,
-      nationality: this.form.value.nationality! || undefined,
-      image: this.form.value.image!,
-
-      // Contact Information
-      phoneNumber: this.form.value.phoneNumber!,
-      email: this.form.value.email!,
-      address: this.form.value.address!,
-
-      // Employment Information
-      contractDate: this.form.value.contractDate!,
-      contractEndDate: this.form.value.contractEndDate! || undefined,
-      terminationDate: this.form.value.terminationDate! || undefined,
-      post: this.form.value.post!,
-      typeOfContract: this.form.value.typeOfContract!,
-      workShift: this.form.value.workShift!,
-
-      // Professional Information
-      certifications: this.form.value.certifications! || [],
-
-      // Emergency Contacts
-      emergencyContactName: this.form.value.emergencyContactName!,
-      emergencyContactPhone: this.form.value.emergencyContactPhone!,
-    });
-
     if (this.isEdit) {
+      const formValue = this.form.getRawValue();
+
+      const staffMember: StaffMember = new StaffMember({
+        id: this.staffMemberId ?? 0,
+
+        // Basic Information
+        state: formValue.state!,
+        name: formValue.name!,
+        lastname: formValue.lastname!,
+        dni: formValue.dni!,
+        birthDate: formValue.birthDate!,
+        nationality: formValue.nationality! || undefined,
+        image: formValue.image!,
+
+        // Contact Information
+        phoneNumber: formValue.phoneNumber!,
+        email: formValue.email!,
+        address: formValue.address!,
+
+        // Employment Information
+        contractDate: formValue.contractDate!,
+        contractEndDate: formValue.contractEndDate! || undefined,
+        terminationDate: formValue.terminationDate! || undefined,
+        post: formValue.post!,
+        typeOfContract: formValue.typeOfContract!,
+        workShift: formValue.workShift!,
+
+        // Professional Information
+        certifications: formValue.certifications! || [],
+
+        // Emergency Contacts
+        emergencyContactName: formValue.emergencyContactName!,
+        emergencyContactPhone: formValue.emergencyContactPhone!,
+      });
+
       this.store.updateStaff(staffMember);
     } else {
+      const staffMember: StaffMember = new StaffMember({
+        id: this.staffMemberId ?? 0,
+
+        // Basic Information
+        state: this.form.value.state!,
+        name: this.form.value.name!,
+        lastname: this.form.value.lastname!,
+        dni: this.form.value.dni!,
+        birthDate: this.form.value.birthDate!,
+        nationality: this.form.value.nationality! || undefined,
+        image: this.form.value.image!,
+
+        // Contact Information
+        phoneNumber: this.form.value.phoneNumber!,
+        email: this.form.value.email!,
+        address: this.form.value.address!,
+
+        // Employment Information
+        contractDate: this.form.value.contractDate!,
+        contractEndDate: this.form.value.contractEndDate! || undefined,
+        terminationDate: this.form.value.terminationDate! || undefined,
+        post: this.form.value.post!,
+        typeOfContract: this.form.value.typeOfContract!,
+        workShift: this.form.value.workShift!,
+
+        // Professional Information
+        certifications: this.form.value.certifications! || [],
+
+        // Emergency Contacts
+        emergencyContactName: this.form.value.emergencyContactName!,
+        emergencyContactPhone: this.form.value.emergencyContactPhone!,
+      });
+
       this.store.addStaffMember(staffMember);
     }
 
