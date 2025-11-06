@@ -1,19 +1,18 @@
-import {Component, computed, inject, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatError} from '@angular/material/form-field';
-import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import { MatTableModule} from '@angular/material/table';
-import {MatCheckbox} from '@angular/material/checkbox';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatTooltip} from '@angular/material/tooltip';
-import {SelectionModel} from '@angular/cdk/collections';
-import {InventoryStore} from '../../application/inventory-store';
-import {LayoutNursingHome} from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { Component, computed, inject, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatError } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltip } from '@angular/material/tooltip';
+import { SelectionModel } from '@angular/cdk/collections';
+import { InventoryStore } from '../../application/inventory-store';
+import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
 @Component({
   selector: 'app-medication-form-list',
@@ -25,14 +24,13 @@ import {LayoutNursingHome} from '../../../shared/presentation/components/layout-
     MatIcon,
     MatIconButton,
     MatButton,
-    Toolbar,
     DatePipe,
     MatTableModule,
     MatCheckbox,
     MatPaginatorModule,
     MatTooltip,
     DecimalPipe,
-    LayoutNursingHome,
+    LayoutNursingHome
   ],
   templateUrl: './medication-form-list.html',
   styleUrl: './medication-form-list.css'
