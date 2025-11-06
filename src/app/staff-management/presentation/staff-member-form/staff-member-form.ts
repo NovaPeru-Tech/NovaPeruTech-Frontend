@@ -297,10 +297,10 @@ export class StaffMemberForm {
       this.store.addStaffMember(staffMember);
     }
 
-    this.router.navigate(['/employee/list']).then();
+    this.router.navigate(['/staff/list']).then();
   }
 
   onCancel(): void {
-    this.router.navigate(['/employee/list']).then();
+    this.router.navigate(['/staff/list']).then();
   }
 }
