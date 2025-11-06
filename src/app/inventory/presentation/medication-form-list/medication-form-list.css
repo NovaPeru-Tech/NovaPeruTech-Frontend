@@ -232,31 +232,10 @@
   display: flex;
   gap: 12px;
   padding: 16px 24px;
-  background: white;
-  border-radius: 12px;
+  background: #f0f8ff;
+  border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   z-index: 100;
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.floating-actions button {
-  height: 44px;
-  font-weight: 500;
-}
-
-.floating-actions button mat-icon {
-  margin-right: 8px;
 }
 
 /* Responsive */
@@ -288,12 +267,20 @@
   .floating-actions {
     bottom: 16px;
     right: 16px;
-    left: 16px;
-    flex-direction: column;
+    padding: 12px 24px;
+    gap: 10px;
+    width: 100%;
+    max-width: 280px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
-  .floating-actions button {
-    width: 100%;
+  .floating-actions button,
+  .floating-actions .mat-button,
+  .floating-actions .mat-raised-button {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex: 1 1 auto;
   }
 
   ::ng-deep .mat-mdc-row {
@@ -304,6 +291,12 @@
   ::ng-deep .mat-mdc-cell {
     padding: 12px 8px;
     font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-actions {
+    max-width: 235px;
   }
 }
 

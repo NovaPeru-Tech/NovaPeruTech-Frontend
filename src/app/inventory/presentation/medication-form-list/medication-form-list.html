@@ -3,13 +3,6 @@
 
   <div class="content-with-toolbar">
     <div class="list-container">
-      <div class="header-section">
-        <button mat-raised-button color="accent" (click)="navigateToNew()">
-          <mat-icon>add</mat-icon>
-          {{ 'medications.add' | translate }}
-        </button>
-      </div>
-
       <!-- Loading State -->
       @if (store.loading()) {
         <div class="loading-wrapper">
@@ -149,19 +142,23 @@
       </div>
 
       <!-- Action Buttons -->
-      @if (selection.hasValue()) {
-        <div class="floating-actions">
-          <button mat-raised-button color="primary" (click)="editMedication(selection.selected[0])"
-                  [disabled]="selection.selected.length !== 1">
-            <mat-icon>edit</mat-icon>
-            {{ 'medications.edit' | translate }}
-          </button>
-          <button mat-raised-button color="warn" (click)="deleteSelected()">
-            <mat-icon>delete</mat-icon>
-            {{ 'medications.delete' | translate }} ({{ selection.selected.length }})
-          </button>
-        </div>
-      }
+      <div class="floating-actions">
+        <button mat-raised-button color="warn" (click)="deleteSelected()" [disabled]="selection.selected.length === 0">
+          <mat-icon>delete</mat-icon>
+          {{ 'medications.delete' | translate }} @if(selection.selected.length != 0) { ({{ selection.selected.length }}) }
+        </button>
+
+        <button mat-raised-button color="primary" (click)="editMedication(selection.selected[0])"
+                [disabled]="selection.selected.length !== 1">
+          <mat-icon>edit</mat-icon>
+          {{ 'medications.edit' | translate }}
+        </button>
+
+        <button mat-raised-button color="accent" (click)="navigateToNew()">
+          <mat-icon>add</mat-icon>
+          {{ 'medications.add' | translate }}
+        </button>
+      </div>
     </div>
   </div>
 </app-layout-nursing-home>
