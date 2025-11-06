@@ -51,7 +51,7 @@ export class StaffMemberDetail {
       this.staffMemberId.set(id);
 
       if (!id) {
-        this.router.navigate(['/employee/list']).then();
+        this.router.navigate(['/staff/list']).then();
       }
     });
   }
@@ -67,13 +67,13 @@ export class StaffMemberDetail {
   }
 
   goBack() {
-    this.router.navigate(['/employee/list']).then();
+    this.router.navigate(['/staff/list']).then();
   }
 
   editStaffMember() {
     const id = this.staffMemberId();
     if (id) {
-      this.router.navigate(['staff', id, 'edit']).then();
+      this.router.navigate(['staff/list', id, 'edit']).then();
     }
   }
 
@@ -88,7 +88,7 @@ export class StaffMemberDetail {
   viewEmploymentRecord() {
     const id = this.staffMemberId();
     if (id) {
-      this.router.navigate(['staff', id, 'records']).then();
+      this.router.navigate(['staff/list', id, 'records']).then();
     }
   }
 }
