@@ -1,8 +1,9 @@
 <app-layout-nursing-home>
+  <h1 class="title">{{ 'medications.list-title' | translate }}</h1>
+
   <div class="content-with-toolbar">
     <div class="list-container">
       <div class="header-section">
-        <h1 class="title">{{ 'medications.list-title' | translate }}</h1>
         <button mat-raised-button color="accent" (click)="navigateToNew()">
           <mat-icon>add</mat-icon>
           {{ 'medications.add' | translate }}
