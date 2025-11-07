@@ -16,6 +16,8 @@ import { MatCalendar } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { MatCard } from '@angular/material/card';
+import {MatDivider} from '@angular/material/divider';
 
 @Component({
   selector: 'app-medication-form',
@@ -42,7 +44,9 @@ import { LayoutNursingHome } from '../../../shared/presentation/components/layou
     MatCalendar,
     DatePipe,
     MatCheckbox,
-    LayoutNursingHome
+    LayoutNursingHome,
+    MatCard,
+    MatDivider
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './medication-form.html',
@@ -85,7 +89,6 @@ export class MedicationForm {
     supplier:              new FormControl<string>      ('',    { nonNullable: true, validators: [Validators.required] }),
     barcode:               new FormControl<string>      ('',    { nonNullable: true }),
     expirationDate:        new FormControl<Date | null> (null,  { validators: [Validators.required] }),
-    lastUpdate:            new FormControl<Date | null> (new Date(),  { validators: [Validators.required] }),
 
     storageLocation:       new FormControl<string>      ('',    { nonNullable: true, validators: [Validators.required] }),
     administrationRoute:   new FormControl<string>      ('',    { nonNullable: true, validators: [Validators.required] }),
@@ -126,7 +129,6 @@ export class MedicationForm {
             supplier: medication.supplier,
             barcode: medication.barcode,
             expirationDate: medication.expirationDate,
-            lastUpdate: medication.lastUpdate,
             storageLocation: medication.storageLocation,
             administrationRoute: medication.administrationRoute,
             requiresRefrigeration: medication.requiresRefrigeration,
@@ -234,11 +236,6 @@ export class MedicationForm {
     this.form.get('expirationDate')?.markAsTouched();
   }
 
-  onLastUpdateSelected(date: Date | null): void {
-    this.form.patchValue({lastUpdate: date});
-    this.form.get('lastUpdate')?.markAsTouched();
-  }
-
   submit() {
     if (this.form.invalid) return;
 
@@ -261,7 +258,7 @@ export class MedicationForm {
         supplier: formValue.supplier!,
         barcode: formValue.barcode || undefined,
         expirationDate: formValue.expirationDate!,
-        lastUpdate: formValue.lastUpdate!,
+        lastUpdate: new Date(),
         storageLocation: formValue.storageLocation!,
         administrationRoute: formValue.administrationRoute!,
         requiresRefrigeration: formValue.requiresRefrigeration!,
@@ -291,7 +288,7 @@ export class MedicationForm {
         supplier: this.form.value.supplier!,
         barcode: this.form.value.barcode || undefined,
         expirationDate: this.form.value.expirationDate!,
-        lastUpdate: this.form.value.lastUpdate!,
+        lastUpdate: new Date(),
         storageLocation: this.form.value.storageLocation!,
         administrationRoute: this.form.value.administrationRoute!,
         requiresRefrigeration: this.form.value.requiresRefrigeration!,
