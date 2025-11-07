@@ -10,6 +10,14 @@
   border-bottom: #66B3AD 5px solid;
 }
 
+.search-container {
+  margin-left: 20px;
+}
+
+.search-container mat-form-field {
+  width: 350px;
+}
+
 .table-container {
   background: white;
   border-radius: 12px;
@@ -17,10 +25,8 @@
   overflow: hidden;
 }
 
-/* ... resto de tus estilos existentes ... */
 .list-container {
-  padding: 20px;
-  margin: 0 auto;
+  margin: 30px 20px;
   background-color: #f5f7fa;
 }
 
@@ -55,6 +61,18 @@
 }
 
 /* Header */
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
 ::ng-deep .mat-mdc-header-row {
   background: linear-gradient(135deg, #5f9ea0 0%, #4a8385 100%);
   height: 56px;
@@ -223,6 +241,12 @@
 @media (max-width: 1240px) {
   .table {
     overflow-x: auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .search-container mat-form-field {
+    width: 280px;
   }
 }
 

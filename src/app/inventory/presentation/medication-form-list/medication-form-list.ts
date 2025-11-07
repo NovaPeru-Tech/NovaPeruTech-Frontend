@@ -1,8 +1,8 @@
-import { Component, computed, inject, ViewChild } from '@angular/core';
+import { Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatError } from '@angular/material/form-field';
+import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { DatePipe, DecimalPipe } from '@angular/common';
@@ -12,6 +12,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltip } from '@angular/material/tooltip';
 import { InventoryStore } from '../../application/inventory-store';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-medication-form-list',
@@ -29,7 +30,12 @@ import { LayoutNursingHome } from '../../../shared/presentation/components/layou
     MatPaginatorModule,
     MatTooltip,
     DecimalPipe,
-    LayoutNursingHome
+    LayoutNursingHome,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatPrefix,
+    MatSuffix
   ],
   templateUrl: './medication-form-list.html',
   styleUrl: './medication-form-list.css'
@@ -54,7 +60,53 @@ export class MedicationFormList {
   ];
 
   selectedId: number | null = null;
+  searchTerm = signal('');
+  selectedColumn = signal<string>('name');
+  sortDirection = signal<'asc'|'desc'>('asc');
   medications = computed(() => this.store.medications());
+
+  filteredMedications = computed(() => {
+    const term = this.removeAccents(this.searchTerm().toLowerCase().trim());
+    const meds = this.store.medications();
+    const col = this.selectedColumn();
+    const dir = this.sortDirection();
+    let result = meds;
+
+    if (term) {
+      result = meds.filter(m => {
+        const name = this.removeAccents(m.name?.toLowerCase() || '');
+        return name.startsWith(term);
+      });
+    }
+
+    return [...result].sort((a, b) => {
+      let valA = (a as any)[col];
+      let valB = (b as any)[col];
+
+      if (valA == null) return 1;
+      if (valB == null) return -1;
+
+      if (typeof valA === 'string') valA = valA.toLowerCase();
+      if (typeof valB === 'string') valB = valB.toLowerCase();
+
+      return dir === 'asc'
+        ? valA > valB ? 1 : -1
+        : valA < valB ? 1 : -1;
+    });
+  });
+
+  removeAccents(word: string) {
+    return word.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').trim();
+  }
+
+  toggleSort(col: string) {
+    if (this.selectedColumn() === col) {
+      this.sortDirection.update(d => d === 'asc' ? 'desc' : 'asc');
+    } else {
+      this.selectedColumn.set(col);
+      this.sortDirection.set('asc');
+    }
+  }
 
   selectMedication(id: number) {
     this.selectedId = this.selectedId === id ? null : id;

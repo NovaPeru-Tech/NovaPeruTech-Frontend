@@ -1,6 +1,24 @@
 <app-layout-nursing-home>
   <h1 class="title">{{ 'medications.list-title' | translate }}</h1>
 
+  <div class="search-container">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'Search' | translate }}</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        [placeholder]="'Enter the name' | translate"
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)"
+        type="text"/>
+      @if (searchTerm()) {
+        <button matSuffix mat-icon-button (click)="searchTerm.set('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  </div>
+
   <div class="content-with-toolbar">
     <div class="list-container">
       <!-- Error State -->
@@ -11,8 +29,7 @@
       <!-- Table Container -->
       <div class="table-container">
         <div class="table">
-          <table mat-table [dataSource]="medications()" class="medications-table">
-
+          <table mat-table [dataSource]="filteredMedications()" class="medications-table">
             <!-- Checkbox Column -->
             <ng-container matColumnDef="select">
               <th mat-header-cell *matHeaderCellDef></th>
@@ -26,7 +43,16 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef>{{ 'medications.name' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('name')">
+                <div class="header-content">
+                  {{ 'medications.name' | translate }}
+                  <mat-icon class="header-icon">
+                    @if (selectedColumn() !== 'name') { unfold_more }
+                    @else if (sortDirection() === 'asc') { arrow_drop_up }
+                    @else { arrow_drop_down }
+                  </mat-icon>
+                </div>
+              </th>
               <td mat-cell *matCellDef="let medication" class="name-cell">
                 <div class="name-wrapper">
                   <span class="medication-name">{{ medication.name }}</span>
@@ -39,34 +65,79 @@
 
             <!-- Type Column -->
             <ng-container matColumnDef="type">
-              <th mat-header-cell *matHeaderCellDef>{{ 'medications.type' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('type')">
+                <div class="header-content">
+                  {{ 'medications.type' | translate }}
+                  <mat-icon class="header-icon">
+                    @if (selectedColumn() !== 'type') { unfold_more }
+                    @else if (sortDirection() === 'asc') { arrow_drop_up }
+                    @else { arrow_drop_down }
+                  </mat-icon>
+                </div>
+              </th>
               <td mat-cell *matCellDef="let medication">{{ medication.type }}</td>
             </ng-container>
 
             <!-- Unit Column -->
             <ng-container matColumnDef="unit">
-              <th mat-header-cell *matHeaderCellDef>{{ 'medications.unit' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('unit')">
+                <div class="header-content">
+                  {{ 'medications.unit' | translate }}
+                  <mat-icon class="header-icon">
+                    @if (selectedColumn() !== 'unit') { unfold_more }
+                    @else if (sortDirection() === 'asc') { arrow_drop_up }
+                    @else { arrow_drop_down }
+                  </mat-icon>
+                </div>
+              </th>
               <td mat-cell *matCellDef="let medication">{{ medication.unit }}</td>
             </ng-container>
 
             <!-- Expiration Date Column -->
             <ng-container matColumnDef="expirationDate">
-              <th mat-header-cell *matHeaderCellDef>{{ 'medications.expiration-date' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('expirationDate')">
+                <div class="header-content">
+                  {{ 'medications.expiration-date' | translate }}
+                  <mat-icon class="header-icon">
+                    @if (selectedColumn() !== 'expirationDate') { unfold_more }
+                    @else if (sortDirection() === 'asc') { arrow_drop_up }
+                    @else { arrow_drop_down }
+                  </mat-icon>
+                </div>
+              </th>
               <td mat-cell *matCellDef="let medication" [class.near-expiration]="medication.isNearExpiration()"
                   [class.expired]="medication.isExpired()">
-                {{ medication.expirationDate | date:'dd-MM-yy' }}
+                {{ medication.expirationDate | date:'dd/MM/yyyy' }}
               </td>
             </ng-container>
 
             <!-- Supplier Column -->
             <ng-container matColumnDef="supplier">
-              <th mat-header-cell *matHeaderCellDef>{{ 'medications.supplier' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('supplier')">
+                <div class="header-content">
+                  {{ 'medications.supplier' | translate }}
+                  <mat-icon class="header-icon">
+                    @if (selectedColumn() !== 'supplier') { unfold_more }
+                    @else if (sortDirection() === 'asc') { arrow_drop_up }
+                    @else { arrow_drop_down }
+                  </mat-icon>
+                </div>
+              </th>
               <td mat-cell *matCellDef="let medication">{{ medication.supplier }}</td>
             </ng-container>
 
             <!-- Unit Cost Column -->
             <ng-container matColumnDef="unitCost">
-              <th mat-header-cell *matHeaderCellDef>{{ 'medications.unit-cost' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('unitCost')">
+                <div class="header-content">
+                  {{ 'medications.unit-cost' | translate }}
+                  <mat-icon class="header-icon">
+                    @if (selectedColumn() !== 'unitCost') { unfold_more }
+                    @else if (sortDirection() === 'asc') { arrow_drop_up }
+                    @else { arrow_drop_down }
+                  </mat-icon>
+                </div>
+              </th>
               <td mat-cell *matCellDef="let medication" class="cost-cell">
                 ${{ medication.unitCost | number:'1.2-2' }}
               </td>
@@ -74,15 +145,33 @@
 
             <!-- Last Update Column -->
             <ng-container matColumnDef="lastUpdate">
-              <th mat-header-cell *matHeaderCellDef>{{ 'medications.last-update' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('lastUpdate')">
+                <div class="header-content">
+                  {{ 'medications.last-update' | translate }}
+                  <mat-icon class="header-icon">
+                    @if (selectedColumn() !== 'lastUpdate') { unfold_more }
+                    @else if (sortDirection() === 'asc') { arrow_drop_up }
+                    @else { arrow_drop_down }
+                  </mat-icon>
+                </div>
+              </th>
               <td mat-cell *matCellDef="let medication">
-                {{ medication.lastUpdate | date:'yyyy-MM-dd' }}
+                {{ medication.lastUpdate | date:'dd/MM/yyyy' }}
               </td>
             </ng-container>
 
             <!-- Quantity Column -->
             <ng-container matColumnDef="quantity">
-              <th mat-header-cell *matHeaderCellDef>{{ 'medications.quantity' | translate }}</th>
+              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('quantity')">
+                <div class="header-content">
+                  {{ 'medications.quantity' | translate }}
+                  <mat-icon class="header-icon">
+                    @if (selectedColumn() !== 'quantity') { unfold_more }
+                    @else if (sortDirection() === 'asc') { arrow_drop_up }
+                    @else { arrow_drop_down }
+                  </mat-icon>
+                </div>
+              </th>
               <td mat-cell *matCellDef="let medication" [class.low-stock]="medication.isLowStock()">
                 {{ medication.quantity }}
               </td>
