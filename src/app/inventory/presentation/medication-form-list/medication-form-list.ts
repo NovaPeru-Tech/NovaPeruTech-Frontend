@@ -10,7 +10,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltip } from '@angular/material/tooltip';
-import { SelectionModel } from '@angular/cdk/collections';
 import { InventoryStore } from '../../application/inventory-store';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
@@ -54,28 +53,11 @@ export class MedicationFormList {
     'actions'
   ];
 
-  selection = new SelectionModel<number>(true, []);
+  selectedId: number | null = null;
   medications = computed(() => this.store.medications());
 
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.medications().length;
-    return numSelected === numRows;
-  }
-
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
-    }
-    this.selection.select(...this.medications().map(m => m.id));
-  }
-
-  checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
-    }
-    return `${this.selection.isSelected(row.id) ? 'deselect' : 'select'} row ${row.id}`;
+  selectMedication(id: number) {
+    this.selectedId = this.selectedId === id ? null : id;
   }
 
   viewDetails(id: number) {
@@ -89,18 +71,6 @@ export class MedicationFormList {
   deleteMedication(id: number) {
     if (confirm('¿Está seguro de eliminar este medicamento?')) {
       this.store.deleteMedication(id);
-      this.selection.deselect(id);
-    }
-  }
-
-  deleteSelected() {
-    if (this.selection.selected.length === 0) return;
-
-    if (confirm(`¿Está seguro de eliminar ${this.selection.selected.length} medicamento(s)?`)) {
-      this.selection.selected.forEach(id => {
-        this.store.deleteMedication(id);
-      });
-      this.selection.clear();
     }
   }
 

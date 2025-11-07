@@ -15,20 +15,11 @@
 
             <!-- Checkbox Column -->
             <ng-container matColumnDef="select">
-              <th mat-header-cell *matHeaderCellDef>
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let medication">
                 <mat-checkbox
-                  (change)="$event ? toggleAllRows() : null"
-                  [checked]="selection.hasValue() && isAllSelected()"
-                  [indeterminate]="selection.hasValue() && !isAllSelected()"
-                  [aria-label]="checkboxLabel()">
-                </mat-checkbox>
-              </th>
-              <td mat-cell *matCellDef="let row">
-                <mat-checkbox
-                  (click)="$event.stopPropagation()"
-                  (change)="$event ? selection.toggle(row.id) : null"
-                  [checked]="selection.isSelected(row.id)"
-                  [aria-label]="checkboxLabel(row)">
+                  [checked]="selectedId === medication.id"
+                  (click)="selectMedication(medication.id); $event.stopPropagation()">
                 </mat-checkbox>
               </td>
             </ng-container>
@@ -111,8 +102,8 @@
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                [class.selected-row]="selection.isSelected(row.id)"
-                (click)="selection.toggle(row.id)">
+                [class.selected-row]="selectedId === row.id"
+                (click)="selectMedication(row.id)">
             </tr>
 
             <tr class="mat-row" *matNoDataRow>
@@ -145,15 +136,13 @@
 
       <!-- Action Buttons -->
       <div class="floating-actions">
-        <button mat-raised-button color="warn" (click)="deleteSelected()" [disabled]="selection.selected.length === 0">
+        <button mat-raised-button color="warn" (click)="deleteMedication(selectedId!)" [disabled]="!selectedId">
           <mat-icon>delete</mat-icon>
-          {{ 'medications.delete' | translate }} @if (selection.selected.length != 0) {
-          ({{ selection.selected.length }})
-        }
+          {{ 'medications.delete' | translate }}
         </button>
 
-        <button mat-raised-button color="primary" (click)="editMedication(selection.selected[0])"
-                [disabled]="selection.selected.length !== 1">
+        <button mat-raised-button color="primary" (click)="editMedication(selectedId!)"
+                [disabled]="!selectedId">
           <mat-icon>edit</mat-icon>
           {{ 'medications.edit' | translate }}
         </button>
