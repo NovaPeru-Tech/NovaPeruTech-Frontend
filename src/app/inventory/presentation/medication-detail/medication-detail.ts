@@ -10,7 +10,7 @@ import {DatePipe, DecimalPipe} from '@angular/common';
 import {MatChip} from '@angular/material/chips';
 
 @Component({
-  selector: 'app-medication-form-detail',
+  selector: 'app-medication-detail',
   standalone: true,
   imports: [
     TranslatePipe,
@@ -24,10 +24,10 @@ import {MatChip} from '@angular/material/chips';
     DecimalPipe,
     MatFabButton
   ],
-  templateUrl: './medication-form-detail.html',
-  styleUrl: './medication-form-detail.css'
+  templateUrl: './medication-detail.html',
+  styleUrl: './medication-detail.css'
 })
-export class MedicationFormDetail {
+export class MedicationDetail {
   protected store = inject(InventoryStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);

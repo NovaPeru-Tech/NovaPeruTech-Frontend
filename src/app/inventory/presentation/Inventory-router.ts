@@ -2,7 +2,7 @@ import {Routes} from '@angular/router';
 
 const MedicationList=()=>import('./medication-list/medication-list').then(m=>m.MedicationList);
 const MedicationForm=()=> import('./medication-form/medication-form').then(m=>m.MedicationForm);
-const MedicationDetail=()=>import('./medication-form-detail/medication-form-detail').then(m=>m.MedicationFormDetail);
+const MedicationDetail=()=>import('./medication-detail/medication-detail').then(m=>m.MedicationDetail);
 const InventoryRouter:Routes=[
   {path:'medication/create', loadComponent:MedicationForm},
   { path:'medication/list', loadComponent:MedicationList},
