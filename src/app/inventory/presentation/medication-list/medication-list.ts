@@ -15,7 +15,7 @@ import { LayoutNursingHome } from '../../../shared/presentation/components/layou
 import { MatInput } from '@angular/material/input';
 
 @Component({
-  selector: 'app-medication-form-list',
+  selector: 'app-medication-list',
   standalone: true,
   imports: [
     TranslatePipe,
@@ -37,10 +37,10 @@ import { MatInput } from '@angular/material/input';
     MatPrefix,
     MatSuffix
   ],
-  templateUrl: './medication-form-list.html',
-  styleUrl: './medication-form-list.css'
+  templateUrl: './medication-list.html',
+  styleUrl: './medication-list.css'
 })
-export class MedicationFormList {
+export class MedicationList {
   readonly store = inject(InventoryStore);
   protected router = inject(Router);
 
