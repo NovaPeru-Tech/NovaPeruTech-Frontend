@@ -1,97 +1,96 @@
-<app-toolbar></app-toolbar>
-
-<div class="detail-wrapper">
-  @if (!medication()) {
-    <div class="loading-container">
-      <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
-      <p>{{ 'medication.loading' | translate }}</p>
-    </div>
-  } @else {
-    <div class="detail-container">
-
-      <!-- Hero Header with Image Background -->
-      <div class="hero-header">
-        <div class="hero-image" [style.background-image]="'url(' + medication()!.image + ')'">
-          <div class="hero-overlay"></div>
-        </div>
-        <div class="hero-content">
-          <button mat-icon-button class="back-button" (click)="navigateToList()">
-            <mat-icon>arrow_back</mat-icon>
-          </button>
-          <div class="hero-info">
-            <h1 class="medication-name">{{ medication()!.name }}</h1>
-            <div class="hero-badges">
-              <mat-chip class="type-badge">
-                <mat-icon>science</mat-icon>
-                {{ medication()!.type }}
-              </mat-chip>
-              <mat-chip class="concentration-badge">
-                {{ medication()!.concentration }}
-              </mat-chip>
-              <mat-chip class="form-badge">
-                {{ medication()!.pharmaceuticalForm }}
-              </mat-chip>
-            </div>
-          </div>
-          <button mat-fab extended color="primary" class="fab-edit" (click)="navigateToEdit()">
-            <mat-icon>edit</mat-icon>
-            {{ 'medication.edit' | translate }}
-          </button>
-        </div>
+<app-layout-nursing-home>
+  <div class="detail-wrapper">
+    @if (!medication()) {
+      <div class="loading-container">
+        <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
+        <p>{{ 'medication.loading' | translate }}</p>
       </div>
+    } @else {
+      <div class="detail-container">
 
-      <!-- Quick Stats Dashboard -->
-      <div class="stats-dashboard">
-
-        <!-- Stock Card -->
-        <div class="stat-card" [class]="'stat-' + getStockStatusClass()">
-          <div class="stat-header">
-            <div class="stat-icon-wrapper">
-              <mat-icon class="stat-icon">inventory_2</mat-icon>
-            </div>
-            <span class="stat-label">{{ 'medication.stock-status' | translate }}</span>
+        <!-- Hero Header with Image Background -->
+        <div class="hero-header">
+          <div class="hero-image" [style.background-image]="'url(' + medication()!.image + ')'">
+            <div class="hero-overlay"></div>
           </div>
-          <div class="stat-body">
-            <div class="stat-main-value">
-              <span class="value-number">{{ medication()!.quantity }}</span>
-              <span class="value-unit">{{ medication()!.unit }}</span>
-            </div>
-            <div class="progress-container">
-              <div class="progress-bar">
-                <div class="progress-fill" [style.width.%]="getStockPercentage()">
-                  <span class="progress-text">{{ getStockPercentage() | number:'1.0-0' }}%</span>
-                </div>
+          <div class="hero-content">
+            <button mat-icon-button class="back-button" (click)="navigateToList()">
+              <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="hero-info">
+              <h1 class="medication-name">{{ medication()!.name }}</h1>
+              <div class="hero-badges">
+                <mat-chip class="type-badge">
+                  <mat-icon>science</mat-icon>
+                  {{ medication()!.type }}
+                </mat-chip>
+                <mat-chip class="concentration-badge">
+                  {{ medication()!.concentration }}
+                </mat-chip>
+                <mat-chip class="form-badge">
+                  {{ medication()!.pharmaceuticalForm }}
+                </mat-chip>
               </div>
             </div>
-            <div class="stat-meta">
-              <span><mat-icon>trending_down</mat-icon> Min: {{ medication()!.minimumStock }}</span>
-              <span><mat-icon>trending_up</mat-icon> Max: {{ medication()!.maximumStock }}</span>
-            </div>
+            <button mat-fab extended color="primary" class="fab-edit" (click)="navigateToEdit()">
+              <mat-icon>edit</mat-icon>
+              {{ 'medication.edit' | translate }}
+            </button>
           </div>
         </div>
 
-        <!-- Expiration Card -->
-        <div class="stat-card" [class]="'stat-' + getExpirationStatusClass()">
-          <div class="stat-header">
-            <div class="stat-icon-wrapper">
-              <mat-icon class="stat-icon">event_available</mat-icon>
+        <!-- Quick Stats Dashboard -->
+        <div class="stats-dashboard">
+
+          <!-- Stock Card -->
+          <div class="stat-card" [class]="'stat-' + getStockStatusClass()">
+            <div class="stat-header">
+              <div class="stat-icon-wrapper">
+                <mat-icon class="stat-icon">inventory_2</mat-icon>
+              </div>
+              <span class="stat-label">{{ 'medication.stock-status' | translate }}</span>
             </div>
-            <span class="stat-label">{{ 'medication.expiration' | translate }}</span>
+            <div class="stat-body">
+              <div class="stat-main-value">
+                <span class="value-number">{{ medication()!.quantity }}</span>
+                <span class="value-unit">{{ medication()!.unit }}</span>
+              </div>
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress-fill" [style.width.%]="getStockPercentage()">
+                    <span class="progress-text">{{ getStockPercentage() | number:'1.0-0' }}%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="stat-meta">
+                <span><mat-icon>trending_down</mat-icon> Min: {{ medication()!.minimumStock }}</span>
+                <span><mat-icon>trending_up</mat-icon> Max: {{ medication()!.maximumStock }}</span>
+              </div>
+            </div>
           </div>
-          <div class="stat-body">
-            <div class="stat-main-value">
-              @if (getDaysUntilExpiration() > 0) {
-                <span class="value-number">{{ getDaysUntilExpiration() }}</span>
-                <span class="value-unit">días</span>
-              } @else {
-                <span class="value-expired">VENCIDO</span>
-              }
+
+          <!-- Expiration Card -->
+          <div class="stat-card" [class]="'stat-' + getExpirationStatusClass()">
+            <div class="stat-header">
+              <div class="stat-icon-wrapper">
+                <mat-icon class="stat-icon">event_available</mat-icon>
+              </div>
+              <span class="stat-label">{{ 'medication.expiration' | translate }}</span>
             </div>
-            <div class="stat-date">
-              <mat-icon>calendar_today</mat-icon>
-              {{ medication()!.expirationDate | date:'dd MMM yyyy' }}
-            </div>
-            <div class="stat-meta">
+            <div class="stat-body">
+              <div class="stat-main-value">
+                @if (getDaysUntilExpiration() > 0) {
+                  <span class="value-number">{{ getDaysUntilExpiration() }}</span>
+                  <span class="value-unit">días</span>
+                } @else {
+                  <span class="value-expired">VENCIDO</span>
+                }
+              </div>
+              <div class="stat-date">
+                <mat-icon>calendar_today</mat-icon>
+                {{ medication()!.expirationDate | date:'dd MMM yyyy' }}
+              </div>
+              <div class="stat-meta">
               <span>
                 @if (getDaysUntilExpiration() > 0) {
                   {{ 'medication.days-remaining' | translate }}
@@ -99,285 +98,293 @@
                   {{ 'medication.expired' | translate }}
                 }
               </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Cost Card -->
-        <div class="stat-card stat-cost">
-          <div class="stat-header">
-            <div class="stat-icon-wrapper">
-              <mat-icon class="stat-icon">payments</mat-icon>
-            </div>
-            <span class="stat-label">{{ 'medication.total-value' | translate }}</span>
-          </div>
-          <div class="stat-body">
-            <div class="stat-main-value">
-              <span class="value-currency">S/</span>
-              <span class="value-number">{{ (medication()!.quantity * medication()!.unitCost) | number:'1.2-2' }}</span>
-            </div>
-            <div class="stat-meta cost-breakdown">
-              <mat-icon>calculate</mat-icon>
-              <span>S/ {{ medication()!.unitCost | number:'1.2-2' }} × {{ medication()!.quantity }} {{ medication()!.unit }}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Update Card -->
-        <div class="stat-card stat-update">
-          <div class="stat-header">
-            <div class="stat-icon-wrapper">
-              <mat-icon class="stat-icon">update</mat-icon>
-            </div>
-            <span class="stat-label">{{ 'medication.lastUpdate' | translate }}</span>
-          </div>
-          <div class="stat-body">
-            <div class="stat-date large">
-              {{ medication()!.lastUpdate | date:'dd/MM/yyyy' }}
-            </div>
-            <div class="stat-meta">
-              <mat-icon>schedule</mat-icon>
-              {{ medication()!.lastUpdate | date:'HH:mm' }}
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Main Content Grid -->
-      <div class="content-grid">
-
-        <!-- Left Column: Essential Information -->
-        <div class="info-section">
-
-          <!-- Administration Information -->
-          <div class="info-card card-gradient-blue">
-            <div class="card-header">
-              <div class="header-icon">
-                <mat-icon>medical_services</mat-icon>
               </div>
-              <h2>{{ 'medication.administration' | translate }}</h2>
             </div>
-            <div class="card-body">
-              <div class="info-row featured">
-                <mat-icon>route</mat-icon>
-                <div class="info-content">
-                  <span class="label">{{ 'medication.administrationRoute' | translate }}</span>
-                  <span class="value highlight">{{ medication()!.administrationRoute }}</span>
+          </div>
+
+          <!-- Cost Card -->
+          <div class="stat-card stat-cost">
+            <div class="stat-header">
+              <div class="stat-icon-wrapper">
+                <mat-icon class="stat-icon">payments</mat-icon>
+              </div>
+              <span class="stat-label">{{ 'medication.total-value' | translate }}</span>
+            </div>
+            <div class="stat-body">
+              <div class="stat-main-value">
+                <span class="value-currency">S/</span>
+                <span
+                  class="value-number">{{ (medication()!.quantity * medication()!.unitCost) | number:'1.2-2' }}</span>
+              </div>
+              <div class="stat-meta cost-breakdown">
+                <mat-icon>calculate</mat-icon>
+                <span>S/ {{ medication()!.unitCost | number:'1.2-2' }}
+                  × {{ medication()!.quantity }} {{ medication()!.unit }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Update Card -->
+          <div class="stat-card stat-update">
+            <div class="stat-header">
+              <div class="stat-icon-wrapper">
+                <mat-icon class="stat-icon">update</mat-icon>
+              </div>
+              <span class="stat-label">{{ 'medication.lastUpdate' | translate }}</span>
+            </div>
+            <div class="stat-body">
+              <div class="stat-date large">
+                {{ medication()!.lastUpdate | date:'dd/MM/yyyy' }}
+              </div>
+              <div class="stat-meta">
+                <mat-icon>schedule</mat-icon>
+                {{ medication()!.lastUpdate | date:'HH:mm' }}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+
+          <!-- Left Column: Essential Information -->
+          <div class="info-section">
+
+            <!-- Administration Information -->
+            <div class="info-card card-gradient-blue">
+              <div class="card-header">
+                <div class="header-icon">
+                  <mat-icon>medical_services</mat-icon>
                 </div>
+                <h2>{{ 'medication.administration' | translate }}</h2>
               </div>
-              <div class="info-divider"></div>
-              <div class="info-row">
-                <mat-icon>place</mat-icon>
-                <div class="info-content">
-                  <span class="label">{{ 'medication.storageLocation' | translate }}</span>
-                  <span class="value">{{ medication()!.storageLocation }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Special Requirements -->
-          <div class="info-card card-gradient-purple">
-            <div class="card-header">
-              <div class="header-icon">
-                <mat-icon>verified_user</mat-icon>
-              </div>
-              <h2>{{ 'medication.special-requirements' | translate }}</h2>
-            </div>
-            <div class="card-body">
-              <div class="requirements-grid">
-                <div class="requirement-item" [class.active]="medication()!.requiresRefrigeration">
-                  <div class="requirement-icon">
-                    <mat-icon>ac_unit</mat-icon>
+              <div class="card-body">
+                <div class="info-row featured">
+                  <mat-icon>route</mat-icon>
+                  <div class="info-content">
+                    <span class="label">{{ 'medication.administrationRoute' | translate }}</span>
+                    <span class="value highlight">{{ medication()!.administrationRoute }}</span>
                   </div>
-                  <span>{{ 'medication.requiresRefrigeration' | translate }}</span>
-                  <mat-icon class="status-icon">{{ medication()!.requiresRefrigeration ? 'check_circle' : 'cancel' }}</mat-icon>
                 </div>
-                <div class="requirement-item" [class.active]="medication()!.requiresPrescription">
-                  <div class="requirement-icon">
-                    <mat-icon>description</mat-icon>
+                <div class="info-divider"></div>
+                <div class="info-row">
+                  <mat-icon>place</mat-icon>
+                  <div class="info-content">
+                    <span class="label">{{ 'medication.storageLocation' | translate }}</span>
+                    <span class="value">{{ medication()!.storageLocation }}</span>
                   </div>
-                  <span>{{ 'medication.requiresPrescription' | translate }}</span>
-                  <mat-icon class="status-icon">{{ medication()!.requiresPrescription ? 'check_circle' : 'cancel' }}</mat-icon>
                 </div>
               </div>
+            </div>
 
-              @if (medication()!.storageConditions && medication()!.storageConditions.length > 0) {
-                <div class="storage-conditions">
-                  <span class="conditions-label">{{ 'medication.storageConditions' | translate }}</span>
-                  <div class="conditions-list">
-                    @for (condition of medication()!.storageConditions; track condition) {
-                      <mat-chip class="condition-chip">
-                        <mat-icon>check</mat-icon>
-                        {{ condition }}
-                      </mat-chip>
+            <!-- Special Requirements -->
+            <div class="info-card card-gradient-purple">
+              <div class="card-header">
+                <div class="header-icon">
+                  <mat-icon>verified_user</mat-icon>
+                </div>
+                <h2>{{ 'medication.special-requirements' | translate }}</h2>
+              </div>
+              <div class="card-body">
+                <div class="requirements-grid">
+                  <div class="requirement-item" [class.active]="medication()!.requiresRefrigeration">
+                    <div class="requirement-icon">
+                      <mat-icon>ac_unit</mat-icon>
+                    </div>
+                    <span>{{ 'medication.requiresRefrigeration' | translate }}</span>
+                    <mat-icon
+                      class="status-icon">{{ medication()!.requiresRefrigeration ? 'check_circle' : 'cancel' }}
+                    </mat-icon>
+                  </div>
+                  <div class="requirement-item" [class.active]="medication()!.requiresPrescription">
+                    <div class="requirement-icon">
+                      <mat-icon>description</mat-icon>
+                    </div>
+                    <span>{{ 'medication.requiresPrescription' | translate }}</span>
+                    <mat-icon class="status-icon">{{ medication()!.requiresPrescription ? 'check_circle' : 'cancel' }}
+                    </mat-icon>
+                  </div>
+                </div>
+
+                @if (medication()!.storageConditions && medication()!.storageConditions.length > 0) {
+                  <div class="storage-conditions">
+                    <span class="conditions-label">{{ 'medication.storageConditions' | translate }}</span>
+                    <div class="conditions-list">
+                      @for (condition of medication()!.storageConditions; track condition) {
+                        <mat-chip class="condition-chip">
+                          <mat-icon>check</mat-icon>
+                          {{ condition }}
+                        </mat-chip>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Batch & Supplier -->
+            <div class="info-card card-gradient-green">
+              <div class="card-header">
+                <div class="header-icon">
+                  <mat-icon>local_shipping</mat-icon>
+                </div>
+                <h2>{{ 'medication.batch-supplier-info' | translate }}</h2>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <mat-icon>business</mat-icon>
+                  <div class="info-content">
+                    <span class="label">{{ 'medication.supplier' | translate }}</span>
+                    <span class="value">{{ medication()!.supplier }}</span>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <mat-icon>qr_code_2</mat-icon>
+                  <div class="info-content">
+                    <span class="label">{{ 'medication.batchNumber' | translate }}</span>
+                    <span class="value code">{{ medication()!.batchNumber }}</span>
+                  </div>
+                </div>
+                <div class="info-row">
+                  <mat-icon>badge</mat-icon>
+                  <div class="info-content">
+                    <span class="label">{{ 'medication.registrationNumber' | translate }}</span>
+                    <span class="value code">{{ medication()!.registrationNumber }}</span>
+                  </div>
+                </div>
+                @if (medication()!.barcode) {
+                  <div class="info-row">
+                    <mat-icon>barcode</mat-icon>
+                    <div class="info-content">
+                      <span class="label">{{ 'medication.barcode' | translate }}</span>
+                      <span class="value code">{{ medication()!.barcode }}</span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Additional Details -->
+          <div class="details-section">
+
+            <!-- Contraindications -->
+            @if (medication()!.contraindications && medication()!.contraindications.length > 0) {
+              <div class="alert-card warning-card">
+                <div class="alert-header">
+                  <mat-icon>warning</mat-icon>
+                  <h3>{{ 'medication.contraindications' | translate }}</h3>
+                </div>
+                <div class="alert-body">
+                  <div class="contraindications-list">
+                    @for (contraindication of medication()!.contraindications; track contraindication) {
+                      <div class="contraindication-item">
+                        <mat-icon>error_outline</mat-icon>
+                        <span>{{ contraindication }}</span>
+                      </div>
                     }
                   </div>
                 </div>
-              }
-            </div>
-          </div>
+              </div>
+            }
 
-          <!-- Batch & Supplier -->
-          <div class="info-card card-gradient-green">
-            <div class="card-header">
-              <div class="header-icon">
-                <mat-icon>local_shipping</mat-icon>
-              </div>
-              <h2>{{ 'medication.batch-supplier-info' | translate }}</h2>
-            </div>
-            <div class="card-body">
-              <div class="info-row">
-                <mat-icon>business</mat-icon>
-                <div class="info-content">
-                  <span class="label">{{ 'medication.supplier' | translate }}</span>
-                  <span class="value">{{ medication()!.supplier }}</span>
+            <!-- Special Notes -->
+            @if (medication()!.specialNotes) {
+              <div class="alert-card info-card">
+                <div class="alert-header">
+                  <mat-icon>info</mat-icon>
+                  <h3>{{ 'medication.specialNotes' | translate }}</h3>
+                </div>
+                <div class="alert-body">
+                  <p class="notes-text">{{ medication()!.specialNotes }}</p>
                 </div>
               </div>
-              <div class="info-row">
-                <mat-icon>qr_code_2</mat-icon>
-                <div class="info-content">
-                  <span class="label">{{ 'medication.batchNumber' | translate }}</span>
-                  <span class="value code">{{ medication()!.batchNumber }}</span>
-                </div>
+            }
+
+            <!-- Inventory Timeline -->
+            <div class="timeline-card">
+              <div class="timeline-header">
+                <mat-icon>timeline</mat-icon>
+                <h3>{{ 'medication.inventory-timeline' | translate }}</h3>
               </div>
-              <div class="info-row">
-                <mat-icon>badge</mat-icon>
-                <div class="info-content">
-                  <span class="label">{{ 'medication.registrationNumber' | translate }}</span>
-                  <span class="value code">{{ medication()!.registrationNumber }}</span>
-                </div>
-              </div>
-              @if (medication()!.barcode) {
-                <div class="info-row">
-                  <mat-icon>barcode</mat-icon>
-                  <div class="info-content">
-                    <span class="label">{{ 'medication.barcode' | translate }}</span>
-                    <span class="value code">{{ medication()!.barcode }}</span>
+              <div class="timeline-body">
+                <div class="timeline-item">
+                  <div class="timeline-dot green"></div>
+                  <div class="timeline-content">
+                    <span class="timeline-label">{{ 'medication.registered' | translate }}</span>
+                    <span class="timeline-value">{{ medication()!.lastUpdate | date:'dd MMM yyyy, HH:mm' }}</span>
                   </div>
                 </div>
-              }
+                <div class="timeline-item">
+                  <div class="timeline-dot" [class.red]="getDaysUntilExpiration() <= 0"
+                       [class.yellow]="getDaysUntilExpiration() > 0 && getDaysUntilExpiration() <= 30"
+                       [class.green]="getDaysUntilExpiration() > 30"></div>
+                  <div class="timeline-content">
+                    <span class="timeline-label">{{ 'medication.expires' | translate }}</span>
+                    <span class="timeline-value">{{ medication()!.expirationDate | date:'dd MMM yyyy' }}</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <!-- Technical Details -->
+            <div class="technical-card">
+              <div class="technical-header">
+                <mat-icon>science</mat-icon>
+                <h3>{{ 'medication.technical-details' | translate }}</h3>
+              </div>
+              <div class="technical-grid">
+                <div class="tech-item">
+                  <mat-icon>medication</mat-icon>
+                  <div>
+                    <span class="tech-label">{{ 'medication.type' | translate }}</span>
+                    <span class="tech-value">{{ medication()!.type }}</span>
+                  </div>
+                </div>
+                <div class="tech-item">
+                  <mat-icon>straighten</mat-icon>
+                  <div>
+                    <span class="tech-label">{{ 'medication.concentration' | translate }}</span>
+                    <span class="tech-value">{{ medication()!.concentration }}</span>
+                  </div>
+                </div>
+                <div class="tech-item">
+                  <mat-icon>medical_information</mat-icon>
+                  <div>
+                    <span class="tech-label">{{ 'medication.pharmaceuticalForm' | translate }}</span>
+                    <span class="tech-value">{{ medication()!.pharmaceuticalForm }}</span>
+                  </div>
+                </div>
+                <div class="tech-item">
+                  <mat-icon>scale</mat-icon>
+                  <div>
+                    <span class="tech-label">{{ 'medication.unit' | translate }}</span>
+                    <span class="tech-value">{{ medication()!.unit }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </div>
 
-        <!-- Right Column: Additional Details -->
-        <div class="details-section">
-
-          <!-- Contraindications -->
-          @if (medication()!.contraindications && medication()!.contraindications.length > 0) {
-            <div class="alert-card warning-card">
-              <div class="alert-header">
-                <mat-icon>warning</mat-icon>
-                <h3>{{ 'medication.contraindications' | translate }}</h3>
-              </div>
-              <div class="alert-body">
-                <div class="contraindications-list">
-                  @for (contraindication of medication()!.contraindications; track contraindication) {
-                    <div class="contraindication-item">
-                      <mat-icon>error_outline</mat-icon>
-                      <span>{{ contraindication }}</span>
-                    </div>
-                  }
-                </div>
-              </div>
-            </div>
-          }
-
-          <!-- Special Notes -->
-          @if (medication()!.specialNotes) {
-            <div class="alert-card info-card">
-              <div class="alert-header">
-                <mat-icon>info</mat-icon>
-                <h3>{{ 'medication.specialNotes' | translate }}</h3>
-              </div>
-              <div class="alert-body">
-                <p class="notes-text">{{ medication()!.specialNotes }}</p>
-              </div>
-            </div>
-          }
-
-          <!-- Inventory Timeline -->
-          <div class="timeline-card">
-            <div class="timeline-header">
-              <mat-icon>timeline</mat-icon>
-              <h3>{{ 'medication.inventory-timeline' | translate }}</h3>
-            </div>
-            <div class="timeline-body">
-              <div class="timeline-item">
-                <div class="timeline-dot green"></div>
-                <div class="timeline-content">
-                  <span class="timeline-label">{{ 'medication.registered' | translate }}</span>
-                  <span class="timeline-value">{{ medication()!.lastUpdate | date:'dd MMM yyyy, HH:mm' }}</span>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-dot" [class.red]="getDaysUntilExpiration() <= 0" [class.yellow]="getDaysUntilExpiration() > 0 && getDaysUntilExpiration() <= 30" [class.green]="getDaysUntilExpiration() > 30"></div>
-                <div class="timeline-content">
-                  <span class="timeline-label">{{ 'medication.expires' | translate }}</span>
-                  <span class="timeline-value">{{ medication()!.expirationDate | date:'dd MMM yyyy' }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Technical Details -->
-          <div class="technical-card">
-            <div class="technical-header">
-              <mat-icon>science</mat-icon>
-              <h3>{{ 'medication.technical-details' | translate }}</h3>
-            </div>
-            <div class="technical-grid">
-              <div class="tech-item">
-                <mat-icon>medication</mat-icon>
-                <div>
-                  <span class="tech-label">{{ 'medication.type' | translate }}</span>
-                  <span class="tech-value">{{ medication()!.type }}</span>
-                </div>
-              </div>
-              <div class="tech-item">
-                <mat-icon>straighten</mat-icon>
-                <div>
-                  <span class="tech-label">{{ 'medication.concentration' | translate }}</span>
-                  <span class="tech-value">{{ medication()!.concentration }}</span>
-                </div>
-              </div>
-              <div class="tech-item">
-                <mat-icon>medical_information</mat-icon>
-                <div>
-                  <span class="tech-label">{{ 'medication.pharmaceuticalForm' | translate }}</span>
-                  <span class="tech-value">{{ medication()!.pharmaceuticalForm }}</span>
-                </div>
-              </div>
-              <div class="tech-item">
-                <mat-icon>scale</mat-icon>
-                <div>
-                  <span class="tech-label">{{ 'medication.unit' | translate }}</span>
-                  <span class="tech-value">{{ medication()!.unit }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <!-- Action Bar -->
+        <div class="action-bar">
+          <button mat-stroked-button class="action-secondary" (click)="navigateToList()">
+            <mat-icon>arrow_back</mat-icon>
+            {{ 'medication.back-to-list' | translate }}
+          </button>
+          <div class="action-spacer"></div>
+          <button mat-raised-button color="primary" class="action-primary" (click)="navigateToEdit()">
+            <mat-icon>edit</mat-icon>
+            {{ 'medication.edit-medication' | translate }}
+          </button>
         </div>
 
       </div>
-
-      <!-- Action Bar -->
-      <div class="action-bar">
-        <button mat-stroked-button class="action-secondary" (click)="navigateToList()">
-          <mat-icon>arrow_back</mat-icon>
-          {{ 'medication.back-to-list' | translate }}
-        </button>
-        <div class="action-spacer"></div>
-        <button mat-raised-button color="primary" class="action-primary" (click)="navigateToEdit()">
-          <mat-icon>edit</mat-icon>
-          {{ 'medication.edit-medication' | translate }}
-        </button>
-      </div>
-
-    </div>
-  }
-</div>
+    }
+  </div>
+</app-layout-nursing-home>

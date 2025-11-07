@@ -1,13 +1,13 @@
-import {Component, computed, inject} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {InventoryStore} from '../../application/inventory-store';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
-import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {MatChip} from '@angular/material/chips';
+import { Component, computed, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { InventoryStore } from '../../application/inventory-store';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatFabButton, MatIconButton } from '@angular/material/button';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { MatChip } from '@angular/material/chips';
+import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 
 @Component({
   selector: 'app-medication-detail',
@@ -18,11 +18,11 @@ import {MatChip} from '@angular/material/chips';
     MatIcon,
     MatIconButton,
     MatButton,
-    Toolbar,
     DatePipe,
     MatChip,
     DecimalPipe,
-    MatFabButton
+    MatFabButton,
+    LayoutNursingHome
   ],
   templateUrl: './medication-detail.html',
   styleUrl: './medication-detail.css'
