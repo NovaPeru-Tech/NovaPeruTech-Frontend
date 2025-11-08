@@ -1,35 +1,20 @@
-:host {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
 .content-with-toolbar {
-  display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
-}
-
-.list-container {
-  flex: 1;
-  padding: 24px;
-  background-color: #f5f7fa;
-  overflow-y: auto;
-}
-
-.header-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
+  padding-bottom: 100px;
 }
 
 .title {
-  margin: 0;
-  font-size: 28px;
-  font-weight: 600;
-  color: #2c3e50;
+  margin: 30px 20px;
+  padding-bottom: 8px;
+  border-bottom: #66B3AD 5px solid;
+}
+
+.search-container {
+  margin-left: 20px;
+}
+
+.search-container mat-form-field {
+  width: 350px;
 }
 
 .table-container {
@@ -39,37 +24,9 @@
   overflow: hidden;
 }
 
-/* ... resto de tus estilos existentes ... */
 .list-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 24px;
+  margin: 30px 20px;
   background-color: #f5f7fa;
-  min-height: 100vh;
-}
-
-/* Header Section */
-.header-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.title {
-  margin: 0;
-  color: #333;
-  font-size: 28px;
-  font-weight: 600;
-}
-
-.header-section button {
-  height: 44px;
-  font-weight: 500;
-}
-
-.header-section button mat-icon {
-  margin-right: 8px;
 }
 
 /* Loading and Error */
@@ -99,20 +56,32 @@
 /* Table Styling */
 .medications-table {
   width: 100%;
-  background: white;
+  background: #f0f8ff;
 }
 
 /* Header */
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
 ::ng-deep .mat-mdc-header-row {
   background: linear-gradient(135deg, #5f9ea0 0%, #4a8385 100%);
   height: 56px;
+  color: white;
 }
 
 ::ng-deep .mat-mdc-header-cell {
-  color: white !important;
+  color: #0d2e73 !important;
   font-weight: 600 !important;
   font-size: 14px !important;
-  border-bottom: none !important;
 }
 
 /* Rows */
@@ -123,24 +92,23 @@
 }
 
 ::ng-deep .mat-mdc-row:hover {
-  background-color: #f5f7fa;
+  background-color: #9fd2f1;
 }
 
 ::ng-deep .mat-mdc-row.selected-row {
-  background-color: #e3f2fd;
+  background-color: #9fd2f1;
 }
 
 ::ng-deep .mat-mdc-cell {
   color: #333;
   font-size: 14px;
-  padding: 12px 16px;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 16px !important;
 }
 
 /* Name Cell */
 .name-cell {
   font-weight: 600;
-  color: #1976d2;
+  color: #333;
 }
 
 .name-wrapper {
@@ -189,31 +157,35 @@
 .expired {
   color: #d32f2f;
   font-weight: 700;
-  background-color: #ffebee;
-}
+  }
 
 .low-stock {
-  color: #f57c00;
+  color: #d32f2f;
   font-weight: 600;
-  background-color: #fff3e0;
-}
-
-/* Actions Cell */
-.actions-cell {
-  text-align: right;
 }
 
 .actions-cell button {
-  color: #1976d2;
+  color: #0d2e73;
 }
 
 /* Checkbox Styling */
-::ng-deep .mat-mdc-checkbox .mdc-checkbox__background {
-  border-color: white;
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__background,
+::ng-deep .mat-mdc-header-cell .mat-mdc-checkbox .mdc-checkbox__background {
+  border: 2px solid #70B1E6 !important;
 }
 
-::ng-deep .mat-mdc-header-cell .mat-mdc-checkbox .mdc-checkbox__background {
-  border-color: white !important;
+::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background,
+::ng-deep .mat-mdc-header-cell .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background {
+  background-color: #70B1E6 !important;
+}
+
+::ng-deep .mdc-checkbox__checkmark-path {
+  stroke: white !important;
+}
+
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__ripple::before,
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__ripple::after {
+  background-color: #70B1E6 !important;
 }
 
 /* Empty State */
@@ -239,12 +211,13 @@
 /* Paginator */
 ::ng-deep .mat-mdc-paginator {
   background: #f8f9fa;
-  border-top: 2px solid #e0e0e0;
-}
-
-::ng-deep .mat-mdc-paginator-container {
-  padding: 12px 16px;
+  border-top: 1px solid #596463;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 8px;
+  padding: 10px;
 }
 
 /* Floating Actions */
@@ -255,95 +228,52 @@
   display: flex;
   gap: 12px;
   padding: 16px 24px;
-  background: white;
-  border-radius: 12px;
+  background: #f0f8ff;
+  border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   z-index: 100;
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.floating-actions button {
-  height: 44px;
-  font-weight: 500;
-}
-
-.floating-actions button mat-icon {
-  margin-right: 8px;
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .table-container {
+@media (max-width: 1240px) {
+  .table {
     overflow-x: auto;
   }
+}
 
-  .medications-table {
-    min-width: 1000px;
+@media (max-width: 1024px) {
+  .search-container mat-form-field {
+    width: 280px;
   }
 }
 
 @media (max-width: 768px) {
-  .list-container {
-    padding: 16px;
-  }
-
-  .header-section {
-    flex-direction: column;
-    gap: 16px;
-    align-items: stretch;
-  }
-
-  .header-section button {
-    width: 100%;
-  }
-
-  .title {
-    font-size: 24px;
-    text-align: center;
+  .content-with-toolbar {
+    padding-bottom: 130px;
   }
 
   .floating-actions {
     bottom: 16px;
     right: 16px;
-    left: 16px;
-    flex-direction: column;
-  }
-
-  .floating-actions button {
+    padding: 12px 24px;
+    gap: 10px;
     width: 100%;
+    max-width: 280px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
-  ::ng-deep .mat-mdc-row {
-    height: auto;
-    min-height: 60px;
-  }
-
-  ::ng-deep .mat-mdc-cell {
-    padding: 12px 8px;
-    font-size: 13px;
+  .floating-actions button,
+  .floating-actions .mat-button,
+  .floating-actions .mat-raised-button {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex: 1 1 auto;
   }
 }
 
-/* Print Styles */
-@media print {
-  .header-section button,
-  .floating-actions,
-  .actions-cell {
-    display: none !important;
-  }
-
-  .table-container {
-    box-shadow: none;
+@media (max-width: 480px) {
+  .floating-actions {
+    max-width: 235px;
   }
 }
