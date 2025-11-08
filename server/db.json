@@ -111,5 +111,23 @@
       "emergencyContactName": "renzo",
       "emergencyContactPhone": "2i292929"
     }
+  ],
+  "rooms": [
+    {
+      "id": 1,
+      "number": "a113",
+      "capacity": 3,
+      "occupied": 0,
+      "type": "simple",
+      "status": "Available"
+    },
+    {
+      "id": 2,
+      "number": "b113",
+      "capacity": 5,
+      "occupied": 1,
+      "type": "double",
+      "status": "Maintenance"
+    }
   ]
 }
