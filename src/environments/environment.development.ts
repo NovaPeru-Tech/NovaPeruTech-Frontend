@@ -7,4 +7,5 @@ export const environment = {
   platformProviderResidentPath:'/residents',
   platformProviderEmployeeEndPoint:'/employee',
   platformProviderMedicationEndPoint:'/medications',
+  platformProviderRoomsEndpointPath: '/rooms'
 };
