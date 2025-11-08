@@ -5,7 +5,8 @@
     "activity": "Actividades",
     "resident": "Residentes",
     "staff": "Personal",
-    "care-management": "Gestión de la atención"
+    "care-management": "Gestión de la atención",
+    "room": "Habitaciones"
   },
   "page-not-found": {
     "title": "Página no encontrada",
