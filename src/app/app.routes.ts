@@ -13,6 +13,8 @@ const staffRoutes = () =>
   import('./staff/presentation/staff-routes').then(m => m.staffRoutes);
 const inventoryRoutes = () =>
   import('./inventory/presentation/inventory-routes').then(m => m.inventoryRoutes);
+const roomRoutes = () =>
+  import('./nursing/presentation/nursing-routes').then(m => m.roomsRoutes);
 
 const baseTitle = 'Veyra';
 export const routes: Routes = [
@@ -22,6 +24,7 @@ export const routes: Routes = [
   { path: 'residents', loadChildren: residentRoutes },
   { path: 'staff',     loadChildren: staffRoutes },
   { path: 'inventory', loadChildren: inventoryRoutes },
+  { path: 'rooms',     loadChildren: roomRoutes },
   { path: '',          redirectTo: '/home',         pathMatch:'full' },
   { path: '**',        loadComponent: pageNotFound, title:`Page Not Found | ${baseTitle}`}
 ];
