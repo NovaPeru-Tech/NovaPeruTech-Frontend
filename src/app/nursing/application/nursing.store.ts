@@ -1,9 +1,10 @@
-import {computed, Injectable, Signal, signal} from '@angular/core';
-import {NursingHome} from '../domain/model/nursing-home.entity';
-import {NursingApi} from '../infrastructure/nursing-api';
-import {retry} from 'rxjs';
-import {Resident} from '../domain/model/resident.entity';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import { computed, Injectable, Signal, signal } from '@angular/core';
+import { NursingHome } from '../domain/model/nursing-home.entity';
+import { NursingApi } from '../infrastructure/nursing-api';
+import { retry } from 'rxjs';
+import { Resident } from '../domain/model/resident.entity';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Room } from '../domain/model/room.entity';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -16,15 +17,19 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 export class NursingStore {
   private readonly _residentSignal = signal<Resident[]>([]);
   private readonly _nursingHomesSignal= signal<NursingHome[]>([]);
+  private readonly _roomsSignal = signal<Room[]>([]);
   private readonly _loadingSignal=signal<boolean>(false);
   private readonly _errorSignal=signal<string|null>(null);
   readonly loading=this._loadingSignal.asReadonly();
   readonly error = this._errorSignal.asReadonly();
   readonly nursingHomes=this._nursingHomesSignal.asReadonly();
   readonly residents = this._residentSignal.asReadonly();
+  readonly rooms = this._roomsSignal.asReadonly();
+  readonly roomCount = computed(() => this.rooms().length);
 
   constructor(private nursingApi: NursingApi) {
     this.loadResidents();
+    this.loadRooms();
   }
 
   /*
@@ -116,6 +121,61 @@ export class NursingStore {
     });
   }
 
+  getRoomById(id: number | null | undefined): Signal<Room | undefined> {
+    return computed(() => id
+      ? this.rooms().find(room => room.id === id)
+      : undefined
+    );
+  }
+
+  addRoom(room: Room): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.createRoom(room).pipe(retry(2)).subscribe({
+      next: createdRoom => {
+        this._roomsSignal.update(rooms => [...rooms, createdRoom]);
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to create room'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
+  updateRoom(room: Room): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.updateRoom(room).pipe(retry(2)).subscribe({
+      next: updatedRoom => {
+        this._roomsSignal.update(rooms =>
+          rooms.map(room => room.id === updatedRoom.id
+            ? updatedRoom
+            : room));
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to update room'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
+  deleteRoom(id: number): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.deleteRoom(id).pipe(retry(2)).subscribe({
+      next: () => {
+        this._roomsSignal.update(rooms => rooms.filter(room => room.id !== id));
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to delete room'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
   /**
    * Loads all residents from the API into the store.
    */
@@ -128,10 +188,45 @@ export class NursingStore {
         this._loadingSignal.set(false);
       },
       error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to load medications'));
+        this._errorSignal.set(this.formatError(err, 'Failed to load residents'));
         this._loadingSignal.set(false);
       }
     });
+  }
+
+  loadRooms(): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.getRooms().pipe(takeUntilDestroyed()).subscribe({
+      next: rooms => {
+        this._roomsSignal.set(rooms);
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to load room list'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
+  getAvailableRooms(): Signal<number> {
+    return computed(() => this._roomsSignal().filter(rooms => rooms.status === 'Available').length);
+  }
+
+  updateRoomStatus(id: number, newStatus: string) {
+    const updated = this._roomsSignal().map(r => {
+      if (r.id === id) { r.status = newStatus; }
+      return r;
+    });
+    this._roomsSignal.set(updated);
+
+    const room = updated.find(r => r.id === id);
+    if (room) {
+      this.nursingApi.updateRoom(room).subscribe({
+        next: () => console.log('Status persisted'),
+        error: err => console.error('Error saving status', err)
+      });
+    }
   }
 
   /*
