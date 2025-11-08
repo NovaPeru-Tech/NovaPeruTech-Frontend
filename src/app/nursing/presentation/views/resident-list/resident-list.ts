@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule }  from '@angular/forms';
 import { NursingStore } from '../../../application/nursing.store';
+
 @Component({
   selector: 'app-resident-list',
   standalone: true,
