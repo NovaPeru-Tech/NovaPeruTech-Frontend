@@ -127,7 +127,7 @@ export class MedicationList {
   }
 
   navigateToNew() {
-    this.router.navigate(['inventory/medication/create']).then();
+    this.router.navigate(['inventory/medication/new']).then();
   }
 
   getStatusClass(medication: any): string {

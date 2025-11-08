@@ -12,7 +12,7 @@ const residentRoutes = () =>
 const staffRoutes = () =>
   import('./staff/presentation/staff-routes').then(m => m.staffRoutes);
 const inventoryRoutes = () =>
-  import('./inventory/presentation/Inventory-router').then(m => m.InventoryRouter);
+  import('./inventory/presentation/inventory-routes').then(m => m.inventoryRoutes);
 
 const baseTitle = 'Veyra';
 export const routes: Routes = [
