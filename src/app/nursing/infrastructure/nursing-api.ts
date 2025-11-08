@@ -6,6 +6,8 @@ import { NursingHomesApiEndpoint } from './nursing-homes-api-endpoint';
 import { BaseApi } from '../../shared/infrastructure/base-api';
 import { Resident } from '../domain/model/resident.entity';
 import { ResidentsApiEndpoint } from './residents-api-endpoint';
+import { RoomsApiEndpoint } from './rooms-api-endpoint';
+import { Room } from '../domain/model/room.entity';
 
 /*
 * @purpose: Service to interact with the Nursing Home API
@@ -22,15 +24,17 @@ import { ResidentsApiEndpoint } from './residents-api-endpoint';
 export class NursingApi extends BaseApi{
   private readonly _nursingHomesApidEndpoint:NursingHomesApiEndpoint;
   private readonly _residentsApiEndPoint: ResidentsApiEndpoint;
+  private readonly _roomsApiEndpoint: RoomsApiEndpoint;
 
   /**
-   * Initializes the Resident and Nursing API service with the required HTTP client.
+   * Initializes the Resident, Room and Nursing Home API service with the required HTTP client.
    * @param http - Angular HttpClient used to perform API requests.
    */
   constructor(http:HttpClient) {
     super();
     this._nursingHomesApidEndpoint=new NursingHomesApiEndpoint(http);
     this._residentsApiEndPoint = new ResidentsApiEndpoint(http);
+    this._roomsApiEndpoint = new RoomsApiEndpoint(http);
   }
 
   createNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
@@ -78,5 +82,25 @@ export class NursingApi extends BaseApi{
    */
   getResidents() {
     return this._residentsApiEndPoint.getAll();
+  }
+
+  getRooms(): Observable<Room[]> {
+    return this._roomsApiEndpoint.getAll();
+  }
+
+  getRoom(id: number): Observable<Room> {
+    return this._roomsApiEndpoint.getById(id);
+  }
+
+  createRoom(room: Room): Observable<Room> {
+    return this._roomsApiEndpoint.create(room);
+  }
+
+  updateRoom(room: Room): Observable<Room> {
+    return this._roomsApiEndpoint.update(room, room.id);
+  }
+
+  deleteRoom(id: number): Observable<void> {
+    return this._roomsApiEndpoint.delete(id);
   }
 }
