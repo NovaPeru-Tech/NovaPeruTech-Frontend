@@ -1,36 +1,51 @@
-import { computed, Injectable, Signal, signal } from '@angular/core';
-import { Resident } from '../domain/model/resident.entity';
-import { ResidentsApi } from '../infrastructure/residents-api';
-import { retry } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {computed, Injectable, Signal, signal} from '@angular/core';
+import {NursingHome} from '../domain/model/nursing-home.entity';
+import {NursingApi} from '../infrastructure/nursing-api';
+import {retry} from 'rxjs';
+import {Resident} from '../domain/model/resident.entity';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+
+/*
+* @purpose: Manage the state of nursing homes in the application
+* @description: This service uses Angular's signal to manage the state of nursing homes, loading status, and error messages.
+* */
 
 @Injectable({
   providedIn: 'root'
 })
-/**
- * Store service that manages resident state using Angular signals.
- * Handles API calls, loading states, and error management.
- */
-export class ResidentsStore {
+export class NursingStore {
   private readonly _residentSignal = signal<Resident[]>([]);
-  private readonly _loadingSignal = signal<boolean>(false);
-  private readonly _errorSignal = signal<string | null>(null);
-
-  /** Read-only signal with the list of residents. */
+  private readonly _nursingHomesSignal= signal<NursingHome[]>([]);
+  private readonly _loadingSignal=signal<boolean>(false);
+  private readonly _errorSignal=signal<string|null>(null);
+  readonly loading=this._loadingSignal.asReadonly();
+  readonly error = this._errorSignal.asReadonly();
+  readonly nursingHomes=this._nursingHomesSignal.asReadonly();
   readonly residents = this._residentSignal.asReadonly();
 
-  /** Read-only signal that indicates if a request is in progress. */
-  readonly loading = this._loadingSignal.asReadonly();
-
-  /** Read-only signal containing any error message. */
-  readonly error = this._errorSignal.asReadonly();
-
-  /**
-   * Initializes the store and automatically loads all residents.
-   * @param ResidentApi - Service used to perform API operations.
-   */
-  constructor(private ResidentApi: ResidentsApi) {
+  constructor(private nursingApi: NursingApi) {
     this.loadResidents();
+  }
+
+  /*
+* @purpose: Add a new nursing home
+* @description: This method sets the loading state to true, clears any previous errors, and calls the API to create a new nursing home. On success, it updates the nursing homes signal and sets loading to false. On error, it sets an appropriate error message and sets loading to false.
+* */
+
+  addNursingHome(nursingHome:NursingHome){
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.createNursingHome(nursingHome).pipe(retry(2)).subscribe({
+      next:createdNursingHome=>{
+        this._nursingHomesSignal.update(nursingHome=>[...nursingHome,createdNursingHome]);
+        this._loadingSignal.set(false);
+
+      },
+      error:err=>{
+        this._errorSignal.set(this.formatError(err,'failed to create '));
+        this._loadingSignal.set(false);
+      }
+    });
   }
 
   /**
@@ -49,7 +64,7 @@ export class ResidentsStore {
   addResident(Resident: Resident): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.ResidentApi.createResident(Resident).pipe(retry(2)).subscribe({
+    this.nursingApi.createResident(Resident).pipe(retry(2)).subscribe({
       next: createdResident => {
         this._residentSignal.update(residents => [...residents, createdResident]);
         this._loadingSignal.set(false);
@@ -68,7 +83,7 @@ export class ResidentsStore {
   updateResident(resident: Resident) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.ResidentApi.updateResident(resident).pipe(retry(2)).subscribe({
+    this.nursingApi.updateResident(resident).pipe(retry(2)).subscribe({
       next: updatedResident => {
         this._residentSignal.update(residents =>
           residents.map(res => res.id === updatedResident.id ? updatedResident : res)
@@ -89,7 +104,7 @@ export class ResidentsStore {
   deleteResident(id: number) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.ResidentApi.deleteResident(id).pipe(retry(2)).subscribe({
+    this.nursingApi.deleteResident(id).pipe(retry(2)).subscribe({
       next: () => {
         this._residentSignal.update(residents => residents.filter(resident => resident.id !== id));
         this._loadingSignal.set(false);
@@ -107,7 +122,7 @@ export class ResidentsStore {
   loadResidents() {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.ResidentApi.getResidents().pipe(takeUntilDestroyed()).subscribe({
+    this.nursingApi.getResidents().pipe(takeUntilDestroyed()).subscribe({
       next: residents => {
         this._residentSignal.set(residents);
         this._loadingSignal.set(false);
@@ -119,17 +134,15 @@ export class ResidentsStore {
     });
   }
 
-  /**
-   * Handles and formats error messages for UI display.
-   * @param error - Error object or response.
-   * @param fallback - Default fallback message.
-   * @returns A formatted error string.
-   */
-   private formatError(error: any, fallback: string): string {
-    if (error instanceof Error) {
-      return error.message.includes('Resource not found')
-        ? `${fallback}: Not Found`
-        : error.message;
+  /*
+* @purpose: Format error messages
+* @description: This private method takes an error object and a fallback string. If the error is an instance of Error, it checks if the message includes 'Resource not found' and returns a formatted message. Otherwise, it returns the fallback string.
+* */
+
+  private formatError(error:any,fallback:string):string{
+    if(error instanceof Error){
+      return error.message.includes('Resource not found ')?`${fallback}:Not Found`:error.message;
+
     }
     return fallback;
   }

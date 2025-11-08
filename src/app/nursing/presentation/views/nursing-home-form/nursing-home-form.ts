@@ -1,17 +1,17 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NursingHomeStore} from '../../application/nursing-home.store';
-import {NursingHome} from '../../domain/model/nursing-home.entity';
+import {NursingHome} from '../../../domain/model/nursing-home.entity';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
-import {Toolbar} from '../../../shared/presentation/components/toolbar/toolbar';
+import {Toolbar} from '../../../../shared/presentation/components/toolbar/toolbar';
+import {NursingStore} from '../../../application/nursing.store';
 
 /*
 * @purpose: Component for Nursing Home Registration Form
-* @description: This component provides a form for registering a new nursing home, including fields for name, RUC, phone number, address, and description. It handles form validation and submission to the NursingHomeStore.
+* @description: This component provides a form for registering a new nursing home, including fields for name, RUC, phone number, address, and description. It handles form validation and submission to the NursingStore.
 * */
 
 @Component({
@@ -39,7 +39,7 @@ export class NursingHomeForm {
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private store = inject(NursingHomeStore);
+  private store = inject(NursingStore);
 
   form = this.fb.group({
     name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),

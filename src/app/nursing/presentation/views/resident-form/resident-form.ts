@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Resident } from '../../../domain/model/resident.entity';
-import { ResidentsStore } from '../../../application/residents-store';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatError, MatFormField, MatHint, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -17,6 +16,7 @@ import { LayoutNursingHome } from '../../../../shared/presentation/components/la
 import { MatCard } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { NursingStore } from '../../../application/nursing.store';
 
 @Component({
   selector: 'app-resident-form',
@@ -52,7 +52,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 })
 export class ResidentForm {
   private fb = inject(FormBuilder);
-  private store = inject(ResidentsStore);
+  private store = inject(NursingStore);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 

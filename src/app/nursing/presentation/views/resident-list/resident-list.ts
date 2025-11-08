@@ -1,5 +1,4 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ResidentsStore } from '../../../application/residents-store';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -12,6 +11,7 @@ import { MatInput } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule }  from '@angular/forms';
+import { NursingStore } from '../../../application/nursing.store';
 @Component({
   selector: 'app-resident-list',
   standalone: true,
@@ -36,7 +36,7 @@ import { FormsModule }  from '@angular/forms';
   styleUrl: './resident-list.css'
 })
 export class ResidentList {
-  readonly store = inject(ResidentsStore);
+  readonly store = inject(NursingStore);
   protected router = inject(Router);
 
   selectedId: number | null = null;

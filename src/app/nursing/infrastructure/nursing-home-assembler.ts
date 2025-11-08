@@ -1,9 +1,9 @@
-import {BaseAssembler} from '../../shared/infrastructure/base-assembler';
-import {NursingHome} from '../domain/model/nursing-home.entity';
-import {NursingHomeResource, NursingHomeResponse} from './nursing-home-response';
+import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
+import { NursingHome } from '../domain/model/nursing-home.entity';
+import { NursingHomesResource, NursingHomesResponse } from './nursing-homes-response';
 
-export class NursingHomeAssembler implements BaseAssembler<NursingHome, NursingHomeResource, NursingHomeResponse>{
-  toEntitiesFromResponse(response: NursingHomeResponse): NursingHome[] {
+export class NursingHomeAssembler implements BaseAssembler<NursingHome, NursingHomesResource, NursingHomesResponse>{
+  toEntitiesFromResponse(response: NursingHomesResponse): NursingHome[] {
     return response.nursingHome.map(nursingHome=>this.toEntityFromResource(nursingHome));
   }
 
@@ -12,7 +12,7 @@ export class NursingHomeAssembler implements BaseAssembler<NursingHome, NursingH
 * @description: This class implements methods to transform data from the API resource format to the domain entity format and vice versa.
 * */
 
-  toEntityFromResource(resource: NursingHomeResource): NursingHome {
+  toEntityFromResource(resource: NursingHomesResource): NursingHome {
     return new NursingHome({
       id:resource.id,
       name:resource.name,
@@ -29,7 +29,7 @@ export class NursingHomeAssembler implements BaseAssembler<NursingHome, NursingH
 * @description: This method takes a NursingHome entity and maps its properties to a NursingHomeResource object suitable for API communication.
 * */
 
-  toResourceFromEntity(entity: NursingHome): NursingHomeResource {
+  toResourceFromEntity(entity: NursingHome): NursingHomesResource {
     return {
       id:entity.id,
       name:entity.name,
@@ -38,8 +38,6 @@ export class NursingHomeAssembler implements BaseAssembler<NursingHome, NursingH
       address:entity.address,
       description:entity.description,
       adminId:entity.adminId
-    } as NursingHomeResource;
+    } as NursingHomesResource;
   }
-
-
 }

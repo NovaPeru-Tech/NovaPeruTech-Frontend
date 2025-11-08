@@ -1,27 +1,48 @@
 import { Injectable } from '@angular/core';
-import { BaseApi } from '../../shared/infrastructure/base-api';
-import { HttpClient } from '@angular/common/http';
-import { ResidentsApiEndpoint } from './residents-api-endpoint';
-import { Resident } from '../domain/model/resident.entity';
+import { NursingHome } from '../domain/model/nursing-home.entity';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { NursingHomesApiEndpoint } from './nursing-homes-api-endpoint';
+import { BaseApi } from '../../shared/infrastructure/base-api';
+import { Resident } from '../domain/model/resident.entity';
+import { ResidentsApiEndpoint } from './residents-api-endpoint';
+
+/*
+* @purpose: Service to interact with the Nursing Home API
+* @description: This service provides methods to create, update, and retrieve nursing home data by communicating with the Nursing Home API endpoint.
+* */
 
 @Injectable({
   providedIn: 'root'
 })
 /**
- * Service class to handle Resident API operations.
+ * Service class to handle Resident and Nursing API operations.
  * Provides CRUD methods for managing residents through HTTP requests.
  */
-export class ResidentsApi extends BaseApi {
+export class NursingApi extends BaseApi{
+  private readonly _nursingHomesApidEndpoint:NursingHomesApiEndpoint;
   private readonly _residentsApiEndPoint: ResidentsApiEndpoint;
 
   /**
-   * Initializes the Resident API service with the required HTTP client.
+   * Initializes the Resident and Nursing API service with the required HTTP client.
    * @param http - Angular HttpClient used to perform API requests.
    */
-  constructor(http: HttpClient) {
+  constructor(http:HttpClient) {
     super();
+    this._nursingHomesApidEndpoint=new NursingHomesApiEndpoint(http);
     this._residentsApiEndPoint = new ResidentsApiEndpoint(http);
+  }
+
+  createNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
+    return this._nursingHomesApidEndpoint.create(nursingHome);
+  }
+
+  updateNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
+    return this._nursingHomesApidEndpoint.update(nursingHome,nursingHome.id);
+  }
+
+  getNursingHome(id:number):Observable<any>{
+    return this._nursingHomesApidEndpoint.getById(id);
   }
 
   /**
