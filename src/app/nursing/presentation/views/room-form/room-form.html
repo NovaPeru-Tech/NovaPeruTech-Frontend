@@ -1,0 +1,53 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ (isEdit ? 'Edit Room' : 'New Room') | translate }}</h1>
+
+  <div class="content">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-form-field>
+        <mat-label>{{ 'Room Number'|translate }}</mat-label>
+        <input matInput formControlName="number" required>
+        @if (form.get('number')!.touched && form.get('number')!.hasError('required')) {
+          <mat-error>{{ 'Room number is required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'Type'|translate }}</mat-label>
+        <input matInput formControlName="type" required>
+        @if (form.get('type')!.touched && form.get('type')!.hasError('required')) {
+          <mat-error>{{ 'Type is required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'Max Capacity'|translate }}</mat-label>
+        <input matInput formControlName="capacity" required>
+        @if (form.get('capacity')!.touched && form.get('capacity')!.hasError('required')) {
+          <mat-error>{{ 'Max capacity is required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      @if (isEdit) {
+        <mat-form-field>
+          <mat-label>{{ 'Status' | translate }}</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="Available">Available</mat-option>
+            <mat-option value="Maintenance">Maintenance</mat-option>
+          </mat-select>
+        </mat-form-field>
+      }
+
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" type="button" (click)="onCancel()">
+          <mat-icon>cancel</mat-icon>
+          {{ 'Cancel' | translate }}
+        </button>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+          <mat-icon>save</mat-icon>
+          {{ (isEdit? 'Update Room' : 'Register Room') | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout-nursing-home>
