@@ -17,7 +17,6 @@ import { DatePipe } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { LayoutNursingHome } from '../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatCard } from '@angular/material/card';
-import {MatDivider} from '@angular/material/divider';
 
 @Component({
   selector: 'app-medication-form',
@@ -45,8 +44,7 @@ import {MatDivider} from '@angular/material/divider';
     DatePipe,
     MatCheckbox,
     LayoutNursingHome,
-    MatCard,
-    MatDivider
+    MatCard
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './medication-form.html',

@@ -6,22 +6,25 @@ const pageNotFound = () =>
 const iamRoutes = () =>
   import('./iam/presentation/iam-routers').then(m => m.IamRouters);
 const nursingHomeRoutes = () =>
-  import('./nursingHome/presentation/nursing-home-routers').then(m => m.NursingHomeRouters);
+  import('./nursing/presentation/nursing-routes').then(m => m.nursingRoutes);
 const residentRoutes = () =>
-  import('./resident/presentation/residents-routes').then(m => m.residentsRoutes);
+  import('./nursing/presentation/nursing-routes').then(m => m.residentsRoutes);
 const staffRoutes = () =>
   import('./staff/presentation/staff-routes').then(m => m.staffRoutes);
 const inventoryRoutes = () =>
   import('./inventory/presentation/inventory-routes').then(m => m.inventoryRoutes);
+const roomRoutes = () =>
+  import('./nursing/presentation/nursing-routes').then(m => m.roomsRoutes);
 
 const baseTitle = 'Veyra';
 export const routes: Routes = [
   { path: 'home',      component: Home,             title:`Home | ${baseTitle}` },
   { path: 'auth',      loadChildren: iamRoutes },
-  { path: '',          loadChildren: nursingHomeRoutes },
+  { path: 'nursing',   loadChildren: nursingHomeRoutes },
   { path: 'residents', loadChildren: residentRoutes },
   { path: 'staff',     loadChildren: staffRoutes },
   { path: 'inventory', loadChildren: inventoryRoutes },
+  { path: 'rooms',     loadChildren: roomRoutes },
   { path: '',          redirectTo: '/home',         pathMatch:'full' },
   { path: '**',        loadComponent: pageNotFound, title:`Page Not Found | ${baseTitle}`}
 ];

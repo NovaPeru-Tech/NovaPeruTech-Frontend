@@ -27,7 +27,7 @@
                   <img [src]="medication()!.image"
                        (load)="onImageLoad(medication()!.id)"
                        (error)="onImageError($event, medication()!.id)"
-                       [alt]="medication.name"
+                       [alt]="medication()!.name"
                        [class.loaded]="imageLoadedMap[medication()!.id]">
                 </div>
               </div>

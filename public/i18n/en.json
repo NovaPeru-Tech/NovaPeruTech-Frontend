@@ -5,7 +5,8 @@
     "activity": "Activities",
     "resident": "Residents",
     "staff": "Staff",
-    "care-management": "Care Management"
+    "care-management": "Care Management",
+    "room": "Rooms"
   },
   "page-not-found": {
     "title": "Page not found",
