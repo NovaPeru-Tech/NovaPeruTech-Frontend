@@ -5,7 +5,7 @@ import { ResidentAssembler } from './resident-assembler';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
-const residentsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderResidentPath}`;
+const residentsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderResidentsEndpointPath}`;
 
 /**
  * API endpoint handler for Resident operations.

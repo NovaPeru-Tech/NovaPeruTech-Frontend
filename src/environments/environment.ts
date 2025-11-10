@@ -3,9 +3,12 @@ export const environment = {
   platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
   platformProviderSignInEndpointPath:'/users',
   platformProviderSignUpEndpointPath:'/users',
-  platformProviderRegisterNursingHomeEndPoint:'/nursingHome',
-  platformProviderResidentPath:'/residents',
+
+  // Nursing Bounded Context
+  platformProviderNursingHomesEndpointPath:'/nursing-homes',
+  platformProviderResidentsEndpointPath:'/residents',
+  platformProviderRoomsEndpointPath: '/rooms',
+
   platformProviderEmployeeEndPoint:'/employee',
-  platformProviderMedicationEndPoint:'/medications',
-  platformProviderRoomsEndpointPath: '/rooms'
+  platformProviderMedicationEndPoint:'/medications'
 };

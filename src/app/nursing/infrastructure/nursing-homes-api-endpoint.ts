@@ -5,7 +5,7 @@ import { NursingHomeAssembler } from './nursing-home-assembler';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
-const nursingHomesEndpointUrl=`${environment.platformProviderApiBaseUrl}${environment.platformProviderRegisterNursingHomeEndPoint}`
+const nursingHomesEndpointUrl=`${environment.platformProviderApiBaseUrl}${environment.platformProviderNursingHomesEndpointPath}`
 
 /*
 * @purpose: Class to handle API interactions for Nursing Homes
