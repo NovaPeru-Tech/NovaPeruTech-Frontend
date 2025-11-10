@@ -2,7 +2,6 @@ import { Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { NursingStore } from '../../../application/nursing.store';
-import { DatePipe, DecimalPipe } from '@angular/common';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatHeaderRow,
@@ -17,8 +16,6 @@ import { MatIcon } from '@angular/material/icon';
 @Component({
   selector: 'app-room-list',
   imports: [
-    DatePipe,
-    DecimalPipe,
     LayoutNursingHome,
     MatButton,
     MatCell,
