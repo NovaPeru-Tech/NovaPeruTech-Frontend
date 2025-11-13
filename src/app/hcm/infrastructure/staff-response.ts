@@ -1,32 +1,16 @@
 import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-response';
 
 export interface StaffResource extends BaseResource{
-  id: number,
-  state: string,
-  name: string,
-  lastname: string,
-  dni: string,
+  id: number; // Unique staff member ID
+  personProfileId: number; // Person profile ID
 
-  birthDate: string,
+  emergencyContactFirstName: string; // Emergency contact first name
+  emergencyContactLastName: string; // Emergency contact last name
+  emergencyContactPhoneNumber: string; // Emergency contact phone number
 
-  nationality?: string,
-  phoneNumber: string,
-  email: string,
-  image: string,
-  address: string,
-
-  contractDate: string,
-  contractEndDate?: string,
-  terminationDate?: string,
-
-  post: string,
-  typeOfContract: string,
-  workShift: string,
-  certifications: string[],
-  emergencyContactName: string;
-  emergencyContactPhone: string;
+  status: string;
 }
 
 export interface StaffResponse extends BaseResponse{
-  staffMember:StaffResource[];
+  staffMember: StaffResource[];
 }
