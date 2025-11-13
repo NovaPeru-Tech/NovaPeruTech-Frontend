@@ -19,6 +19,15 @@
     </mat-form-field>
   </div>
 
+  <div style="display: none;">
+    <app-person-profile-detail
+      [personProfileCard]="false"
+      [personProfileId]="null"
+      [searchTerm]="searchTerm()"
+      (idsFiltered)="onFiltered($event)">
+    </app-person-profile-detail>
+  </div>
+
   <!-- Loading State -->
   @if (store.loading()) {
     <mat-spinner diameter="40"></mat-spinner>
@@ -39,28 +48,10 @@
              [class.active]="selectedId === resident.id">
         </div>
 
-        <div class="resident-image">
-          <img [src]="resident.image"
-               (load)="onImageLoad(resident.id)"
-               (error)="onImageError($event, resident.id)"
-               [alt]="resident.name + ' ' + resident.lastname"
-               [class.loaded]="imageLoadedMap[resident.id]">
-        </div>
-
-        <mat-card-content>
-          <p class="resident-info">
-            <strong>{{ 'residents.last-name' | translate }}:</strong>
-            {{ resident.lastname }}
-          </p>
-          <p class="resident-info">
-            <strong>{{ 'residents.first-name' | translate }}:</strong>
-            {{ resident.name }}
-          </p>
-          <p class="resident-info">
-            <strong>{{ 'residents.dni' | translate }}:</strong>
-            {{ resident.dni }}
-          </p>
-        </mat-card-content>
+        <app-person-profile-detail
+          [personProfileCard]="true"
+          [personProfileId]="resident.personProfileId">
+        </app-person-profile-detail>
 
         <button mat-raised-button
                 class="detail-button"
