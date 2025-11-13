@@ -9,6 +9,9 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatInput } from '@angular/material/input';
+import {
+  PersonProfileDetail
+} from '../../../../profiles/presentation/components/person-profile-detail/person-profile-detail';
 
 @Component({
   selector: 'app-staff-member-list',
@@ -27,7 +30,8 @@ import { MatInput } from '@angular/material/input';
     MatInput,
     MatLabel,
     MatPrefix,
-    MatSuffix
+    MatSuffix,
+    PersonProfileDetail
   ],
   templateUrl: './staff-member-list.html',
   styleUrl: './staff-member-list.css'
@@ -37,37 +41,27 @@ export class StaffMemberList {
   protected router = inject(Router);
 
   selectedId: number | null = null;
-  imageLoadedMap: Record<number, boolean> = {};
   searchTerm = signal('');
-  staffMembers = computed(() => this.store.staff());
-  filteredStaffMembers = computed(() => {
-    const term = this.removeAccents(this.searchTerm().toLowerCase().trim());
-    const staffMembers = this.staffMembers();
+  filteredPersonProfilesIds = signal<number[]>([]);
+  staff = computed(() => this.store.staff());
 
-    if (!term) return staffMembers;
+  onFiltered(ids: number[]) {
+    this.filteredPersonProfilesIds.set(ids);
+  }
 
-    return staffMembers.filter(r => {
-      const name = this.removeAccents(r.name);
-      const lastname = this.removeAccents(r.lastname);
-      return name.startsWith(term) || lastname.startsWith(term);
-    });
+  filteredStaff = computed(() => {
+    const ids = this.filteredPersonProfilesIds();
+    const allStaff = this.staff();
+    const term = this.searchTerm();
+
+    if (term && ids.length === 0) {
+      return [];
+    }
+
+    return allStaff.filter(r => ids.includes(r.personProfileId));
   });
 
-  onImageLoad(id: number) {
-    this.imageLoadedMap[id] = true;
-  }
-
-  onImageError(event: Event, id: number) {
-    const img = event.target as HTMLImageElement;
-    img.src = 'images/shared/veyra-placeholder.png';
-    this.imageLoadedMap[id] = true;
-  }
-
-  removeAccents(text: string) {
-    return text.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').trim();
-  }
-
-  selectStaff(id: number) {
+  selectStaffMember(id: number) {
     this.selectedId = this.selectedId === id ? null : id;
   }
 
@@ -75,18 +69,22 @@ export class StaffMemberList {
     this.router.navigate(['staff/list', id, 'detail']).then();
   }
 
-  editStaff(id: number) {
+  editStaffMember(id: number) {
     this.router.navigate(['staff/list', id, 'edit']).then();
     if (this.selectedId === id) {
       this.selectedId = null;
     }
   }
 
-  deleteStaff(id: number) {
+  deleteStaffMember(id: number) {
     this.store.deleteStaffMember(id);
   }
 
   navigateToNew() {
     this.router.navigate(['staff/list/new']).then();
+  }
+
+  navigateToNewContract(id: number) {
+    this.router.navigate(['staff/contract', id,'new']).then();
   }
 }

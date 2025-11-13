@@ -19,6 +19,15 @@
     </mat-form-field>
   </div>
 
+  <div style="display: none;">
+    <app-person-profile-detail
+      [personProfileCard]="false"
+      [personProfileId]="null"
+      [searchTerm]="searchTerm()"
+      (idsFiltered)="onFiltered($event)">
+    </app-person-profile-detail>
+  </div>
+
   <!-- Loading State -->
   @if (store.loading()) {
     <mat-spinner diameter="40"></mat-spinner>
@@ -31,52 +40,35 @@
 
   <!-- Grid de Tarjetas de Empleados -->
   <div class="cards-grid">
-    @for (staffMember of filteredStaffMembers(); track staffMember.id) {
+    @for (staffMember of filteredStaff(); track staffMember.id) {
       <mat-card class="staff-card"
                 [class.selected]="selectedId === staffMember.id"
-                (click)="selectStaff(staffMember.id)">
+                (click)="selectStaffMember(staffMember.id)">
 
-        <!-- Indicador de selección (círculo superior izquierdo) -->
         <div class="selection-indicator"
              [class.active]="selectedId === staffMember.id">
         </div>
 
-        <!-- Foto del empleado -->
-        <div class="staff-image">
-          <img [src]="staffMember.image"
-               (load)="onImageLoad(staffMember.id)"
-               (error)="onImageError($event, staffMember.id)"
-               [alt]="staffMember.name + ' ' + staffMember.lastname"
-               [class.loaded]="imageLoadedMap[staffMember.id]">
-        </div>
+        <app-person-profile-detail
+          [personProfileCard]="true"
+          [personProfileId]="staffMember.personProfileId">
+        </app-person-profile-detail>
 
-        <!-- Información del empleado -->
-        <mat-card-content>
-          <p class="staff-info">
-            <strong>{{ 'staff-management.last-name' | translate }}:</strong>
-            {{ staffMember.lastname }}
-          </p>
-          <p class="staff-info">
-            <strong>{{ 'staff-management.first-name' | translate }}:</strong>
-            {{ staffMember.name }}
-          </p>
-          <p class="staff-info">
-            <strong>{{ 'staff-management.dni' | translate }}:</strong>
-            {{ staffMember.dni }}
-          </p>
-          <p class="staff-info">
-            <strong>{{ 'staff-management.post' | translate }}:</strong>
-            {{ staffMember.post }}
-          </p>
-        </mat-card-content>
-
-        <!-- Botón Detalle -->
         <button mat-raised-button
                 color="primary"
                 class="detail-button"
                 (click)="viewDetails(staffMember.id); $event.stopPropagation()">
           {{ 'staff-management.buttons.details' | translate }}
         </button>
+
+        @if (staffMember.status === 'PENDING') {
+          <button mat-raised-button
+                  color="primary"
+                  class="detail-button"
+                  (click)="navigateToNewContract(staffMember.id); $event.stopPropagation()">
+            {{ 'Add contract' | translate }}
+          </button>
+        }
       </mat-card>
     } @empty {
       <div class="empty-state">
@@ -90,7 +82,7 @@
     <button mat-raised-button
             color="warn"
             [disabled]="!selectedId"
-            (click)="deleteStaff(selectedId!)">
+            (click)="deleteStaffMember(selectedId!)">
       <mat-icon>delete</mat-icon>
       {{ 'staff-management.buttons.delete' | translate }}
     </button>
@@ -98,7 +90,7 @@
     <button mat-raised-button
             color="primary"
             [disabled]="!selectedId"
-            (click)="editStaff(selectedId!)">
+            (click)="editStaffMember(selectedId!)">
       <mat-icon>edit</mat-icon>
       {{ 'staff-management.buttons.edit' | translate }}
     </button>
