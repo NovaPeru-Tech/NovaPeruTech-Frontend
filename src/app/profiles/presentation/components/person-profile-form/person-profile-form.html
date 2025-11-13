@@ -1,0 +1,248 @@
+<div class="form-wrapper">
+  <div [formGroup]="form" class="person-profile-form">
+    <!-- Basic Information Section -->
+    <div class="section-divider">
+      <mat-icon>person</mat-icon>
+      <span>{{ 'Basic Information' | translate }}</span>
+    </div>
+
+    <div class="info-grid">
+      <mat-card class="info-card">
+        <div class="card-header-custom">
+          <div class="icon-wrapper personal">
+            <mat-icon>assignment_ind</mat-icon>
+          </div>
+
+          <h3>{{ 'Datos personales' | translate }}</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="detail-row">
+            <div class="image-upload-section">
+              <label class="image-label">
+                {{ 'Photo' | translate }}
+
+                <span class="required">*</span>
+              </label>
+
+              <div class="image-upload-container">
+                @if (!photoPreview) {
+                  <div class="upload-placeholder">
+                    <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)"
+                           style="display: none">
+
+                    <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">
+                      <mat-icon>add_photo_alternate</mat-icon>
+                      {{ 'form.select-image' | translate }}
+                    </button>
+
+                    <p class="upload-hint">JPG, PNG - {{ 'form.max-size' | translate }}</p>
+                  </div>
+                } @else {
+                  <div class="image-preview-container">
+                    <img [src]="photoPreview" alt="Preview" class="image-preview">
+
+                    <button mat-icon-button color="warn" type="button" class="remove-image-btn" (click)="removeImage()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
+                }
+              </div>
+
+              @if (form.get('image')?.touched && form.get('image')!.hasError('required')) {
+                <mat-error class="image-error">
+                  {{ 'required' | translate }}
+                </mat-error>
+              }
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'name' | translate }}</mat-label>
+
+              <input matInput formControlName="firstName" required>
+
+              @if (form.get('firstName')?.touched && form.get('firstName')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'last name' | translate }}</mat-label>
+
+              <input matInput formControlName="lastName" required>
+
+              @if (form.get('lastName')?.touched && form.get('lastName')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="info-card">
+        <div class="card-header-custom">
+          <div class="icon-wrapper personal">
+            <mat-icon>assignment</mat-icon>
+          </div>
+
+          <h3>{{ 'Datos de verificación' | translate }}</h3>
+        </div>
+
+        <div class="card-body">
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'dni' | translate }}</mat-label>
+
+              <input matInput formControlName="dni" required>
+
+              @if (form.get('dni')?.touched && form.get('dni')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="detail-row">
+            <div class="calendar-section">
+              <label class="section-label">
+                {{ 'birthdate' | translate }}
+
+                <span class="required">*</span>
+              </label>
+
+              <mat-calendar
+                [selected]="form.value.birthDate"
+                (selectedChange)="onBirthDateSelected($event)"
+                [maxDate]="maxDate">
+              </mat-calendar>
+
+              @if (form.value.birthDate) {
+                <div class="selected-date">
+                  <mat-icon>event</mat-icon>
+                  <span>{{ form.value.birthDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+              }
+
+              @if (form.get('birthDate')?.touched && form.get('birthDate')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </div>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="info-card">
+        <div class="card-header-custom">
+          <div class="icon-wrapper contact">
+            <mat-icon>contact_phone</mat-icon>
+          </div>
+
+          <h3>{{ 'Datos de contacto' | translate }}</h3>
+        </div>
+        <div class="card-body">
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'phone number' | translate }}</mat-label>
+
+              <input matInput formControlName="phoneNumber" required>
+
+              @if (form.get('phoneNumber')?.touched && form.get('phoneNumber')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'email address' | translate }}</mat-label>
+
+              <input matInput type="email" formControlName="emailAddress" required>
+
+              @if (form.get('emailAddress')?.touched && form.get('emailAddress')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+
+              @if (form.get('emailAddress')?.touched && form.get('emailAddress')!.hasError('emailAddress')) {
+                <mat-error>{{ 'invalid' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="info-card">
+        <div class="card-header-custom">
+          <div class="icon-wrapper location">
+            <mat-icon>location_on</mat-icon>
+          </div>
+
+          <h3>{{ 'Datos de ubicación' | translate }}</h3>
+        </div>
+        <div class="card-body">
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'street' | translate }}</mat-label>
+
+              <input matInput formControlName="street" required>
+
+              @if (form.get('street')?.touched && form.get('street')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'number' | translate }}</mat-label>
+
+              <input matInput formControlName="number" required>
+
+              @if (form.get('number')?.touched && form.get('number')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'city' | translate }}</mat-label>
+
+              <input matInput formControlName="city" required>
+
+              @if (form.get('city')?.touched && form.get('city')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'postal code' | translate }}</mat-label>
+
+              <input matInput formControlName="postalCode" required>
+
+              @if (form.get('postalCode')?.touched && form.get('postalCode')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="detail-row">
+            <mat-form-field>
+              <mat-label>{{ 'country' | translate }}</mat-label>
+
+              <input matInput formControlName="country" required>
+
+              @if (form.get('country')?.touched && form.get('country')!.hasError('required')) {
+                <mat-error>{{ 'required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
