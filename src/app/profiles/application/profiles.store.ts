@@ -2,7 +2,7 @@ import { computed, Injectable, Signal, signal } from '@angular/core';
 import { BusinessProfile } from '../domain/model/business-profile.entity';
 import { PersonProfile } from '../domain/model/person-profile.entity';
 import { ProfilesApi } from '../infrastructure/profiles-api';
-import { retry } from 'rxjs';
+import { Observable, retry, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
@@ -33,38 +33,38 @@ export class ProfilesStore {
     );
   }
 
-  addBusinessProfile(businessProfile: BusinessProfile): void {
+  addBusinessProfile(businessProfile: BusinessProfile): Observable<BusinessProfile> {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.profilesApi.createBusinessProfile(businessProfile).pipe(retry(2)).subscribe({
-      next: createdBusinessProfile => {
-        this._businessProfilesSignal.update(businessProfiles => [...businessProfiles, createdBusinessProfile]);
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to create business profile'));
-        this._loadingSignal.set(false);
-      }
-    });
+
+    return this.profilesApi.createBusinessProfile(businessProfile).pipe(retry(2), tap({
+        next: createdBusinessProfile => {
+          this._businessProfilesSignal.update(businessProfiles => [...businessProfiles, createdBusinessProfile]);
+          this._loadingSignal.set(false);
+        },
+        error: err => {
+          this._errorSignal.set(this.formatError(err, 'Failed to create business profile'));
+          this._loadingSignal.set(false);
+        }
+      })
+    );
   }
 
-  updateBusinessProfile(businessProfile: BusinessProfile): void {
+  updateBusinessProfile(businessProfile: BusinessProfile): Observable<BusinessProfile> {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.profilesApi.updateBusinessProfile(businessProfile).pipe(retry(2)).subscribe({
-      next: updatedBusinessProfile => {
-        this._businessProfilesSignal.update(businessProfiles =>
-          businessProfiles.map(bp => bp.id === updatedBusinessProfile.id
-            ? updatedBusinessProfile
-            : bp
-          ));
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to update business profile'));
-        this._loadingSignal.set(false);
-      }
-    });
+    return this.profilesApi.updateBusinessProfile(businessProfile).pipe(retry(2), tap({
+        next: updatedBusinessProfile => {
+          this._businessProfilesSignal.update(businessProfiles =>
+            businessProfiles.map(bp => bp.id === updatedBusinessProfile.id ? updatedBusinessProfile : bp));
+          this._loadingSignal.set(false);
+        },
+        error: err => {
+          this._errorSignal.set(this.formatError(err, 'Failed to update business profile'));
+          this._loadingSignal.set(false);
+        }
+      })
+    );
   }
 
   deleteBusinessProfile(id: number): void {
@@ -89,38 +89,36 @@ export class ProfilesStore {
     );
   }
 
-  addPersonProfile(personProfile: PersonProfile): void {
+  addPersonProfile(personProfile: PersonProfile): Observable<PersonProfile> {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.profilesApi.createPersonProfile(personProfile).pipe(retry(2)).subscribe({
-      next: createdPersonProfile => {
-        this._personProfilesSignal.update(personProfiles => [...personProfiles, createdPersonProfile]);
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to create person profile'));
-        this._loadingSignal.set(false);
-      }
-    });
+    return this.profilesApi.createPersonProfile(personProfile).pipe(retry(2), tap({
+        next: createdPersonProfile => {
+          this._personProfilesSignal.update(personProfiles => [...personProfiles, createdPersonProfile]);
+          this._loadingSignal.set(false);
+        },
+        error: err => {
+          this._errorSignal.set(this.formatError(err, 'Failed to create person profile'));
+          this._loadingSignal.set(false);
+        }
+      })
+    );
   }
 
-  updatePersonProfile(personProfile: PersonProfile): void {
+  updatePersonProfile(personProfile: PersonProfile): Observable<PersonProfile> {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.profilesApi.updatePersonProfile(personProfile).pipe(retry(2)).subscribe({
-      next: updatedPersonProfile => {
-        this._personProfilesSignal.update(personProfiles =>
-          personProfiles.map(pp => pp.id === updatedPersonProfile.id
-            ? updatedPersonProfile
-            : pp
-          ));
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to update person profile'));
-        this._loadingSignal.set(false);
-      }
-    });
+    return this.profilesApi.updatePersonProfile(personProfile).pipe(retry(2), tap({
+        next: updatedPersonProfile => {
+          this._personProfilesSignal.update(personProfiles => personProfiles.map(pp => pp.id === updatedPersonProfile.id ? updatedPersonProfile : pp));
+          this._loadingSignal.set(false);
+        },
+        error: err => {
+          this._errorSignal.set(this.formatError(err, 'Failed to update person profile'));
+          this._loadingSignal.set(false);
+        }
+      })
+    );
   }
 
   deletePersonProfile(id: number): void {
