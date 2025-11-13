@@ -5,12 +5,10 @@ import { MatButton, MatFabButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatError } from '@angular/material/form-field';
-import { MatDivider } from '@angular/material/divider';
-import { MatChip } from '@angular/material/chips';
-import { DatePipe } from '@angular/common';
 import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { TranslatePipe } from '@ngx-translate/core';
+import { PersonProfileDetail } from '../../../../profiles/presentation/components/person-profile-detail/person-profile-detail';
 
 @Component({
   selector: 'app-staff-member-detail',
@@ -21,12 +19,10 @@ import { TranslatePipe } from '@ngx-translate/core';
     MatIcon,
     MatProgressSpinner,
     MatError,
-    MatDivider,
-    MatChip,
     MatFabButton,
-    DatePipe,
     LayoutNursingHome,
-    TranslatePipe
+    TranslatePipe,
+    PersonProfileDetail
   ],
   templateUrl: './staff-member-detail.html',
   styleUrl: './staff-member-detail.css'
@@ -36,13 +32,18 @@ export class StaffMemberDetail {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  imageLoadedMap: Record<number, boolean> = {};
   staffMemberId = signal<number | null>(null);
+
   staffMember = computed(() => {
     const id = this.staffMemberId();
     if (!id) return undefined;
     const staffMemberSignal = this.store.getStaffMemberById(id);
     return staffMemberSignal();
+  });
+
+  personProfileId = computed(() => {
+    const res = this.staffMember();
+    return res ? res.personProfileId : null;
   });
 
   constructor() {
@@ -54,16 +55,6 @@ export class StaffMemberDetail {
         this.router.navigate(['/staff/list']).then();
       }
     });
-  }
-
-  onImageLoad(id: number) {
-    this.imageLoadedMap[id] = true;
-  }
-
-  onImageError(event: Event, id: number) {
-    const img = event.target as HTMLImageElement;
-    img.src = 'images/shared/veyra-placeholder.png';
-    this.imageLoadedMap[id] = true;
   }
 
   goBack() {
