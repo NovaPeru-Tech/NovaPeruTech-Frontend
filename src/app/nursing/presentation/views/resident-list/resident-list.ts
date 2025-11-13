@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule }  from '@angular/forms';
 import { NursingStore } from '../../../application/nursing.store';
+import { PersonProfileDetail } from '../../../../profiles/presentation/components/person-profile-detail/person-profile-detail';
 
 @Component({
   selector: 'app-resident-list',
@@ -21,7 +22,6 @@ import { NursingStore } from '../../../application/nursing.store';
     MatProgressSpinner,
     MatError,
     MatCard,
-    MatCardContent,
     MatIcon,
     MatButton,
     LayoutNursingHome,
@@ -31,7 +31,8 @@ import { NursingStore } from '../../../application/nursing.store';
     FormsModule,
     MatIconButton,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    PersonProfileDetail
   ],
   templateUrl: './resident-list.html',
   styleUrl: './resident-list.css'
@@ -41,35 +42,25 @@ export class ResidentList {
   protected router = inject(Router);
 
   selectedId: number | null = null;
-  imageLoadedMap: Record<number, boolean> = {};
   searchTerm = signal('');
+  filteredPersonProfilesIds = signal<number[]>([]);
   residents = computed(() => this.store.residents());
+
+  onFiltered(ids: number[]) {
+    this.filteredPersonProfilesIds.set(ids);
+  }
+
   filteredResidents = computed(() => {
-    const term = this.removeAccents(this.searchTerm().toLowerCase().trim());
-    const residents = this.residents();
+    const ids = this.filteredPersonProfilesIds();
+    const allResidents = this.residents();
+    const term = this.searchTerm();
 
-    if (!term) return residents;
+    if (term && ids.length === 0) {
+      return [];
+    }
 
-    return residents.filter(r => {
-      const name = this.removeAccents(r.name);
-      const lastname = this.removeAccents(r.lastname);
-      return name.startsWith(term) || lastname.startsWith(term);
-    });
+    return allResidents.filter(r => ids.includes(r.personProfileId));
   });
-
-  onImageLoad(id: number) {
-    this.imageLoadedMap[id] = true;
-  }
-
-  onImageError(event: Event, id: number) {
-    const img = event.target as HTMLImageElement;
-    img.src = 'images/shared/veyra-placeholder.png';
-    this.imageLoadedMap[id] = true;
-  }
-
-  removeAccents(word: string) {
-    return word.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').trim();
-  }
 
   selectResident(id: number) {
     this.selectedId = this.selectedId === id ? null : id;
