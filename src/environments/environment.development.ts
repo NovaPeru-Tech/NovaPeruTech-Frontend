@@ -9,6 +9,10 @@ export const environment = {
   platformProviderResidentsEndpointPath:'/residents',
   platformProviderRoomsEndpointPath: '/rooms',
 
+  // Profiles Bounded Context
+  platformProviderBusinessProfilesEndpointPath: '/business-profiles',
+  platformProviderPersonProfilesEndpointPath: '/person-profiles',
+
   platformProviderEmployeeEndPoint:'/employee',
   platformProviderMedicationEndPoint:'/medications'
 };
