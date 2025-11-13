@@ -1,45 +1,19 @@
 import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-response';
 
 /**
- * Resident detailed information including personal, medical, and contact data.
+ * Resident detailed information including legal representative and emergency contact data.
  */
 export interface ResidentsResource extends BaseResource {
   id: number; // Unique resident ID
-  state: string; // Current status
-  name: string; // First name
-  lastname: string; // Last name
-  dni: string; // National ID
-  birthDate: string; // Date of birth
-  phoneNumber: string; // Phone number
-  email: string; // Email address
-  bloodType: string; // Blood type
-  room: string; // Assigned room
-  image: string; // Profile image
+  personProfileId: number; // Person profile ID
 
-  allergies?: string; // Known allergies
-  chronicDiseases: string[]; // Chronic conditions
-  currentMedications?: string; // Current medication
-  specialDiet?: string; // Special diet
+  legalRepresentativeFirstName: string; // Legal representative first name
+  legalRepresentativeLastName: string; // Legal representative last name
+  legalRepresentativePhoneNumber: string; // Legal representative phone number
 
-  mobilityLevel: string; // Mobility level
-  dependencyLevel: string; // Dependency level
-  needsBathingAssistance: boolean; // Needs help bathing
-  needsFeedingAssistance: boolean; // Needs help eating
-  needsDressingAssistance: boolean; // Needs help dressing
-
-  emergencyContactName: string; // Main emergency contact
-  emergencyPhone: string; // Emergency phone
-  contactRelation: string; // Relation to contact
-  secondaryContact?: string; // Secondary contact
-  secondaryPhone?: string; // Secondary phone
-
-  admissionDate: string; // Admission date
-  attendingPhysician: string; // Assigned physician
-  medicalInsurance?: string; // Medical insurance
-  socialSecurityNumber?: string; // Social security number
-
-  legalGuardian?: string; // Legal guardian
-  guardianPhone?: string; // Guardian phone
+  emergencyContactFirstName: string; // Emergency contact first name
+  emergencyContactLastName: string; // Emergency contact last name
+  emergencyContactPhoneNumber: string; // Emergency contact phone number
 }
 
 /**
