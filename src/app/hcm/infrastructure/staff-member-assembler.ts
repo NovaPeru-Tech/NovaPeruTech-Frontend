@@ -10,56 +10,26 @@ export class StaffMemberAssembler implements BaseAssembler<StaffMember, StaffRes
   toEntityFromResource(resource: StaffResource): StaffMember {
     return new StaffMember({
       id: resource.id,
-      state: resource.state,
-      name: resource.name,
-      lastname: resource.lastname,
-      dni: resource.dni,
+      personProfileId: resource.personProfileId,
 
-      birthDate: new Date(resource.birthDate),
-      nationality: resource.nationality,
-      phoneNumber: resource.phoneNumber,
-      email: resource.email,
-      address: resource.address,
-      image: resource.image,
+      emergencyContactFirstName: resource.emergencyContactFirstName,
+      emergencyContactLastName: resource.emergencyContactLastName,
+      emergencyContactPhoneNumber: resource.emergencyContactPhoneNumber,
 
-      contractDate: new Date(resource.contractDate),
-      contractEndDate: resource.contractEndDate ? new Date(resource.contractEndDate) : undefined,
-      terminationDate: resource.terminationDate ? new Date(resource.terminationDate) : undefined,
-      post: resource.post,
-      typeOfContract: resource.typeOfContract,
-      workShift: resource.workShift,
-      certifications: resource.certifications,
-      emergencyContactName: resource.emergencyContactName,
-      emergencyContactPhone: resource.emergencyContactPhone
+      status: resource.status
     });
   }
 
   toResourceFromEntity(entity: StaffMember): StaffResource {
     return {
       id: entity.id,
-      state: entity.state,
-      name: entity.name,
-      lastname: entity.lastname,
-      dni: entity.dni,
+      personProfileId: entity.personProfileId,
 
-      birthDate: entity.birthDate.toString(),
-      nationality: entity.nationality,
-      phoneNumber: entity.phoneNumber,
-      email: entity.email,
-      address: entity.address,
-      image: entity.image,
+      emergencyContactFirstName: entity.emergencyContactFirstName,
+      emergencyContactLastName: entity.emergencyContactLastName,
+      emergencyContactPhoneNumber: entity.emergencyContactPhoneNumber,
 
-
-      contractDate: entity.contractDate.toISOString(),
-      contractEndDate: entity.contractEndDate ? entity.contractEndDate.toISOString() : undefined,
-      terminationDate: entity.terminationDate ? entity.terminationDate.toISOString() : undefined,
-
-      post: entity.post,
-      typeOfContract: entity.typeOfContract,
-      workShift: entity.workShift,
-      certifications: entity.certifications,
-      emergencyContactName: entity.emergencyContactName,
-      emergencyContactPhone: entity.emergencyContactPhone
+      status: entity.status
     } as StaffResource;
   }
 }
