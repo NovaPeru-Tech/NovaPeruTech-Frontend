@@ -13,6 +13,7 @@ export class PersonProfile extends Profile {
     firstName: string;
     lastName: string;
     birthDate: Date;
+    age: number;
     emailAddress: string;
     street: string;
     number: string;
@@ -38,20 +39,7 @@ export class PersonProfile extends Profile {
     this._firstName = personProfile.firstName;
     this._lastName = personProfile.lastName;
     this._birthDate = personProfile.birthDate;
-    this._age = this.calculateAge(personProfile.birthDate);
-  }
-
-  private calculateAge(birthDate: Date): number {
-    const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
-
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--;
-    }
-
-    return age;
+    this._age = personProfile.age;
   }
 
   get dni(): string {
