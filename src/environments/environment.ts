@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
   // Hcm Bounded Context
+  platformProviderContractsEndpointPath: '/contracts',
   platformProviderStaffEndpointPath:'/staff',
 
   platformProviderSignInEndpointPath:'/users',
