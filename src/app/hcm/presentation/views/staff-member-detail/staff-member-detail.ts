@@ -8,7 +8,7 @@ import { MatError } from '@angular/material/form-field';
 import { MatDivider } from '@angular/material/divider';
 import { MatChip } from '@angular/material/chips';
 import { DatePipe } from '@angular/common';
-import { StaffStore } from '../../../application/staff.store';
+import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -32,7 +32,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './staff-member-detail.css'
 })
 export class StaffMemberDetail {
-  protected store = inject(StaffStore);
+  protected store = inject(HcmStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 

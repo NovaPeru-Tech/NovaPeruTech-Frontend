@@ -1,21 +1,21 @@
 import { computed, Injectable, Signal, signal } from '@angular/core';
 import { StaffMember } from '../domain/model/staff-member.entity';
-import { StaffApi } from '../infrastructure/staff-api';
+import { HcmApi } from '../infrastructure/hcm-api';
 import { retry } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StaffStore {
+export class HcmStore {
   private readonly _staffMemberSignal = signal<StaffMember[]>([]);
   private readonly _loadingSignal = signal<boolean>(false);
   private readonly _errorSignal = signal<string | null>(null);
   readonly error = this._errorSignal.asReadonly();
   readonly loading = this._loadingSignal.asReadonly();
-  readonly staffMembers = this._staffMemberSignal.asReadonly();
+  readonly staff = this._staffMemberSignal.asReadonly();
 
-  constructor(private staffApi: StaffApi) {
+  constructor(private staffApi: HcmApi) {
     this.loadStaffMembers();
   }
 
@@ -35,7 +35,7 @@ export class StaffStore {
   }
 
   getStaffMemberById(id: number): Signal<StaffMember | undefined> {
-    return computed(() => id ? this.staffMembers().find(s => s.id === id) : undefined);
+    return computed(() => id ? this.staff().find(s => s.id === id) : undefined);
   }
 
   deleteStaffMember(id: number): void {

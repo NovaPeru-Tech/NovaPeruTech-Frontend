@@ -6,7 +6,7 @@ import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
-import { StaffStore } from '../../../application/staff.store';
+import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatInput } from '@angular/material/input';
 
@@ -33,13 +33,13 @@ import { MatInput } from '@angular/material/input';
   styleUrl: './staff-member-list.css'
 })
 export class StaffMemberList {
-  readonly store = inject(StaffStore);
+  readonly store = inject(HcmStore);
   protected router = inject(Router);
 
   selectedId: number | null = null;
   imageLoadedMap: Record<number, boolean> = {};
   searchTerm = signal('');
-  staffMembers = computed(() => this.store.staffMembers());
+  staffMembers = computed(() => this.store.staff());
   filteredStaffMembers = computed(() => {
     const term = this.removeAccents(this.searchTerm().toLowerCase().trim());
     const staffMembers = this.staffMembers();

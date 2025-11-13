@@ -13,7 +13,7 @@ import { MatOption, provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
 import { MatCalendar } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
-import { StaffStore } from '../../../application/staff.store';
+import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatCard } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
@@ -51,7 +51,7 @@ import { MatDivider } from '@angular/material/divider';
 })
 export class StaffMemberForm {
   private fb = inject(FormBuilder);
-  protected store = inject(StaffStore);
+  protected store = inject(HcmStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 

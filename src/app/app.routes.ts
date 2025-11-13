@@ -10,7 +10,7 @@ const nursingHomeRoutes = () =>
 const residentRoutes = () =>
   import('./nursing/presentation/nursing-routes').then(m => m.residentsRoutes);
 const staffRoutes = () =>
-  import('./staff/presentation/staff-routes').then(m => m.staffRoutes);
+  import('./hcm/presentation/hcm-routes').then(m => m.staffRoutes);
 const inventoryRoutes = () =>
   import('./inventory/presentation/inventory-routes').then(m => m.inventoryRoutes);
 const roomRoutes = () =>

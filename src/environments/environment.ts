@@ -1,6 +1,9 @@
 export const environment = {
   production: true,
   platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
+  // Hcm Bounded Context
+  platformProviderStaffEndpointPath:'/staff',
+
   platformProviderSignInEndpointPath:'/users',
   platformProviderSignUpEndpointPath:'/users',
 
@@ -13,6 +16,5 @@ export const environment = {
   platformProviderBusinessProfilesEndpointPath: '/business-profiles',
   platformProviderPersonProfilesEndpointPath: '/person-profiles',
 
-  platformProviderEmployeeEndPoint:'/employee',
   platformProviderMedicationEndPoint:'/medications'
 };

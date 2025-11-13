@@ -1,0 +1,14 @@
+import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
+import { StaffMember } from '../domain/model/staff-member.entity';
+import { StaffResource, StaffResponse } from './staff-response';
+import { StaffMemberAssembler } from './staff-member-assembler';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
+const  staffEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderStaffEndpointPath}`
+
+export class StaffApiEndpoint extends BaseApiEndpoint<StaffMember, StaffResource,StaffResponse,StaffMemberAssembler> {
+  constructor(http: HttpClient) {
+    super(http, staffEndpointUrl ,new StaffMemberAssembler());
+  }
+}

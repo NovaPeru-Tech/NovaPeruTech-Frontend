@@ -1,6 +1,6 @@
 import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-response';
 
-export interface StaffMembersResource extends BaseResource{
+export interface StaffResource extends BaseResource{
   id: number,
   state: string,
   name: string,
@@ -27,6 +27,6 @@ export interface StaffMembersResource extends BaseResource{
   emergencyContactPhone: string;
 }
 
-export interface StaffMembersResponse extends BaseResponse{
-  staffMember:StaffMembersResource[];
+export interface StaffResponse extends BaseResponse{
+  staffMember:StaffResource[];
 }
