@@ -11,6 +11,8 @@ const residentRoutes = () =>
   import('./nursing/presentation/nursing-routes').then(m => m.residentsRoutes);
 const staffRoutes = () =>
   import('./hcm/presentation/hcm-routes').then(m => m.staffRoutes);
+const contractsRoutes = () =>
+  import('./hcm/presentation/hcm-routes').then(m => m.contractsRoutes);
 const inventoryRoutes = () =>
   import('./inventory/presentation/inventory-routes').then(m => m.inventoryRoutes);
 const roomRoutes = () =>
@@ -23,6 +25,7 @@ export const routes: Routes = [
   { path: 'nursing',   loadChildren: nursingHomeRoutes },
   { path: 'residents', loadChildren: residentRoutes },
   { path: 'staff',     loadChildren: staffRoutes },
+  { path: 'contracts', loadChildren: contractsRoutes },
   { path: 'inventory', loadChildren: inventoryRoutes },
   { path: 'rooms',     loadChildren: roomRoutes },
   { path: '',          redirectTo: '/home',         pathMatch:'full' },

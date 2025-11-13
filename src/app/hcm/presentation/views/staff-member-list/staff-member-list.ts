@@ -3,15 +3,13 @@ import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
-import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatInput } from '@angular/material/input';
-import {
-  PersonProfileDetail
-} from '../../../../profiles/presentation/components/person-profile-detail/person-profile-detail';
+import { PersonProfileDetail } from '../../../../profiles/presentation/components/person-profile-detail/person-profile-detail';
 
 @Component({
   selector: 'app-staff-member-list',
@@ -21,7 +19,6 @@ import {
     MatProgressSpinner,
     MatError,
     MatCard,
-    MatCardContent,
     MatIcon,
     MatButton,
     LayoutNursingHome,
@@ -85,6 +82,6 @@ export class StaffMemberList {
   }
 
   navigateToNewContract(id: number) {
-    this.router.navigate(['staff/contract', id,'new']).then();
+    this.router.navigate(['contracts/list', id,'new']).then();
   }
 }
