@@ -17,6 +17,8 @@ const inventoryRoutes = () =>
   import('./inventory/presentation/inventory-routes').then(m => m.inventoryRoutes);
 const roomRoutes = () =>
   import('./nursing/presentation/nursing-routes').then(m => m.roomsRoutes);
+const paymentsRoutes = () =>
+  import('./payments/presentation/payments-routes').then(m => m.paymentsRoutes);
 
 const baseTitle = 'Veyra';
 export const routes: Routes = [
