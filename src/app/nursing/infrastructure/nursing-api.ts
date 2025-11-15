@@ -8,6 +8,8 @@ import { Resident } from '../domain/model/resident.entity';
 import { ResidentsApiEndpoint } from './residents-api-endpoint';
 import { RoomsApiEndpoint } from './rooms-api-endpoint';
 import { Room } from '../domain/model/room.entity';
+import {MedicationsApiEndpoint} from './medications-api-endpoint';
+import {Medication} from '../domain/model/medication.entity';
 
 /*
 * @purpose: Service to interact with the Nursing Home API
@@ -25,6 +27,7 @@ export class NursingApi extends BaseApi{
   private readonly _nursingHomesApidEndpoint:NursingHomesApiEndpoint;
   private readonly _residentsApiEndPoint: ResidentsApiEndpoint;
   private readonly _roomsApiEndpoint: RoomsApiEndpoint;
+  private readonly _medicationsApiEndpoint: MedicationsApiEndpoint;
 
   /**
    * Initializes the Resident, Room and Nursing Home API service with the required HTTP client.
@@ -35,6 +38,7 @@ export class NursingApi extends BaseApi{
     this._nursingHomesApidEndpoint=new NursingHomesApiEndpoint(http);
     this._residentsApiEndPoint = new ResidentsApiEndpoint(http);
     this._roomsApiEndpoint = new RoomsApiEndpoint(http);
+    this._medicationsApiEndpoint = new MedicationsApiEndpoint(http);
   }
 
   createNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
@@ -102,5 +106,17 @@ export class NursingApi extends BaseApi{
 
   deleteRoom(id: number): Observable<void> {
     return this._roomsApiEndpoint.delete(id);
+  }
+
+  getMedications() {
+    return this._medicationsApiEndpoint.getAll();
+  }
+
+  getMedication(id: number): Observable<Medication> {
+    return this._medicationsApiEndpoint.getById(id);
+  }
+
+  createMedication(medication: Medication): Observable<Medication> {
+    return this._medicationsApiEndpoint.create(medication);
   }
 }

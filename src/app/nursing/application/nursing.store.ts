@@ -5,6 +5,7 @@ import { retry } from 'rxjs';
 import { Resident } from '../domain/model/resident.entity';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Room } from '../domain/model/room.entity';
+import { Medication } from '../domain/model/medication.entity';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -15,6 +16,7 @@ import { Room } from '../domain/model/room.entity';
   providedIn: 'root'
 })
 export class NursingStore {
+  private readonly _medicationsSignal = signal<Medication[]>([]);
   private readonly _residentSignal = signal<Resident[]>([]);
   private readonly _nursingHomesSignal= signal<NursingHome[]>([]);
   private readonly _roomsSignal = signal<Room[]>([]);
@@ -22,6 +24,7 @@ export class NursingStore {
   private readonly _errorSignal=signal<string|null>(null);
   readonly loading=this._loadingSignal.asReadonly();
   readonly error = this._errorSignal.asReadonly();
+  readonly medications = this._medicationsSignal.asReadonly();
   readonly nursingHomes=this._nursingHomesSignal.asReadonly();
   readonly residents = this._residentSignal.asReadonly();
   readonly rooms = this._roomsSignal.asReadonly();
@@ -30,6 +33,7 @@ export class NursingStore {
   constructor(private nursingApi: NursingApi) {
     this.loadResidents();
     this.loadRooms();
+    this.loadMedications();
   }
 
   /*
@@ -176,9 +180,49 @@ export class NursingStore {
     });
   }
 
+  addMedication(medication: Medication): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.createMedication(medication).pipe(retry(2)).subscribe({
+      next: createdMedication => {
+        this._medicationsSignal.update(medications => [...medications, createdMedication]);
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to create medication'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
+  getMedicationById(id: number | null | undefined): Signal<Medication | undefined> {
+    return computed(() => id
+      ? this.medications().find(medication => medication.id === id)
+      : undefined
+    );
+  }
+
+  getMedicationsByResidentId(residentId: number): Signal<Medication[]> {
+    return computed(() => this.medications().filter(medication => medication.residentId === residentId));
+  }
   /**
    * Loads all residents from the API into the store.
    */
+  loadMedications() {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.getMedications().pipe(takeUntilDestroyed()).subscribe({
+      next: medications => {
+        this._medicationsSignal.set(medications);
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to load medications'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
   loadResidents() {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
