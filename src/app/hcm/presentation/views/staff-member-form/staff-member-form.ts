@@ -64,7 +64,8 @@ export class StaffMemberForm {
           this.form.patchValue({
             emergencyContactFirstName: staffMember.emergencyContactFirstName,
             emergencyContactLastName: staffMember.emergencyContactLastName,
-            emergencyContactPhoneNumber: staffMember.emergencyContactPhoneNumber
+            emergencyContactPhoneNumber: staffMember.emergencyContactPhoneNumber,
+            status: staffMember.status
           });
 
           this.personProfileId = staffMember.personProfileId;
