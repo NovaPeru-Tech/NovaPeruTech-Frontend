@@ -9,6 +9,7 @@ export const environment = {
   platformProviderSignUpEndpointPath:'/users',
 
   // Nursing Bounded Context
+  platformProviderMedicationsEndpointPath:'/medications',
   platformProviderNursingHomesEndpointPath:'/nursing-homes',
   platformProviderResidentsEndpointPath:'/residents',
   platformProviderRoomsEndpointPath: '/rooms',
