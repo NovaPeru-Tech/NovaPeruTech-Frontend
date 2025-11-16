@@ -1,0 +1,99 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ 'medication.new.title' | translate }}</h1>
+
+  <div class="form-wrapper">
+    @if (store.loading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    }
+
+    @if (store.error()) {
+      <div class="error-container">
+        <mat-error>{{ store.error() }}</mat-error>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="medication-form">
+      <mat-form-field>
+        <mat-label>{{ 'medication.name' | translate }}</mat-label>
+        <input matInput formControlName="name" required>
+        @if (form.get('name')?.touched && form.get('name')!.hasError('required')) {
+          <mat-error>{{ 'medication.error.name-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'description' | translate }}</mat-label>
+        <input matInput formControlName="description" required>
+        @if (form.get('description')?.touched && form.get('description')!.hasError('required')) {
+          <mat-error>{{ 'description-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'amount' | translate }}</mat-label>
+        <input matInput type="number" formControlName="amount" required min="0">
+        @if (form.get('amount')?.touched && form.get('amount')!.hasError('required')) {
+          <mat-error>{{ 'amount-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="calendar-section">
+        <label class="section-label">
+          {{ 'medication.expirationDate' | translate }}
+          <span class="required">*</span>
+        </label>
+
+        <mat-calendar
+          [selected]="form.value.expirationDate"
+          (selectedChange)="onExpirationDateSelected($event)"
+          [minDate]="minExpirationDate"
+          [startAt]="startDate">
+        </mat-calendar>
+
+        @if (form.value.expirationDate) {
+          <div class="selected-date">
+            <mat-icon>event</mat-icon>
+            <span>{{ form.value.expirationDate | date:'dd/MM/yyyy' }}</span>
+          </div>
+        }
+
+        @if (form.get('expirationDate')?.touched && form.get('expirationDate')!.hasError('required')) {
+          <mat-error>{{ 'medication.error.expirationDate-required' | translate }}</mat-error>
+        }
+      </div>
+
+      <mat-form-field>
+        <mat-label>{{ 'drugPresentation' | translate }}</mat-label>
+        <input matInput formControlName="drugPresentation" required>
+        @if (form.get('drugPresentation')?.touched && form.get('drugPresentation')!.hasError('required')) {
+          <mat-error>{{ 'drugPresentation-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'dosage' | translate }}</mat-label>
+        <input matInput formControlName="dosage" required>
+        @if (form.get('dosage')?.touched && form.get('dosage')!.hasError('required')) {
+          <mat-error>{{ 'dosage-required' | translate }}</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="space"></div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button mat-raised-button type="button" (click)="onCancel()">
+          <mat-icon>cancel</mat-icon>
+          {{ 'medication.cancel' | translate }}
+        </button>
+
+        <button mat-raised-button color="primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ 'medication.add' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout-nursing-home>
