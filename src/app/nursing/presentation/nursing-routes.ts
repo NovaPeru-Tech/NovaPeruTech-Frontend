@@ -13,7 +13,10 @@ const roomForm = () =>
   import('./views/room-form/room-form').then(m => m.RoomForm);
 const nursingHomeRegister = () =>
   import('./views/nursing-home-form/nursing-home-form').then(m => m.NursingHomeForm)
-
+const medicationList = () =>
+  import('./views/medication-list/medication-list').then(m => m.MedicationList);
+const medicationForm = () =>
+  import('./views/medication-form/medication-form').then(m => m.MedicationForm);
 
 const baseTitle = 'Veyra';
 const residentsRoutes: Routes = [
@@ -33,6 +36,12 @@ const nursingRoutes: Routes = [
   { path:'register/nursingHome', loadComponent:nursingHomeRegister }
 ];
 
+const medicationsRoutes: Routes = [
+  { path: 'list/:id',        loadComponent: medicationList,   title: `Medications | ${baseTitle}` },
+  { path: 'list/:id/new',    loadComponent: medicationForm,   title: `New Medication | ${baseTitle}` }
+]
+
 export { residentsRoutes };
 export { roomsRoutes };
 export { nursingRoutes };
+export { medicationsRoutes };
