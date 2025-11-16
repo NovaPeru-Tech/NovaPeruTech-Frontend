@@ -1,41 +1,36 @@
 import { Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatPaginator } from '@angular/material/paginator';
-import { NursingStore } from '../../../application/nursing.store';
-import { DatePipe } from '@angular/common';
-import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
-import { MatButton, MatIconButton } from '@angular/material/button';
-import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatNoDataRow, MatTable } from '@angular/material/table';
-import { MatError, MatFormField, MatPrefix, MatSuffix } from '@angular/material/form-field';
-import { MatInput, MatLabel } from '@angular/material/input';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatError, MatFormField, MatLabel, MatPrefix, MatSuffix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatInput } from '@angular/material/input';
+import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { NursingStore } from '../../../application/nursing.store';
 
 @Component({
   selector: 'app-medication-list',
+  standalone: true,
   imports: [
-    DatePipe,
-    LayoutNursingHome,
-    MatButton,
-    MatCell,
-    MatCellDef,
-    MatColumnDef,
+    TranslatePipe,
+    MatProgressSpinner,
     MatError,
-    MatFormField,
-    MatHeaderCell,
     MatIcon,
     MatIconButton,
+    MatButton,
+    DatePipe,
+    MatTableModule,
+    MatPaginatorModule,
+    LayoutNursingHome,
+    MatFormField,
     MatInput,
     MatLabel,
-    MatPaginator,
     MatPrefix,
-    MatProgressSpinner,
-    MatSuffix,
-    MatTable,
-    TranslatePipe,
-    MatHeaderCellDef,
-    MatNoDataRow
+    MatSuffix
   ],
   templateUrl: './medication-list.html',
   styleUrl: './medication-list.css'
@@ -71,6 +66,7 @@ export class MedicationList {
   searchTerm = signal('');
   selectedColumn = signal<string>('name');
   sortDirection = signal<'asc'|'desc'>('asc');
+  medications = computed(() => this.store.medications());
 
   filteredMedications = computed(() => {
     const term = this.removeAccents(this.searchTerm().toLowerCase().trim());
@@ -115,11 +111,11 @@ export class MedicationList {
     }
   }
 
-  navigateToNew() {
-    this.router.navigate(['inventory/medication/new']).then();
+  navigateToNew(id: number) {
+    this.router.navigate(['medications/list', id, 'new']).then();
   }
 
-  getStatusClass(medication: any): string {
-    return medication.getStatus();
+  goBack() {
+    this.router.navigate(['/residents/list']).then();
   }
 }
