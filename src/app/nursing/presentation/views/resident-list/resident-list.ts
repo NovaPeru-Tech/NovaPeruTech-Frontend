@@ -70,6 +70,10 @@ export class ResidentList {
     this.router.navigate(['residents/list', id, 'detail']).then();
   }
 
+  viewMedications(id: number) {
+    this.router.navigate(['medications/list', id]).then();
+  }
+
   editResident(id: number) {
     this.router.navigate(['residents/list', id, 'edit']).then();
     if (this.selectedId === id) {

@@ -59,6 +59,12 @@
           {{ 'residents.buttons.details' | translate }}
         </button>
 
+        <button mat-raised-button
+                class="detail-button"
+                (click)="viewMedications(resident.id); $event.stopPropagation()">
+          {{ 'View Medications' | translate }}
+        </button>
+
       </mat-card>
     } @empty {
       <div class="empty-state">
