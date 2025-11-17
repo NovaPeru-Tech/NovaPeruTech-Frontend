@@ -1,0 +1,105 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ 'staff-management.list.title' | translate }}</h1>
+
+  <div class="search-container">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'staff-management.buttons.search' | translate }}</mat-label>
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        [placeholder]="'staff-management.buttons.search-info' | translate"
+        [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)"
+        type="text"/>
+      @if (searchTerm()) {
+        <button matSuffix mat-icon-button (click)="searchTerm.set('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+    </mat-form-field>
+  </div>
+
+  <div style="display: none;">
+    <app-person-profile-detail
+      [personProfileCard]="false"
+      [personProfileId]="null"
+      [searchTerm]="searchTerm()"
+      (idsFiltered)="onFiltered($event)">
+    </app-person-profile-detail>
+  </div>
+
+  <!-- Loading State -->
+  @if (store.loading()) {
+    <mat-spinner diameter="40"></mat-spinner>
+  }
+
+  <!-- Error State -->
+  @if (store.error()) {
+    <mat-error>{{ store.error() }}</mat-error>
+  }
+
+  <!-- Grid de Tarjetas de Empleados -->
+  <div class="cards-grid">
+    @for (staffMember of filteredStaff(); track staffMember.id) {
+      <mat-card class="staff-card"
+                [class.selected]="selectedId === staffMember.id"
+                (click)="selectStaffMember(staffMember.id)">
+
+        <div class="selection-indicator"
+             [class.active]="selectedId === staffMember.id">
+        </div>
+
+        <app-person-profile-detail
+          [personProfileCard]="true"
+          [personProfileId]="staffMember.personProfileId">
+        </app-person-profile-detail>
+
+        <button mat-raised-button
+                color="primary"
+                class="detail-button"
+                (click)="viewDetails(staffMember.id); $event.stopPropagation()">
+          {{ 'staff-management.buttons.details' | translate }}
+        </button>
+
+        @if (staffMember.status === 'PENDING') {
+          <button mat-raised-button
+                  color="primary"
+                  class="detail-button"
+                  (click)="navigateToNewContract(staffMember.id); $event.stopPropagation()">
+            {{ 'Add contract' | translate }}
+          </button>
+        }
+      </mat-card>
+    } @empty {
+      <div class="empty-state">
+        <p>{{ 'staff-management.error.no-staff' | translate }}</p>
+      </div>
+    }
+  </div>
+
+  <!-- Botones de acción globales -->
+  <div class="action-buttons">
+    <button mat-raised-button
+            color="warn"
+            [disabled]="!selectedId"
+            (click)="deleteStaffMember(selectedId!)">
+      <mat-icon>delete</mat-icon>
+      {{ 'staff-management.buttons.delete' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="primary"
+            [disabled]="!selectedId"
+            (click)="editStaffMember(selectedId!)">
+      <mat-icon>edit</mat-icon>
+      {{ 'staff-management.buttons.edit' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="accent"
+            (click)="navigateToNew()">
+      <mat-icon>add</mat-icon>
+      {{ 'staff-management.buttons.add' | translate }}
+    </button>
+  </div>
+</app-layout-nursing-home>

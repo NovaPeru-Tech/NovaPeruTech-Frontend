@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {LanguageSwitcher} from "../language-switcher/language-switcher";
-import {MatToolbar} from "@angular/material/toolbar";
+import { LanguageSwitcher} from "../language-switcher/language-switcher";
+import { MatToolbar } from "@angular/material/toolbar";
 
 @Component({
   selector: 'app-toolbar',

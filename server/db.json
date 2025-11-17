@@ -1,12 +1,26 @@
 {
-  "users": [
-    {
-      "id": 1,
-      "firstName": "renato ",
-      "lastName": "calvo",
-      "email": "renato.calvo@hotmail.com",
-      "password": "1232dsad",
-      "role": "administrator"
-    }
+  "contracts": [
+
+  ],
+  "staff": [
+
+  ],
+  "nursing-homes": [
+
+  ],
+  "residents": [
+
+  ],
+  "rooms": [
+
+  ],
+  "business-profiles": [
+
+  ],
+  "person-profiles": [
+
+  ],
+  "medications": [
+
   ]
 }

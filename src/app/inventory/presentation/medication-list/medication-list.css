@@ -1,0 +1,279 @@
+.content-with-toolbar {
+  flex-direction: column;
+  padding-bottom: 100px;
+}
+
+.title {
+  margin: 30px 20px;
+  padding-bottom: 8px;
+  border-bottom: #66B3AD 5px solid;
+}
+
+.search-container {
+  margin-left: 20px;
+}
+
+.search-container mat-form-field {
+  width: 350px;
+}
+
+.table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.list-container {
+  margin: 30px 20px;
+  background-color: #f5f7fa;
+}
+
+/* Loading and Error */
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}
+
+.error-message {
+  text-align: center;
+  padding: 16px;
+  margin: 20px 0;
+  background-color: #ffebee;
+  border-radius: 8px;
+  color: #c62828;
+}
+
+/* Table Container */
+.table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* Table Styling */
+.medications-table {
+  width: 100%;
+  background: #f0f8ff;
+}
+
+/* Header */
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .mat-mdc-header-row {
+  background: linear-gradient(135deg, #5f9ea0 0%, #4a8385 100%);
+  height: 56px;
+  color: white;
+}
+
+::ng-deep .mat-mdc-header-cell {
+  color: #0d2e73 !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+}
+
+/* Rows */
+::ng-deep .mat-mdc-row {
+  height: 60px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+::ng-deep .mat-mdc-row:hover {
+  background-color: #9fd2f1;
+}
+
+::ng-deep .mat-mdc-row.selected-row {
+  background-color: #9fd2f1;
+}
+
+::ng-deep .mat-mdc-cell {
+  color: #333;
+  font-size: 14px;
+  padding: 12px 16px !important;
+}
+
+/* Name Cell */
+.name-cell {
+  font-weight: 600;
+  color: #333;
+}
+
+.name-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.medication-name {
+  flex: 1;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-indicator.expired {
+  background-color: #f44336;
+  box-shadow: 0 0 6px rgba(244, 67, 54, 0.5);
+}
+
+.status-indicator.near-expiration {
+  background-color: #ff9800;
+  box-shadow: 0 0 6px rgba(255, 152, 0, 0.5);
+}
+
+.status-indicator.low-stock {
+  background-color: #ffc107;
+  box-shadow: 0 0 6px rgba(255, 193, 7, 0.5);
+}
+
+/* Special Cell Styling */
+.cost-cell {
+  font-weight: 600;
+  color: #2e7d32;
+}
+
+.near-expiration {
+  color: #f57c00;
+  font-weight: 600;
+}
+
+.expired {
+  color: #d32f2f;
+  font-weight: 700;
+  }
+
+.low-stock {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.actions-cell button {
+  color: #0d2e73;
+}
+
+/* Checkbox Styling */
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__background,
+::ng-deep .mat-mdc-header-cell .mat-mdc-checkbox .mdc-checkbox__background {
+  border: 2px solid #70B1E6 !important;
+}
+
+::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background,
+::ng-deep .mat-mdc-header-cell .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background {
+  background-color: #70B1E6 !important;
+}
+
+::ng-deep .mdc-checkbox__checkmark-path {
+  stroke: white !important;
+}
+
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__ripple::before,
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__ripple::after {
+  background-color: #70B1E6 !important;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+/* Paginator */
+::ng-deep .mat-mdc-paginator {
+  background: #f8f9fa;
+  border-top: 1px solid #596463;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+}
+
+/* Floating Actions */
+.floating-actions {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background: #f0f8ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+/* Responsive */
+@media (max-width: 1240px) {
+  .table {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  .search-container mat-form-field {
+    width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-with-toolbar {
+    padding-bottom: 130px;
+  }
+
+  .floating-actions {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 24px;
+    gap: 10px;
+    width: 100%;
+    max-width: 280px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .floating-actions button,
+  .floating-actions .mat-button,
+  .floating-actions .mat-raised-button {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-actions {
+    max-width: 235px;
+  }
+}

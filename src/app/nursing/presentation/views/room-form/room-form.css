@@ -1,0 +1,45 @@
+.title {
+  margin: 30px 20px;
+  padding-bottom: 8px;
+  border-bottom: #66B3AD 5px solid;
+}
+
+.action-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background: #f0f8ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .action-buttons {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 24px;
+    gap: 10px;
+    width: 100%;
+    max-width: 280px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .action-buttons button,
+  .action-buttons .mat-button,
+  .action-buttons .mat-raised-button {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons {
+    max-width: 235px;
+  }
+}

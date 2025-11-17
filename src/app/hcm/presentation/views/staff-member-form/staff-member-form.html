@@ -1,0 +1,85 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ (isEdit ? 'staff-management.edit.title' : 'staff-management.new.title') | translate }}</h1>
+
+  <div class="form-wrapper">
+    @if (store.loading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+    }
+
+    @if (store.error()) {
+      <div class="error-container">
+        <mat-error>{{ store.error() }}</mat-error>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="staff-form">
+      <app-person-profile-form
+        [personProfileId]="personProfileId">
+      </app-person-profile-form>
+
+      <!-- Emergency Contacts Section -->
+      <div class="section-divider">
+        <mat-icon>emergency</mat-icon>
+        <span>{{ 'residents.emergency-contacts' | translate }}</span>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="full-width-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper emergency">
+              <mat-icon>contact_emergency</mat-icon>
+            </div>
+            <h3>{{ 'residents.main-contact' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'emergencyContactFirstName' | translate }}</mat-label>
+                <input matInput formControlName="emergencyContactFirstName" required>
+                @if (form.get('emergencyContactFirstName')?.touched && form.get('emergencyContactFirstName')!.hasError('required')) {
+                  <mat-error>{{ 'required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'Emergency Contact Last Name' | translate }}</mat-label>
+                <input matInput formControlName="emergencyContactLastName" required>
+                @if (form.get('emergencyContactLastName')?.touched && form.get('emergencyContactLastName')!.hasError('required')) {
+                  <mat-error>{{ 'required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="detail-row">
+              <mat-form-field>
+                <mat-label>{{ 'emergencyContactPhoneNumber' | translate }}</mat-label>
+                <input matInput formControlName="emergencyContactPhoneNumber" required>
+                @if (form.get('emergencyContactPhoneNumber')?.touched && form.get('emergencyContactPhoneNumber')!.hasError('required')) {
+                  <mat-error>{{ 'required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="space"></div>
+
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" type="button" (click)="onCancel()">
+          <mat-icon>cancel</mat-icon>
+          {{ 'residents.buttons.cancel' | translate }}
+        </button>
+
+        <button mat-raised-button color="primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ (isEdit? 'residents.buttons.update' : 'residents.buttons.register') | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout-nursing-home>

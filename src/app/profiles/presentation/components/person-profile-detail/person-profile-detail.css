@@ -1,0 +1,31 @@
+.resident-image {
+  background-color: #fff5f5;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #70B1E6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.resident-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.resident-image img.loaded {
+  opacity: 1;
+}
+
+.resident-info {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.resident-info strong {
+  color: #0d2e73;
+}

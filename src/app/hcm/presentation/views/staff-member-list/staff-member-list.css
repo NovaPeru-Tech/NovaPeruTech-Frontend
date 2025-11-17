@@ -1,0 +1,184 @@
+/* Container principal */
+.title {
+  margin: 30px 20px;
+  padding-bottom: 8px;
+  border-bottom: #66B3AD 5px solid;
+}
+
+.search-container {
+  margin-left: 20px;
+}
+
+.search-container mat-form-field {
+  width: 350px;
+}
+
+/* Loading y error */
+mat-spinner {
+  margin: 40px auto;
+  display: block;
+}
+
+mat-error {
+  text-align: center;
+  display: block;
+  margin: 20px;
+  padding: 16px;
+  background-color: #ffebee;
+  border-radius: 8px;
+  color: #c62828;
+  font-size: 14px;
+}
+
+/* Grid de tarjetas */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 30px 20px;
+  padding-bottom: 120px;
+}
+
+/* Tarjeta de empleado */
+.staff-card {
+  position: relative;
+  border-radius: 15px;
+  padding: 20px;
+  border: 2px solid #f0f8ff;
+  background-color: #f0f8ff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.staff-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: 2px solid #56aaE6;
+}
+
+.staff-card.selected {
+  border-color: #56aaE6;
+  background-color: #9fd2f1;
+  box-shadow: 0 0 15px rgba(112, 177, 230, 100);
+}
+
+/* Indicador de selección */
+.selection-indicator {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #70B1E6;
+  border-radius: 5px;
+  background-color: white;
+  transition: background-color 0.3s;
+  z-index: 2;
+}
+
+.selection-indicator.active {
+  background-color: #70B1E6;
+}
+
+/* Imagen del empleado */
+.staff-image {
+  background-color: #fff5f5;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #70B1E6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.staff-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.resident-image img.loaded {
+  opacity: 1;
+}
+
+/* Información del empleado */
+.staff-info {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.staff-info strong {
+  color: #0d2e73;
+}
+
+/* Botón de detalle */
+.detail-button {
+  width: 100%;
+  margin-top: 10px;
+  color: #0d2e73 !important;
+  border-radius: 8px;
+}
+
+/* Estado vacío */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  grid-column: 1 / -1;
+}
+
+/* Botones de acción globales */
+.action-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background: #f0f8ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+@media (max-width: 1024px) {
+  .search-container mat-form-field {
+    width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-grid {
+    padding-bottom: 150px;
+  }
+  .action-buttons {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 24px;
+    gap: 10px;
+    width: 100%;
+    max-width: 280px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .action-buttons button,
+  .action-buttons .mat-button,
+  .action-buttons .mat-raised-button {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-grid {
+    padding-bottom: 150px;
+  }
+
+  .action-buttons {
+    max-width: 235px;
+  }
+}

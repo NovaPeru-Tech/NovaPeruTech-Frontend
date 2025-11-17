@@ -1,0 +1,123 @@
+.title {
+  margin: 30px 20px;
+  padding-bottom: 8px;
+  border-bottom: #66B3AD 5px solid;
+}
+
+mat-spinner {
+  margin: 40px auto;
+  display: block;
+}
+
+.search-container {
+  margin-left: 20px;
+}
+
+.search-container mat-form-field {
+  width: 350px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 30px 20px;
+  padding-bottom: 120px;
+}
+
+.resident-card {
+  position: relative;
+  border-radius: 15px;
+  padding: 20px;
+  border: 2px solid #f0f8ff;
+  background-color: #f0f8ff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.resident-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border: 2px solid #56aaE6;
+}
+
+.resident-card.selected {
+  border-color: #56aaE6;
+  background-color: #9fd2f1;
+  box-shadow: 0 0 15px rgba(112, 177, 230, 100);
+}
+
+.selection-indicator {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #70B1E6;
+  border-radius: 5px;
+  background-color: white;
+  transition: background-color 0.3s;
+  z-index: 2;
+}
+
+.selection-indicator.active {
+  background-color: #70B1E6;
+}
+
+.resident-image {
+  background-color: #fff5f5;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #70B1E6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.resident-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.resident-image img.loaded {
+  opacity: 1;
+}
+
+.resident-info {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.resident-info strong {
+  color: #0d2e73;
+}
+
+.detail-button {
+  width: 100%;
+  margin-top: 10px;
+  color: #0d2e73 !important;
+  border-radius: 8px;
+}
+
+.action-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background: #f0f8ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+}

@@ -1,0 +1,92 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ 'residents.detail.title' | translate }}</h1>
+
+  <div class="detail-container">
+    @if (store.loading()) {
+      <div class="loading-wrapper">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>{{ 'residents.loading' | translate }}</p>
+      </div>
+    }
+
+    @if (store.error()) {
+      <mat-error class="error-message">
+        <mat-icon>error</mat-icon>
+        {{ store.error() }}
+      </mat-error>
+    }
+
+    @if (resident()) {
+      <div class="top-actions">
+        <button mat-raised-button
+                color="accent"
+                (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'residents.buttons.go-back' | translate }}
+        </button>
+      </div>
+
+      <div class="detail-layout">
+        <app-person-profile-detail
+          [personProfileCard]="false"
+          [personProfileId]="personProfileId()">
+        </app-person-profile-detail>
+
+        <mat-card class="medical-card">
+          <div class="medical-content">
+            <div class="medical-icon-wrapper">
+              <mat-icon>medical_services</mat-icon>
+            </div>
+            <div class="medical-text">
+              <h3>{{ 'residents.medical-history' | translate }}</h3>
+              <p>
+                {{ 'residents.medical-history-desc' | translate }}
+              </p>
+            </div>
+            <button mat-fab
+                    color="accent"
+                    (click)="viewMedicalHistory()"
+                    class="medical-fab">
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+          </div>
+        </mat-card>
+      </div>
+    } @else {
+      <div class="not-found">
+        <div class="not-found-icon-wrapper">
+          <mat-icon class="not-found-icon">person_off</mat-icon>
+        </div>
+        <h2>{{ 'residents.not-found-title' | translate }}</h2>
+        <p>{{ 'residents.not-found-message' | translate }}</p>
+        <button mat-raised-button color="primary" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'residents.return-list' | translate }}
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="action-buttons">
+    <button mat-raised-button
+            color="accent"
+            (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'residents.buttons.go-back' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="warn"
+            (click)="deleteResident()">
+      <mat-icon>delete</mat-icon>
+      {{ 'residents.buttons.delete' | translate }}
+    </button>
+
+    <button mat-raised-button
+            color="primary"
+            (click)="editResident()">
+      <mat-icon>edit</mat-icon>
+      {{ 'residents.buttons.edit' | translate }}
+    </button>
+  </div>
+</app-layout-nursing-home>

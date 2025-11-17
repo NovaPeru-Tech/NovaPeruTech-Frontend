@@ -1,19 +1,353 @@
 {
-"toolbar": {
-"logoAlt": "logo"
-},
-"welcome": {
-"title": "We care for those<br>you love, we inform<br>those who wait",
-"subtitle": "Veyra: Your best ally in family care and connection.",
-"imageAlt": "Caregiver with patient"
-},
-"auth": {
-"login": "Login",
-"register": "Sign Up"
-},
-"buttons": {
-"administrator": "Administrator",
-"family": "Family"
+  "nav": {
+    "home": "Home",
+    "inventory": "Inventory",
+    "activity": "Activities",
+    "resident": "Residents",
+    "staff": "Staff",
+    "care-management": "Care Management",
+    "room": "Rooms"
+  },
+  "page-not-found": {
+    "title": "Page not found",
+    "content": "The path <strong>{{ invalid_path }}</strong> does not exist.",
+    "go-home": "Go Home"
+  },
+  "toolbar": {
+    "logoAlt": "logo"
+  },
+  "welcome": {
+    "title": "We care for those<br>you love, inform those<br>who wait",
+    "subtitle": "Veyra: Your best ally in care and family connection.",
+    "imageAlt": "Caregiver with patient"
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Sign Up"
+  },
+  "buttons": {
+    "administrator": "Administrator",
+    "family": "Family"
+  },
+  "nursingHome": {
+    "new": {
+      "title": "Register Nursing Home"
+    },
+    "edit": {
+      "title": "Edit Nursing Home"
+    },
+    "name": "Name",
+    "ruc": "RUC",
+    "phoneNumber": "Phone",
+    "address": "Address",
+    "description": "Description",
+    "button": {
+      "create": "Create"
+    },
+    "error": {
+      "name-required": "Name is required",
+      "ruc-required": "RUC is required",
+      "phoneNumber-required": "Phone is required",
+      "address-required": "Address is required",
+      "description-required": "Description is required"
+    }
+  },
+  "medication": {
+    "new": {
+      "title": "New Medication"
+    },
+    "edit": {
+      "title": "Edit Medication"
+    },
+    "basic-info": "Basic Information",
+    "inventory-info": "Inventory Information",
+    "batch-supplier-info": "Batch and Supplier Information",
+    "storage-info": "Storage Information",
+    "additional-info": "Additional Information",
+    "name": "Medication Name",
+    "image": "Image",
+    "type": "Type",
+    "concentration": "Concentration",
+    "pharmaceuticalForm": "Pharmaceutical Form",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "minimumStock": "Minimum Stock",
+    "maximumStock": "Maximum Stock",
+    "unitCost": "Unit Cost",
+    "batchNumber": "Batch Number",
+    "registrationNumber": "Registration Number",
+    "supplier": "Supplier",
+    "barcode": "Barcode",
+    "expirationDate": "Expiration Date",
+    "lastUpdate": "Last Update",
+    "storageLocation": "Storage Location",
+    "administrationRoute": "Administration Route",
+    "requiresRefrigeration": "Requires Refrigeration",
+    "requiresPrescription": "Requires Prescription",
+    "storageConditions": "Storage Conditions",
+    "contraindications": "Contraindications",
+    "specialNotes": "Special Notes",
+    "special-requirements": "Special Requirements",
+    "add-storage-condition": "Add condition",
+    "add-contraindication": "Add contraindication",
+    "storage-conditions-hint": "E.g.: Keep in cool place, Protect from light",
+    "specialNotes-placeholder": "E.g.: Shake before use, Keep out of reach of children...",
+    "register": "Register Medication",
+    "update": "Update Medication",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "select-image": "Select Image",
+    "max-size": "Maximum 5MB",
+    "optional": "Optional",
+    "loading": "Loading medication...",
+    "stock-status": "Stock Status",
+    "expiration": "Expiration",
+    "total-value": "Total Value",
+    "current-quantity": "Current Quantity",
+    "of-maximum": "of maximum",
+    "days-remaining": "days remaining",
+    "expired": "EXPIRED",
+    "per-unit": "per unit",
+    "no-special-requirements": "No special requirements",
+    "administration": "Administration",
+    "inventory-timeline": "Inventory Timeline",
+    "registered": "Registered",
+    "expires": "Expires",
+    "technical-details": "Technical Details",
+    "back-to-list": "Back to List",
+    "edit-medication": "Edit Medication",
+    "error": {
+      "name-required": "Name is required",
+      "type-required": "Type is required",
+      "concentration-required": "Concentration is required",
+      "pharmaceuticalForm-required": "Pharmaceutical form is required",
+      "image-required": "Image is required",
+      "quantity-required": "Quantity is required",
+      "unit-required": "Unit is required",
+      "minimumStock-required": "Minimum stock is required",
+      "maximumStock-required": "Maximum stock is required",
+      "unitCost-required": "Unit cost is required",
+      "batchNumber-required": "Batch number is required",
+      "registrationNumber-required": "Registration number is required",
+      "supplier-required": "Supplier is required",
+      "expirationDate-required": "Expiration date is required",
+      "lastUpdate-required": "Last update date is required",
+      "storageLocation-required": "Storage location is required",
+      "administrationRoute-required": "Administration route is required"
+    }
+  },
+  "medications": {
+    "list-title": "Medications List",
+    "name": "Name",
+    "type": "Type",
+    "unit": "Unit",
+    "expiration-date": "Expiration Date",
+    "supplier": "Supplier",
+    "unit-cost": "Unit Cost",
+    "last-update": "Last Update",
+    "quantity": "Quantity",
+    "view-details": "View Details",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add New",
+    "no-medications": "No medications registered."
+  },
+  "residents": {
+    "loading": "Loading information...",
+    "list": {
+      "title": "Residents"
+    },
+    "detail": {
+      "title": "Resident Details"
+    },
+    "medical-history": "Medical Records",
+    "medical-history-desc": "Access the full medical history with diagnoses, treatments, and clinical notes of the resident.",
+    "basic-info": "Basic Information",
+    "personal-info": "Personal Information",
+    "medical-info": "Medical Information",
+    "mobility-dependency": "Mobility and Dependency",
+    "administrative-info": "Administrative Information",
+    "legal-info": "Legal Information",
+    "contact": "Contact",
+    "location": "Location",
+    "dates": "Dates",
+    "assistance-needs": "Assistance Needs",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "dni": "ID",
+    "image": "Image",
+    "birthdate": "Birth Date",
+    "blood-type": "Blood Type",
+    "phone": "Phone",
+    "email": "Email",
+    "room": "Room",
+    "state": "State",
+    "admission-date": "Admission Date",
+    "allergies": "Allergies",
+    "no-allergies": "No registered allergies",
+    "chronic-diseases": "Chronic Diseases",
+    "current-medications": "Current Medications",
+    "no-medications": "No registered medications",
+    "special-diet": "Special Diet",
+    "normal-diet": "Normal diet",
+    "attending-physician": "Attending Physician",
+    "medical-insurance": "Medical Insurance",
+    "social-security-number": "Social Security Number",
+    "legal-guardian": "Legal Guardian",
+    "guardian-phone": "Guardian Phone",
+    "mobility-level": "Mobility Level",
+    "dependency-level": "Dependency Level",
+    "bathing-assistance": "Bathing",
+    "feeding-assistance": "Feeding",
+    "dressing-assistance": "Dressing",
+    "emergency-contacts": "Emergency Contacts",
+    "emergency-contact-name": "Emergency Contact Name",
+    "emergency-phone": "Emergency Phone",
+    "contact-relation": "Relationship",
+    "main-contact": "Main Contact",
+    "secondary-contact": "Secondary Contact",
+    "secondary-name": "Secondary Contact Name",
+    "secondary-phone": "Secondary Phone",
+    "form": {
+      "new-title": "New Resident",
+      "edit-title": "Edit Resident",
+      "select-image": "Select Image",
+      "max-size": "Maximum 5MB",
+      "optional": "Optional",
+      "allergies-placeholder": "Example: Penicillin, pollen, seafood...",
+      "add-disease": "Add disease",
+      "medications-placeholder": "Example: Metformin, Gabapentin, Paracetamol...",
+      "diet-placeholder": "Example: Low sodium, diabetic, vegetarian...",
+      "needs-assistance": "Needs assistance with"
+    },
+    "buttons": {
+      "add": "Add New",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "details": "View details",
+      "edit": "Edit",
+      "go-back": "Go Back",
+      "register": "Register Resident",
+      "search": "Search",
+      "search-info": "Enter the first or last name",
+      "update": "Update Resident",
+      "return-list": "Return to List"
+    },
+    "error": {
+      "no-residents": "No residents registered.",
+      "admission-date-required": "Admission date is required",
+      "attending-physician-required": "Attending physician is required",
+      "birthdate-required": "Birth date is required",
+      "blood-type-required": "Blood type is required",
+      "contact-relation-required": "Contact relation is required",
+      "dependency-level-required": "Dependency level is required",
+      "dni-required": "ID number is required",
+      "email-invalid": "Invalid email",
+      "email-required": "Email is required",
+      "emergency-contact-name-required": "Emergency contact name is required",
+      "emergency-phone-required": "Emergency phone is required",
+      "image-required": "Image is required",
+      "last-name-required": "Last name is required",
+      "mobility-level-required": "Mobility level is required",
+      "name-required": "Name is required",
+      "phone-required": "Phone is required",
+      "room-required": "Room is required",
+      "state-required": "State is required",
+      "not-found-title": "Resident not found",
+      "not-found-message": "The information for the requested resident could not be found."
+    }
+  },
+  "staff-management": {
+    "loading": "Loading information...",
+    "list": {
+      "title": "Staff Members"
+    },
+    "detail": {
+      "title": "Staff Member Details"
+    },
+    "basic-info": "Basic Information",
+    "personal-info": "Personal Information",
+    "contact-info": "Contact Information",
+    "employment-info": "Employment Information",
+    "professional-info": "Professional Information",
+    "emergency-contacts": "Emergency Contacts",
+    "employee-records": "Employee Records",
+    "image": "Image",
+    "last-name": "Last Name",
+    "first-name": "First Name",
+    "dni": "ID",
+    "post": "Position",
+    "state": "State",
+    "birthDate": "Birth Date",
+    "readonly": "Read Only",
+    "age": "Age",
+    "nationality": "Nationality",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "position-contract": "Position and Contract",
+    "position": "Position",
+    "type-of-contract": "Contract Type",
+    "record": "Employment Record",
+    "record-info": "Access the employee's complete file with history of evaluations, training, and employment documents.",
+    "work-shift": "Work Shift",
+    "contractual-date": "Contractual Dates",
+    "contract-date": "Contract Date",
+    "contract-end-date": "Contract End Date",
+    "termination-date": "Termination Date",
+    "certifications": "Certifications",
+    "emergency-contact": "Emergency Contact",
+    "emergencyContactName": "Emergency Contact Name",
+    "emergencyContactPhone": "Emergency Contact Phone",
+    "new": {
+      "title": "New Staff Member"
+    },
+    "edit": {
+      "title": "Edit Staff Member"
+    },
+    "form": {
+      "register": "Register Staff Member",
+      "update": "Update Staff Member",
+      "cancel": "Cancel",
+      "readonly": "Read only",
+      "select-image": "Select Image",
+      "max-size": "Maximum 5MB",
+      "optional": "Optional",
+      "add-certification": "Add certification"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "search": "Search",
+      "search-info": "Enter the first or last name",
+      "details": "View Details",
+      "delete": "Delete",
+      "add": "Add New",
+      "edit": "Edit",
+      "back-to-list": "Back to List",
+      "go-back": "Go Back",
+      "update": "Update Staff Member",
+      "register": "Register Staff Member"
+    },
+    "error": {
+      "state-required": "State is required",
+      "name-required": "Name is required",
+      "last-name-required": "Last name is required",
+      "dni-required": "ID is required",
+      "birthDate-required": "Birth date is required",
+      "image-required": "Image is required",
+      "phoneNumber-required": "Phone is required",
+      "email-required": "Email is required",
+      "email-invalid": "Invalid email",
+      "address-required": "Address is required",
+      "post-required": "Position is required",
+      "typeOfContract-required": "Contract type is required",
+      "workShift-required": "Work shift is required",
+      "contractDate-required": "Contract date is required",
+      "emergencyContactName-required": "Emergency contact name is required",
+      "emergencyContactPhone-required": "Emergency phone is required",
+      "not-found": "Staff Member not found",
+      "not-found-message": "Could not find the requested staff member information",
+      "no-staff": "No staff members registered."
+    }
+  }
 }
-}
-

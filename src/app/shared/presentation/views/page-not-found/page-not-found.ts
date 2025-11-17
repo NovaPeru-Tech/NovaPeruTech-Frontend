@@ -1,11 +1,15 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslatePipe} from '@ngx-translate/core';
+import {MatButton} from '@angular/material/button';
+import {Toolbar} from '../../components/toolbar/toolbar';
 
 @Component({
   selector: 'app-page-not-found',
   imports: [
-    TranslatePipe
+    TranslatePipe,
+    MatButton,
+    Toolbar
   ],
   templateUrl: './page-not-found.html',
   styleUrl: './page-not-found.css'
