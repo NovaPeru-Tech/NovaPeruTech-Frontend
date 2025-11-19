@@ -1,7 +1,6 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Resident } from '../../../domain/model/resident.entity';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -10,7 +9,8 @@ import { MatIcon } from '@angular/material/icon';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatCard } from '@angular/material/card';
 import { NursingStore } from '../../../application/nursing.store';
-import { PersonProfileForm } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
+import { PersonProfileForm, PersonProfileFormValue } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
+import { CreateResidentCommand } from '../../../domain/commands/create-resident-command';
 
 @Component({
   selector: 'app-resident-form',
@@ -76,48 +76,107 @@ export class ResidentForm {
     });
   }
 
-  submit(){
+  submit() {
     if (this.form.invalid) {
       alert("Datos incompletos");
       this.form.markAllAsTouched();
       return;
     }
 
-    this.personProfileForm.submit().subscribe({
-      next: (profileId: number | null) => {
+    const personProfile: PersonProfileFormValue | null = this.personProfileForm.getProfileData();
+    if (!personProfile) {
+      alert("Datos incompletos");
+      this.form.markAllAsTouched();
+      return;
+    }
 
-        if (profileId === null) {
-          alert("Datos incompletos");
-          return;
-        }
+    const resident = this.form.getRawValue();
 
-        const formValue = this.form.getRawValue();
-
-        const resident = new Resident({
-          id: this.residentId ?? 0,
-          personProfileId: profileId,
-
-          legalRepresentativeFirstName: formValue.legalRepresentativeFirstName!,
-          legalRepresentativeLastName: formValue.legalRepresentativeLastName!,
-          legalRepresentativePhoneNumber: formValue.legalRepresentativePhoneNumber!,
-
-          emergencyContactFirstName: formValue.emergencyContactFirstName!,
-          emergencyContactLastName: formValue.emergencyContactLastName!,
-          emergencyContactPhoneNumber: formValue.emergencyContactPhoneNumber!
-        });
-
-        if (this.isEdit) {
-          this.store.updateResident(resident);
-        } else {
-          this.store.addResident(resident);
-        }
-
-        this.router.navigate(['/residents/list']).then();
-      },
-      error: () => {
-        console.error('Ocurrió un error en la llamada API al guardar el perfil.');
-      }
+    const command = new CreateResidentCommand({
+      dni: personProfile.dni,
+      firstName: personProfile.firstName,
+      lastName: personProfile.lastName,
+      birthDate: this.formatDateToISO(personProfile.birthDate),
+      age: this.calculateAge(personProfile.birthDate),
+      emailAddress: personProfile.emailAddress,
+      street: personProfile.street,
+      number: personProfile.number,
+      city: personProfile.city,
+      postalCode: personProfile.postalCode,
+      country: personProfile.country,
+      photo: personProfile.photo,
+      phoneNumber: personProfile.phoneNumber,
+      legalRepresentativeFirstName: resident.legalRepresentativeFirstName,
+      legalRepresentativeLastName: resident.legalRepresentativeLastName,
+      legalRepresentativePhoneNumber: resident.legalRepresentativePhoneNumber,
+      emergencyContactFirstName: resident.emergencyContactFirstName,
+      emergencyContactLastName: resident.emergencyContactLastName,
+      emergencyContactPhoneNumber: resident.emergencyContactPhoneNumber
     });
+
+    if (!confirm("¿Deseas guardar los cambios del residente?")) {
+      return;
+    }
+
+    if(this.isEdit){
+      this.store.updateResident(this.residentId ?? 0, command).subscribe({
+        next: () => {
+          this.router.navigate(['/residents/list']).then();
+          alert('Datos guardados exitosamente');
+        },
+        error: (err) => {
+          let errorMessage = 'Error al guardar el residente.';
+
+          if (err.error?.message) {
+            errorMessage = `Error al guardar el residente: ${err.error.message}`;
+          } else if (typeof err.error === 'string') {
+            errorMessage = `Error al guardar el residente: ${err.error}`;
+          }
+
+          alert(errorMessage);
+        }
+      });
+    } else {
+      this.store.createResidentInNursingHome(1, command).subscribe({
+        next: () => {
+          this.router.navigate(['/residents/list']).then();
+          alert('Residente registrado exitosamente');
+        },
+        error: (err) => {
+          let errorMessage = 'Error al guardar el residente.';
+
+          if (err.error?.message) {
+            errorMessage = `Error al guardar el residente: ${err.error.message}`;
+          } else if (typeof err.error === 'string') {
+            errorMessage = `Error al guardar el residente: ${err.error}`;
+          }
+
+          alert(errorMessage);
+        }
+      });
+    }
+  }
+
+  private formatDateToISO(date: Date): string {
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private calculateAge(birthDate: Date): number {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return age;
   }
 
   onCancel(): void {
