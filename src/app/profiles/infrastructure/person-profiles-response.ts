@@ -2,19 +2,14 @@ import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-res
 
 export interface PersonProfileResource extends BaseResource {
   id: number;
+  fullName: string;
   dni: string;
-  firstName: string;
-  lastName: string;
   birthDate: Date;
   age: number;
-  emailAddress: string;
-  street: string;
-  number: string;
-  city: string;
-  postalCode: string;
-  country: string;
   photo: string;
   phoneNumber: string;
+  emailAddress: string;
+  streetAddress: string;
 }
 
 export interface PersonProfilesResponse extends BaseResponse {
