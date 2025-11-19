@@ -82,6 +82,10 @@ export class ResidentList {
   }
 
   deleteResident(id: number) {
+    if (!confirm("¿Estás seguro de que deseas eliminar este residente? Esta acción no se puede deshacer.")) {
+      return;
+    }
+
     this.store.deleteResident(id);
   };
 
