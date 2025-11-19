@@ -1,12 +1,12 @@
 <app-layout-nursing-home>
-  <h1 class="title">{{ (isEdit ? 'Edit Room' : 'New Room') | translate }}</h1>
+  <h1 class="title">{{ 'New Room' | translate }}</h1>
 
   <div class="content">
     <form [formGroup]="form" (ngSubmit)="submit()">
       <mat-form-field>
         <mat-label>{{ 'Room Number'|translate }}</mat-label>
-        <input matInput formControlName="number" required>
-        @if (form.get('number')!.touched && form.get('number')!.hasError('required')) {
+        <input matInput formControlName="roomNumber" required>
+        @if (form.get('roomNumber')!.touched && form.get('roomNumber')!.hasError('required')) {
           <mat-error>{{ 'Room number is required' | translate }}</mat-error>
         }
       </mat-form-field>
@@ -27,16 +27,6 @@
         }
       </mat-form-field>
 
-      @if (isEdit) {
-        <mat-form-field>
-          <mat-label>{{ 'Status' | translate }}</mat-label>
-          <mat-select formControlName="status">
-            <mat-option value="Available">Available</mat-option>
-            <mat-option value="Maintenance">Maintenance</mat-option>
-          </mat-select>
-        </mat-form-field>
-      }
-
       <div class="action-buttons">
         <button mat-raised-button color="primary" type="button" (click)="onCancel()">
           <mat-icon>cancel</mat-icon>
@@ -45,7 +35,7 @@
 
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
           <mat-icon>save</mat-icon>
-          {{ (isEdit? 'Update Room' : 'Register Room') | translate }}
+          {{ 'Register Room' | translate }}
         </button>
       </div>
     </form>
