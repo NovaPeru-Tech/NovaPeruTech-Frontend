@@ -19,12 +19,13 @@
     </mat-form-field>
   </div>
 
+  <!-- Error State -->
+  @if (store.error()) {
+    <mat-error class="error-message">{{ store.error() }}</mat-error>
+  }
+
   <div class="content-with-toolbar">
     <div class="list-container">
-      <!-- Error State -->
-      @if (store.error()) {
-        <mat-error class="error-message">{{ store.error() }}</mat-error>
-      }
 
       <!-- Table Container -->
       <div class="table-container">
