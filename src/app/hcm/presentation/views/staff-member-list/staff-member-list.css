@@ -22,7 +22,7 @@ mat-spinner {
 mat-error {
   text-align: center;
   display: block;
-  margin: 20px;
+  margin: 0 20px;
   padding: 16px;
   background-color: #ffebee;
   border-radius: 8px;
