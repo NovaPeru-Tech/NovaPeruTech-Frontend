@@ -3,18 +3,14 @@
     <img [src]="personProfile()?.photo"
          (load)="onImageLoad()"
          (error)="onImageError($event)"
-         [alt]="personProfile()?.firstName + ' ' + personProfile()?.lastName"
+         [alt]="personProfile()?.fullName"
          [class.loaded]="imageLoaded">
   </div>
 
   <mat-card-content>
     <p class="resident-info">
-      <strong>{{ 'residents.last-name' | translate }}:</strong>
-      {{ personProfile()?.lastName }}
-    </p>
-    <p class="resident-info">
-      <strong>{{ 'residents.first-name' | translate }}:</strong>
-      {{ personProfile()?.firstName }}
+      <strong>{{ 'Name: ' | translate }}:</strong>
+      {{ personProfile()?.fullName }}
     </p>
     <p class="resident-info">
       <strong>{{ 'residents.dni' | translate }}:</strong>
@@ -44,19 +40,14 @@
             <img [src]="personProfile()?.photo"
                  (load)="onImageLoad()"
                  (error)="onImageError($event)"
-                 [alt]="personProfile()?.firstName + ' ' + personProfile()?.lastName"
+                 [alt]="personProfile()?.fullName"
                  [class.loaded]="imageLoaded">
           </div>
         </div>
 
         <div class="detail-row">
-          <strong>{{ 'residents.first-name' | translate }}:</strong>
-          {{ personProfile()?.firstName }}
-        </div>
-
-        <div class="detail-row">
-          <strong>{{ 'residents.last-name' | translate }}:</strong>
-          {{ personProfile()?.lastName }}
+          <strong>{{ 'Name' | translate }}:</strong>
+          {{ personProfile()?.fullName }}
         </div>
 
         <div class="detail-row">
@@ -119,28 +110,8 @@
       </div>
       <div class="card-body">
         <div class="detail-row">
-          <strong>{{ 'street' | translate }}:</strong>
-          {{ personProfile()?.street }}
-        </div>
-
-        <div class="detail-row">
-          <strong>{{ 'number' | translate }}:</strong>
-          {{ personProfile()?.number }}
-        </div>
-
-        <div class="detail-row">
-          <strong>{{ 'city' | translate }}:</strong>
-          {{ personProfile()?.city }}
-        </div>
-
-        <div class="detail-row">
-          <strong>{{ 'postal code' | translate }}:</strong>
-          {{ personProfile()?.postalCode }}
-        </div>
-
-        <div class="detail-row">
-          <strong>{{ 'country' | translate }}:</strong>
-          {{ personProfile()?.country }}
+          <strong>{{ 'street Address' | translate }}:</strong>
+          {{ personProfile()?.streetAddress }}
         </div>
       </div>
     </mat-card>

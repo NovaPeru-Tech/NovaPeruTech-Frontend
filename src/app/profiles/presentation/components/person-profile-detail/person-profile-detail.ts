@@ -46,8 +46,7 @@ export class PersonProfileDetail {
         this.idsFiltered.emit(personProfiles.map(pp => pp.id));
       } else {
         const filtered = personProfiles.filter(pp =>
-          this.removeAccents(pp.firstName).toLowerCase().includes(term) ||
-          this.removeAccents(pp.lastName).toLowerCase().includes(term)
+          this.removeAccents(pp.fullName).toLowerCase().includes(term)
         );
         this.idsFiltered.emit(filtered.map(pp => pp.id));
       }
