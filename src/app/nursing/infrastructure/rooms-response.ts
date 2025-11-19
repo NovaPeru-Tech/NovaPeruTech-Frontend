@@ -2,7 +2,8 @@ import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-res
 
 export interface RoomResource extends BaseResource {
   id: number;
-  number: string;
+  roomNumber: string;
+  nursingHomeId: number;
   capacity: number;
   occupied: number;
   type: string;
