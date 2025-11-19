@@ -35,6 +35,39 @@
           [personProfileId]="personProfileId()">
         </app-person-profile-detail>
 
+        <!-- Emergency Contacts Section -->
+        <div class="section-divider">
+          <mat-icon>emergency</mat-icon>
+          <span>{{ 'residents.emergency-contacts' | translate }}</span>
+        </div>
+
+        <div class="info-grid">
+          <mat-card class="full-width-card">
+            <div class="card-header-custom">
+              <div class="icon-wrapper emergency">
+                <mat-icon>contact_emergency</mat-icon>
+              </div>
+              <h3>{{ 'residents.main-contact' | translate }}</h3>
+            </div>
+            <div class="card-body">
+              <div class="detail-row">
+                <strong>{{ 'emergencyContactFirstName' | translate }}:</strong>
+                {{ staffMember()?.emergencyContactFirstName }}
+              </div>
+
+              <div class="detail-row">
+                <strong>{{ 'emergencyContactLastName' | translate }}:</strong>
+                {{ staffMember()?.emergencyContactLastName }}
+              </div>
+
+              <div class="detail-row">
+                <strong>{{ 'emergencyContactPhoneNumber' | translate }}:</strong>
+                {{ staffMember()?.emergencyContactPhoneNumber }}
+              </div>
+            </div>
+          </mat-card>
+        </div>
+
         <mat-card class="records-card">
           <div class="records-content">
             <div class="records-icon-wrapper">
