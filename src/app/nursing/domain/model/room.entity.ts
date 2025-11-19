@@ -1,15 +1,17 @@
 export class Room {
   private _id: number;
-  private _number: string;
+  private _roomNumber: string;
+  private _nursingHomeId: number;
   private _capacity: number;
   private _occupied: number;
   private _type: string;
   private _status: string;
 
-  constructor(room: { id: number, number: string, capacity: number,
+  constructor(room: { id: number, roomNumber: string, nursingHomeId: number, capacity: number,
     occupied: number, type: string, status: string }) {
     this._id = room.id;
-    this._number = room.number;
+    this._roomNumber = room.roomNumber;
+    this._nursingHomeId = room.nursingHomeId;
     this._capacity = room.capacity;
     this._occupied = room.occupied;
     this._type = room.type;
@@ -24,12 +26,12 @@ export class Room {
     this._id = value;
   }
 
-  get number(): string {
-    return this._number;
+  get roomNumber(): string {
+    return this._roomNumber;
   }
 
-  set number(value: string) {
-    this._number = value;
+  set roomNumber(value: string) {
+    this._roomNumber = value;
   }
 
   get capacity(): number {
@@ -62,5 +64,13 @@ export class Room {
 
   set occupied(value: number) {
     this._occupied = value;
+  }
+
+  get nursingHomeId(): number {
+    return this._nursingHomeId;
+  }
+
+  set nursingHomeId(value: number) {
+    this._nursingHomeId = value;
   }
 }
