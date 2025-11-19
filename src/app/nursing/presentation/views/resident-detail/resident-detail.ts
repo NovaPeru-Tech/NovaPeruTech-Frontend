@@ -9,6 +9,7 @@ import { LayoutNursingHome } from '../../../../shared/presentation/components/la
 import { TranslatePipe } from '@ngx-translate/core';
 import { NursingStore } from '../../../application/nursing.store';
 import { PersonProfileDetail } from '../../../../profiles/presentation/components/person-profile-detail/person-profile-detail';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-resident-detail',
@@ -22,7 +23,8 @@ import { PersonProfileDetail } from '../../../../profiles/presentation/component
     MatFabButton,
     LayoutNursingHome,
     TranslatePipe,
-    PersonProfileDetail
+    PersonProfileDetail,
+    ReactiveFormsModule
   ],
   templateUrl: './resident-detail.html',
   styleUrl: './resident-detail.css'

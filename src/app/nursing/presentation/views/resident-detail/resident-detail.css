@@ -25,16 +25,37 @@
   font-size: 16px;
 }
 
-/* Error */
-.error-message {
+.section-divider {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 20px;
-  margin: 20px;
+  margin: 32px 0 20px 0;
+}
+
+.section-divider span {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0D2E73;
+}
+
+.section-divider mat-icon {
+  color: #0D2E73;
+  font-size: 28px;
+}
+
+
+/* Error */
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 16px;
+  margin: 0 0 20px 0;
   background-color: #ffebee;
-  border-radius: 12px;
-  border-left: 4px solid #f44336;
+  border-radius: 8px;
+  color: #c62828;
 }
 
 /* Top Actions */
