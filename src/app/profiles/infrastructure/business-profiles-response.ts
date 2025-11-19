@@ -4,14 +4,10 @@ export interface BusinessProfileResource extends BaseResource {
   id: number;
   businessName: string;
   ruc: string;
-  emailAddress: string;
-  street: string;
-  number: string;
-  city: string;
-  postalCode: string;
-  country: string;
   photo: string;
   phoneNumber: string;
+  emailAddress: string;
+  streetAddress: string;
 }
 
 export interface BusinessProfilesResponse extends BaseResponse {
