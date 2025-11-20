@@ -3,8 +3,10 @@ import { Home } from './shared/presentation/views/home/home';
 
 const pageNotFound = () =>
   import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound);
-const iamRoutes = () =>
-  import('./iam/presentation/iam-routers').then(m => m.IamRouters);
+const signIn = () =>
+  import('./iam/presentation/components/sign-in.component/sign-in.component').then(m => m.SignInComponent);
+const signUp = () =>
+  import('./iam/presentation/components/sign-up.component/sign-up.component').then(m => m.SignUpComponent);
 const nursingHomeRoutes = () =>
   import('./nursing/presentation/nursing-routes').then(m => m.nursingRoutes);
 const residentRoutes = () =>
@@ -20,8 +22,9 @@ const roomRoutes = () =>
 
 const baseTitle = 'Veyra';
 export const routes: Routes = [
+  { path: 'sign-in',   loadComponent:signIn,        title:`Sign In | ${baseTitle}`},
+  { path: 'sign-up',   loadComponent:signUp,        title:`Sign Up | ${baseTitle}`},
   { path: 'home',      component: Home,             title:`Home | ${baseTitle}` },
-  { path: 'auth',      loadChildren: iamRoutes },
   { path: 'nursing',   loadChildren: nursingHomeRoutes },
   { path: 'residents', loadChildren: residentRoutes },
   { path: 'staff',     loadChildren: staffRoutes },
