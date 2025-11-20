@@ -1,9 +1,11 @@
 export const environment = {
   production: true,
-  platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
-  platformProviderSignInEndpointPath:'/users',
-  platformProviderSignUpEndpointPath:'/users',
+  platformProviderApiBaseUrl: 'http://localhost:8080/api/v1',
   platformProviderRegisterNursingHomeEndPoint:'/nursingHome',
   platformProviderResidentPath:'/residents',
-  platformProviderEmployeeEndPoint:'/employee'
+  platformProviderEmployeeEndPoint:'/employee',
+
+  //IAM Bounded Context
+  platformProviderSignInEndpointPath: '/authentication/sign-in',
+  platformProviderSignUpEndpointPath: '/authentication/sign-up'
 };
