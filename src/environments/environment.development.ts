@@ -5,8 +5,9 @@ export const environment = {
   platformProviderContractsEndpointPath: '/contracts',
   platformProviderStaffEndpointPath:'/staff',
 
-  platformProviderSignInEndpointPath:'/users',
-  platformProviderSignUpEndpointPath:'/users',
+  //IAM Bounded Context
+  platformProviderSignInEndpointPath: '/authentication/sign-in',
+  platformProviderSignUpEndpointPath: '/authentication/sign-up',
 
   // Nursing Bounded Context
   platformProviderNursingHomesEndpointPath:'/nursing-homes',

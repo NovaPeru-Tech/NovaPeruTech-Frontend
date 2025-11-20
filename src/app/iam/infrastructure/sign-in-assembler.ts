@@ -1,35 +1,33 @@
-import {BaseAssembler} from '../../shared/infrastructure/base-assembler';
 import {SignInResource, SignInResponse} from './sign-in-response';
-import {SignIn} from '../domain/model/sign-in.entity';
-/*
-*  |
-*
-* */
-export class SignInAssembler implements BaseAssembler<SignIn,SignInResource,SignInResponse>{
-  toEntitiesFromResponse(response: SignInResponse): SignIn[] {
-    return response.signIn.map(signIn=>this.toEntityFromResource(signIn));
+import {SignInCommand} from '../domain/model/sign-in.command';
+import {SignInRequest} from './sign-in.request';
+
+/**
+ * Assembler for converting between sign-in domain models and API request/response models.
+ */
+export class SignInAssembler {
+  /**
+   * Converts a sign-in response from the API to a sign-in resource.
+   * @param response - The API response.
+   * @returns The sign-in resource.
+   */
+  toResourceFromResponse(response: SignInResponse): SignInResource {
+    return {
+      id: response.id,
+      username: response.username,
+      token: response.token
+    } as SignInResource;
   }
 
-  toEntityFromResponse(response: SignInResponse): SignIn {
-    const first = response.signIn && response.signIn.length ? response.signIn[0] : null;
-    if (!first) {
-      throw new Error('Empty SignInResponse');
-    }
-    return this.toEntityFromResource(first);
+  /**
+   * Converts a sign-in command to a sign-in request for the API.
+   * @param command - The domain command.
+   * @returns The API request.
+   */
+  toRequestFromCommand(command: SignInCommand) {
+    return {
+      username: command.username,
+      password: command.password
+    } as SignInRequest;
   }
-
-
-  toEntityFromResource(resource: SignInResource): SignIn {
-    return new SignIn({ id:resource.id,email:resource.email,password:''});
-  }
-
-  toResourceFromEntity(entity: SignIn): SignInResource {
-return {
-  id:entity.id,
-  email:entity.email,
-  password:entity.password,
-}as SignInResource;
-  }
-
-
 }
