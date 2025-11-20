@@ -1,17 +1,39 @@
 import {BaseEntity} from '../domain/model/base-entity';
 import {BaseResource, BaseResponse} from './base-response';
 import {BaseAssembler} from './base-assembler';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {catchError, map, Observable, throwError} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {catchError, map, Observable} from 'rxjs';
+import {ErrorHandlingEnabledBaseType} from './error-handling-enabled-base-type';
 
+/**
+ * Abstract base class for API endpoints handling CRUD operations.
+ * Provides common methods for fetching, creating, updating, and deleting entities.
+ * @template TEntity - The entity type extending BaseEntity.
+ * @template TResource - The resource type extending BaseResource.
+ * @template TResponse - The response type extending BaseResponse.
+ * @template TAssembler - The assembler type extending BaseAssembler.
+ */
 export abstract class BaseApiEndpoint<
   TEntity extends BaseEntity,
   TResource extends BaseResource,
   TResponse extends BaseResponse,
-  TAssembler extends BaseAssembler<TEntity, TResource, TResponse>
-> {
-  constructor(protected http: HttpClient, protected endpointUrl: string, protected assembler: TAssembler) {}
+  TAssembler extends BaseAssembler<TEntity, TResource, TResponse>>
+  extends ErrorHandlingEnabledBaseType
+{
+  /**
+   * Creates a new BaseApiEndpoint instance.
+   * @param http - The HTTP client for making requests.
+   * @param endpointUrl - The base URL for the API endpoint.
+   * @param assembler - The assembler for converting between entities and resources.
+   */
+  protected constructor(protected http: HttpClient, protected endpointUrl: string, protected assembler: TAssembler) {
+    super();
+  }
 
+  /**
+   * Retrieves all entities from the API.
+   * @returns An observable for an array of entities.
+   */
   getAll() {
     return this.http.get<TResponse | TResource[]>(this.endpointUrl).pipe(
       map(response => {
@@ -25,6 +47,11 @@ export abstract class BaseApiEndpoint<
     );
   }
 
+  /**
+   * Retrieves an entity by its ID.
+   * @param id - The ID of the entity to retrieve.
+   * @returns An observable of the entity.
+   */
   getById(id: number): Observable<TEntity> {
     return this.http.get<TResource>(`${this.endpointUrl}/${id}`).pipe(
       map(resource => this.assembler.toEntityFromResource(resource)),
@@ -32,6 +59,11 @@ export abstract class BaseApiEndpoint<
     );
   }
 
+  /**
+   * Creates a new entity.
+   * @param entity - The entity to create.
+   * @returns An observable of the created entity.
+   */
   create(entity: TEntity): Observable<TEntity> {
     const resource = this.assembler.toResourceFromEntity(entity);
     return this.http.post<TResource>(this.endpointUrl, resource).pipe(
@@ -40,6 +72,12 @@ export abstract class BaseApiEndpoint<
     );
   }
 
+  /**
+   * Updates an existing entity.
+   * @param entity - The entity to update.
+   * @param id - The ID of the entity to update.
+   * @returns An observable of the updated entity.
+   */
   update(entity: TEntity, id: number): Observable<TEntity> {
     const resource = this.assembler.toResourceFromEntity(entity);
     return this.http.put<TResource>(`${this.endpointUrl}/${id}`, resource).pipe(
@@ -48,23 +86,14 @@ export abstract class BaseApiEndpoint<
     );
   }
 
+  /**
+   * Deletes an entity by its ID.
+   * @param id - The ID of the entity to delete.
+   * @returns An observable that completes when the deletion is done.
+   */
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.endpointUrl}/${id}`).pipe(
       catchError(this.handleError(`Failed to delete entity with id ${id}`))
     );
-  }
-
-  private handleError(operation: string) {
-    return (error: HttpErrorResponse): Observable<never> => {
-      let errorMessage = operation;
-      if (error.status === 404) {
-        errorMessage = `Resource not found: ${operation}`;
-      } else if (error.error instanceof ErrorEvent) {
-        errorMessage = `${operation}: ${error.error.message}`;
-      } else {
-        errorMessage = `${operation}: ${error.statusText || 'Unexpected error'}`;
-      }
-      return throwError(() => new Error(errorMessage));
-    }
   }
 }
