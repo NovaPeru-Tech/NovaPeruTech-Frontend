@@ -1,10 +1,26 @@
-import {BaseResource, BaseResponse} from '../../shared/infrastructure/base-response';
+import {BaseResource} from '../../shared/infrastructure/base-response';
 
+/**
+ * Resource interface for sign-in response.
+ */
 export interface SignInResource extends BaseResource {
-  id:number;
-  email: string;
-  password:string,
+  /**
+   * The unique identifier of the user.
+   */
+  id: number;
+
+  /**
+   * The username of the user.
+   */
+  username: string;
+
+  /**
+   * The authentication token.
+   */
+  token: string;
 }
-export interface  SignInResponse extends BaseResponse {
- signIn:SignInResource[];
-}
+
+/**
+ * Response interface for sign-in API.
+ */
+export interface SignInResponse extends BaseResource, SignInResource {}
