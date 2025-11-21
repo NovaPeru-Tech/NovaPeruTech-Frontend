@@ -10,7 +10,7 @@ import { LayoutNursingHome } from '../../../../shared/presentation/components/la
 import { MatCard } from '@angular/material/card';
 import { NursingStore } from '../../../application/nursing.store';
 import { PersonProfileForm, PersonProfileFormValue } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
-import { CreateResidentCommand } from '../../../domain/commands/create-resident-command';
+import { ResidentCommand } from '../../../domain/model/resident.command';
 
 @Component({
   selector: 'app-resident-form',
@@ -92,7 +92,7 @@ export class ResidentForm {
 
     const resident = this.form.getRawValue();
 
-    const command = new CreateResidentCommand({
+    const command = new ResidentCommand({
       dni: personProfile.dni,
       firstName: personProfile.firstName,
       lastName: personProfile.lastName,
@@ -119,41 +119,9 @@ export class ResidentForm {
     }
 
     if(this.isEdit){
-      this.store.updateResident(this.residentId ?? 0, command).subscribe({
-        next: () => {
-          this.router.navigate(['/residents/list']).then();
-          alert('Datos guardados exitosamente');
-        },
-        error: (err) => {
-          let errorMessage = 'Error al guardar el residente.';
-
-          if (err.error?.message) {
-            errorMessage = `Error al guardar el residente: ${err.error.message}`;
-          } else if (typeof err.error === 'string') {
-            errorMessage = `Error al guardar el residente: ${err.error}`;
-          }
-
-          alert(errorMessage);
-        }
-      });
+      this.store.updateResident(this.residentId ?? 0, command);
     } else {
-      this.store.createResidentInNursingHome(1, command).subscribe({
-        next: () => {
-          this.router.navigate(['/residents/list']).then();
-          alert('Residente registrado exitosamente');
-        },
-        error: (err) => {
-          let errorMessage = 'Error al guardar el residente.';
-
-          if (err.error?.message) {
-            errorMessage = `Error al guardar el residente: ${err.error.message}`;
-          } else if (typeof err.error === 'string') {
-            errorMessage = `Error al guardar el residente: ${err.error}`;
-          }
-
-          alert(errorMessage);
-        }
-      });
+      this.store.createResidentInNursingHome(1, command);
     }
   }
 

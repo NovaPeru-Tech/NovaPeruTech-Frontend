@@ -9,7 +9,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { NursingStore } from '../../../application/nursing.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatIcon } from '@angular/material/icon';
-import { CreateRoomCommand } from '../../../domain/commands/create-room-command';
+import { RoomCommand } from '../../../domain/model/room.command';
 
 @Component({
   selector: 'app-room-form',
@@ -47,7 +47,7 @@ export class RoomForm {
 
     const room = this.form.getRawValue();
 
-    const command = new CreateRoomCommand({
+    const command = new RoomCommand({
       capacity: room.capacity ?? 0,
       type: room.type,
       roomNumber: room.roomNumber
