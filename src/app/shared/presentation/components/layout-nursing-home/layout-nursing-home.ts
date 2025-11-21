@@ -24,7 +24,8 @@ import {
     MatButtonModule,
     MatTooltipModule,
     TranslatePipe,
-    LanguageSwitcher
+    LanguageSwitcher,
+    AuthenticationSection
   ],
   templateUrl: './layout-nursing-home.html',
   styleUrls: ['./layout-nursing-home.css']
