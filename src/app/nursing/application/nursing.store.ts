@@ -1,4 +1,4 @@
-import { computed, Injectable, Signal, signal } from '@angular/core';
+import {computed, inject, Injectable, Signal, signal} from '@angular/core';
 import { NursingHome } from '../domain/model/nursing-home.entity';
 import { NursingApi } from '../infrastructure/nursing-api';
 import { catchError, Observable, retry, tap, throwError } from 'rxjs';
@@ -6,8 +6,8 @@ import { Resident } from '../domain/model/resident.entity';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Room } from '../domain/model/room.entity';
 import { Medication } from '../domain/model/medication.entity';
-import { CreateResidentCommand } from '../domain/commands/create-resident-command';
-import { CreateRoomCommand } from '../domain/commands/create-room-command';
+import { ResidentCommand } from '../domain/model/resident.command';
+import { RoomCommand } from '../domain/model/room.command';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -67,21 +67,17 @@ export class NursingStore {
     return computed(() => id ? this.residents().find(r => r.id === id) : undefined);
   }
 
-  createResidentInNursingHome(nursingHomeId: number, command: CreateResidentCommand): Observable<Resident> {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-
-    return this.nursingApi.createResidentToNursingHome(nursingHomeId, command).pipe(retry(2),
-      tap(createdResident => {
+  createResidentInNursingHome(nursingHomeId: number, command: ResidentCommand): void {
+    this.nursingApi.createResidentToNursingHome(nursingHomeId, command).pipe(retry(2)).subscribe({
+      next: createdResident => {
         this._residentSignal.update(residents => [...residents, createdResident]);
         this._loadingSignal.set(false);
-      }),
-      catchError(err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to create resident in nursing home'));
-        this._loadingSignal.set(false);
-        return throwError(() => err);
-      })
-    );
+      },
+      error: err => {
+      this._errorSignal.set(this.formatError(err, 'Failed to create resident in nursing home'));
+      this._loadingSignal.set(false);
+      }
+    });
   }
 
   loadResidentsByNursingHome(nursingHomeId: number): void {
@@ -100,7 +96,7 @@ export class NursingStore {
     });
   }
 
-  createRoomInNursingHome(nursingHomeId: number, command: CreateRoomCommand): Observable<Room> {
+  createRoomInNursingHome(nursingHomeId: number, command: RoomCommand): Observable<Room> {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
 
@@ -152,7 +148,7 @@ export class NursingStore {
     });
   }
 
-  updateResident(residentId: number, command: CreateResidentCommand): Observable<Resident> {
+  updateResident(residentId: number, command: ResidentCommand): Observable<Resident> {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
     return this.nursingApi.updateResident(residentId, command).pipe(retry(2),
