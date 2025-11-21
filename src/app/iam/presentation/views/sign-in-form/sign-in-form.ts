@@ -17,42 +17,29 @@ import {IamStore} from '../../../application/iam.store';
     ReactiveFormsModule,
     RouterLink
   ],
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  templateUrl: './sign-in-form.html',
+  styleUrls: ['./sign-in-form.css']
 })
-export class SignInComponent {
-  private fb = inject(FormBuilder);
+export class SignInForm {
   protected store = inject(IamStore);
   private router = inject(Router);
 
-  form = this.fb.group({
+  form = new FormGroup({
     username: new FormControl<string>('', {nonNullable: true, validators: [Validators.required, Validators.minLength(3)]}),
     password: new FormControl<string>('', {nonNullable: true, validators: [Validators.required, Validators.minLength(6)]})
   });
   hidePassword = true;
-
-  constructor() {
-    // Navigate to home when sign-in is successful
-    effect(() => {
-      const user = this.store.user();
-      if (user && 'token' in user) {
-        // Store token in localStorage
-        localStorage.setItem('authToken', user.token);
-        this.router.navigate(['/']).then();
-      }
-    });
-  }
 
   /**
    * Handles form submission for sign-in.
    */
   onSubmit(): void {
     if (this.form.valid) {
-      const command = new SignInCommand({
+      const signInCommand = new SignInCommand({
         username: this.form.value.username!,
         password: this.form.value.password!
       });
-      this.store.signIn(command);
+      this.store.signIn(signInCommand, this.router);
     } else {
       this.markFormGroupTouched(this.form);
     }

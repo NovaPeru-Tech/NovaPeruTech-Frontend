@@ -18,11 +18,10 @@ import { SignUpCommand } from '../../../domain/model/sign-up.command';
     ReactiveFormsModule,
     RouterLink,
   ],
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  templateUrl: './sign-up-form.html',
+  styleUrls: ['./sign-up-form.css']
 })
-export class SignUpComponent {
-  private fb = inject(FormBuilder);
+export class SignUpForm {
   protected store = inject(IamStore);
   private router = inject(Router);
 
@@ -33,7 +32,7 @@ export class SignUpComponent {
     { value: 'ROLE_INSTRUCTOR', label: 'Instructor', description: 'Content moderation access' }
   ];
 
-  form = this.fb.group({
+  form = new FormGroup({
     username:        new FormControl<string>   ('',      { nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
     password:        new FormControl<string>   ('',      { nonNullable: true, validators: [Validators.required, Validators.minLength(6), this.passwordStrengthValidator] }),
     confirmPassword: new FormControl<string>   ('',      { nonNullable: true, validators: [Validators.required] }),
@@ -41,19 +40,6 @@ export class SignUpComponent {
   }, { validators: this.passwordMatchValidator });
   hidePassword = true;
   hideConfirmPassword = true;
-
-  constructor() {
-    // Navigate to sign-in when sign-up is successful
-    effect(() => {
-      const user = this.store.user();
-      if (user && !('token' in user)) {
-        // User created successfully, redirect to sign-in
-        this.router.navigate(['/sign-in'], {
-          queryParams: { registered: 'true' }
-        }).then();
-      }
-    });
-  }
 
   /**
    * Custom validator to check password strength.
@@ -102,12 +88,12 @@ export class SignUpComponent {
    */
   onSubmit(): void {
     if (this.form.valid) {
-      const command = new SignUpCommand({
+      const signUpCommand = new SignUpCommand({
         username: this.form.value.username!,
         password: this.form.value.password!,
         roles: this.form.value.roles!,
       });
-      this.store.signUp(command);
+      this.store.signUp(signUpCommand, this.router);
     } else {
       this.markFormGroupTouched(this.form);
     }
