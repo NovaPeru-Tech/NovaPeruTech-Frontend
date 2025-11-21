@@ -11,9 +11,9 @@ import { Room } from '../domain/model/room.entity';
 import { MedicationsApiEndpoint } from './medications-api-endpoint';
 import { Medication } from '../domain/model/medication.entity';
 import { NursingHomeResidentsApiEndpoint } from './nursing-home-residents-api-endpoint';
-import { CreateResidentCommand } from '../domain/commands/create-resident-command';
+import { ResidentCommand } from '../domain/model/resident.command';
 import { NursingHomeRoomsApiEndpoint } from './nursing-home-rooms-api-endpoint';
-import {CreateRoomCommand} from '../domain/commands/create-room-command';
+import {RoomCommand} from '../domain/model/room.command';
 
 /*
 * @purpose: Service to interact with the Nursing Home API
@@ -61,7 +61,7 @@ export class NursingApi extends BaseApi{
     return this._nursingHomesApidEndpoint.getById(id);
   }
 
-  createResidentToNursingHome(nursingHomeId: number, command: CreateResidentCommand): Observable<Resident> {
+  createResidentToNursingHome(nursingHomeId: number, command: ResidentCommand): Observable<Resident> {
     return this._nursingHomeResidentsApiEndpoint.create(nursingHomeId, command);
   }
 
@@ -69,7 +69,7 @@ export class NursingApi extends BaseApi{
     return this._nursingHomeResidentsApiEndpoint.getAll(nursingHomeId);
   }
 
-  createRoomToNursingHome(nursingHomeId: number, command: CreateRoomCommand): Observable<Room> {
+  createRoomToNursingHome(nursingHomeId: number, command: RoomCommand): Observable<Room> {
     return this._nursingHomeRoomsApiEndpoint.create(nursingHomeId, command);
   }
 
@@ -86,7 +86,7 @@ export class NursingApi extends BaseApi{
     return this._residentsApiEndPoint.create(resident);
   }
 
-  updateResident(residentId: number, command: CreateResidentCommand): Observable<Resident> {
+  updateResident(residentId: number, command: ResidentCommand): Observable<Resident> {
     return this._nursingHomeResidentsApiEndpoint.update(residentId, command);
   }
 
