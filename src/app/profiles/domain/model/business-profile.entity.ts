@@ -8,25 +8,17 @@ export class BusinessProfile extends Profile {
     id: number;
     businessName: string;
     ruc: string;
-    emailAddress: string;
-    street: string;
-    number: string;
-    city: string;
-    postalCode: string;
-    country: string;
     photo: string;
     phoneNumber: string;
+    emailAddress: string;
+    streetAddress: string;
   }) {
     super({
       id: businessProfile.id,
-      emailAddress: businessProfile.emailAddress,
-      street: businessProfile.street,
-      number: businessProfile.number,
-      city: businessProfile.city,
-      postalCode: businessProfile.postalCode,
-      country: businessProfile.country,
       photo: businessProfile.photo,
-      phoneNumber: businessProfile.phoneNumber
+      phoneNumber: businessProfile.phoneNumber,
+      emailAddress: businessProfile.emailAddress,
+      streetAddress: businessProfile.streetAddress
     });
 
     this._businessName = businessProfile.businessName;

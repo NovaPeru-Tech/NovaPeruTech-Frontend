@@ -70,6 +70,10 @@ export class ResidentList {
     this.router.navigate(['residents/list', id, 'detail']).then();
   }
 
+  viewMedications(id: number) {
+    this.router.navigate(['medications/list', id]).then();
+  }
+
   editResident(id: number) {
     this.router.navigate(['residents/list', id, 'edit']).then();
     if (this.selectedId === id) {
@@ -78,6 +82,10 @@ export class ResidentList {
   }
 
   deleteResident(id: number) {
+    if (!confirm("¿Estás seguro de que deseas eliminar este residente? Esta acción no se puede deshacer.")) {
+      return;
+    }
+
     this.store.deleteResident(id);
   };
 

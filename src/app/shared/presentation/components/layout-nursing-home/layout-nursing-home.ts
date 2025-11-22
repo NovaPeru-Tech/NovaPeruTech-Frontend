@@ -9,6 +9,9 @@ import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { LanguageSwitcher } from '../language-switcher/language-switcher';
+import {
+  AuthenticationSection
+} from '../../../../iam/presentation/components/authentication-section/authentication-section';
 
 @Component({
   selector: 'app-layout-nursing-home',
@@ -21,7 +24,8 @@ import { LanguageSwitcher } from '../language-switcher/language-switcher';
     MatButtonModule,
     MatTooltipModule,
     TranslatePipe,
-    LanguageSwitcher
+    LanguageSwitcher,
+    AuthenticationSection
   ],
   templateUrl: './layout-nursing-home.html',
   styleUrls: ['./layout-nursing-home.css']
@@ -32,8 +36,7 @@ export class LayoutNursingHome {
   sidenavOpened = true;
 
   options = [
-    { label: 'nav.home',      icon: 'home',         link: '/nursing-home',              color: '#5FC2BA'},
-    { label: 'nav.inventory', icon: 'inventory',    link: '/inventory/medication/list', color: '#5FC2BA'},
+    { label: 'nav.home',      icon: 'home',         link: '/home',                      color: '#5FC2BA'},
     { label: 'nav.activity',  icon: 'assignment',   link: '/activities/list',           color: '#5FC2BA'},
     { label: 'nav.resident',  icon: 'person',       link: '/residents/list',            color: '#5FC2BA'},
     { label: 'nav.staff',     icon: 'group',        link: '/staff/list',                color: '#5FC2BA'},

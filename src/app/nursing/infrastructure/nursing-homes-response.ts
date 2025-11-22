@@ -5,14 +5,9 @@ import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-res
 * @description: These interfaces define the structure of the data received from the Nursing Home API, including individual nursing home resources and the overall response format.
 * */
 
-export interface NursingHomesResource extends BaseResource{
+export interface NursingHomeResource extends BaseResource{
   id:number;
-  name:string;
-  ruc:string;
-  phoneNUmber:string;
-  address:string;
-  description:string;
-  adminId:number;
+  businessProfileId: number;
 }
 
 /*
@@ -21,5 +16,5 @@ export interface NursingHomesResource extends BaseResource{
 * */
 
 export interface NursingHomesResponse extends BaseResponse{
-  nursingHome:NursingHomesResource[];
+  nursingHome: NursingHomeResource[];
 }

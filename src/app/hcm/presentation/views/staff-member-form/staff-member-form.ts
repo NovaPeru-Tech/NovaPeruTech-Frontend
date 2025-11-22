@@ -1,7 +1,6 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StaffMember } from '../../../domain/model/staff-member.entity';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -11,7 +10,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatCard } from '@angular/material/card';
-import { PersonProfileForm } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
+import { PersonProfileForm, PersonProfileFormValue } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
+import { CreateStaffMemberCommand } from '../../../domain/commands/create-staff-member-command';
 
 @Component({
   selector: 'app-staff-member-form',
@@ -45,8 +45,7 @@ export class StaffMemberForm {
   form = this.fb.group({
     emergencyContactFirstName:      new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] }),
     emergencyContactLastName:       new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] }),
-    emergencyContactPhoneNumber:    new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] }),
-    status:                         new FormControl<string> ('PENDING', { nonNullable: true, validators: [Validators.required] })
+    emergencyContactPhoneNumber:    new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] })
   });
   isEdit = false;
   staffMemberId: number | null = null;
@@ -59,16 +58,15 @@ export class StaffMemberForm {
 
       if (this.isEdit && this.staffMemberId) {
         let id = this.staffMemberId;
-        const staffMember = this.store.getStaffMemberById(id)();
-        if (staffMember) {
+        const resident = this.store.getStaffMemberById(id)();
+        if(resident) {
           this.form.patchValue({
-            emergencyContactFirstName: staffMember.emergencyContactFirstName,
-            emergencyContactLastName: staffMember.emergencyContactLastName,
-            emergencyContactPhoneNumber: staffMember.emergencyContactPhoneNumber,
-            status: staffMember.status
+            emergencyContactFirstName: resident.emergencyContactFirstName,
+            emergencyContactLastName: resident.emergencyContactLastName,
+            emergencyContactPhoneNumber: resident.emergencyContactPhoneNumber
           });
 
-          this.personProfileId = staffMember.personProfileId;
+          this.personProfileId = resident.personProfileId;
         }
       }
     });
@@ -81,38 +79,97 @@ export class StaffMemberForm {
       return;
     }
 
-    this.personProfileForm.submit().subscribe({
-      next: (personProfileId: number | null) => {
+    const personProfile: PersonProfileFormValue | null = this.personProfileForm.getProfileData();
+    if (!personProfile) {
+      alert("Datos incompletos");
+      this.form.markAllAsTouched();
+      return;
+    }
 
-        if (personProfileId === null) {
-          alert("Datos incompletos");
-          return;
+    const staffMember = this.form.getRawValue();
+
+    const command = new CreateStaffMemberCommand({
+      dni: personProfile.dni,
+      firstName: personProfile.firstName,
+      lastName: personProfile.lastName,
+      birthDate: this.formatDateToISO(personProfile.birthDate),
+      age: this.calculateAge(personProfile.birthDate),
+      emailAddress: personProfile.emailAddress,
+      street: personProfile.street,
+      number: personProfile.number,
+      city: personProfile.city,
+      postalCode: personProfile.postalCode,
+      country: personProfile.country,
+      photo: personProfile.photo,
+      phoneNumber: personProfile.phoneNumber,
+      emergencyContactFirstName: staffMember.emergencyContactFirstName,
+      emergencyContactLastName: staffMember.emergencyContactLastName,
+      emergencyContactPhoneNumber: staffMember.emergencyContactPhoneNumber
+    })
+
+    if (!confirm("¿Deseas guardar los cambios del empleado?")) {
+      return;
+    }
+
+    if(this.isEdit){
+      this.store.updateStaffMember(this.staffMemberId ?? 0, command).subscribe({
+        next: () => {
+          this.router.navigate(['/staff/list']).then();
+          alert('Datos guardados exitosamente');
+        },
+        error: (err) => {
+          let errorMessage = 'Error al guardar el empleado.';
+
+          if (err.error?.message) {
+            errorMessage = `Error al guardar el empleado: ${err.error.message}`;
+          } else if (typeof err.error === 'string') {
+            errorMessage = `Error al guardar el empleado: ${err.error}`;
+          }
+
+          alert(errorMessage);
         }
+      });
+    } else {
+      this.store.createStaffMemberInNursingHome(1, command).subscribe({
+        next: () => {
+          this.router.navigate(['/staff/list']).then();
+          alert('Empleado registrado exitosamente');
+        },
+        error: (err) => {
+          let errorMessage = 'Error al guardar el empleado.';
 
-        const formValue = this.form.getRawValue();
+          if (err.error?.message) {
+            errorMessage = `Error al guardar el empleado: ${err.error.message}`;
+          } else if (typeof err.error === 'string') {
+            errorMessage = `Error al guardar el empleado: ${err.error}`;
+          }
 
-        const staffMember = new StaffMember({
-          id: this.staffMemberId ?? 0,
-          personProfileId: personProfileId,
-
-          emergencyContactFirstName: formValue.emergencyContactFirstName!,
-          emergencyContactLastName: formValue.emergencyContactLastName!,
-          emergencyContactPhoneNumber: formValue.emergencyContactPhoneNumber!,
-          status: formValue.status
-        });
-
-        if (this.isEdit) {
-          this.store.updateStaffMember(staffMember);
-        } else {
-          this.store.addStaffMember(staffMember);
+          alert(errorMessage);
         }
+      });
+    }
+  }
 
-        this.router.navigate(['/staff/list']).then();
-      },
-      error: () => {
-        console.error('Ocurrió un error en la llamada API al guardar el perfil.');
-      }
-    });
+  private formatDateToISO(date: Date): string {
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private calculateAge(birthDate: Date): number {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return age;
   }
 
   onCancel(): void {

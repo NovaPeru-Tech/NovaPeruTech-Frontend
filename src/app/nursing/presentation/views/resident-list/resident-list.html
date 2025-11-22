@@ -35,7 +35,7 @@
 
   <!-- Error State -->
   @if (store.error()) {
-    <mat-error>{{ store.error() }}</mat-error>
+    <mat-error class="error-message">{{ store.error() }}</mat-error>
   }
 
   <div class="cards-grid">
@@ -57,6 +57,12 @@
                 class="detail-button"
                 (click)="viewDetails(resident.id); $event.stopPropagation()">
           {{ 'residents.buttons.details' | translate }}
+        </button>
+
+        <button mat-raised-button
+                class="detail-button"
+                (click)="viewMedications(resident.id); $event.stopPropagation()">
+          {{ 'View Medications' | translate }}
         </button>
 
       </mat-card>
