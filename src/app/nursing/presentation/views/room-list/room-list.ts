@@ -114,16 +114,6 @@ export class RoomList {
     this.selectedId = this.selectedId === id ? null : id;
   }
 
-  editRoom(id: number) {
-    this.router.navigate(['rooms/list', id, 'edit']).then();
-  }
-
-  deleteRoom(id: number) {
-    if (confirm('¿Está seguro de eliminar esta habitación?')) {
-      this.store.deleteRoom(id);
-    }
-  }
-
   navigateToNew() {
     this.router.navigate(['rooms/list/new']).then();
   }
