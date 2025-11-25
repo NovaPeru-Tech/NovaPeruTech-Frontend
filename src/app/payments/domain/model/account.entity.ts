@@ -1,59 +1,27 @@
-/*
- * @purpose: Represents an account entity within the Veyra Payments bounded context.
- * @description: Stores information about the account owner, which can be a Nursing Home
- *               Administrator or a Familiar of a resident. Includes encapsulated getters and setters.
- */
+import { AccountResponse } from "../../infrastructure/accounts-response";
 
 export class Account {
+  constructor(
+    public id: string,
+    public fullName: string,
+    public email: string,
+    public phone: string,
+    public country: string,
+    public role: "family" | "nursing-home",
+    public createdAt: string,
+    public updatedAt: string
+  ) {}
 
-  private _id: number;
-  private _email: string;
-  private _fullName: string;
-  private _role: 'Administrator' | 'Familiar';
-
-  constructor(account: {
-    id: number;
-    email: string;
-    fullName: string;
-    role: 'Administrator' | 'Familiar';
-  }) {
-    this._id = account.id;
-    this._email = account.email;
-    this._fullName = account.fullName;
-    this._role = account.role;
-  }
-
-  // Getters & Setters
-
-  get id(): number {
-    return this._id;
-  }
-
-  set id(value: number) {
-    this._id = value;
-  }
-
-  get email(): string {
-    return this._email;
-  }
-
-  set email(value: string) {
-    this._email = value;
-  }
-
-  get fullName(): string {
-    return this._fullName;
-  }
-
-  set fullName(value: string) {
-    this._fullName = value;
-  }
-
-  get role(): 'Administrator' | 'Familiar' {
-    return this._role;
-  }
-
-  set role(value: 'Administrator' | 'Familiar') {
-    this._role = value;
+  static fromResponse(data: AccountResponse): Account {
+    return new Account(
+      data.id,
+      data.fullName,
+      data.email,
+      data.phone,
+      data.country,
+      data.role,
+      data.createdAt,
+      data.updatedAt
+    );
   }
 }
