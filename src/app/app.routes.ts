@@ -30,6 +30,7 @@ export const routes: Routes = [
   { path: 'contracts',   loadChildren: contractsRoutes },
   { path: 'medications', loadChildren: medicationRoutes },
   { path: 'rooms',       loadChildren: roomRoutes },
+  { path: 'payments',    loadChildren: paymentsRoutes },
   { path: '',            redirectTo: '/home',         pathMatch:'full' },
   { path: '**',          loadComponent: pageNotFound, title:`Page Not Found | ${baseTitle}`}
 ];
