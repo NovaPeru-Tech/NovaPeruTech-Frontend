@@ -10,16 +10,15 @@ import { RoomsApiEndpoint } from './rooms-api-endpoint';
 import { Room } from '../domain/model/room.entity';
 import { MedicationsApiEndpoint } from './medications-api-endpoint';
 import { Medication } from '../domain/model/medication.entity';
-import { NursingHomeResidentsApiEndpoint } from './nursing-home-residents-api-endpoint';
+import { ResidentCommandsApiEndpoint } from './resident-commands-api-endpoint';
 import { ResidentCommand } from '../domain/model/resident.command';
-import { NursingHomeRoomsApiEndpoint } from './nursing-home-rooms-api-endpoint';
+import { RoomCommandsApiEndpoint } from './room-commands-api-endpoint';
 import {RoomCommand} from '../domain/model/room.command';
 
-/*
-* @purpose: Service to interact with the Nursing Home API
-* @description: This service provides methods to create, update, and retrieve nursing home data by communicating with the Nursing Home API endpoint.
-* */
-
+/**
+ * @purpose: Service to interact with the Nursing Home API
+ * @description: This service provides methods to create, update, and retrieve nursing home data by communicating with the Nursing Home API endpoint.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -32,8 +31,8 @@ export class NursingApi extends BaseApi{
   private readonly _residentsApiEndPoint: ResidentsApiEndpoint;
   private readonly _roomsApiEndpoint: RoomsApiEndpoint;
   private readonly _medicationsApiEndpoint: MedicationsApiEndpoint;
-  private readonly _nursingHomeResidentsApiEndpoint: NursingHomeResidentsApiEndpoint;
-  private readonly _nursingHomeRoomsApiEndpoint: NursingHomeRoomsApiEndpoint;
+  private readonly _residentCommandsApiEndpoint: ResidentCommandsApiEndpoint;
+  private readonly _roomCommandsApiEndpoint: RoomCommandsApiEndpoint;
 
   /**
    * Initializes the Resident, Room and Nursing Home API service with the required HTTP client.
@@ -45,8 +44,8 @@ export class NursingApi extends BaseApi{
     this._residentsApiEndPoint = new ResidentsApiEndpoint(http);
     this._roomsApiEndpoint = new RoomsApiEndpoint(http);
     this._medicationsApiEndpoint = new MedicationsApiEndpoint(http);
-    this._nursingHomeResidentsApiEndpoint = new NursingHomeResidentsApiEndpoint(http);
-    this._nursingHomeRoomsApiEndpoint = new NursingHomeRoomsApiEndpoint(http);
+    this._residentCommandsApiEndpoint = new ResidentCommandsApiEndpoint(http);
+    this._roomCommandsApiEndpoint = new RoomCommandsApiEndpoint(http);
   }
 
   createNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
@@ -62,19 +61,19 @@ export class NursingApi extends BaseApi{
   }
 
   createResidentToNursingHome(nursingHomeId: number, command: ResidentCommand): Observable<Resident> {
-    return this._nursingHomeResidentsApiEndpoint.create(nursingHomeId, command);
+    return this._residentCommandsApiEndpoint.create(nursingHomeId, command);
   }
 
   getResidentsByNursingHome(nursingHomeId: number): Observable<Resident[]> {
-    return this._nursingHomeResidentsApiEndpoint.getAll(nursingHomeId);
+    return this._residentCommandsApiEndpoint.getAll(nursingHomeId);
   }
 
   createRoomToNursingHome(nursingHomeId: number, command: RoomCommand): Observable<Room> {
-    return this._nursingHomeRoomsApiEndpoint.create(nursingHomeId, command);
+    return this._roomCommandsApiEndpoint.create(nursingHomeId, command);
   }
 
   getRoomsByNursingHome(nursingHomeId: number): Observable<Room[]> {
-    return this._nursingHomeRoomsApiEndpoint.getAll(nursingHomeId);
+    return this._roomCommandsApiEndpoint.getAll(nursingHomeId);
   }
 
   /**
@@ -86,8 +85,8 @@ export class NursingApi extends BaseApi{
     return this._residentsApiEndPoint.create(resident);
   }
 
-  updateResident(residentId: number, command: ResidentCommand): Observable<Resident> {
-    return this._nursingHomeResidentsApiEndpoint.update(residentId, command);
+  updateResident(residentId: number, residentCommand: ResidentCommand): Observable<Resident> {
+    return this._residentCommandsApiEndpoint.update(residentId, residentCommand);
   }
 
   /**
@@ -107,24 +106,12 @@ export class NursingApi extends BaseApi{
     return this._residentsApiEndPoint.getAll();
   }
 
-  getRooms(): Observable<Room[]> {
-    return this._roomsApiEndpoint.getAll();
+  getRooms(nursingHomeId: number): Observable<Room[]> {
+    return this._roomCommandsApiEndpoint.getAll(nursingHomeId);
   }
 
-  getRoom(id: number): Observable<Room> {
-    return this._roomsApiEndpoint.getById(id);
-  }
-
-  createRoom(room: Room): Observable<Room> {
-    return this._roomsApiEndpoint.create(room);
-  }
-
-  updateRoom(room: Room): Observable<Room> {
-    return this._roomsApiEndpoint.update(room, room.id);
-  }
-
-  deleteRoom(id: number): Observable<void> {
-    return this._roomsApiEndpoint.delete(id);
+  createRoom(nursingHomeId: number, roomCommand: RoomCommand): Observable<Room> {
+    return this._roomCommandsApiEndpoint.create(nursingHomeId, roomCommand);
   }
 
   getMedications() {
