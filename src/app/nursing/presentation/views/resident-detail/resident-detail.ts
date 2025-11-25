@@ -72,7 +72,7 @@ export class ResidentDetail {
 
   deleteResident() {
     const id = this.residentId();
-    if (id && confirm('¿Está seguro de eliminar este residente?')) {
+    if (id && confirm("¿Estás seguro de que deseas eliminar este residente? Esta acción no se puede deshacer.")) {
       this.store.deleteResident(id);
       this.router.navigate(['/residents/list']).then();
     }
