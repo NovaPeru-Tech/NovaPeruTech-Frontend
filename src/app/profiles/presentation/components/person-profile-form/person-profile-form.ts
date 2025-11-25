@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { MatError, MatFormField, MatHint, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { MatCalendar } from '@angular/material/datepicker';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
@@ -30,7 +30,6 @@ export interface PersonProfileFormValue {
   selector: 'app-person-profile-form',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
     MatFormField,
     MatLabel,
     MatInput,
@@ -43,7 +42,7 @@ export interface PersonProfileFormValue {
     MatButton,
     MatIconButton,
     MatHint,
-    NgIf
+    ReactiveFormsModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './person-profile-form.html',
@@ -88,44 +87,19 @@ export class PersonProfileForm {
         const personProfile = this.store.getPersonProfileById(id)();
 
         if(personProfile) {
-          const fullNameParts = personProfile.fullName.trim().split(/\s+/);
-
-          let firstName = "";
-          let lastName = "";
-
-          if (fullNameParts.length === 2) {
-            firstName = fullNameParts[0];
-            lastName = fullNameParts[1];
-          }
-          else if (fullNameParts.length >= 3) {
-            lastName = fullNameParts.slice(-2).join(" ");
-            firstName = fullNameParts.slice(0, -2).join(" ");
-          }
-          else {
-            firstName = fullNameParts[0] ?? "";
-            lastName = "";
-          }
-
-          const streetAddressParts = personProfile.streetAddress.split(',');
-          const streetAndNumber = streetAddressParts[0]?.trim() ?? '';
-          const postalCode = streetAddressParts[1]?.trim() ?? '';
-          const city = streetAddressParts[2]?.trim() ?? '';
-          const country = streetAddressParts[3]?.trim() ?? '';
-          const streetParts = streetAndNumber.split(' ');
-          const number = streetParts.pop() ?? '';
-          const street = streetParts.join(' ');
+          const parsed = this.parsePersonProfile(personProfile);
 
           this.form.patchValue({
             dni: personProfile.dni,
-            firstName: firstName,
-            lastName: lastName,
-            birthDate: new Date(personProfile.birthDate),
+            firstName: parsed.firstName,
+            lastName: parsed.lastName,
+            birthDate: new Date(personProfile.birthDate  + 'T00:00:00'),
             emailAddress: personProfile.emailAddress,
-            street: street,
-            number: number,
-            city: city,
-            postalCode: postalCode,
-            country: country,
+            street: parsed.street,
+            number: parsed.number,
+            city: parsed.city,
+            postalCode: parsed.postalCode,
+            country: parsed.country,
             photo: personProfile.photo,
             phoneNumber: personProfile.phoneNumber
           });
@@ -143,7 +117,13 @@ export class PersonProfileForm {
       return null;
     }
 
-    return this.form.getRawValue() as PersonProfileFormValue;
+    const rawValue = this.form.getRawValue();
+
+    if (!rawValue.birthDate) {
+      return null;
+    }
+
+    return rawValue as PersonProfileFormValue;
   }
 
   private resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<string> {
@@ -229,4 +209,44 @@ export class PersonProfileForm {
     this.form.patchValue({ birthDate: date });
     this.form.get('birthDate')?.markAsTouched();
   }
+
+  parsePersonProfile(personProfile: any) {
+    const fullNameParts = (personProfile.fullName ?? "").trim().split(/\s+/);
+
+    let firstName;
+    let lastName;
+
+    if (fullNameParts.length === 2) {
+      firstName = fullNameParts[0];
+      lastName = fullNameParts[1];
+    }
+    else if (fullNameParts.length >= 3) {
+      lastName = fullNameParts.slice(-2).join(" ");
+      firstName = fullNameParts.slice(0, -2).join(" ");
+    }
+    else {
+      firstName = fullNameParts[0] ?? "";
+      lastName = "";
+    }
+
+    const streetAddressParts = personProfile.streetAddress.split(',');
+    const streetAndNumber = streetAddressParts[0]?.trim() ?? '';
+    const postalCode = streetAddressParts[1]?.trim() ?? '';
+    const city = streetAddressParts[2]?.trim() ?? '';
+    const country = streetAddressParts[3]?.trim() ?? '';
+    const streetParts = streetAndNumber.split(' ');
+    const number = streetParts.pop() ?? '';
+    const street = streetParts.join(' ');
+
+    return {
+      firstName,
+      lastName,
+      street,
+      number,
+      city,
+      postalCode,
+      country
+    };
+  }
+
 }

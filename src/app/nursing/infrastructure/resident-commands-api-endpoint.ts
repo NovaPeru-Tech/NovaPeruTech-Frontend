@@ -6,12 +6,12 @@ import { environment } from '../../../environments/environment';
 import { ResidentsResource } from './residents-response';
 import { ResidentCommand } from '../domain/model/resident.command';
 import { ErrorHandlingEnabledBaseType } from '../../shared/infrastructure/error-handling-enabled-base-type';
-import { ResidentCommandAssembler } from './nursing-home-resident-assembler';
+import { ResidentCommandAssembler } from './resident-command-assembler';
 
-const nursingHomeResidentsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderNursingHomeResidentsEndpointPath}`;
+const residentCommandsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderNursingHomeResidentsEndpointPath}`;
 const residentsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderResidentsEndpointPath}`
 
-export class NursingHomeResidentsApiEndpoint extends ErrorHandlingEnabledBaseType{
+export class ResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
   private readonly residentAssembler = new ResidentAssembler();
   private readonly residentCommandAssembler = new ResidentCommandAssembler();
 
@@ -21,7 +21,7 @@ export class NursingHomeResidentsApiEndpoint extends ErrorHandlingEnabledBaseTyp
 
   /** GET: /api/v1/nursing-homes/{nursingHomeId}/residents */
   getAll(nursingHomeId: number): Observable<Resident[]> {
-    const url = nursingHomeResidentsEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString());
+    const url = residentCommandsEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString());
     return this.http.get<ResidentsResource[]>(url).pipe(
       map(response => {
         if(Array.isArray(response)) {
@@ -34,9 +34,9 @@ export class NursingHomeResidentsApiEndpoint extends ErrorHandlingEnabledBaseTyp
   }
 
   /** POST: /api/v1/nursing-homes/{nursingHomeId}/residents */
-  create(nursingHomeId: number, command: ResidentCommand): Observable<Resident> {
-    const resource = this.residentCommandAssembler.toResourceFromEntity(command);
-    const url = nursingHomeResidentsEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString());
+  create(nursingHomeId: number, residentCommand: ResidentCommand): Observable<Resident> {
+    const resource = this.residentCommandAssembler.toResourceFromEntity(residentCommand);
+    const url = residentCommandsEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString());
     return this.http.post<Resident>(url, resource).pipe(
       map(createdResident => this.residentAssembler.toEntityFromResource(createdResident)),
       catchError(this.handleError('Failed to create nursing home resident'))
@@ -44,8 +44,8 @@ export class NursingHomeResidentsApiEndpoint extends ErrorHandlingEnabledBaseTyp
   }
 
   /** PUT: /api/v1/residents/{residentId} */
-  update(residentId: number, command: ResidentCommand): Observable<Resident> {
-    const resource = this.residentCommandAssembler.toResourceFromEntity(command);
+  update(residentId: number, residentCommand: ResidentCommand): Observable<Resident> {
+    const resource = this.residentCommandAssembler.toResourceFromEntity(residentCommand);
     const url = residentsEndpointUrl + `/${residentId}`
     return this.http.put<Resident>(url, resource).pipe(
       map(updatedResident => this.residentAssembler.toEntityFromResource(updatedResident)),
@@ -55,7 +55,7 @@ export class NursingHomeResidentsApiEndpoint extends ErrorHandlingEnabledBaseTyp
 
   /** GET: /api/v1/nursing-homes/{nursingHomeId}/residents?state=active */
   getByActiveState(nursingHomeId: number): Observable<Resident[]> {
-    const url = nursingHomeResidentsEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString()) + '?state=active';
+    const url = residentCommandsEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString()) + '?state=active';
     return this.http.get<ResidentsResource[]>(url).pipe(
       map(response => {
         if(Array.isArray(response)) {

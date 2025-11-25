@@ -11,6 +11,7 @@ import { MatCard } from '@angular/material/card';
 import { NursingStore } from '../../../application/nursing.store';
 import { PersonProfileForm, PersonProfileFormValue } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
 import { ResidentCommand } from '../../../domain/model/resident.command';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-resident-form',
@@ -29,6 +30,7 @@ import { ResidentCommand } from '../../../domain/model/resident.command';
     MatLabel,
     PersonProfileForm
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './resident-form.html',
   styleUrl: './resident-form.css'
 })
@@ -51,6 +53,7 @@ export class ResidentForm {
   isEdit = false;
   residentId: number | null = null;
   personProfileId: number | null = null;
+  private residentData: any = null;
 
   constructor() {
     this.route.params.subscribe(params => {
@@ -60,7 +63,11 @@ export class ResidentForm {
       if (this.isEdit && this.residentId) {
         let id = this.residentId;
         const resident = this.store.getResidentById(id)();
+
         if(resident) {
+          this.residentData = resident;
+          this.personProfileId = resident.personProfileId;
+
           this.form.patchValue({
             legalRepresentativeFirstName: resident.legalRepresentativeFirstName,
             legalRepresentativeLastName: resident.legalRepresentativeLastName,
@@ -69,8 +76,6 @@ export class ResidentForm {
             emergencyContactLastName: resident.emergencyContactLastName,
             emergencyContactPhoneNumber: resident.emergencyContactPhoneNumber
           });
-
-          this.personProfileId = resident.personProfileId;
         }
       }
     });
@@ -114,15 +119,23 @@ export class ResidentForm {
       emergencyContactPhoneNumber: resident.emergencyContactPhoneNumber
     });
 
-    if (!confirm("¿Deseas guardar los cambios del residente?")) {
+    const confirmMessage = this.isEdit
+      ? "¿Deseas guardar los cambios del residente?"
+      : "¿Deseas crear este nuevo residente?";
+
+    if (!confirm(confirmMessage)) {
       return;
     }
 
     if(this.isEdit){
       this.store.updateResident(this.residentId ?? 0, command);
+      alert("Residente actualizado correctamente");
     } else {
       this.store.createResidentInNursingHome(1, command);
+      alert("Residente creado correctamente");
     }
+
+    this.router.navigate(['/residents/list']).then();
   }
 
   private formatDateToISO(date: Date): string {

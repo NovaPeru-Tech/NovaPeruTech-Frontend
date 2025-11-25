@@ -67,7 +67,7 @@ export class NursingStore {
     return computed(() => id ? this.residents().find(r => r.id === id) : undefined);
   }
 
-  createResidentInNursingHome(nursingHomeId: number, command: ResidentCommand): void {
+  createResidentInNursingHome(nursingHomeId: number, command: ResidentCommand) {
     this.nursingApi.createResidentToNursingHome(nursingHomeId, command).pipe(retry(2)).subscribe({
       next: createdResident => {
         this._residentSignal.update(residents => [...residents, createdResident]);
@@ -94,23 +94,6 @@ export class NursingStore {
         this._loadingSignal.set(false);
       }
     });
-  }
-
-  createRoomInNursingHome(nursingHomeId: number, command: RoomCommand): Observable<Room> {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-
-    return this.nursingApi.createRoomToNursingHome(nursingHomeId, command).pipe(retry(2),
-      tap(createdRoom => {
-        this._roomsSignal.update(rooms => [...rooms, createdRoom]);
-        this._loadingSignal.set(false);
-      }),
-      catchError(err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to create room in nursing home'));
-        this._loadingSignal.set(false);
-        return throwError(() => err);
-      })
-    );
   }
 
   loadRoomsByNursingHome(nursingHomeId: number): void {
@@ -148,22 +131,21 @@ export class NursingStore {
     });
   }
 
-  updateResident(residentId: number, command: ResidentCommand): Observable<Resident> {
+  updateResident(residentId: number, command: ResidentCommand) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    return this.nursingApi.updateResident(residentId, command).pipe(retry(2),
-      tap(updatedResident => {
+    this.nursingApi.updateResident(residentId, command).pipe(retry(2)).subscribe({
+      next: updatedResident => {
         this._residentSignal.update(residents =>
-          residents.map(res => res.id === updatedResident.id ? updatedResident : res)
-        );
+          residents.map(res => res.id === updatedResident.id ? updatedResident : res));
         this._loadingSignal.set(false);
-      }),
-      catchError(err => {
+      },
+      error: err => {
         this._errorSignal.set(this.formatError(err, 'Failed to update resident'));
         this._loadingSignal.set(false);
         return throwError(() => err);
-      })
-    );
+      }
+    });
   }
 
   /**
@@ -185,56 +167,16 @@ export class NursingStore {
     });
   }
 
-  getRoomById(id: number | null | undefined): Signal<Room | undefined> {
-    return computed(() => id
-      ? this.rooms().find(room => room.id === id)
-      : undefined
-    );
-  }
-
-  addRoom(room: Room): void {
+  addRoom(nursingHomeId: number, roomCommand: RoomCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.nursingApi.createRoom(room).pipe(retry(2)).subscribe({
+    this.nursingApi.createRoom(nursingHomeId, roomCommand).pipe(retry(2)).subscribe({
       next: createdRoom => {
         this._roomsSignal.update(rooms => [...rooms, createdRoom]);
         this._loadingSignal.set(false);
       },
       error: err => {
         this._errorSignal.set(this.formatError(err, 'Failed to create room'));
-        this._loadingSignal.set(false);
-      }
-    });
-  }
-
-  updateRoom(room: Room): void {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-    this.nursingApi.updateRoom(room).pipe(retry(2)).subscribe({
-      next: updatedRoom => {
-        this._roomsSignal.update(rooms =>
-          rooms.map(room => room.id === updatedRoom.id
-            ? updatedRoom
-            : room));
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to update room'));
-        this._loadingSignal.set(false);
-      }
-    });
-  }
-
-  deleteRoom(id: number): void {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-    this.nursingApi.deleteRoom(id).pipe(retry(2)).subscribe({
-      next: () => {
-        this._roomsSignal.update(rooms => rooms.filter(room => room.id !== id));
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to delete room'));
         this._loadingSignal.set(false);
       }
     });
@@ -283,61 +225,12 @@ export class NursingStore {
     });
   }
 
-  loadResidents() {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-    this.nursingApi.getResidents().pipe(takeUntilDestroyed()).subscribe({
-      next: residents => {
-        this._residentSignal.set(residents);
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to load residents'));
-        this._loadingSignal.set(false);
-      }
-    });
-  }
-
-  loadRooms(): void {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-    this.nursingApi.getRooms().pipe(takeUntilDestroyed()).subscribe({
-      next: rooms => {
-        this._roomsSignal.set(rooms);
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to load room list'));
-        this._loadingSignal.set(false);
-      }
-    });
-  }
-
-  getAvailableRooms(): Signal<number> {
-    return computed(() => this._roomsSignal().filter(rooms => rooms.status === 'Available').length);
-  }
-
-  updateRoomStatus(id: number, newStatus: string) {
-    const updated = this._roomsSignal().map(r => {
-      if (r.id === id) { r.status = newStatus; }
-      return r;
-    });
-    this._roomsSignal.set(updated);
-
-    const room = updated.find(r => r.id === id);
-    if (room) {
-      this.nursingApi.updateRoom(room).subscribe({
-        next: () => console.log('Status persisted'),
-        error: err => console.error('Error saving status', err)
-      });
-    }
-  }
-
-  /*
-* @purpose: Format error messages
-* @description: This private method takes an error object and a fallback string. If the error is an instance of Error, it checks if the message includes 'Resource not found' and returns a formatted message. Otherwise, it returns the fallback string.
-* */
-
+  /**
+   *  @purpose: Format error messages
+   *  @description: This private method takes an error object and a fallback string.
+   *  If the error is an instance of Error, it checks if the message includes 'Resource not found' and returns a formatted message.
+   *  Otherwise, it returns the fallback string.
+   */
   private formatError(error:any,fallback:string):string{
     if(error instanceof Error){
       return error.message.includes('Resource not found ')?`${fallback}:Not Found`:error.message;

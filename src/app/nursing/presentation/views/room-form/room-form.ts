@@ -33,7 +33,7 @@ export class RoomForm {
   private store = inject(NursingStore);
 
   form = this.fb.group({
-    capacity:   new FormControl<number | null> (null,           { nonNullable: true, validators: [Validators.required] }),
+    capacity:   new FormControl<number | null> (null,        { nonNullable: true, validators: [Validators.required] }),
     type:       new FormControl<string>        ('',          { nonNullable: true, validators: [Validators.required] }),
     roomNumber: new FormControl<string>        ('',          { nonNullable: true, validators: [Validators.required] })
   });
@@ -47,7 +47,7 @@ export class RoomForm {
 
     const room = this.form.getRawValue();
 
-    const command = new RoomCommand({
+    const roomCommand = new RoomCommand({
       capacity: room.capacity ?? 0,
       type: room.type,
       roomNumber: room.roomNumber
@@ -57,23 +57,9 @@ export class RoomForm {
       return;
     }
 
-    this.store.createRoomInNursingHome(1, command).subscribe({
-      next: () => {
-        this.router.navigate(['/rooms/list']).then();
-        alert('Habitación registrada exitosamente');
-      },
-      error: (err) => {
-        let errorMessage = 'Error al guardar la habitación.';
-
-        if (err.error?.message) {
-          errorMessage = `Error al guardar la habitación: ${err.error.message}`;
-        } else if (typeof err.error === 'string') {
-          errorMessage = `Error al guardar la habitación: ${err.error}`;
-        }
-
-        alert(errorMessage);
-      }
-    });
+    this.store.addRoom(1, roomCommand);
+    alert('Habitación registrada exitosamente');
+    this.router.navigate(['/rooms/list']).then();
   }
 
   onCancel(): void {
