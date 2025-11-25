@@ -1,0 +1,33 @@
+<div class="checkout-container">
+
+  <div class="checkout-card">
+
+    <h2>Payment Information</h2>
+
+    <form [formGroup]="form" (ngSubmit)="buy()">
+
+      <div class="row">
+        <input placeholder="First name" formControlName="firstName" />
+        <input placeholder="Last name" formControlName="lastName" />
+      </div>
+
+      <input placeholder="Email address" formControlName="email" />
+
+      <label>Card Information</label>
+      <div id="card-element" class="card-box"></div>
+
+      <div class="error" *ngIf="error">{{ error }}</div>
+
+      <button type="submit" [disabled]="form.invalid">
+        Pay Now — ${{ selectedPlan.price }}
+      </button>
+
+    </form>
+  </div>
+
+  <div class="plan-summary">
+    <h3>{{ selectedPlan.name }}</h3>
+    <p class="price">${{ selectedPlan.price }}</p>
+  </div>
+
+</div>
