@@ -101,7 +101,7 @@
 
               <input matInput formControlName="dni" [readonly]="isEdit">
 
-              <mat-hint *ngIf="isEdit">Readonly</mat-hint>
+              @if(isEdit) {<mat-hint>Readonly</mat-hint>}
 
               @if (form.get('dni')?.touched && form.get('dni')!.hasError('required')) {
                 <mat-error>{{ 'required' | translate }}</mat-error>
