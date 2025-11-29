@@ -13,6 +13,7 @@ import {MatInput, MatLabel} from '@angular/material/input';
 import {MatError, MatFormField} from '@angular/material/form-field';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIcon} from '@angular/material/icon';
+import {MedicationCommand} from '../../../domain/model/medication.command';
 
 @Component({
   selector: 'app-medication-form',
@@ -79,21 +80,29 @@ export class MedicationForm {
     }
 
     const formValue = this.form.getRawValue();
-    const medication = new Medication({
-      id: 0,
-      residentId: this.residentId!,
+    const medicationCommand = new MedicationCommand({
       name: formValue.name!,
       description: formValue.description!,
       amount: formValue.amount!,
-      expirationDate: formValue.expirationDate!,
+      expirationDate: this.formatDateToISO(formValue.expirationDate!),
       drugPresentation: formValue.drugPresentation!,
       dosage: formValue.dosage!
     });
 
-    this.store.addMedication(medication);
+    this.store.addMedication(this.residentId!, medicationCommand);
 
     this.router.navigate(['medications/list', this.residentId]).then();
   }
+
+  private formatDateToISO(date: Date): string {
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
 
   onCancel(): void {
     this.router.navigate(['medications/list', this.residentId]).then();
