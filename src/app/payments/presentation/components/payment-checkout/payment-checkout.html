@@ -1,1 +1,70 @@
-<p>payment-checkout works!</p>
+<div class="checkout-container">
+
+  <!-- LEFT SIDE: PAYMENT FORM -->
+  <div class="checkout-card form-card">
+    <h2 class="section-title">Payment Information</h2>
+
+    <form [formGroup]="stripeForm" (ngSubmit)="submitPayment()">
+
+      <label class="form-label">Full Name</label>
+      <input class="form-input" type="text" formControlName="fullName">
+
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" formControlName="email">
+
+      <label class="form-label">Phone</label>
+      <input class="form-input" type="text" formControlName="phone">
+
+      <label class="form-label">Card Number</label>
+      <input class="form-input" type="text" formControlName="cardNumber" placeholder="1234 5678 9012 3456">
+
+      <div class="row">
+        <div class="col">
+          <label class="form-label">Exp. Month</label>
+          <input class="form-input" type="text" formControlName="expMonth" placeholder="MM">
+        </div>
+
+        <div class="col">
+          <label class="form-label">Exp. Year</label>
+          <input class="form-input" type="text" formControlName="expYear" placeholder="YY">
+        </div>
+
+        <div class="col">
+          <label class="form-label">CVC</label>
+          <input class="form-input" type="text" formControlName="cvc" placeholder="123">
+        </div>
+      </div>
+
+      <p class="error-text" *ngIf="error">{{ error }}</p>
+
+      <button class="pay-button" type="submit">
+        Pay {{ planPrice | currency:'USD' }}
+      </button>
+
+      <button class="cancel-button" type="button" (click)="cancel()">
+        Cancel
+      </button>
+    </form>
+  </div>
+
+  <!-- RIGHT SIDE: SUMMARY -->
+  <div class="checkout-card summary-card">
+    <h2 class="section-title">Order Summary</h2>
+
+    <div class="summary-item">
+      <span class="label">Plan:</span>
+      <span class="value">{{ planTitle }}</span>
+    </div>
+
+    <div class="summary-item">
+      <span class="label">Billing Cycle:</span>
+      <span class="value text-capitalize">{{ period }}</span>
+    </div>
+
+    <div class="summary-item total">
+      <span class="label">Total:</span>
+      <span class="value">{{ planPrice | currency:'USD' }}</span>
+    </div>
+  </div>
+
+</div>
