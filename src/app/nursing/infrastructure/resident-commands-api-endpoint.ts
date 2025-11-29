@@ -29,7 +29,7 @@ export class ResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
         }
         return this.residentAssembler.toEntitiesFromResponse(response);
       }),
-      catchError(this.handleError('Failed to fetch nursing home residents'))
+      catchError(this.handleError('Failed to fetch residents'))
     );
   }
 
@@ -39,7 +39,7 @@ export class ResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
     const url = residentCommandsEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString());
     return this.http.post<Resident>(url, resource).pipe(
       map(createdResident => this.residentAssembler.toEntityFromResource(createdResident)),
-      catchError(this.handleError('Failed to create nursing home resident'))
+      catchError(this.handleError('Failed to create resident'))
     );
   }
 
@@ -49,7 +49,7 @@ export class ResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
     const url = residentsEndpointUrl + `/${residentId}`
     return this.http.put<Resident>(url, resource).pipe(
       map(updatedResident => this.residentAssembler.toEntityFromResource(updatedResident)),
-      catchError(this.handleError('Failed to update nursing home resident'))
+      catchError(this.handleError('Failed to update resident'))
     );
   }
 
@@ -63,7 +63,7 @@ export class ResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
         }
         return this.residentAssembler.toEntitiesFromResponse(response);
       }),
-      catchError(this.handleError('Failed to fetch active nursing home residents'))
+      catchError(this.handleError('Failed to fetch active residents'))
     );
   }
 }
