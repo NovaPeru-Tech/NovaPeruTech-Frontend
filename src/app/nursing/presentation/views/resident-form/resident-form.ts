@@ -53,7 +53,7 @@ export class ResidentForm {
   isEdit = false;
   residentId: number | null = null;
   personProfileId: number | null = null;
-  private residentData: any = null;
+  residentData: any = null;
 
   constructor() {
     this.route.params.subscribe(params => {

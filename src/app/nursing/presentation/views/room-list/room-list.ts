@@ -49,6 +49,10 @@ export class RoomList {
   readonly store = inject(NursingStore);
   protected router = inject(Router);
 
+  constructor() {
+    this.store.loadRoomsByNursingHome(1);
+  }
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = [

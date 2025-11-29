@@ -1,0 +1,78 @@
+:host {
+  display: inline-block;
+}
+
+::ng-deep mat-button-toggle-group {
+  border-radius: 10px !important;
+  border: 2px solid #e0e0e0 !important;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+::ng-deep mat-button-toggle-group:hover {
+  border-color: #70b1e6 !important;
+  box-shadow: 0 4px 12px rgba(112, 177, 230, 0.15);
+}
+
+::ng-deep mat-button-toggle {
+  border: none !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  padding: 0.4rem 1rem !important;
+  transition: all 0.3s ease !important;
+  color: #666 !important;
+}
+
+::ng-deep mat-button-toggle:hover {
+  background-color: rgba(112, 177, 230, 0.1) !important;
+}
+
+::ng-deep mat-button-toggle.mat-button-toggle-checked {
+  background: #70b1e6 !important;
+  color: white !important;
+}
+
+::ng-deep .mat-button-toggle-label-content {
+  line-height: 1 !important;
+  padding: 0.3rem 0.6rem !important;
+}
+
+/* Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+:host {
+  animation: slideIn 0.4s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  ::ng-deep mat-button-toggle {
+    font-size: 12px !important;
+    padding: 0.35rem 0.85rem !important;
+  }
+
+  ::ng-deep .mat-button-toggle-label-content {
+    padding: 0.25rem 0.5rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  ::ng-deep mat-button-toggle {
+    font-size: 11px !important;
+    padding: 0.3rem 0.7rem !important;
+  }
+
+  ::ng-deep .mat-button-toggle-label-content {
+    padding: 0.2rem 0.4rem !important;
+  }
+}

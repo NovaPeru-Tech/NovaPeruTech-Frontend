@@ -13,7 +13,9 @@ import { Medication } from '../domain/model/medication.entity';
 import { ResidentCommandsApiEndpoint } from './resident-commands-api-endpoint';
 import { ResidentCommand } from '../domain/model/resident.command';
 import { RoomCommandsApiEndpoint } from './room-commands-api-endpoint';
-import {RoomCommand} from '../domain/model/room.command';
+import { RoomCommand } from '../domain/model/room.command';
+import { MedicationCommandsApiEndpoint } from './medication-commands-api-endpoint';
+import { MedicationCommand } from '../domain/model/medication.command';
 
 /**
  * @purpose: Service to interact with the Nursing Home API
@@ -33,6 +35,7 @@ export class NursingApi extends BaseApi{
   private readonly _medicationsApiEndpoint: MedicationsApiEndpoint;
   private readonly _residentCommandsApiEndpoint: ResidentCommandsApiEndpoint;
   private readonly _roomCommandsApiEndpoint: RoomCommandsApiEndpoint;
+  private readonly _medicationCommandsApiEndpoint: MedicationCommandsApiEndpoint;
 
   /**
    * Initializes the Resident, Room and Nursing Home API service with the required HTTP client.
@@ -46,6 +49,7 @@ export class NursingApi extends BaseApi{
     this._medicationsApiEndpoint = new MedicationsApiEndpoint(http);
     this._residentCommandsApiEndpoint = new ResidentCommandsApiEndpoint(http);
     this._roomCommandsApiEndpoint = new RoomCommandsApiEndpoint(http);
+    this._medicationCommandsApiEndpoint = new MedicationCommandsApiEndpoint(http);
   }
 
   createNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
@@ -114,15 +118,11 @@ export class NursingApi extends BaseApi{
     return this._roomCommandsApiEndpoint.create(nursingHomeId, roomCommand);
   }
 
-  getMedications() {
-    return this._medicationsApiEndpoint.getAll();
+  getMedications(residentId: number): Observable<Medication[]> {
+    return this._medicationCommandsApiEndpoint.getAll(residentId);
   }
 
-  getMedication(id: number): Observable<Medication> {
-    return this._medicationsApiEndpoint.getById(id);
-  }
-
-  createMedication(medication: Medication): Observable<Medication> {
-    return this._medicationsApiEndpoint.create(medication);
+  createMedication(residentId: number, medicationCommand: MedicationCommand): Observable<Medication> {
+    return this._medicationCommandsApiEndpoint.create(residentId, medicationCommand);
   }
 }

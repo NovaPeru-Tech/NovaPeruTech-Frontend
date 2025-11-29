@@ -4,12 +4,14 @@ export const environment = {
   // Hcm Bounded Context
   platformProviderContractsEndpointPath: '/contracts',
   platformProviderStaffEndpointPath:'/staff',
+  platformProviderStaffMemberContractsEndpointPath:'/staff/{staffMemberId}/contracts',
 
   //IAM Bounded Context
   platformProviderSignInEndpointPath: '/authentication/sign-in',
   platformProviderSignUpEndpointPath: '/authentication/sign-up',
 
   // Nursing Bounded Context
+  platformProviderResidentMedicationsEndpointPath: '/residents/{residentId}/medications',
   platformProviderNursingHomeResidentsEndpointPath: '/nursing-homes/{nursingHomeId}/residents',
   platformProviderNursingHomeStaffEndpointPath: '/nursing-homes/{nursingHomeId}/staff',
   platformProviderNursingHomeRoomsEndpointPath: '/nursing-homes/{nursingHomeId}/rooms',

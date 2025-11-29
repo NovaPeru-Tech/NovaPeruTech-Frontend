@@ -21,8 +21,8 @@ const staffRoutes: Routes = [
 ];
 
 const contractsRoutes: Routes = [
-  { path: 'list/:id',        loadComponent: contractForm,      title: `Contracts | ${baseTitle}` },
-  { path: 'list/:id/new',    loadComponent: contractList,      title: `New Contract | ${baseTitle}` }
+  { path: 'list/:id',        loadComponent: contractList,      title: `Contracts | ${baseTitle}` },
+  { path: 'list/:id/new',    loadComponent: contractForm,      title: `New Contract | ${baseTitle}` }
 ];
 
 export { staffRoutes };

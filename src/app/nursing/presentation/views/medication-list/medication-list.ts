@@ -62,6 +62,8 @@ export class MedicationList {
         return;
       }
     });
+
+    this.store.loadMedications(this.residentId()!);
   }
   searchTerm = signal('');
   selectedColumn = signal<string>('name');
