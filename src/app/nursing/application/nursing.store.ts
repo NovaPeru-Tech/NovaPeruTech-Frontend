@@ -8,6 +8,7 @@ import { Room } from '../domain/model/room.entity';
 import { Medication } from '../domain/model/medication.entity';
 import { ResidentCommand } from '../domain/model/resident.command';
 import { RoomCommand } from '../domain/model/room.command';
+import {MedicationCommand} from '../domain/model/medication.command';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -178,10 +179,10 @@ export class NursingStore {
     });
   }
 
-  addMedication(medication: Medication): void {
+  addMedication(residentId: number, medicationCommand: MedicationCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.nursingApi.createMedication(medication).pipe(retry(2)).subscribe({
+    this.nursingApi.createMedication(residentId, medicationCommand).pipe(retry(2)).subscribe({
       next: createdMedication => {
         this._medicationsSignal.update(medications => [...medications, createdMedication]);
         this._loadingSignal.set(false);
@@ -206,10 +207,10 @@ export class NursingStore {
   /**
    * Loads all residents from the API into the store.
    */
-  loadMedications() {
+  loadMedications(residentId: number): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.nursingApi.getMedications().pipe(takeUntilDestroyed()).subscribe({
+    this.nursingApi.getMedications(residentId).pipe(takeUntilDestroyed()).subscribe({
       next: medications => {
         this._medicationsSignal.set(medications);
         this._loadingSignal.set(false);
