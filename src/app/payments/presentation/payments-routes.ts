@@ -13,6 +13,10 @@ const subscriptionPlanFamily = () =>
   import('./views/subscription-plan-family/subscription-plan-family')
     .then(m => m.SubscriptionPlanFamily);
 
+const paymentCheckout = () =>
+  import('./components/payment-checkout/payment-checkout')
+    .then(m => m.PaymentCheckoutPage);
+
 const baseTitle = 'Veyra';
 
 export const paymentsRoutes: Routes = [
@@ -27,8 +31,13 @@ export const paymentsRoutes: Routes = [
     title: `Family Plan | ${baseTitle}`
   },
   {
-    path: 'plans/nursing',
+    path: 'plans/nursing-home',
     loadComponent: subscriptionPlanNursing,
     title: `Nursing Home Plan | ${baseTitle}`
+  },
+  {
+    path: 'checkout/:type/:cycle',
+    loadComponent: paymentCheckout,
+    title: `Checkout | ${baseTitle}`
   }
 ];
