@@ -11,6 +11,7 @@ export const environment = {
   platformProviderSignUpEndpointPath: '/authentication/sign-up',
 
   // Nursing Bounded Context
+  platformProviderResidentMedicationsEndpointPath: '/residents/{residentId}/medications',
   platformProviderNursingHomeResidentsEndpointPath: '/nursing-homes/{nursingHomeId}/residents',
   platformProviderNursingHomeStaffEndpointPath: '/nursing-homes/{nursingHomeId}/staff',
   platformProviderNursingHomeRoomsEndpointPath: '/nursing-homes/{nursingHomeId}/rooms',
