@@ -37,6 +37,10 @@ export class StaffMemberList {
   readonly store = inject(HcmStore);
   protected router = inject(Router);
 
+  constructor() {
+    this.store.loadStaff(1);
+  }
+
   selectedId: number | null = null;
   searchTerm = signal('');
   filteredPersonProfilesIds = signal<number[]>([]);
@@ -55,7 +59,7 @@ export class StaffMemberList {
       return [];
     }
 
-    return allStaff.filter(r => ids.includes(r.personProfileId));
+    return allStaff.filter(staff => ids.includes(staff.personProfileId));
   });
 
   selectStaffMember(id: number) {

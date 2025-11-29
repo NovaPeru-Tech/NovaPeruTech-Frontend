@@ -11,7 +11,7 @@ import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatCard } from '@angular/material/card';
 import { PersonProfileForm, PersonProfileFormValue } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
-import { CreateStaffMemberCommand } from '../../../domain/commands/create-staff-member-command';
+import { StaffMemberCommand } from '../../../domain/model/staff-member.command';
 
 @Component({
   selector: 'app-staff-member-form',
@@ -43,13 +43,14 @@ export class StaffMemberForm {
   private route = inject(ActivatedRoute);
 
   form = this.fb.group({
-    emergencyContactFirstName:      new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] }),
-    emergencyContactLastName:       new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] }),
-    emergencyContactPhoneNumber:    new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] })
+    emergencyContactFirstName:   new FormControl<string> ('', { nonNullable: true, validators: [Validators.required] }),
+    emergencyContactLastName:    new FormControl<string> ('', { nonNullable: true, validators: [Validators.required] }),
+    emergencyContactPhoneNumber: new FormControl<string> ('', { nonNullable: true, validators: [Validators.required] })
   });
   isEdit = false;
   staffMemberId: number | null = null;
   personProfileId: number | null = null;
+  staffMemberData: any = null;
 
   constructor() {
     this.route.params.subscribe(params => {
@@ -58,15 +59,17 @@ export class StaffMemberForm {
 
       if (this.isEdit && this.staffMemberId) {
         let id = this.staffMemberId;
-        const resident = this.store.getStaffMemberById(id)();
-        if(resident) {
-          this.form.patchValue({
-            emergencyContactFirstName: resident.emergencyContactFirstName,
-            emergencyContactLastName: resident.emergencyContactLastName,
-            emergencyContactPhoneNumber: resident.emergencyContactPhoneNumber
-          });
+        const staffMember = this.store.getStaffMemberById(id)();
 
-          this.personProfileId = resident.personProfileId;
+        if(staffMember) {
+          this.staffMemberData = staffMember;
+          this.personProfileId = staffMember.personProfileId;
+
+          this.form.patchValue({
+            emergencyContactFirstName: staffMember.emergencyContactFirstName,
+            emergencyContactLastName: staffMember.emergencyContactLastName,
+            emergencyContactPhoneNumber: staffMember.emergencyContactPhoneNumber
+          });
         }
       }
     });
@@ -88,7 +91,7 @@ export class StaffMemberForm {
 
     const staffMember = this.form.getRawValue();
 
-    const command = new CreateStaffMemberCommand({
+    const staffMemberCommand = new StaffMemberCommand({
       dni: personProfile.dni,
       firstName: personProfile.firstName,
       lastName: personProfile.lastName,
@@ -105,49 +108,36 @@ export class StaffMemberForm {
       emergencyContactFirstName: staffMember.emergencyContactFirstName,
       emergencyContactLastName: staffMember.emergencyContactLastName,
       emergencyContactPhoneNumber: staffMember.emergencyContactPhoneNumber
-    })
+    });
 
-    if (!confirm("¿Deseas guardar los cambios del empleado?")) {
+    const confirmMessage = this.isEdit
+      ? "¿Deseas guardar los cambios del staff member?"
+      : "¿Deseas crear este nuevo staff member?";
+
+    if (!confirm(confirmMessage)) {
       return;
     }
 
     if(this.isEdit){
-      this.store.updateStaffMember(this.staffMemberId ?? 0, command).subscribe({
-        next: () => {
-          this.router.navigate(['/staff/list']).then();
-          alert('Datos guardados exitosamente');
-        },
-        error: (err) => {
-          let errorMessage = 'Error al guardar el empleado.';
-
-          if (err.error?.message) {
-            errorMessage = `Error al guardar el empleado: ${err.error.message}`;
-          } else if (typeof err.error === 'string') {
-            errorMessage = `Error al guardar el empleado: ${err.error}`;
-          }
-
-          alert(errorMessage);
-        }
-      });
+      this.store.updateStaffMember(this.staffMemberId ?? 0, staffMemberCommand);
     } else {
-      this.store.createStaffMemberInNursingHome(1, command).subscribe({
-        next: () => {
-          this.router.navigate(['/staff/list']).then();
-          alert('Empleado registrado exitosamente');
-        },
-        error: (err) => {
-          let errorMessage = 'Error al guardar el empleado.';
-
-          if (err.error?.message) {
-            errorMessage = `Error al guardar el empleado: ${err.error.message}`;
-          } else if (typeof err.error === 'string') {
-            errorMessage = `Error al guardar el empleado: ${err.error}`;
-          }
-
-          alert(errorMessage);
-        }
-      });
+      this.store.addStaffMember(1, staffMemberCommand);
     }
+
+    setTimeout(() => {
+      if (this.store.error()) {
+        alert(this.store.error()!);
+        return;
+      }
+
+      alert(
+        this.isEdit
+          ? "Staff member actualizado correctamente"
+          : "Staff member creado correctamente"
+      );
+
+      this.router.navigate(['/staff/list']).then();
+    }, 300);
   }
 
   private formatDateToISO(date: Date): string {
