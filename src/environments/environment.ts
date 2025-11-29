@@ -4,6 +4,7 @@ export const environment = {
   // Hcm Bounded Context
   platformProviderContractsEndpointPath: '/contracts',
   platformProviderStaffEndpointPath:'/staff',
+  platformProviderStaffMemberContractsEndpointPath:'/staff/{staffMemberId}/contracts',
 
   //IAM Bounded Context
   platformProviderSignInEndpointPath: '/authentication/sign-in',
