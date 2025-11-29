@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-subscription-plan-family',
@@ -7,9 +8,10 @@ import { Component } from '@angular/core';
 })
 export class SubscriptionPlanFamily {
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   choosePlan(type: string) {
-    console.log("Selected Family plan:", type);
+    // type = 'monthly' o 'annual'
+    this.router.navigate(['/payments/checkout', 'family', type === 'monthly' ? 'monthly' : 'annual']);
   }
 }
