@@ -41,6 +41,10 @@ export class ResidentList {
   readonly store = inject(NursingStore);
   protected router = inject(Router);
 
+  constructor() {
+    this.store.loadResidentsByNursingHome(1);
+  }
+
   selectedId: number | null = null;
   searchTerm = signal('');
   filteredPersonProfilesIds = signal<number[]>([]);
