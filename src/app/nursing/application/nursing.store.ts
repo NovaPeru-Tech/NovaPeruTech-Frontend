@@ -1,7 +1,7 @@
-import {computed, inject, Injectable, Signal, signal} from '@angular/core';
+import { computed, Injectable, Signal, signal } from '@angular/core';
 import { NursingHome } from '../domain/model/nursing-home.entity';
 import { NursingApi } from '../infrastructure/nursing-api';
-import { catchError, Observable, retry, tap, throwError } from 'rxjs';
+import { retry, throwError } from 'rxjs';
 import { Resident } from '../domain/model/resident.entity';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Room } from '../domain/model/room.entity';
@@ -32,11 +32,7 @@ export class NursingStore {
   readonly rooms = this._roomsSignal.asReadonly();
   readonly roomCount = computed(() => this.rooms().length);
 
-  constructor(private nursingApi: NursingApi) {
-    this.loadResidentsByNursingHome(1);
-    this.loadRoomsByNursingHome(1);
-    this.loadMedications();
-  }
+  constructor(private nursingApi: NursingApi) {}
 
   /*
 * @purpose: Add a new nursing home
