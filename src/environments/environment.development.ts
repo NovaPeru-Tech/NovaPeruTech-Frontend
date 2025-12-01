@@ -1,6 +1,17 @@
 export const environment = {
   production: false,
   platformProviderApiBaseUrl: 'http://localhost:8080/api/v1',
+
+  // Analytics Bounded Context
+  platformProviderAnalyticsStaffTerminationsEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/staff/terminations',
+  platformProviderAnalyticsStaffTerminationsByMonthEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/staff/terminations/by-month',
+  platformProviderAnalyticsStaffHiresEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/staff/hires',
+  platformProviderAnalyticsStaffHiresByMonthEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/staff/hires/by-month',
+  platformProviderAnalyticsResidentsAdmissionsEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/residents/admissions',
+  platformProviderAnalyticsResidentsAdmissionsByMonthEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/residents/admissions/by-month',
+  platformProviderAnalyticsResidentsAdmissionsByDateRangeEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/residents/admissions/by-date-range',
+  platformProviderAnalyticsResidentsActiveEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/residents/active',
+
   // Hcm Bounded Context
   platformProviderContractsEndpointPath: '/contracts',
   platformProviderStaffEndpointPath:'/staff',
