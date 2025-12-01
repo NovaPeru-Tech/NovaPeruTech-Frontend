@@ -14,13 +14,6 @@ import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatIconButton } from '@angular/material/button';
 
-interface MetricResponse {
-  labels: string[];
-  values: number[];
-  metricType: string;
-  total: number;
-}
-
 interface ExpandedChart {
   title: string;
   data: ChartConfiguration['data'];
@@ -55,11 +48,10 @@ export class AnalyticsDashboard implements OnInit {
   protected store = inject(AnalyticsStore);
 
   selectedYear = new Date().getFullYear();
-  nursingHomeId = 1; // Ajustar según tu lógica
+  nursingHomeId = 1;
 
-  availableYears = [2023, 2024, 2025];
+  availableYears = [2025];
 
-  // Control del modal de expansión
   expandedChart: ExpandedChart | null = null;
 
   ngOnInit() {
@@ -71,14 +63,11 @@ export class AnalyticsDashboard implements OnInit {
   }
 
   private loadAllMetrics() {
-    // Cargar todas las métricas del año seleccionado
     this.store.getStaffTerminations(this.nursingHomeId, this.selectedYear);
     this.store.getStaffHires(this.nursingHomeId, this.selectedYear);
     this.store.getResidentsAdmissions(this.nursingHomeId, this.selectedYear);
-    this.store.getResidentsActive(this.nursingHomeId, this.selectedYear);
   }
 
-  // Getters para acceder a los datos del store
   get staffTerminationsMetric() {
     return this.store.staffTerminations();
   }
@@ -103,7 +92,6 @@ export class AnalyticsDashboard implements OnInit {
     return this.store.error();
   }
 
-  // Helper methods para obtener datos reales
   private getMonthlyTerminations(): number[] {
     return this.staffTerminationsMetric?.values || Array(12).fill(0);
   }
@@ -117,12 +105,10 @@ export class AnalyticsDashboard implements OnInit {
   }
 
   private getMonthLabels(): string[] {
-    // Usar labels del API si están disponibles, sino usar defaults
     return this.staffTerminationsMetric?.labels ||
       ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   }
 
-  // LINE CHART - Staff Terminations over time
   public lineTerminationsType: ChartType = 'line';
   public get lineTerminationsData(): ChartConfiguration<'line'>['data'] {
     const labels = this.getMonthLabels();
@@ -156,7 +142,6 @@ export class AnalyticsDashboard implements OnInit {
     }
   };
 
-  // BAR CHART - Staff Hires vs Terminations (Stacked)
   public barComparisonType: ChartType = 'bar';
   public get barComparisonData(): ChartConfiguration<'bar'>['data'] {
     const labels = this.getMonthLabels();
@@ -193,7 +178,6 @@ export class AnalyticsDashboard implements OnInit {
     }
   };
 
-  // LINE CHART - Resident Admissions
   public lineAdmissionsType: ChartType = 'line';
   public get lineAdmissionsData(): ChartConfiguration<'line'>['data'] {
     const labels = this.getMonthLabels();
@@ -227,40 +211,6 @@ export class AnalyticsDashboard implements OnInit {
     }
   };
 
-  // DOUGHNUT CHART - Staff Distribution by Role
-  public doughnutStaffType: ChartType = 'doughnut';
-  public get doughnutStaffData(): ChartConfiguration<'doughnut'>['data'] {
-    // Este chart requiere un endpoint diferente para distribución por rol
-    // Por ahora mantener datos estáticos o comentar hasta tener el endpoint
-    return {
-      labels: ['Nurses', 'Caregivers', 'Doctors', 'Administrators', 'Supervisors'],
-      datasets: [
-        {
-          data: [45, 30, 10, 8, 7],
-          backgroundColor: [
-            '#70b1e6',
-            '#66bb6a',
-            '#ffa726',
-            '#ab47bc',
-            '#26c6da'
-          ],
-          borderWidth: 2,
-          borderColor: '#fff'
-        }
-      ]
-    };
-  }
-
-  public doughnutStaffOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: { position: 'bottom' },
-      title: { display: true, text: 'Staff Distribution by Role', font: { size: 16 } }
-    }
-  };
-
-  // BAR CHART - Resident Admissions (Simple)
   public barAdmissionsType: ChartType = 'bar';
   public get barAdmissionsData(): ChartConfiguration<'bar'>['data'] {
     const labels = this.getMonthLabels();
@@ -290,49 +240,6 @@ export class AnalyticsDashboard implements OnInit {
     }
   };
 
-  // PIE CHART - Active Residents Status
-  public pieActiveType: ChartType = 'pie';
-  public get pieActiveData(): ChartConfiguration<'pie'>['data'] {
-    const activeData = this.residentsActiveMetric;
-
-    if (activeData && activeData.labels && activeData.values) {
-      return {
-        labels: activeData.labels,
-        datasets: [
-          {
-            data: activeData.values,
-            backgroundColor: ['#66bb6a', '#ffa726', '#ef5350'],
-            borderWidth: 2,
-            borderColor: '#fff'
-          }
-        ]
-      };
-    }
-
-    // Fallback data
-    return {
-      labels: ['Active', 'Under Evaluation', 'Temporary Leave'],
-      datasets: [
-        {
-          data: [85, 10, 5],
-          backgroundColor: ['#66bb6a', '#ffa726', '#ef5350'],
-          borderWidth: 2,
-          borderColor: '#fff'
-        }
-      ]
-    };
-  }
-
-  public pieActiveOptions: ChartConfiguration['options'] = {
-    responsive: true,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: { position: 'bottom' },
-      title: { display: true, text: 'Active Residents Status', font: { size: 16 } }
-    }
-  };
-
-  // KPI Cards - Summary metrics usando datos reales
   get totalTerminations(): number {
     return this.staffTerminationsMetric?.total || 0;
   }
@@ -353,7 +260,6 @@ export class AnalyticsDashboard implements OnInit {
     return this.residentsActiveMetric?.total || 0;
   }
 
-  // Métodos para expandir gráficos
   expandChart(title: string, data: ChartConfiguration['data'], options: ChartConfiguration['options'], type: ChartType) {
     this.expandedChart = { title, data, options, type };
   }

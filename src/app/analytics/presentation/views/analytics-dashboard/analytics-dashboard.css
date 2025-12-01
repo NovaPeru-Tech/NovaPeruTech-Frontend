@@ -1,19 +1,14 @@
 .title {
+  margin-right: 40px;
   padding-bottom: 12px;
   border-bottom: 4px solid #66B3AD;
   font-size: 2.5rem;
   font-weight: 700;
   color: #0d2e73;
-  margin-right: 40px;
-}
-
-.title p {
-  margin: 0;
 }
 
 /* Year Selector */
 .year-selector {
-  margin: 24px 0;
   display: flex;
   justify-content: flex-end;
   margin-right: 40px;
@@ -364,18 +359,10 @@ mat-divider {
 @media (max-width: 768px) {
   .title {
     font-size: 2rem;
-    margin-right: 0;
-  }
-
-  .analytics-container {
-    margin-right: 0;
-    padding: 0 16px 40px 16px;
   }
 
   .year-selector {
-    margin-right: 0;
     justify-content: flex-start;
-    padding: 0 16px;
   }
 
   .cards {
@@ -506,10 +493,6 @@ mat-divider {
 @media (max-width: 360px) {
   .title {
     font-size: 1.5rem;
-  }
-
-  .analytics-container {
-    padding: 0 8px 40px 8px;
   }
 
   .big {

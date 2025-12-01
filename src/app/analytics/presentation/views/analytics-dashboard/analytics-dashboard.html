@@ -1,7 +1,5 @@
 <app-layout-nursing-home>
-  <div class="title">
-    <p>{{ 'Analytics Dashboard' | translate }}</p>
-  </div>
+  <h1 class="title">{{ 'Analytics Dashboard' | translate }}</h1>
 
   <!-- Year Selector -->
   <div class="year-selector">
@@ -103,18 +101,6 @@
             <span>{{ 'Click to expand' | translate }}</span>
           </div>
         </div>
-
-        <div class="chart-container" (click)="expandChart('Staff Distribution by Role', doughnutStaffData, doughnutStaffOptions, doughnutStaffType)">
-          <canvas baseChart
-                  [data]="doughnutStaffData"
-                  [options]="doughnutStaffOptions"
-                  [type]="doughnutStaffType">
-          </canvas>
-          <div class="expand-hint">
-            <mat-icon>fullscreen</mat-icon>
-            <span>{{ 'Click to expand' | translate }}</span>
-          </div>
-        </div>
       </div>
 
       <mat-divider></mat-divider>
@@ -143,18 +129,6 @@
                   [data]="barAdmissionsData"
                   [options]="barAdmissionsOptions"
                   [type]="barAdmissionsType">
-          </canvas>
-          <div class="expand-hint">
-            <mat-icon>fullscreen</mat-icon>
-            <span>{{ 'Click to expand' | translate }}</span>
-          </div>
-        </div>
-
-        <div class="chart-container" (click)="expandChart('Active Residents Status', pieActiveData, pieActiveOptions, pieActiveType)">
-          <canvas baseChart
-                  [data]="pieActiveData"
-                  [options]="pieActiveOptions"
-                  [type]="pieActiveType">
           </canvas>
           <div class="expand-hint">
             <mat-icon>fullscreen</mat-icon>
