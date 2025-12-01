@@ -5,6 +5,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { iamInterceptor } from './iam/infrastructure/iam.interceptor';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 /**
  * Application configuration for Angular.
@@ -19,6 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideTranslateService({
       loader: provideTranslateHttpLoader({prefix: './i18n/', suffix: '.json'}),
       fallbackLang: 'en'
-    })
+    }), provideCharts(withDefaultRegisterables())
   ]
 };
