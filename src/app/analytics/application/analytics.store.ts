@@ -42,22 +42,6 @@ export class AnalyticsStore {
     });
   }
 
-  getStaffTerminationsByMonth(nursingHomeId: number, year: number, month: number) {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-
-    this.analyticsApi.getStaffTerminationsByMonth(nursingHomeId, year, month).pipe(retry(2)).subscribe({
-      next: metric => {
-        this._staffTerminationsSignal.set(metric);
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to fetch staff terminations by month'));
-        this._loadingSignal.set(false);
-      }
-    });
-  }
-
   getStaffHires(nursingHomeId: number, year: number) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
@@ -74,22 +58,6 @@ export class AnalyticsStore {
     });
   }
 
-  getStaffHiresByMonth(nursingHomeId: number, year: number, month: number) {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-
-    this.analyticsApi.getStaffHiresByMonth(nursingHomeId, year, month).pipe(retry(2)).subscribe({
-      next: metric => {
-        this._staffHiresSignal.set(metric);
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to fetch staff hires by month'));
-        this._loadingSignal.set(false);
-      }
-    });
-  }
-
   getResidentsAdmissions(nursingHomeId: number, year: number) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
@@ -101,54 +69,6 @@ export class AnalyticsStore {
       },
       error: err => {
         this._errorSignal.set(this.formatError(err, 'Failed to fetch residents admissions'));
-        this._loadingSignal.set(false);
-      }
-    });
-  }
-
-  getResidentsAdmissionsByMonth(nursingHomeId: number, year: number, month: number) {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-
-    this.analyticsApi.getResidentsAdmissionsByMonth(nursingHomeId, year, month).pipe(retry(2)).subscribe({
-      next: metric => {
-        this._residentsAdmissionsSignal.set(metric);
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to fetch residents admissions by month'));
-        this._loadingSignal.set(false);
-      }
-    });
-  }
-
-  getResidentsAdmissionsByDateRange(nursingHomeId: number, startDate: string, endDate: string) {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-
-    this.analyticsApi.getResidentsAdmissionsByDateRange(nursingHomeId, startDate, endDate).pipe(retry(2)).subscribe({
-      next: metric => {
-        this._residentsAdmissionsSignal.set(metric);
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to fetch residents admissions by date range'));
-        this._loadingSignal.set(false);
-      }
-    });
-  }
-
-  getResidentsActive(nursingHomeId: number, year: number) {
-    this._loadingSignal.set(true);
-    this._errorSignal.set(null);
-
-    this.analyticsApi.getResidentsActive(nursingHomeId, year).pipe(retry(2)).subscribe({
-      next: metric => {
-        this._residentsActiveSignal.set(metric);
-        this._loadingSignal.set(false);
-      },
-      error: err => {
-        this._errorSignal.set(this.formatError(err, 'Failed to fetch active residents'));
         this._loadingSignal.set(false);
       }
     });
