@@ -6,9 +6,9 @@ import { Resident } from '../domain/model/resident.entity';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Room } from '../domain/model/room.entity';
 import { Medication } from '../domain/model/medication.entity';
-import { ResidentCommand } from '../domain/model/resident.command';
-import { RoomCommand } from '../domain/model/room.command';
-import {MedicationCommand} from '../domain/model/medication.command';
+import { CreateResidentCommand } from '../domain/model/create-resident.command';
+import { CreateRoomCommand } from '../domain/model/create-room.command';
+import {CreateMedicationCommand} from '../domain/model/create-medication.command';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -64,8 +64,8 @@ export class NursingStore {
     return computed(() => id ? this.residents().find(r => r.id === id) : undefined);
   }
 
-  createResidentInNursingHome(nursingHomeId: number, command: ResidentCommand) {
-    this.nursingApi.createResidentToNursingHome(nursingHomeId, command).pipe(retry(2)).subscribe({
+  createResidentInNursingHome(nursingHomeId: number, createResidentCommand: CreateResidentCommand) {
+    this.nursingApi.createResidentToNursingHome(nursingHomeId, createResidentCommand).pipe(retry(2)).subscribe({
       next: createdResident => {
         this._residentSignal.update(residents => [...residents, createdResident]);
         this._loadingSignal.set(false);
@@ -128,10 +128,10 @@ export class NursingStore {
     });
   }
 
-  updateResident(residentId: number, command: ResidentCommand) {
+  updateResident(residentId: number, createResidentCommand: CreateResidentCommand) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.nursingApi.updateResident(residentId, command).pipe(retry(2)).subscribe({
+    this.nursingApi.updateResident(residentId, createResidentCommand).pipe(retry(2)).subscribe({
       next: updatedResident => {
         this._residentSignal.update(residents =>
           residents.map(res => res.id === updatedResident.id ? updatedResident : res));
@@ -164,10 +164,10 @@ export class NursingStore {
     });
   }
 
-  addRoom(nursingHomeId: number, roomCommand: RoomCommand): void {
+  addRoom(nursingHomeId: number, createRoomCommand: CreateRoomCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.nursingApi.createRoom(nursingHomeId, roomCommand).pipe(retry(2)).subscribe({
+    this.nursingApi.createRoom(nursingHomeId, createRoomCommand).pipe(retry(2)).subscribe({
       next: createdRoom => {
         this._roomsSignal.update(rooms => [...rooms, createdRoom]);
         this._loadingSignal.set(false);
@@ -179,10 +179,10 @@ export class NursingStore {
     });
   }
 
-  addMedication(residentId: number, medicationCommand: MedicationCommand): void {
+  addMedication(residentId: number, createMedicationCommand: CreateMedicationCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.nursingApi.createMedication(residentId, medicationCommand).pipe(retry(2)).subscribe({
+    this.nursingApi.createMedication(residentId, createMedicationCommand).pipe(retry(2)).subscribe({
       next: createdMedication => {
         this._medicationsSignal.update(medications => [...medications, createdMedication]);
         this._loadingSignal.set(false);

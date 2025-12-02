@@ -1,8 +1,8 @@
-import { MedicationCommand } from '../domain/model/medication.command';
+import { CreateMedicationCommand } from '../domain/model/create-medication.command';
 import { MedicationCommandResource } from './medication-commands-response';
 
 export class MedicationCommandAssembler {
-  toResourceFromEntity(command: MedicationCommand): MedicationCommandResource {
+  toResourceFromEntity(command: CreateMedicationCommand): MedicationCommandResource {
     return {
       name: command.name,
       description: command.description,

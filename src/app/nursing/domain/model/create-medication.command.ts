@@ -1,4 +1,4 @@
-export class MedicationCommand {
+export class CreateMedicationCommand {
   private _name: string;
   private _description: string;
   private _amount: number;

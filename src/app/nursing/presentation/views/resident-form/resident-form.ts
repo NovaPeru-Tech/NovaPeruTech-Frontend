@@ -10,7 +10,7 @@ import { LayoutNursingHome } from '../../../../shared/presentation/components/la
 import { MatCard } from '@angular/material/card';
 import { NursingStore } from '../../../application/nursing.store';
 import { PersonProfileForm, PersonProfileFormValue } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
-import { ResidentCommand } from '../../../domain/model/resident.command';
+import { CreateResidentCommand } from '../../../domain/model/create-resident.command';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
@@ -97,7 +97,7 @@ export class ResidentForm {
 
     const resident = this.form.getRawValue();
 
-    const command = new ResidentCommand({
+    const createResidentCommand = new CreateResidentCommand({
       dni: personProfile.dni,
       firstName: personProfile.firstName,
       lastName: personProfile.lastName,
@@ -128,10 +128,10 @@ export class ResidentForm {
     }
 
     if(this.isEdit){
-      this.store.updateResident(this.residentId ?? 0, command);
+      this.store.updateResident(this.residentId ?? 0, createResidentCommand);
       alert("Residente actualizado correctamente");
     } else {
-      this.store.createResidentInNursingHome(1, command);
+      this.store.createResidentInNursingHome(1, createResidentCommand);
       alert("Residente creado correctamente");
     }
 

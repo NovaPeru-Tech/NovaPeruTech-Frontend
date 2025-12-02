@@ -9,7 +9,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { NursingStore } from '../../../application/nursing.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatIcon } from '@angular/material/icon';
-import { RoomCommand } from '../../../domain/model/room.command';
+import { CreateRoomCommand } from '../../../domain/model/create-room.command';
 import { MatCard } from '@angular/material/card';
 import { MatOption, MatSelect } from '@angular/material/select';
 
@@ -52,7 +52,7 @@ export class RoomForm {
 
     const room = this.form.getRawValue();
 
-    const roomCommand = new RoomCommand({
+    const createRoomCommand = new CreateRoomCommand({
       capacity: room.capacity ?? 0,
       type: room.type,
       roomNumber: room.roomNumber
@@ -62,7 +62,7 @@ export class RoomForm {
       return;
     }
 
-    this.store.addRoom(1, roomCommand);
+    this.store.addRoom(1, createRoomCommand);
 
     setTimeout(() => {
       if (this.store.error()) {

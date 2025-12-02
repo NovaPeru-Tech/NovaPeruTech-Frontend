@@ -1,4 +1,4 @@
-export class ResidentCommand {
+export class CreateResidentCommand {
   private _dni: string;
   private _firstName: string;
   private _lastName: string;
