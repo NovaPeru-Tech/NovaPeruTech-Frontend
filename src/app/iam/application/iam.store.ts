@@ -3,8 +3,8 @@ import {User} from '../domain/model/user.entity';
 import {SignInCommand} from '../domain/model/sign-in.command';
 import {Router} from '@angular/router';
 import {IamApi} from '../infrastructure/iam-api';
-import {SignInAssembler} from '../infrastructure/sign-in-assembler';
 import {SignUpCommand} from '../domain/model/sign-up.command';
+import {CreateAdministratorCommand} from '../domain/model/create-administrator.command';
 
 @Injectable({providedIn: 'root'})
 export class IamStore {
@@ -30,6 +30,22 @@ export class IamStore {
     this.currentUserIdSignal.set(null);
   }
 
+  createAdministrator(createAdministratorCommand: CreateAdministratorCommand, router: Router) {
+    this.iamApi.createAdministrator(createAdministratorCommand).subscribe({
+      next: (administratorResource) => {
+        console.log('Administrator created successfully:', administratorResource);
+        router.navigate(['/iam/sign-in']).then();
+      },
+      error: (err) => {
+        console.error('Administrator creation failed:', err);
+        this.isSignedInSignal.set(false);
+        this.currentUsernameSignal.set(null);
+        this.currentUserIdSignal.set(null);
+        router.navigate(['/iam/sign-up']).then();
+      }
+    })
+  }
+
   signIn(signInCommand: SignInCommand, router: Router) {
     console.log(signInCommand);
     this.iamApi.signIn(signInCommand).subscribe({
@@ -38,7 +54,7 @@ export class IamStore {
         this.isSignedInSignal.set(true);
         this.currentUsernameSignal.set(signInResource.username);
         this.currentUserIdSignal.set(signInResource.id);
-        router.navigate(['/residents/list']).then();
+        router.navigate(['/analytics/dashboard']).then();
       },
       error: (err) => {
         console.error('Sign-in failed:', err);
@@ -72,10 +88,5 @@ export class IamStore {
     this.currentUsernameSignal.set(null);
     this.currentUserIdSignal.set(null);
     router.navigate(['/home']).then();
-  }
-
-  loadUsers() {
-    this.loadingUsers.set(true);
-    // TODO: Implement user loading logic
   }
 }

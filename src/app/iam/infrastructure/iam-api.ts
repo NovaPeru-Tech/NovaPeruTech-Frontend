@@ -10,6 +10,10 @@ import {SignInCommand} from '../domain/model/sign-in.command';
 import {SignInResource} from './sign-in-response';
 import {SignInApiEndpoint} from './sign-in-api-endpoint';
 import {SignInAssembler} from './sign-in-assembler';
+import {CreateAdministratorApiEndpoint} from './create-administrator-api-endpoint';
+import {CreateAdministratorAssembler} from './create-administrator-assembler';
+import {AdministratorResource} from './create-administrator-response';
+import {CreateAdministratorCommand} from '../domain/model/create-administrator.command';
 
 /**
  * API service for identity and access management operations, including sign-up and sign-in.
@@ -18,6 +22,7 @@ import {SignInAssembler} from './sign-in-assembler';
 export class IamApi extends BaseApi {
   private readonly signUpEndpoint: SignUpApiEndpoint;
   private readonly signInEndpoint: SignInApiEndpoint;
+  private readonly administratorEndpoint: CreateAdministratorApiEndpoint;
 
   /**
    * Creates a new IamApi instance.
@@ -27,6 +32,7 @@ export class IamApi extends BaseApi {
     super();
     this.signUpEndpoint = new SignUpApiEndpoint(http, new SignUpAssembler());
     this.signInEndpoint = new SignInApiEndpoint(http, new SignInAssembler());
+    this.administratorEndpoint = new CreateAdministratorApiEndpoint(http, new CreateAdministratorAssembler());
   }
 
   /**
@@ -45,5 +51,9 @@ export class IamApi extends BaseApi {
    */
   signIn(signInCommand: SignInCommand): Observable<SignInResource> {
     return this.signInEndpoint.signIn(signInCommand);
+  }
+
+  createAdministrator(createAdministratorCommand: CreateAdministratorCommand): Observable<AdministratorResource> {
+    return this.administratorEndpoint.createAdministrator(createAdministratorCommand);
   }
 }
