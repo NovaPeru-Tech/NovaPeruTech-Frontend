@@ -1,8 +1,19 @@
 <div class="sign-up-container">
   <div class="sign-up-card">
     <div class="card-header">
-      <h1>Create Account</h1>
-      <p>Sign up to get started with your account.</p>
+      <!-- Dynamic badge for admin mode -->
+      @if (isAdminMode) {
+        <div class="admin-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          <span>Administrator</span>
+        </div>
+      }
+
+      <h1>{{ getTitle() }}</h1>
+      <p>{{ getSubtitle() }}</p>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -130,45 +141,19 @@
         </span>
       </div>
 
-      <!-- Role Selection (Radio Buttons) -->
-      <div class="form-group">
-        <label>Select Your Role</label>
-        <div class="roles-container">
-          <div
-            *ngFor="let role of availableRoles"
-            class="role-option"
-            [class.selected]="isRoleSelected(role.value)"
-            (click)="selectRole(role.value)"
-          >
-            <div class="role-radio">
-              <div class="radio-dot" *ngIf="isRoleSelected(role.value)"></div>
-            </div>
-            <div class="role-info">
-              <div class="role-label">{{ role.label }}</div>
-              <div class="role-description">{{ role.description }}</div>
-            </div>
-          </div>
-        </div>
-        <span
-          class="error-message"
-          *ngIf="form.get('role')?.invalid && form.get('role')?.touched"
-        >
-          {{ getRoleError() }}
-        </span>
-      </div>
-
       <!-- Submit Button -->
       <button
         type="submit"
         class="btn-primary"
+        [class.admin-btn]="isAdminMode"
         [disabled]="store.loading()"
       >
-        <span *ngIf="!store.loading()">Create Account</span>
+        <span *ngIf="!store.loading()">{{ getSubmitButtonText() }}</span>
         <span *ngIf="store.loading()" class="loading-spinner">
           <svg class="spinner" viewBox="0 0 50 50">
             <circle cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
           </svg>
-          Creating account...
+          {{ isAdminMode ? 'Creating administrator...' : 'Creating account...' }}
         </span>
       </button>
     </form>
