@@ -3,7 +3,7 @@ import {LayoutNursingHome} from '../../../../shared/presentation/components/layo
 import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HcmStore} from '../../../application/hcm.store';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ContractCommand} from '../../../domain/model/contract.command';
+import {CreateContractCommand} from '../../../domain/model/create-contract.command';
 import {MatCard} from '@angular/material/card';
 import {TranslatePipe} from '@ngx-translate/core';
 import {MatError, MatFormField} from '@angular/material/form-field';
@@ -88,7 +88,7 @@ export class ContractForm {
       return;
     }
 
-    const contractCommand = new ContractCommand({
+    const contractCommand = new CreateContractCommand({
       startDate:      this.formatDateToISO(this.form.value.startDate!),
       endDate:        this.formatDateToISO(this.form.value.endDate!),
       typeOfContract: this.form.value.typeOfContract!,

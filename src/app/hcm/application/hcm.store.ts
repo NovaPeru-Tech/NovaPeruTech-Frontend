@@ -4,8 +4,8 @@ import { HcmApi } from '../infrastructure/hcm-api';
 import { retry } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Contract } from '../domain/model/contract.entity';
-import { StaffMemberCommand } from '../domain/model/staff-member.command';
-import { ContractCommand } from '../domain/model/contract.command';
+import { CreateStaffMemberCommand } from '../domain/model/create-staff-member.command';
+import { CreateContractCommand } from '../domain/model/create-contract.command';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class HcmStore {
 
   constructor(private hcmApi: HcmApi) {}
 
-  addStaffMember(nursingHomeId: number, staffMemberCommand: StaffMemberCommand) {
+  addStaffMember(nursingHomeId: number, staffMemberCommand: CreateStaffMemberCommand) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
     this.hcmApi.createStaffMember(nursingHomeId, staffMemberCommand).pipe(retry(2)).subscribe({
@@ -55,7 +55,7 @@ export class HcmStore {
     })
   }
 
-  updateStaffMember(staffMemberId: number, staffMemberCommand: StaffMemberCommand): void {
+  updateStaffMember(staffMemberId: number, staffMemberCommand: CreateStaffMemberCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
     this.hcmApi.updateStaffMember(staffMemberId, staffMemberCommand).pipe(retry(2)).subscribe({
@@ -71,7 +71,7 @@ export class HcmStore {
     });
   }
 
-  addContract(staffMemberId: number, contractCommand: ContractCommand): void {
+  addContract(staffMemberId: number, contractCommand: CreateContractCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
     this.hcmApi.createContract(staffMemberId, contractCommand).pipe(retry(2)).subscribe({

@@ -1,4 +1,4 @@
-export class StaffMemberCommand {
+export class CreateStaffMemberCommand {
   private _dni: string;
   private _firstName: string
   private _lastName: string

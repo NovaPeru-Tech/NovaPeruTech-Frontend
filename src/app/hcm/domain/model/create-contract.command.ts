@@ -1,4 +1,4 @@
-export class ContractCommand {
+export class CreateContractCommand {
   private _startDate: string;
   private _endDate: string;
 

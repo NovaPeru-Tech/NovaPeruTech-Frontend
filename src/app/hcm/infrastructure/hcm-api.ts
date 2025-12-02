@@ -6,10 +6,10 @@ import { StaffMember } from '../domain/model/staff-member.entity';
 import { Observable } from 'rxjs';
 import { ContractsApiEndpoint } from './contracts-api-endpoint';
 import { Contract } from '../domain/model/contract.entity';
-import { StaffMemberCommandsApiEndpoint } from './staff-member-commands-api-endpoint';
-import {StaffMemberCommand} from '../domain/model/staff-member.command';
-import {ContractCommandsApiEndpoint} from './contract-commands-api-endpoint';
-import {ContractCommand} from '../domain/model/contract.command';
+import { CreateStaffMemberCommandsApiEndpoint } from './create-staff-member-commands-api-endpoint';
+import {CreateStaffMemberCommand} from '../domain/model/create-staff-member.command';
+import {CreateContractCommandsApiEndpoint} from './create-contract-commands-api-endpoint';
+import {CreateContractCommand} from '../domain/model/create-contract.command';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +17,18 @@ import {ContractCommand} from '../domain/model/contract.command';
 export class HcmApi extends BaseApi {
   private readonly _staffApiEndpoint: StaffApiEndpoint;
   private readonly _contractsApiEndpoint: ContractsApiEndpoint;
-  private readonly _staffMemberCommandsApiEndpoint: StaffMemberCommandsApiEndpoint;
-  private readonly _contractCommandsApiEndpoint: ContractCommandsApiEndpoint;
+  private readonly _staffMemberCommandsApiEndpoint: CreateStaffMemberCommandsApiEndpoint;
+  private readonly _contractCommandsApiEndpoint: CreateContractCommandsApiEndpoint;
 
   constructor(http:HttpClient) {
     super();
     this._staffApiEndpoint = new StaffApiEndpoint(http);
     this._contractsApiEndpoint = new ContractsApiEndpoint(http);
-    this._staffMemberCommandsApiEndpoint = new StaffMemberCommandsApiEndpoint(http);
-    this._contractCommandsApiEndpoint = new ContractCommandsApiEndpoint(http);
+    this._staffMemberCommandsApiEndpoint = new CreateStaffMemberCommandsApiEndpoint(http);
+    this._contractCommandsApiEndpoint = new CreateContractCommandsApiEndpoint(http);
   }
 
-  createStaffMember(nursingHomeId: number, staffMemberCommand: StaffMemberCommand): Observable<StaffMember> {
+  createStaffMember(nursingHomeId: number, staffMemberCommand: CreateStaffMemberCommand): Observable<StaffMember> {
     return this._staffMemberCommandsApiEndpoint.create(nursingHomeId, staffMemberCommand);
   }
 
@@ -36,7 +36,7 @@ export class HcmApi extends BaseApi {
     return this._staffApiEndpoint.delete(id);
   }
 
-  updateStaffMember(staffMemberId: number, staffMemberCommand: StaffMemberCommand): Observable<StaffMember> {
+  updateStaffMember(staffMemberId: number, staffMemberCommand: CreateStaffMemberCommand): Observable<StaffMember> {
     return this._staffMemberCommandsApiEndpoint.update(staffMemberId, staffMemberCommand);
   }
 
@@ -44,7 +44,7 @@ export class HcmApi extends BaseApi {
     return this._staffMemberCommandsApiEndpoint.getAll(nursingHomeId);
   }
 
-  createContract(staffMemberId: number, contractCommand: ContractCommand): Observable<Contract> {
+  createContract(staffMemberId: number, contractCommand: CreateContractCommand): Observable<Contract> {
     return this._contractCommandsApiEndpoint.create(staffMemberId, contractCommand);
   }
 
