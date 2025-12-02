@@ -1,0 +1,114 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ 'Assign Room' | translate }}</h1>
+
+  <div class="form-wrapper">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <!-- Room Selection -->
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper location">
+              <mat-icon>meeting_room</mat-icon>
+            </div>
+            <h3>{{ 'Select Available Room' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            @if (availableRooms().length === 0) {
+              <div class="no-rooms-message">
+                <mat-icon>info</mat-icon>
+                <p>{{ 'No available rooms at the moment' | translate }}</p>
+              </div>
+            } @else {
+              <div class="detail-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ 'Room Number' | translate }}</mat-label>
+                  <mat-select formControlName="roomNumber" required>
+                    @for (room of availableRooms(); track room.id) {
+                      <mat-option [value]="room.roomNumber">
+                        <div class="room-option">
+                          <span class="room-number">{{ room.roomNumber }}</span>
+                          <span class="room-details">
+                            <span class="room-type">{{ getRoomTypeLabel(room.type) }}</span>
+                            <span class="room-capacity">
+                              <mat-icon>people</mat-icon>
+                              {{ getRoomCapacityInfo(room) }}
+                            </span>
+                          </span>
+                        </div>
+                      </mat-option>
+                    }
+                  </mat-select>
+                  <mat-icon matPrefix>door_front</mat-icon>
+                  @if (form.get('roomNumber')?.touched && form.get('roomNumber')!.hasError('required')) {
+                    <mat-error>{{ 'Please select a room' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+            }
+          </div>
+        </mat-card>
+      </div>
+
+      <!-- Room Preview -->
+      @if (selectedRoom()) {
+        <div class="info-grid">
+          <mat-card class="info-card">
+            <div class="card-header-custom">
+              <div class="icon-wrapper contact">
+                <mat-icon>preview</mat-icon>
+              </div>
+              <h3>{{ 'Room Details' | translate }}</h3>
+            </div>
+            <div class="card-body">
+              <div class="preview-content">
+                <div class="preview-item">
+                  <mat-icon>pin</mat-icon>
+                  <div>
+                    <span class="preview-label">{{ 'Room Number' | translate }}</span>
+                    <span class="preview-value">{{ selectedRoom()?.roomNumber }}</span>
+                  </div>
+                </div>
+                <div class="preview-item">
+                  <mat-icon>category</mat-icon>
+                  <div>
+                    <span class="preview-label">{{ 'Type' | translate }}</span>
+                    <span class="preview-value">{{ getRoomTypeLabel(selectedRoom()!.type) }}</span>
+                  </div>
+                </div>
+                <div class="preview-item">
+                  <mat-icon>groups</mat-icon>
+                  <div>
+                    <span class="preview-label">{{ 'Capacity' | translate }}</span>
+                    <span class="preview-value">{{ selectedRoom()?.capacity }} {{ 'residents' | translate }}</span>
+                  </div>
+                </div>
+                <div class="preview-item">
+                  <mat-icon>check_circle</mat-icon>
+                  <div>
+                    <span class="preview-label">{{ 'Status' | translate }}</span>
+                    <span class="preview-value status-available">{{ 'Available' | translate }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      }
+
+      <div class="space"></div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" type="button" (click)="onCancel()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'Cancel' | translate }}
+        </button>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || availableRooms().length === 0">
+          <mat-icon>check_circle</mat-icon>
+          {{ 'Assign Room' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout-nursing-home>
