@@ -1,0 +1,102 @@
+@startuml
+' Bounded Context: shared
+
+package "domain.model" {
+  abstract class BaseEntity {
+    +id: string
+    +createdAt: Date
+    +updatedAt: Date
+  }
+}
+
+package "infrastructure.api" {
+  abstract class ErrorHandlingEnabledBaseType {
+    +handleError(error): void
+  }
+
+  class BaseApiEndpoint <<endpoint>> {
+    +baseUrl: string
+    +get(path): Promise<BaseResponse>
+    +post(path, body): Promise<BaseResponse>
+    +put(path, body): Promise<BaseResponse>
+    +delete(path): Promise<BaseResponse>
+  }
+
+  class BaseApi {
+    +endpoint: BaseApiEndpoint
+    +getAll(): Promise<BaseResponse>
+    +getById(id): Promise<BaseResponse>
+  }
+}
+
+package "infrastructure.transform" {
+  class BaseAssembler {
+    +toEntity(response: BaseResponse): BaseEntity
+    +toResponse(entity: BaseEntity): BaseResponse
+  }
+}
+
+package "infrastructure.responses" {
+  class BaseResponse {
+    +success: boolean
+    +message: string
+    +data: any
+  }
+}
+
+' Inheritance / usage in infrastructure
+ErrorHandlingEnabledBaseType <|-- BaseApiEndpoint
+BaseApi --> BaseApiEndpoint : uses
+BaseApiEndpoint --> BaseResponse : returns
+BaseAssembler --> BaseResponse : maps from
+BaseAssembler --> BaseEntity : maps to
+
+package "presentation.components.language-switcher" {
+  class LanguageSwitcherComponent <<component>> {
+    +currentLanguage: string
+    +switchLanguage(lang)
+  }
+}
+
+package "presentation.components.layout-nursing-home" {
+  class LayoutNursingHomeComponent <<component>> {
+    +renderHeader()
+    +renderContent()
+  }
+}
+
+package "presentation.components.toolbar" {
+  class ToolbarComponent <<component>> {
+    +title: string
+  }
+}
+
+package "presentation.views.home" {
+  class HomeComponent <<view>> {
+    +ngOnInit()
+  }
+}
+
+package "presentation.views.page-not-found" {
+  class PageNotFoundComponent <<view>> {
+    +message: string
+  }
+}
+
+package "presentation.base-form" {
+  abstract class BaseFormComponent <<component>> {
+    +isSubmitting: boolean
+    +submit(): void
+    +reset(): void
+  }
+}
+
+' Layout / components relationships
+LayoutNursingHomeComponent *-- ToolbarComponent
+LayoutNursingHomeComponent *-- LanguageSwitcherComponent
+
+' Views use layout
+HomeComponent --> LayoutNursingHomeComponent : uses
+PageNotFoundComponent --> LayoutNursingHomeComponent : uses
+
+@enduml

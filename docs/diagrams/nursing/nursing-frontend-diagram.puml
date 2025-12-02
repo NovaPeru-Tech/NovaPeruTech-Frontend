@@ -1,0 +1,200 @@
+@startuml
+' Bounded Context: nursing
+
+package "application.store" {
+  class NursingStore {
+    +loadNursingHomes()
+    +loadResidentsByNursingHome(nursingHomeId)
+    +loadRoomsByNursingHome(nursingHomeId)
+    +loadMedicationsByResident(residentId)
+    +createOrUpdateNursingHome()
+    +createOrUpdateResident(cmd: ResidentCommand)
+    +createOrUpdateRoom(cmd: RoomCommand)
+    +createOrUpdateMedication(cmd: MedicationCommand)
+  }
+}
+
+package "domain.model.entities" {
+  class NursingHome {
+    +nursingHomeId: string
+    +name: string
+    +address: string
+  }
+
+  class Resident {
+    +residentId: string
+    +personProfile: string
+    +roomId: string
+    +nursingHomeId: string
+  }
+
+  class Medication {
+    +medicationId: string
+    +name: string
+    +dose: string
+    +stock: number
+  }
+
+  class Room {
+    +roomId: string
+    +roomNumber: number
+    +capacity: number
+  }
+}
+
+package "domain.model.commands" {
+  class MedicationCommand
+  class ResidentCommand
+  class RoomCommand
+}
+
+NursingHome *-- Room : "has 0..*"
+NursingHome *-- Resident : "hosts 0..*"
+Resident o-- Room : "assigned 0..1"
+Resident *-- Medication : "receives 0..*"
+
+package "infrastructure.api" {
+  class NursingApi
+  class MedicationsApiEndpoint
+  class MedicationCommandsApiEndpoint
+  class ResidentsApiEndpoint
+  class ResidentCommandsApiEndpoint
+  class RoomsApiEndpoint
+  class RoomCommandsApiEndpoint
+  class NursingHomesApiEndpoint
+}
+
+package "infrastructure.api.responses" {
+  class MedicationsResponse
+  class MedicationCommandsResponse
+  class ResidentsResponse
+  class ResidentCommandsResponse
+  class RoomsResponse
+  class RoomCommandsResponse
+  class NursingHomesResponse
+}
+
+package "infrastructure.transform.assemblers" {
+  class MedicationAssembler
+  class MedicationCommandAssembler
+  class ResidentAssembler
+  class ResidentCommandAssembler
+  class RoomAssembler
+  class RoomCommandAssembler
+  class NursingHomeAssembler
+}
+
+' Responses -> entities
+MedicationsResponse *-- Medication
+ResidentsResponse *-- Resident
+RoomsResponse *-- Room
+NursingHomesResponse *-- NursingHome
+
+' Store -> API
+NursingStore --> NursingApi : uses
+
+' API facade -> endpoints
+NursingApi ..> MedicationsApiEndpoint
+NursingApi ..> MedicationCommandsApiEndpoint
+NursingApi ..> ResidentsApiEndpoint
+NursingApi ..> ResidentCommandsApiEndpoint
+NursingApi ..> RoomsApiEndpoint
+NursingApi ..> RoomCommandsApiEndpoint
+NursingApi ..> NursingHomesApiEndpoint
+
+' Endpoints -> responses
+MedicationsApiEndpoint --> MedicationsResponse : returns
+MedicationCommandsApiEndpoint --> MedicationCommandsResponse : returns
+ResidentsApiEndpoint --> ResidentsResponse : returns
+ResidentCommandsApiEndpoint --> ResidentCommandsResponse : returns
+RoomsApiEndpoint --> RoomsResponse : returns
+RoomCommandsApiEndpoint --> RoomCommandsResponse : returns
+NursingHomesApiEndpoint --> NursingHomesResponse : returns
+
+' Assemblers
+MedicationAssembler --> Medication : toModel()
+MedicationAssembler --> MedicationsResponse : fromResponse()
+MedicationCommandAssembler --> MedicationCommand : fromForm()
+
+ResidentAssembler --> Resident : toModel()
+ResidentAssembler --> ResidentsResponse : fromResponse()
+ResidentCommandAssembler --> ResidentCommand : fromForm()
+
+RoomAssembler --> Room : toModel()
+RoomAssembler --> RoomsResponse : fromResponse()
+RoomCommandAssembler --> RoomCommand : fromForm()
+
+NursingHomeAssembler --> NursingHome : toModel()
+NursingHomeAssembler --> NursingHomesResponse : fromResponse()
+
+' Commands used by store
+MedicationCommand --> NursingStore : createOrUpdateMedication()
+ResidentCommand --> NursingStore : createOrUpdateResident()
+RoomCommand --> NursingStore : createOrUpdateRoom()
+
+package "presentation.views.medication-form" {
+  class MedicationFormComponent <<component>>
+}
+
+package "presentation.views.medication-list" {
+  class MedicationListComponent <<component>>
+}
+
+package "presentation.views.nursing-home-form" {
+  class NursingHomeFormComponent <<component>>
+}
+
+package "presentation.views.resident-detail" {
+  class ResidentDetailComponent <<component>>
+}
+
+package "presentation.views.resident-form" {
+  class ResidentFormComponent <<component>>
+}
+
+package "presentation.views.resident-list" {
+  class ResidentListComponent <<component>>
+}
+
+package "presentation.views.room-form" {
+  class RoomFormComponent <<component>>
+}
+
+package "presentation.views.room-list" {
+  class RoomListComponent <<component>>
+}
+
+package "presentation.routes" {
+  class NursingRoutes
+}
+
+' Views -> store / commands
+MedicationFormComponent --> MedicationCommand : builds
+MedicationFormComponent --> NursingStore : dispatches
+
+MedicationListComponent --> NursingStore : reads
+
+NursingHomeFormComponent --> NursingStore : createOrUpdateNursingHome()
+
+ResidentFormComponent --> ResidentCommand : builds
+ResidentFormComponent --> NursingStore : dispatches
+
+ResidentDetailComponent --> NursingStore : reads
+ResidentListComponent --> NursingStore : reads
+
+RoomFormComponent --> RoomCommand : builds
+RoomFormComponent --> NursingStore : dispatches
+
+RoomListComponent --> NursingStore : reads
+
+' Routes
+NursingRoutes --> NursingHomeFormComponent
+NursingRoutes --> ResidentListComponent
+NursingRoutes --> ResidentFormComponent
+NursingRoutes --> ResidentDetailComponent
+NursingRoutes --> MedicationListComponent
+NursingRoutes --> MedicationFormComponent
+NursingRoutes --> RoomListComponent
+NursingRoutes --> RoomFormComponent
+
+@enduml

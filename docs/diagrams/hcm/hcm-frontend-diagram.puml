@@ -1,0 +1,147 @@
+@startuml
+' Bounded Context: hcm
+
+package "application.store" {
+  class HcmStore {
+    +loadStaffMembers()
+    +loadContractsForStaffMember(staffId)
+    +createStaffMember(command: StaffMemberCommand)
+    +updateStaffMember(command: StaffMemberCommand)
+    +addContractToStaffMember(command: ContractCommand)
+    +updateContractStatus(command: ContractCommand)
+  }
+}
+
+package "domain.model.entities" {
+  class StaffMember {
+    +staffId: string
+    +profileId: string
+    +status: StaffStatus
+    +role: StaffRole
+    +contracts: List<Contract>
+  }
+
+  class Contract {
+    +contractId: string
+    +period: ContractPeriod
+    +status: ContractStatus
+    +type: TypeOfContract
+  }
+}
+
+package "domain.model.valueobjects" {
+  class ContractPeriod
+  class ContractStatus
+  class StaffStatus
+  class StaffRole
+  class TypeOfContract
+}
+
+package "domain.model.commands" {
+  class StaffMemberCommand
+  class ContractCommand
+}
+
+package "infrastructure.api.endpoints" {
+  class HcmApi
+  class StaffApiEndpoint
+  class StaffMemberCommandsApiEndpoint
+  class ContractsApiEndpoint
+  class ContractCommandsApiEndpoint
+}
+
+package "infrastructure.api.responses" {
+  class StaffResponse
+  class StaffMemberCommandsResponse
+  class ContractsResponse
+  class ContractCommandsResponse
+}
+
+package "infrastructure.transform.assemblers" {
+  class StaffMemberAssembler
+  class StaffMemberCommandAssembler
+  class ContractAssembler
+  class ContractCommandAssembler
+}
+
+package "presentation.views.contract-form" {
+  class ContractFormComponent <<component>>
+}
+
+package "presentation.views.contract-list" {
+  class ContractListComponent <<component>>
+}
+
+package "presentation.views.staff-member-detail" {
+  class StaffMemberDetailComponent <<component>>
+}
+
+package "presentation.views.staff-member-form" {
+  class StaffMemberFormComponent <<component>>
+}
+
+package "presentation.views.staff-member-list" {
+  class StaffMemberListComponent <<component>>
+}
+
+package "presentation.routes" {
+  class HcmRoutes
+}
+
+' Domain relationships
+StaffMember *-- Contract : "has 0..*"
+Contract .. ContractPeriod
+Contract .. ContractStatus
+StaffMember .. StaffStatus
+StaffMember .. StaffRole
+Contract .. TypeOfContract
+
+' Store -> endpoints
+HcmStore --> StaffApiEndpoint : uses
+HcmStore --> StaffMemberCommandsApiEndpoint : uses
+HcmStore --> ContractsApiEndpoint : uses
+HcmStore --> ContractCommandsApiEndpoint : uses
+
+' Endpoints -> responses
+StaffApiEndpoint --> StaffResponse : returns
+StaffMemberCommandsApiEndpoint --> StaffMemberCommandsResponse : returns
+ContractsApiEndpoint --> ContractsResponse : returns
+ContractCommandsApiEndpoint --> ContractCommandsResponse : returns
+
+' Assemblers
+StaffMemberAssembler --> StaffMember : toModel
+StaffMemberAssembler --> StaffResponse : fromResponse
+StaffMemberCommandAssembler --> StaffMemberCommand : fromForm
+
+ContractAssembler --> Contract : toModel
+ContractAssembler --> ContractsResponse : fromResponse
+ContractCommandAssembler --> ContractCommand : fromForm
+
+' Commands -> endpoints
+StaffMemberCommand --> StaffMemberCommandsApiEndpoint : send()
+ContractCommand --> ContractCommandsApiEndpoint : send()
+
+' Views -> store / commands
+StaffMemberFormComponent --> StaffMemberCommand : builds
+ContractFormComponent --> ContractCommand : builds
+
+StaffMemberFormComponent --> HcmStore : dispatches
+StaffMemberDetailComponent --> HcmStore : reads
+StaffMemberListComponent --> HcmStore : reads
+ContractFormComponent --> HcmStore : dispatches
+ContractListComponent --> HcmStore : reads
+
+' Routes -> views
+HcmRoutes --> StaffMemberListComponent
+HcmRoutes --> StaffMemberDetailComponent
+HcmRoutes --> StaffMemberFormComponent
+HcmRoutes --> ContractListComponent
+HcmRoutes --> ContractFormComponent
+
+' HcmApi as facade over endpoints
+HcmApi ..> StaffApiEndpoint
+HcmApi ..> StaffMemberCommandsApiEndpoint
+HcmApi ..> ContractsApiEndpoint
+HcmApi ..> ContractCommandsApiEndpoint
+
+@enduml

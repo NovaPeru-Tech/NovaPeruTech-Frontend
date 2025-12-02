@@ -1,0 +1,124 @@
+@startuml
+' Bounded Context: iam
+
+package "application.store" {
+  class IamStore {
+    +signIn(command: SignInCommand)
+    +signUp(command: SignUpCommand)
+    +loadCurrentUser()
+  }
+}
+
+package "domain.model.entities" {
+  class User {
+    +userId: string
+    +username: string
+    +email: string
+    +roles: List<String>
+  }
+}
+
+package "domain.model.commands" {
+  class SignInCommand {
+    +usernameOrEmail: string
+    +password: string
+  }
+
+  class SignUpCommand {
+    +username: string
+    +email: string
+    +password: string
+    +confirmPassword: string
+  }
+}
+
+package "infrastructure.http" {
+  class IamInterceptor
+}
+
+package "infrastructure.api" {
+  class IamApi
+  class SignInApiEndpoint
+  class SignUpApiEndpoint
+}
+
+package "infrastructure.api.requests" {
+  class SignInRequest
+  class SignUpRequest
+}
+
+package "infrastructure.api.responses" {
+  class SignInResponse
+  class SignUpResponse
+  class UsersResponse
+}
+
+package "infrastructure.transform.assemblers" {
+  class SignInAssembler
+  class SignUpAssembler
+}
+
+package "presentation.components.authentication-section" {
+  class AuthenticationSectionComponent <<component>>
+}
+
+package "presentation.views.sign-in-form" {
+  class SignInFormComponent <<component>>
+}
+
+package "presentation.views.sign-up-form" {
+  class SignUpFormComponent <<component>>
+}
+
+package "presentation.routes" {
+  class IamRoutes
+}
+
+' Domain
+UsersResponse *-- User : "contains 0..*"
+SignInResponse ..> User : "authenticated user"
+
+' Store -> API
+IamStore --> IamApi : uses
+
+' API facade -> endpoints
+IamApi ..> SignInApiEndpoint
+IamApi ..> SignUpApiEndpoint
+
+' Endpoints -> requests/responses
+SignInApiEndpoint --> SignInRequest : sends
+SignInApiEndpoint --> SignInResponse : returns
+SignUpApiEndpoint --> SignUpRequest : sends
+SignUpApiEndpoint --> SignUpResponse : returns
+
+' Assemblers
+SignInAssembler --> SignInCommand : fromForm()
+SignInAssembler --> SignInRequest : toRequest()
+SignInAssembler --> SignInResponse : fromResponse()
+SignInAssembler --> User : toUser()
+
+SignUpAssembler --> SignUpCommand : fromForm()
+SignUpAssembler --> SignUpRequest : toRequest()
+SignUpAssembler --> SignUpResponse : fromResponse()
+SignUpAssembler --> User : toUser()
+
+' Commands used by store
+SignInCommand --> IamStore : signIn()
+SignUpCommand --> IamStore : signUp()
+
+' Interceptor
+IamInterceptor --> IamApi : intercepts calls
+
+' Views & components
+SignInFormComponent --> SignInCommand : builds
+SignInFormComponent --> IamStore : dispatches signIn()
+SignUpFormComponent --> SignUpCommand : builds
+SignUpFormComponent --> IamStore : dispatches signUp()
+
+AuthenticationSectionComponent *-- SignInFormComponent
+AuthenticationSectionComponent *-- SignUpFormComponent
+
+' Routes
+IamRoutes --> AuthenticationSectionComponent
+
+@enduml

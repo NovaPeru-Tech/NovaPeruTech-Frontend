@@ -1,0 +1,103 @@
+@startuml
+' Bounded Context: profiles
+
+package "application.store" {
+  class ProfilesStore {
+    +loadBusinessProfiles()
+    +loadPersonProfiles()
+    +loadBusinessProfileById(id)
+    +loadPersonProfileById(id)
+    +saveBusinessProfile(profile: BusinessProfile)
+    +savePersonProfile(profile: PersonProfile)
+  }
+}
+
+package "domain.model.entities" {
+  abstract class Profile {
+    +profileId: string
+  }
+
+  class BusinessProfile {
+    +businessProfileId: string
+    +name: string
+    +ruc: string
+  }
+
+  class PersonProfile {
+    +personProfileId: string
+    +name: string
+    +dni: string
+  }
+}
+
+Profile <|-- BusinessProfile
+Profile <|-- PersonProfile
+
+package "infrastructure.api" {
+  class ProfilesApi
+  class BusinessProfilesApiEndpoint
+  class PersonProfilesApiEndpoint
+}
+
+package "infrastructure.api.responses" {
+  class BusinessProfilesResponse
+  class PersonProfilesResponse
+}
+
+package "infrastructure.transform.assemblers" {
+  class BusinessProfileAssembler
+  class PersonProfileAssembler
+}
+
+' Responses -> entities
+BusinessProfilesResponse *-- BusinessProfile : "0..*"
+PersonProfilesResponse *-- PersonProfile : "0..*"
+
+' Store -> API
+ProfilesStore --> ProfilesApi : uses
+
+' API facade -> endpoints
+ProfilesApi ..> BusinessProfilesApiEndpoint
+ProfilesApi ..> PersonProfilesApiEndpoint
+
+' Endpoints -> responses
+BusinessProfilesApiEndpoint --> BusinessProfilesResponse : returns
+PersonProfilesApiEndpoint --> PersonProfilesResponse : returns
+
+' Assemblers
+BusinessProfileAssembler --> BusinessProfilesResponse : fromResponse()
+BusinessProfileAssembler --> BusinessProfile : toModel()
+PersonProfileAssembler --> PersonProfilesResponse : fromResponse()
+PersonProfileAssembler --> PersonProfile : toModel()
+
+package "presentation.components.business-profile-detail" {
+  class BusinessProfileDetailComponent <<component>>
+}
+
+package "presentation.components.business-profile-form" {
+  class BusinessProfileFormComponent <<component>>
+}
+
+package "presentation.components.person-profile-detail" {
+  class PersonProfileDetailComponent <<component>>
+}
+
+package "presentation.components.person-profile-form" {
+  class PersonProfileFormComponent <<component>>
+}
+
+' Components -> store
+BusinessProfileDetailComponent --> ProfilesStore : reads
+BusinessProfileFormComponent --> ProfilesStore : saves
+
+PersonProfileDetailComponent --> ProfilesStore : reads
+PersonProfileFormComponent --> ProfilesStore : saves
+
+' Components <-> entities (data binding)
+BusinessProfileDetailComponent --> BusinessProfile
+BusinessProfileFormComponent --> BusinessProfile
+
+PersonProfileDetailComponent --> PersonProfile
+PersonProfileFormComponent --> PersonProfile
+
+@enduml
