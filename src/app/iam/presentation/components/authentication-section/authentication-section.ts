@@ -15,15 +15,23 @@ export class AuthenticationSection {
   private router = inject(Router);
   protected store = inject(IamStore);
 
-  performSignIn(){
+  performSignIn(): void {
     this.router.navigate(['/iam/sign-in']).then();
   }
 
-  performSignUp(){
-    this.router.navigate(['/iam/sign-up']).then();
+  performSignUpUser(): void {
+    this.router.navigate(['/iam/sign-up'], {
+      queryParams: { mode: 'user' }
+    }).then();
   }
 
-  performSignOut(){
+  performSignUpAdmin(): void {
+    this.router.navigate(['/iam/sign-up'], {
+      queryParams: { mode: 'admin' }
+    }).then();
+  }
+
+  performSignOut(): void {
     this.store.signOut(this.router);
   }
 }
