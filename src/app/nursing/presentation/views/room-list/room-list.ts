@@ -119,6 +119,6 @@ export class RoomList {
   }
 
   navigateToNew() {
-    this.router.navigate(['rooms/list/new']).then();
+    this.router.navigate(['nursing/rooms/new']).then();
   }
 }

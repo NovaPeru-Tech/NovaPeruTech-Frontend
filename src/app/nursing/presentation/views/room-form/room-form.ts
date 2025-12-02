@@ -72,11 +72,11 @@ export class RoomForm {
 
       alert('Habitación registrada exitosamente');
 
-      this.router.navigate(['/rooms/list']).then();
+      this.router.navigate(['/nursing/rooms']).then();
     }, 300);
   }
 
   onCancel(): void {
-    this.router.navigate(['/rooms/list']).then();
+    this.router.navigate(['/nursing/rooms']).then();
   }
 }

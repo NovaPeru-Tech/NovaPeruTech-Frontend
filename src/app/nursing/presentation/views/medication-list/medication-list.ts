@@ -58,7 +58,7 @@ export class MedicationList {
       const id = params['id'] ? +params['id'] : null;
       this.residentId.set(id);
       if (!id) {
-        this.router.navigate(['residents/list']).then();
+        this.router.navigate(['nursing/residents']).then();
         return;
       }
     });
@@ -114,10 +114,10 @@ export class MedicationList {
   }
 
   navigateToNew(id: number) {
-    this.router.navigate(['medications/list', id, 'new']).then();
+    this.router.navigate(['nursing/medications', id, 'new']).then();
   }
 
   goBack() {
-    this.router.navigate(['/residents/list']).then();
+    this.router.navigate(['/nursing/residents']).then();
   }
 }

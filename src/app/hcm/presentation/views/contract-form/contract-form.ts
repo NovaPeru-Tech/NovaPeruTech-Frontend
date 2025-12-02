@@ -112,13 +112,13 @@ export class ContractForm {
 
       alert("Contrato creado correctamente");
 
-      this.router.navigate(['/staff/list']).then();
+      this.router.navigate(['/hcm/staff']).then();
     }, 300);
   }
 
   onCancel(): void {
     if (confirm('¿Estás seguro de que deseas cancelar? Los datos no guardados se perderán.')) {
-      this.router.navigate(['/staff/list']).then();
+      this.router.navigate(['/hcm/staff']).then();
     }
   }
 }

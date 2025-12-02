@@ -6,7 +6,7 @@ const analyticsDashboard = () =>
 
 const baseTitle = 'Veyra';
 const analyticsRoutes: Routes = [
-  {path: 'dashboard', loadComponent: analyticsDashboard, title: `Analytics Dashboard | ${baseTitle}`}
+  { path: 'dashboard', loadComponent: analyticsDashboard, title: `Dashboard | ${baseTitle}` }
 ];
 
 export {analyticsRoutes};

@@ -83,14 +83,14 @@ export class AssignRoomForm {
 
       alert('Habitación asignada exitosamente');
 
-      this.router.navigate(['/residents/list']).then();
+      this.router.navigate(['/nursing/residents']).then();
     } else {
       this.form.markAllAsTouched();
     }
   }
 
   onCancel() {
-    this.router.navigate(['/residents/list']).then();
+    this.router.navigate(['/nursing/residents']).then();
   }
 
   getRoomCapacityInfo(room: any): string {

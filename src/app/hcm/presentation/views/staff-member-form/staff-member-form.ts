@@ -136,7 +136,7 @@ export class StaffMemberForm {
           : "Staff member creado correctamente"
       );
 
-      this.router.navigate(['/staff/list']).then();
+      this.router.navigate(['/hcm/staff']).then();
     }, 300);
   }
 
@@ -163,6 +163,6 @@ export class StaffMemberForm {
   }
 
   onCancel(): void {
-    this.router.navigate(['/staff/list']).then();
+    this.router.navigate(['/hcm/staff']).then();
   }
 }

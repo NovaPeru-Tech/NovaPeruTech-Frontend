@@ -78,19 +78,19 @@ export class ResidentList {
   }
 
   assignRoom(id: number) {
-    this.router.navigate(['residents/list', id, 'assign-room']).then();
+    this.router.navigate(['nursing/residents', id, 'assign-room']).then();
   }
 
   viewDetails(id: number) {
-    this.router.navigate(['residents/list', id, 'detail']).then();
+    this.router.navigate(['nursing/residents', id, 'detail']).then();
   }
 
   viewMedications(id: number) {
-    this.router.navigate(['medications/list', id]).then();
+    this.router.navigate(['nursing/medications', id]).then();
   }
 
   editResident(id: number) {
-    this.router.navigate(['residents/list', id, 'edit']).then();
+    this.router.navigate(['nursing/residents', id, 'edit']).then();
     if (this.selectedId === id) {
       this.selectedId = null;
     }
