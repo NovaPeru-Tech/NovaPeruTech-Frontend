@@ -5,15 +5,15 @@ import {catchError, map, Observable} from 'rxjs';
 import { Room } from '../domain/model/room.entity';
 import { CreateRoomCommand } from '../domain/model/create-room.command';
 import { RoomResource } from './rooms-response';
-import { RoomCommandAssembler } from './room-command-assembler';
+import { CreateRoomCommandAssembler } from './create-room-command-assembler';
 import { ErrorHandlingEnabledBaseType } from '../../shared/infrastructure/error-handling-enabled-base-type';
 import {resource} from '@angular/core';
 
 const nursingHomeRoomsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderNursingHomeRoomsEndpointPath}`;
 
-export class RoomCommandsApiEndpoint extends ErrorHandlingEnabledBaseType {
+export class CreateRoomCommandsApiEndpoint extends ErrorHandlingEnabledBaseType {
   private readonly roomAssembler = new RoomAssembler();
-  private readonly roomCommandAssembler = new RoomCommandAssembler();
+  private readonly roomCommandAssembler = new CreateRoomCommandAssembler();
 
   constructor(private http: HttpClient) {
     super();

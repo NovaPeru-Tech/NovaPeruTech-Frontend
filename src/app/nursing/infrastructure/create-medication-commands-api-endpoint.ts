@@ -3,16 +3,16 @@ import { Observable, map, catchError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ErrorHandlingEnabledBaseType } from '../../shared/infrastructure/error-handling-enabled-base-type';
 import { MedicationAssembler } from './medication-assembler';
-import { MedicationCommandAssembler } from './medication-command-assembler';
+import { CreateMedicationCommandAssembler } from './create-medication-command-assembler';
 import { Medication } from '../domain/model/medication.entity';
 import { MedicationResource } from './medications-response';
 import { CreateMedicationCommand } from '../domain/model/create-medication.command';
 
 const medicationCommandsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderResidentMedicationsEndpointPath}`;
 
-export class MedicationCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
+export class CreateMedicationCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
   private readonly medicationAssembler = new MedicationAssembler();
-  private readonly medicationCommandAssembler = new MedicationCommandAssembler();
+  private readonly medicationCommandAssembler = new CreateMedicationCommandAssembler();
 
   constructor(private http: HttpClient) {
     super();

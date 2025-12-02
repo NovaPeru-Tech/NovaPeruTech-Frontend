@@ -1,7 +1,7 @@
 import { CreateRoomCommand } from '../domain/model/create-room.command';
-import { RoomCommandResource } from './room-commands-response';
+import { RoomCommandResource } from './create-room-commands-response';
 
-export class RoomCommandAssembler {
+export class CreateRoomCommandAssembler {
   toResourceFromEntity(command: CreateRoomCommand): RoomCommandResource {
     return {
       capacity: command.capacity,

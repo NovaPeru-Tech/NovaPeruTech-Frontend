@@ -6,14 +6,14 @@ import { environment } from '../../../environments/environment';
 import { ResidentsResource } from './residents-response';
 import { CreateResidentCommand } from '../domain/model/create-resident.command';
 import { ErrorHandlingEnabledBaseType } from '../../shared/infrastructure/error-handling-enabled-base-type';
-import { ResidentCommandAssembler } from './resident-command-assembler';
+import { CreateResidentCommandAssembler } from './create-resident-command-assembler';
 
 const residentCommandsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderNursingHomeResidentsEndpointPath}`;
 const residentsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderResidentsEndpointPath}`
 
-export class ResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
+export class CreateResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
   private readonly residentAssembler = new ResidentAssembler();
-  private readonly residentCommandAssembler = new ResidentCommandAssembler();
+  private readonly residentCommandAssembler = new CreateResidentCommandAssembler();
 
   constructor(private http: HttpClient) {
     super();

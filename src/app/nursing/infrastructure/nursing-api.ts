@@ -10,11 +10,11 @@ import { RoomsApiEndpoint } from './rooms-api-endpoint';
 import { Room } from '../domain/model/room.entity';
 import { MedicationsApiEndpoint } from './medications-api-endpoint';
 import { Medication } from '../domain/model/medication.entity';
-import { ResidentCommandsApiEndpoint } from './resident-commands-api-endpoint';
+import { CreateResidentCommandsApiEndpoint } from './create-resident-commands-api-endpoint';
 import { CreateResidentCommand } from '../domain/model/create-resident.command';
-import { RoomCommandsApiEndpoint } from './room-commands-api-endpoint';
+import { CreateRoomCommandsApiEndpoint } from './create-room-commands-api-endpoint';
 import { CreateRoomCommand } from '../domain/model/create-room.command';
-import { MedicationCommandsApiEndpoint } from './medication-commands-api-endpoint';
+import { CreateMedicationCommandsApiEndpoint } from './create-medication-commands-api-endpoint';
 import { CreateMedicationCommand } from '../domain/model/create-medication.command';
 
 /**
@@ -33,9 +33,9 @@ export class NursingApi extends BaseApi{
   private readonly _residentsApiEndPoint: ResidentsApiEndpoint;
   private readonly _roomsApiEndpoint: RoomsApiEndpoint;
   private readonly _medicationsApiEndpoint: MedicationsApiEndpoint;
-  private readonly _residentCommandsApiEndpoint: ResidentCommandsApiEndpoint;
-  private readonly _roomCommandsApiEndpoint: RoomCommandsApiEndpoint;
-  private readonly _medicationCommandsApiEndpoint: MedicationCommandsApiEndpoint;
+  private readonly _residentCommandsApiEndpoint: CreateResidentCommandsApiEndpoint;
+  private readonly _roomCommandsApiEndpoint: CreateRoomCommandsApiEndpoint;
+  private readonly _medicationCommandsApiEndpoint: CreateMedicationCommandsApiEndpoint;
 
   /**
    * Initializes the Resident, Room and Nursing Home API service with the required HTTP client.
@@ -47,9 +47,9 @@ export class NursingApi extends BaseApi{
     this._residentsApiEndPoint = new ResidentsApiEndpoint(http);
     this._roomsApiEndpoint = new RoomsApiEndpoint(http);
     this._medicationsApiEndpoint = new MedicationsApiEndpoint(http);
-    this._residentCommandsApiEndpoint = new ResidentCommandsApiEndpoint(http);
-    this._roomCommandsApiEndpoint = new RoomCommandsApiEndpoint(http);
-    this._medicationCommandsApiEndpoint = new MedicationCommandsApiEndpoint(http);
+    this._residentCommandsApiEndpoint = new CreateResidentCommandsApiEndpoint(http);
+    this._roomCommandsApiEndpoint = new CreateRoomCommandsApiEndpoint(http);
+    this._medicationCommandsApiEndpoint = new CreateMedicationCommandsApiEndpoint(http);
   }
 
   createNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
