@@ -135,7 +135,7 @@ export class ResidentForm {
       alert("Residente creado correctamente");
     }
 
-    this.router.navigate(['/residents/list']).then();
+    this.router.navigate(['/nursing/residents']).then();
   }
 
   private formatDateToISO(date: Date): string {
@@ -161,6 +161,6 @@ export class ResidentForm {
   }
 
   onCancel(): void {
-    this.router.navigate(['/residents/list']).then();
+    this.router.navigate(['/nursing/residents']).then();
   }
 }

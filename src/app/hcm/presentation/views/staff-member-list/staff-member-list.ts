@@ -67,11 +67,11 @@ export class StaffMemberList {
   }
 
   viewDetails(id: number) {
-    this.router.navigate(['staff/list', id, 'detail']).then();
+    this.router.navigate(['hcm/staff', id, 'detail']).then();
   }
 
   editStaffMember(id: number) {
-    this.router.navigate(['staff/list', id, 'edit']).then();
+    this.router.navigate(['hcm/staff', id, 'edit']).then();
     if (this.selectedId === id) {
       this.selectedId = null;
     }
@@ -82,10 +82,10 @@ export class StaffMemberList {
   }
 
   navigateToNew() {
-    this.router.navigate(['staff/list/new']).then();
+    this.router.navigate(['hcm/staff/new']).then();
   }
 
   navigateToNewContract(id: number) {
-    this.router.navigate(['contracts/list', id,'new']).then();
+    this.router.navigate(['hcm/contracts', id,'new']).then();
   }
 }

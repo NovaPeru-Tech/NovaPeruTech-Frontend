@@ -36,11 +36,11 @@ export class LayoutNursingHome {
   sidenavOpened = true;
 
   options = [
-    { label: 'nav.dashboard', icon: 'home',         link: '/analytics/dashboard',       color: '#5FC2BA'},
+    { label: 'nav.dashboard', icon: 'home',         link: '/analytics/dashboard', color: '#5FC2BA'},
     //{ label: 'nav.activity',  icon: 'assignment',   link: '/activities/list',           color: '#5FC2BA'},
-    { label: 'nav.resident',  icon: 'person',       link: '/residents/list',            color: '#5FC2BA'},
-    { label: 'nav.staff',     icon: 'group',        link: '/staff/list',                color: '#5FC2BA'},
-    { label: 'nav.room',      icon: 'meeting_room', link: '/rooms/list',                color: '#5FC2BA'},
+    { label: 'nav.resident',  icon: 'person',       link: '/nursing/residents',   color: '#5FC2BA'},
+    { label: 'nav.staff',     icon: 'group',        link: '/hcm/staff',           color: '#5FC2BA'},
+    { label: 'nav.room',      icon: 'meeting_room', link: '/nursing/rooms',       color: '#5FC2BA'},
   ];
 
   constructor(private router: Router, private observer: BreakpointObserver) {

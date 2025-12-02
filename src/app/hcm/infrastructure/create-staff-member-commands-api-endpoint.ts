@@ -4,16 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { StaffMember } from '../domain/model/staff-member.entity';
 import { catchError, map, Observable } from 'rxjs';
 import { StaffResource } from './staff-response';
-import { StaffMemberCommand } from '../domain/model/staff-member.command';
-import { StaffMemberCommandAssembler } from './staff-member-command-assembler';
+import { CreateStaffMemberCommand } from '../domain/model/create-staff-member.command';
+import { CreateStaffMemberCommandAssembler } from './create-staff-member-command-assembler';
 import { ErrorHandlingEnabledBaseType } from '../../shared/infrastructure/error-handling-enabled-base-type';
 
 const nursingHomeStaffEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderNursingHomeStaffEndpointPath}`;
 const staffEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderStaffEndpointPath}`;
 
-export class StaffMemberCommandsApiEndpoint extends ErrorHandlingEnabledBaseType {
+export class CreateStaffMemberCommandsApiEndpoint extends ErrorHandlingEnabledBaseType {
   private readonly staffMemberAssembler = new StaffMemberAssembler();
-  private readonly staffMemberCommandAssembler = new StaffMemberCommandAssembler();
+  private readonly staffMemberCommandAssembler = new CreateStaffMemberCommandAssembler();
 
   constructor(private http: HttpClient) {
     super();
@@ -34,7 +34,7 @@ export class StaffMemberCommandsApiEndpoint extends ErrorHandlingEnabledBaseType
   }
 
   /** POST: /api/v1/nursing-homes/{nursingHomeId}/staff */
-  create(nursingHomeId: number, staffMemberCommand: StaffMemberCommand): Observable<StaffMember> {
+  create(nursingHomeId: number, staffMemberCommand: CreateStaffMemberCommand): Observable<StaffMember> {
     const resource = this.staffMemberCommandAssembler.toResourceFromEntity(staffMemberCommand);
     const url = nursingHomeStaffEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString());
     return this.http.post<StaffMember>(url, resource).pipe(
@@ -44,7 +44,7 @@ export class StaffMemberCommandsApiEndpoint extends ErrorHandlingEnabledBaseType
   }
 
   /** PUT: /api/v1/staff/{staffMemberId} */
-  update(staffMemberId: number, staffMemberCommand: StaffMemberCommand): Observable<StaffMember> {
+  update(staffMemberId: number, staffMemberCommand: CreateStaffMemberCommand): Observable<StaffMember> {
     const resource = this.staffMemberCommandAssembler.toResourceFromEntity(staffMemberCommand);
     const url = staffEndpointUrl + `/${staffMemberId}`
     return this.http.put<StaffMember>(url, resource).pipe(

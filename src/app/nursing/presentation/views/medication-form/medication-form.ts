@@ -65,7 +65,7 @@ export class MedicationForm {
       const id = params['id'] ? +params['id'] : null;
       this.residentId = id;
       if (!id) {
-        this.router.navigate(['residents/list']).then();
+        this.router.navigate(['nursing/medications']).then();
         return;
       }
     });
@@ -95,7 +95,7 @@ export class MedicationForm {
 
     this.store.addMedication(this.residentId!, createMedicationCommand);
 
-    this.router.navigate(['medications/list', this.residentId]).then();
+    this.router.navigate(['nursing/medications', this.residentId]).then();
   }
 
   private formatDateToISO(date: Date): string {
@@ -109,6 +109,6 @@ export class MedicationForm {
 
 
   onCancel(): void {
-    this.router.navigate(['medications/list', this.residentId]).then();
+    this.router.navigate(['nursing/medications', this.residentId]).then();
   }
 }

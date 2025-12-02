@@ -1,8 +1,8 @@
-import { StaffMemberCommandResource } from './staff-member-commands-response';
-import { StaffMemberCommand } from '../domain/model/staff-member.command';
+import { StaffMemberCommandResource } from './create-staff-member-commands-response';
+import { CreateStaffMemberCommand } from '../domain/model/create-staff-member.command';
 
-export class StaffMemberCommandAssembler {
-  toResourceFromEntity(command: StaffMemberCommand): StaffMemberCommandResource {
+export class CreateStaffMemberCommandAssembler {
+  toResourceFromEntity(command: CreateStaffMemberCommand): StaffMemberCommandResource {
     return {
       dni: command.dni,
       firstName: command.firstName,

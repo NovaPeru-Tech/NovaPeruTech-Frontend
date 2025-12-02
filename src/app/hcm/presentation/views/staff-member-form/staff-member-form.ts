@@ -11,7 +11,7 @@ import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatCard } from '@angular/material/card';
 import { PersonProfileForm, PersonProfileFormValue } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
-import { StaffMemberCommand } from '../../../domain/model/staff-member.command';
+import { CreateStaffMemberCommand } from '../../../domain/model/create-staff-member.command';
 
 @Component({
   selector: 'app-staff-member-form',
@@ -91,7 +91,7 @@ export class StaffMemberForm {
 
     const staffMember = this.form.getRawValue();
 
-    const staffMemberCommand = new StaffMemberCommand({
+    const staffMemberCommand = new CreateStaffMemberCommand({
       dni: personProfile.dni,
       firstName: personProfile.firstName,
       lastName: personProfile.lastName,
@@ -136,7 +136,7 @@ export class StaffMemberForm {
           : "Staff member creado correctamente"
       );
 
-      this.router.navigate(['/staff/list']).then();
+      this.router.navigate(['/hcm/staff']).then();
     }, 300);
   }
 
@@ -163,6 +163,6 @@ export class StaffMemberForm {
   }
 
   onCancel(): void {
-    this.router.navigate(['/staff/list']).then();
+    this.router.navigate(['/hcm/staff']).then();
   }
 }

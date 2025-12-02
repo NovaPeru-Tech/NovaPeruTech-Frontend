@@ -54,19 +54,19 @@ export class ResidentDetail {
       this.residentId.set(id);
 
       if (!id) {
-        this.router.navigate(['/residents/list']).then();
+        this.router.navigate(['/nursing/residents']).then();
       }
     });
   }
 
   goBack() {
-    this.router.navigate(['/residents/list']).then();
+    this.router.navigate(['/nursing/residents']).then();
   }
 
   editResident() {
     const id = this.residentId();
     if (id) {
-      this.router.navigate(['residents/list', id, 'edit']).then();
+      this.router.navigate(['nursing/residents', id, 'edit']).then();
     }
   }
 
@@ -74,14 +74,14 @@ export class ResidentDetail {
     const id = this.residentId();
     if (id && confirm("¿Estás seguro de que deseas eliminar este residente? Esta acción no se puede deshacer.")) {
       this.store.deleteResident(id);
-      this.router.navigate(['/residents/list']).then();
+      this.router.navigate(['/nursing/residents']).then();
     }
   }
 
   viewMedicalHistory() {
     const id = this.residentId();
     if (id) {
-      this.router.navigate(['residents/list', id, 'medical-history']).then();
+      this.router.navigate(['nursing/residents', id, 'medical-history']).then();
     }
   }
 }

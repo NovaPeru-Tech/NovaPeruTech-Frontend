@@ -13,17 +13,13 @@ const contractForm = () =>
   import('./views/contract-form/contract-form').then(m => m.ContractForm);
 
 const baseTitle = 'Veyra';
-const staffRoutes: Routes = [
-  { path: 'list',            loadComponent: staffMemberList,   title: `Staff | ${baseTitle}` },
-  { path: 'list/:id/detail', loadComponent: staffMemberDetail, title: `Staff Member Detail | ${baseTitle}` },
-  { path: 'list/new',        loadComponent: staffMemberForm,   title: `New Staff Member | ${baseTitle}` },
-  { path: 'list/:id/edit',   loadComponent: staffMemberForm,   title: `Edit Staff Member | ${baseTitle}` }
+const hcmRoutes: Routes = [
+  { path: 'staff',             loadComponent: staffMemberList,   title: `Staff | ${baseTitle}` },
+  { path: 'staff/:id/detail',  loadComponent: staffMemberDetail, title: `Staff Member Detail | ${baseTitle}` },
+  { path: 'staff/new',         loadComponent: staffMemberForm,   title: `New Staff Member | ${baseTitle}` },
+  { path: 'staff/:id/edit',    loadComponent: staffMemberForm,   title: `Edit Staff Member | ${baseTitle}` },
+  { path: 'contracts/:id',     loadComponent: contractList,      title: `Contracts | ${baseTitle}` },
+  { path: 'contracts/:id/new', loadComponent: contractForm,      title: `New Contract | ${baseTitle}` }
 ];
 
-const contractsRoutes: Routes = [
-  { path: 'list/:id',        loadComponent: contractList,      title: `Contracts | ${baseTitle}` },
-  { path: 'list/:id/new',    loadComponent: contractForm,      title: `New Contract | ${baseTitle}` }
-];
-
-export { staffRoutes };
-export { contractsRoutes };
+export { hcmRoutes };
