@@ -3,7 +3,7 @@ import { RoomAssembler } from './room-assembler';
 import { HttpClient } from '@angular/common/http';
 import {catchError, map, Observable} from 'rxjs';
 import { Room } from '../domain/model/room.entity';
-import { RoomCommand } from '../domain/model/room.command';
+import { CreateRoomCommand } from '../domain/model/create-room.command';
 import { RoomResource } from './rooms-response';
 import { RoomCommandAssembler } from './room-command-assembler';
 import { ErrorHandlingEnabledBaseType } from '../../shared/infrastructure/error-handling-enabled-base-type';
@@ -34,8 +34,8 @@ export class RoomCommandsApiEndpoint extends ErrorHandlingEnabledBaseType {
   }
 
   /** POST: /api/v1/nursing-homes/{nursingHomeId}/rooms */
-  create(nursingHomeId: number, roomCommand: RoomCommand): Observable<Room> {
-    const resource = this.roomCommandAssembler.toResourceFromEntity(roomCommand);
+  create(nursingHomeId: number, createRoomCommand: CreateRoomCommand): Observable<Room> {
+    const resource = this.roomCommandAssembler.toResourceFromEntity(createRoomCommand);
     const url = nursingHomeRoomsEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString());
     return this.http.post<Room>(url, resource).pipe(
       map(createdRoom => this.roomAssembler.toEntityFromResource(createdRoom)),

@@ -6,7 +6,7 @@ import { MedicationAssembler } from './medication-assembler';
 import { MedicationCommandAssembler } from './medication-command-assembler';
 import { Medication } from '../domain/model/medication.entity';
 import { MedicationResource } from './medications-response';
-import { MedicationCommand } from '../domain/model/medication.command';
+import { CreateMedicationCommand } from '../domain/model/create-medication.command';
 
 const medicationCommandsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderResidentMedicationsEndpointPath}`;
 
@@ -33,8 +33,8 @@ export class MedicationCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
   }
 
   /** POST: /api/v1/residents/{residentId}/medications */
-  create(residentId: number, medicationCommand: MedicationCommand): Observable<Medication> {
-    const resource = this.medicationCommandAssembler.toResourceFromEntity(medicationCommand);
+  create(residentId: number, createMedicationCommand: CreateMedicationCommand): Observable<Medication> {
+    const resource = this.medicationCommandAssembler.toResourceFromEntity(createMedicationCommand);
     const url = medicationCommandsEndpointUrl.replace('{residentId}', residentId.toString());
       return this.http.post<Medication>(url, resource).pipe(
       map(createdMedication => this.medicationAssembler.toEntityFromResource(createdMedication)),

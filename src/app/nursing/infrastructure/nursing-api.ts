@@ -11,11 +11,11 @@ import { Room } from '../domain/model/room.entity';
 import { MedicationsApiEndpoint } from './medications-api-endpoint';
 import { Medication } from '../domain/model/medication.entity';
 import { ResidentCommandsApiEndpoint } from './resident-commands-api-endpoint';
-import { ResidentCommand } from '../domain/model/resident.command';
+import { CreateResidentCommand } from '../domain/model/create-resident.command';
 import { RoomCommandsApiEndpoint } from './room-commands-api-endpoint';
-import { RoomCommand } from '../domain/model/room.command';
+import { CreateRoomCommand } from '../domain/model/create-room.command';
 import { MedicationCommandsApiEndpoint } from './medication-commands-api-endpoint';
-import { MedicationCommand } from '../domain/model/medication.command';
+import { CreateMedicationCommand } from '../domain/model/create-medication.command';
 
 /**
  * @purpose: Service to interact with the Nursing Home API
@@ -64,7 +64,7 @@ export class NursingApi extends BaseApi{
     return this._nursingHomesApidEndpoint.getById(id);
   }
 
-  createResidentToNursingHome(nursingHomeId: number, command: ResidentCommand): Observable<Resident> {
+  createResidentToNursingHome(nursingHomeId: number, command: CreateResidentCommand): Observable<Resident> {
     return this._residentCommandsApiEndpoint.create(nursingHomeId, command);
   }
 
@@ -72,7 +72,7 @@ export class NursingApi extends BaseApi{
     return this._residentCommandsApiEndpoint.getAll(nursingHomeId);
   }
 
-  createRoomToNursingHome(nursingHomeId: number, command: RoomCommand): Observable<Room> {
+  createRoomToNursingHome(nursingHomeId: number, command: CreateRoomCommand): Observable<Room> {
     return this._roomCommandsApiEndpoint.create(nursingHomeId, command);
   }
 
@@ -89,7 +89,7 @@ export class NursingApi extends BaseApi{
     return this._residentsApiEndPoint.create(resident);
   }
 
-  updateResident(residentId: number, residentCommand: ResidentCommand): Observable<Resident> {
+  updateResident(residentId: number, residentCommand: CreateResidentCommand): Observable<Resident> {
     return this._residentCommandsApiEndpoint.update(residentId, residentCommand);
   }
 
@@ -114,7 +114,7 @@ export class NursingApi extends BaseApi{
     return this._roomCommandsApiEndpoint.getAll(nursingHomeId);
   }
 
-  createRoom(nursingHomeId: number, roomCommand: RoomCommand): Observable<Room> {
+  createRoom(nursingHomeId: number, roomCommand: CreateRoomCommand): Observable<Room> {
     return this._roomCommandsApiEndpoint.create(nursingHomeId, roomCommand);
   }
 
@@ -122,7 +122,7 @@ export class NursingApi extends BaseApi{
     return this._medicationCommandsApiEndpoint.getAll(residentId);
   }
 
-  createMedication(residentId: number, medicationCommand: MedicationCommand): Observable<Medication> {
+  createMedication(residentId: number, medicationCommand: CreateMedicationCommand): Observable<Medication> {
     return this._medicationCommandsApiEndpoint.create(residentId, medicationCommand);
   }
 }

@@ -1,8 +1,8 @@
 import { ResidentCommandResource } from './resident-commands-response';
-import { ResidentCommand } from '../domain/model/resident.command';
+import { CreateResidentCommand } from '../domain/model/create-resident.command';
 
 export class ResidentCommandAssembler {
-  toResourceFromEntity(command: ResidentCommand): ResidentCommandResource {
+  toResourceFromEntity(command: CreateResidentCommand): ResidentCommandResource {
     return {
       dni: command.dni,
       firstName: command.firstName,

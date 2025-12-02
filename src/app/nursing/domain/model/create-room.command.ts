@@ -1,4 +1,4 @@
-export class RoomCommand {
+export class CreateRoomCommand {
   private _capacity: number;
   private _type: string;
   private _roomNumber: string;

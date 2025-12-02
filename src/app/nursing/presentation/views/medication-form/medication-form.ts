@@ -13,7 +13,7 @@ import {MatInput, MatLabel} from '@angular/material/input';
 import {MatError, MatFormField} from '@angular/material/form-field';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatIcon} from '@angular/material/icon';
-import {MedicationCommand} from '../../../domain/model/medication.command';
+import {CreateMedicationCommand} from '../../../domain/model/create-medication.command';
 
 @Component({
   selector: 'app-medication-form',
@@ -80,7 +80,7 @@ export class MedicationForm {
     }
 
     const formValue = this.form.getRawValue();
-    const medicationCommand = new MedicationCommand({
+    const createMedicationCommand = new CreateMedicationCommand({
       name: formValue.name!,
       description: formValue.description!,
       amount: formValue.amount!,
@@ -89,7 +89,7 @@ export class MedicationForm {
       dosage: formValue.dosage!
     });
 
-    this.store.addMedication(this.residentId!, medicationCommand);
+    this.store.addMedication(this.residentId!, createMedicationCommand);
 
     this.router.navigate(['medications/list', this.residentId]).then();
   }
