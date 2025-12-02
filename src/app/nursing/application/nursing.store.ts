@@ -9,6 +9,7 @@ import { Medication } from '../domain/model/medication.entity';
 import { CreateResidentCommand } from '../domain/model/create-resident.command';
 import { CreateRoomCommand } from '../domain/model/create-room.command';
 import {CreateMedicationCommand} from '../domain/model/create-medication.command';
+import {AssignRoomCommand} from '../domain/model/assign-room.command';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -189,6 +190,22 @@ export class NursingStore {
       },
       error: err => {
         this._errorSignal.set(this.formatError(err, 'Failed to create medication'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
+  assignRoom(nursingHomeId: number, residentId: number, assignRoomCommand: AssignRoomCommand): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.assignRoomToResident(nursingHomeId, residentId, assignRoomCommand).subscribe({
+      next: updatedResident => {
+        this._residentSignal.update(residents =>
+          residents.map(res => res.id === updatedResident.id ? updatedResident : res));
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to assign room to resident'));
         this._loadingSignal.set(false);
       }
     });

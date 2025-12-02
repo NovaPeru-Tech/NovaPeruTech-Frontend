@@ -16,6 +16,8 @@ import { CreateRoomCommandsApiEndpoint } from './create-room-commands-api-endpoi
 import { CreateRoomCommand } from '../domain/model/create-room.command';
 import { CreateMedicationCommandsApiEndpoint } from './create-medication-commands-api-endpoint';
 import { CreateMedicationCommand } from '../domain/model/create-medication.command';
+import {AssignRoomCommandsApiEndpoint} from './assign-room-commands-api-endpoint';
+import {AssignRoomCommand} from '../domain/model/assign-room.command';
 
 /**
  * @purpose: Service to interact with the Nursing Home API
@@ -36,6 +38,7 @@ export class NursingApi extends BaseApi{
   private readonly _residentCommandsApiEndpoint: CreateResidentCommandsApiEndpoint;
   private readonly _roomCommandsApiEndpoint: CreateRoomCommandsApiEndpoint;
   private readonly _medicationCommandsApiEndpoint: CreateMedicationCommandsApiEndpoint;
+  private readonly _assignRoomCommandsApiEndpoint: AssignRoomCommandsApiEndpoint;
 
   /**
    * Initializes the Resident, Room and Nursing Home API service with the required HTTP client.
@@ -50,6 +53,7 @@ export class NursingApi extends BaseApi{
     this._residentCommandsApiEndpoint = new CreateResidentCommandsApiEndpoint(http);
     this._roomCommandsApiEndpoint = new CreateRoomCommandsApiEndpoint(http);
     this._medicationCommandsApiEndpoint = new CreateMedicationCommandsApiEndpoint(http);
+    this._assignRoomCommandsApiEndpoint = new AssignRoomCommandsApiEndpoint(http);
   }
 
   createNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
@@ -124,5 +128,9 @@ export class NursingApi extends BaseApi{
 
   createMedication(residentId: number, medicationCommand: CreateMedicationCommand): Observable<Medication> {
     return this._medicationCommandsApiEndpoint.create(residentId, medicationCommand);
+  }
+
+  assignRoomToResident(nursingHomeId: number, residentId: number, assignRoomCommand: AssignRoomCommand): Observable<Resident> {
+    return this._assignRoomCommandsApiEndpoint.assignRoom(nursingHomeId, residentId, assignRoomCommand);
   }
 }
