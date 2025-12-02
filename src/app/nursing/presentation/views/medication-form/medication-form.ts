@@ -1,19 +1,20 @@
 import { Component, inject } from '@angular/core';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
+import { MatOption, provideNativeDateAdapter } from '@angular/material/core';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NursingStore } from '../../../application/nursing.store';
-import { Medication } from '../../../domain/model/medication.entity';
-import {LayoutNursingHome} from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
-import {TranslatePipe} from '@ngx-translate/core';
-import {DatePipe} from '@angular/common';
-import {MatButton} from '@angular/material/button';
-import {MatCalendar} from '@angular/material/datepicker';
-import {MatInput, MatLabel} from '@angular/material/input';
-import {MatError, MatFormField} from '@angular/material/form-field';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatIcon} from '@angular/material/icon';
-import {CreateMedicationCommand} from '../../../domain/model/create-medication.command';
+import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
+import { TranslatePipe } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatCalendar } from '@angular/material/datepicker';
+import { MatInput, MatLabel } from '@angular/material/input';
+import { MatError, MatFormField } from '@angular/material/form-field';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIcon } from '@angular/material/icon';
+import { CreateMedicationCommand } from '../../../domain/model/create-medication.command';
+import { MatCard } from '@angular/material/card';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-medication-form',
@@ -30,7 +31,10 @@ import {CreateMedicationCommand} from '../../../domain/model/create-medication.c
     MatIcon,
     MatInput,
     MatLabel,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCard,
+    MatSelect,
+    MatOption
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './medication-form.html',
