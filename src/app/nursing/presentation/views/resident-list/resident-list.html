@@ -53,6 +53,19 @@
           [personProfileId]="resident.personProfileId">
         </app-person-profile-detail>
 
+        @if(resident.roomId != null) {
+          <div class="resident-info">
+            <strong>{{ 'Room' | translate }}:</strong>
+             {{ roomNumberById(resident.roomId) }}
+          </div>
+        } @else {
+          <button mat-raised-button
+                  class="detail-button"
+                  (click)="assignRoom(resident.id); $event.stopPropagation()">
+            {{ 'Assign Room' | translate }}
+          </button>
+        }
+
         <button mat-raised-button
                 class="detail-button"
                 (click)="viewDetails(resident.id); $event.stopPropagation()">
