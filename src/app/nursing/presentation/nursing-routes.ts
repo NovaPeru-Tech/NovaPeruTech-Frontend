@@ -17,13 +17,16 @@ const medicationList = () =>
   import('./views/medication-list/medication-list').then(m => m.MedicationList);
 const medicationForm = () =>
   import('./views/medication-form/medication-form').then(m => m.MedicationForm);
+const assignRoomForm = () =>
+  import('./views/assign-room-form/assign-room-form').then(m => m.AssignRoomForm);
 
 const baseTitle = 'Veyra';
 const residentsRoutes: Routes = [
-  { path: 'list',            loadComponent: residentList,   title: `Residents | ${baseTitle}` },
-  { path: 'list/:id/detail', loadComponent: residentDetail, title: `Resident Detail | ${baseTitle}` },
-  { path: 'list/new',        loadComponent: residentForm,   title: `New Resident | ${baseTitle}` },
-  { path: 'list/:id/edit',   loadComponent: residentForm,   title: `Edit Resident | ${baseTitle}` }
+  { path: 'list',                 loadComponent: residentList,   title: `Residents | ${baseTitle}` },
+  { path: 'list/:id/detail',      loadComponent: residentDetail, title: `Resident Detail | ${baseTitle}` },
+  { path: 'list/new',             loadComponent: residentForm,   title: `New Resident | ${baseTitle}` },
+  { path: 'list/:id/edit',        loadComponent: residentForm,   title: `Edit Resident | ${baseTitle}` },
+  { path: 'list/:id/assign-room', loadComponent: assignRoomForm, title: `Assign-Room | ${baseTitle}` }
 ];
 
 const roomsRoutes: Routes = [

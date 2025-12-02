@@ -8,6 +8,7 @@ import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-res
 export interface NursingHomeResource extends BaseResource{
   id:number;
   businessProfileId: number;
+  administratorId: number;
 }
 
 /*
