@@ -1,14 +1,15 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl,
   ValidationErrors, FormControl } from '@angular/forms';
-import {Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { IamStore } from '../../../application/iam.store';
 import { SignUpCommand } from '../../../domain/model/sign-up.command';
+import { CreateAdministratorCommand } from '../../../domain/model/create-administrator.command';
 
 /**
  * Component for user sign-up functionality.
- * Provides a form for new users to register with username and password.
+ * Supports both regular user and administrator account creation.
  */
 @Component({
   selector: 'app-sign-up',
@@ -21,25 +22,29 @@ import { SignUpCommand } from '../../../domain/model/sign-up.command';
   templateUrl: './sign-up-form.html',
   styleUrls: ['./sign-up-form.css']
 })
-export class SignUpForm {
+export class SignUpForm implements OnInit {
   protected store = inject(IamStore);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
-  // Available roles for selection
-  availableRoles = [
-    { value: 'ROLE_USER',       label: 'User',       description: 'Standard user access' },
-    { value: 'ROLE_ADMIN',      label: 'Admin',      description: 'Administrative access' },
-    { value: 'ROLE_INSTRUCTOR', label: 'Instructor', description: 'Content moderation access' }
-  ];
+  // Determines if this is admin or user registration
+  isAdminMode = false;
 
   form = new FormGroup({
-    username:        new FormControl<string>   ('',      { nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
-    password:        new FormControl<string>   ('',      { nonNullable: true, validators: [Validators.required, Validators.minLength(6), this.passwordStrengthValidator] }),
-    confirmPassword: new FormControl<string>   ('',      { nonNullable: true, validators: [Validators.required] }),
-    roles:           new FormControl<string[]> (['ROLE_USER'], { nonNullable: true, validators: [Validators.required] })
+    username:        new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)] }),
+    password:        new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6), this.passwordStrengthValidator] }),
+    confirmPassword: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
   }, { validators: this.passwordMatchValidator });
+
   hidePassword = true;
   hideConfirmPassword = true;
+
+  ngOnInit() {
+    // Check route to determine if this is admin or user registration
+    this.route.queryParams.subscribe(params => {
+      this.isAdminMode = params['mode'] === 'admin';
+    });
+  }
 
   /**
    * Custom validator to check password strength.
@@ -69,31 +74,26 @@ export class SignUpForm {
   }
 
   /**
-   * Selects a role (only one can be selected at a time).
-   */
-  selectRole(roleValue: string): void {
-    this.form.patchValue({ roles: roleValue ? [roleValue] : [] });
-  }
-
-  /**
-   * Checks if a role is selected.
-   */
-  isRoleSelected(roleValue: string): boolean {
-    const currentRoles = this.form.get('roles')?.value || [];
-    return currentRoles.includes(roleValue);
-  }
-
-  /**
    * Handles form submission for sign-up.
    */
   onSubmit(): void {
     if (this.form.valid) {
-      const signUpCommand = new SignUpCommand({
-        username: this.form.value.username!,
-        password: this.form.value.password!,
-        roles: this.form.value.roles!,
-      });
-      this.store.signUp(signUpCommand, this.router);
+      if (this.isAdminMode) {
+        // Create administrator
+        const createAdminCommand = new CreateAdministratorCommand({
+          username: this.form.value.username!,
+          password: this.form.value.password!
+        });
+        this.store.createAdministrator(createAdminCommand, this.router);
+      } else {
+        // Create regular user with ROLE_USER
+        const signUpCommand = new SignUpCommand({
+          username: this.form.value.username!,
+          password: this.form.value.password!,
+          roles: ['ROLE_USER']
+        });
+        this.store.signUp(signUpCommand, this.router);
+      }
     } else {
       this.markFormGroupTouched(this.form);
     }
@@ -172,17 +172,6 @@ export class SignUpForm {
   }
 
   /**
-   * Gets error message for role field.
-   */
-  getRoleError(): string {
-    const control = this.form.get('roles');
-    if (control?.hasError('required')) {
-      return 'Please select a role';
-    }
-    return '';
-  }
-
-  /**
    * Calculates password strength score.
    */
   getPasswordStrength(): number {
@@ -216,5 +205,28 @@ export class SignUpForm {
     if (strength <= 1) return '#f56565';
     if (strength <= 3) return '#ed8936';
     return '#48bb78';
+  }
+
+  /**
+   * Gets the title based on mode.
+   */
+  getTitle(): string {
+    return this.isAdminMode ? 'Create Administrator Account' : 'Create User Account';
+  }
+
+  /**
+   * Gets the subtitle based on mode.
+   */
+  getSubtitle(): string {
+    return this.isAdminMode
+      ? 'Register a new administrator with full system access.'
+      : 'Sign up to get started with your account.';
+  }
+
+  /**
+   * Gets the submit button text based on mode.
+   */
+  getSubmitButtonText(): string {
+    return this.isAdminMode ? 'Create Administrator' : 'Create Account';
   }
 }

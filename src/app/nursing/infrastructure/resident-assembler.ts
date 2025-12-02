@@ -31,7 +31,9 @@ export class ResidentAssembler implements BaseAssembler<Resident, ResidentsResou
 
       emergencyContactFirstName: resource.emergencyContactFirstName,
       emergencyContactLastName: resource.emergencyContactLastName,
-      emergencyContactPhoneNumber: resource.emergencyContactPhoneNumber
+      emergencyContactPhoneNumber: resource.emergencyContactPhoneNumber,
+
+      roomId: resource.roomId
     });
   }
 
@@ -51,7 +53,9 @@ export class ResidentAssembler implements BaseAssembler<Resident, ResidentsResou
 
       emergencyContactFirstName: entity.emergencyContactFirstName,
       emergencyContactLastName: entity.emergencyContactLastName,
-      emergencyContactPhoneNumber: entity.emergencyContactPhoneNumber
+      emergencyContactPhoneNumber: entity.emergencyContactPhoneNumber,
+
+      roomId: entity.roomId
     } as ResidentsResource;
   }
 }

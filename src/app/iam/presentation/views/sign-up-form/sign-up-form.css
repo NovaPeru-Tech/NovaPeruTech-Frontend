@@ -520,3 +520,64 @@
     left: -140px;
   }
 }
+
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+  color: white;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.admin-badge svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Admin Button Styling */
+.btn-primary.admin-btn {
+  background: linear-gradient(135deg, #f44336 0%, #e91e63 100%) !important;
+}
+
+.btn-primary.admin-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d32f2f 0%, #c2185b 100%) !important;
+  box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4) !important;
+}
+
+/* Card Header Adjustments */
+.card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.card-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.card-header p {
+  font-size: 1rem;
+  color: #718096;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .admin-badge {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    margin-bottom: 12px;
+  }
+
+  .admin-badge svg {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -43,15 +43,22 @@ export class ResidentList {
 
   constructor() {
     this.store.loadResidentsByNursingHome(1);
+    this.store.loadRoomsByNursingHome(1);
   }
 
   selectedId: number | null = null;
   searchTerm = signal('');
   filteredPersonProfilesIds = signal<number[]>([]);
   residents = computed(() => this.store.residents());
+  rooms = computed(() => this.store.rooms());
 
   onFiltered(ids: number[]) {
     this.filteredPersonProfilesIds.set(ids);
+  }
+
+  roomNumberById(id: number): string {
+    const room = this.rooms().find(r => r.id === id);
+    return room ? room.roomNumber : 'N/A';
   }
 
   filteredResidents = computed(() => {
@@ -68,6 +75,10 @@ export class ResidentList {
 
   selectResident(id: number) {
     this.selectedId = this.selectedId === id ? null : id;
+  }
+
+  assignRoom(id: number) {
+    this.router.navigate(['residents/list', id, 'assign-room']).then();
   }
 
   viewDetails(id: number) {

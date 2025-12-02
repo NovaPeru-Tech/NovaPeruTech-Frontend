@@ -81,7 +81,7 @@ export class RoomList {
     if (term) {
       result = rooms.filter(m => {
         const name = this.removeAccents(m.roomNumber?.toLowerCase() || '');
-        return name.startsWith(term);
+        return name.includes(term);
       });
     }
 

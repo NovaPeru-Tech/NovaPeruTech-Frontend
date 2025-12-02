@@ -12,30 +12,47 @@
   margin-right: 40px;
 }
 
-/* Section Dividers */
-.section-divider {
+/* Loading State */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 20px;
+}
+
+.loading-container p {
+  font-size: 16px;
+  color: #5f6368;
+  margin: 0;
+}
+
+/* Error State */
+.error-card {
+  margin: 20px 0;
+  border-left: 4px solid #ef5350 !important;
+  background-color: #ffebee !important;
+  border-radius: 12px !important;
+}
+
+.error-card mat-card-content {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 40px 0 24px 0;
-  padding: 16px;
-  background-color: #f0f8ff;
-  border-radius: 12px;
-  border-left: 4px solid #70b1e6;
+  padding: 16px !important;
 }
 
-.section-divider mat-icon {
-  color: #70b1e6;
-  font-size: 28px;
-  width: 28px;
-  height: 28px;
+.error-card mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
 }
 
-.section-divider span {
+.error-card p {
   margin: 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #0d2e73;
+  color: #c62828;
+  font-weight: 500;
 }
 
 /* Info Grid */
@@ -44,11 +61,11 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
   margin-bottom: 32px;
+  margin-top: 32px;
 }
 
 /* Cards */
-.info-card,
-.full-width-card {
+.info-card {
   border-radius: 16px !important;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -57,15 +74,10 @@
   background-color: white !important;
 }
 
-.info-card:hover,
-.full-width-card:hover {
+.info-card:hover {
   transform: translateY(-4px);
   border-color: #70b1e6;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
-}
-
-.full-width-card {
-  grid-column: 1 / -1;
 }
 
 /* Card Header */
@@ -98,6 +110,21 @@
   flex-shrink: 0;
 }
 
+.icon-wrapper.personal {
+  border-color: #70b1e6;
+  color: #70b1e6;
+}
+
+.icon-wrapper.contact {
+  border-color: #66bb6a;
+  color: #66bb6a;
+}
+
+.icon-wrapper.location {
+  border-color: #ffa726;
+  color: #ffa726;
+}
+
 .icon-wrapper mat-icon {
   font-size: 24px;
   width: 24px;
@@ -108,6 +135,50 @@
 .card-body {
   padding: 24px;
   background: white;
+}
+
+/* Resident Info */
+.resident-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+.info-item:hover {
+  background: #e9ecef;
+}
+
+.info-item.current-room {
+  background: #e8f5e9;
+  border-left: 4px solid #66bb6a;
+}
+
+.info-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #5f6368;
+}
+
+.info-value {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0d2e73;
+}
+
+.info-value.highlight {
+  color: #66bb6a;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
 /* Form Fields */
@@ -129,124 +200,136 @@ mat-form-field {
   background-color: transparent !important;
 }
 
-::ng-deep .mat-mdc-form-field-error {
-  color: #f56565 !important;
-}
-
-.calendar-section-horizontal {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
-  justify-items: center;
-}
-
-.calendar-label {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #0d2e73;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-bottom: 8px;
-}
-
-.required {
-  color: #ef5350;
-  font-weight: 700;
-}
-
-/* Calendar styling */
-::ng-deep .mat-calendar {
-  border-radius: 12px;
-  border: 2px solid #e0e0e0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  background: #fafbfc;
-  width: 100%;
-  max-width: 380px;
-}
-
-::ng-deep .mat-calendar-header {
-  background: #f0f8ff;
-  padding: 16px;
-  border-radius: 12px 12px 0 0;
-}
-
-::ng-deep .mat-calendar-body-selected {
-  background-color: #66B3AD !important;
-  color: white !important;
-}
-
-.selected-date {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-  border-radius: 12px;
-  border: 2px solid #66bb6a;
-  width: 100%;
-}
-
-.selected-date mat-icon {
-  color: #66bb6a;
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.selected-date span {
-  font-size: 1.1rem;
-  color: #1b5e20;
-  font-weight: 700;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .calendar-section-horizontal {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .calendar-wrapper {
-    max-width: 100%;
-  }
-
-  ::ng-deep .mat-calendar {
-    max-width: 100%;
-  }
-
-  .selected-date span {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .calendar-section-horizontal {
-    gap: 20px;
-  }
-
-  .calendar-label {
-    font-size: 0.9rem;
-  }
-
-  .selected-date {
-    padding: 12px;
-  }
-
-  .selected-date span {
-    font-size: 0.95rem;
-  }
+::ng-deep .mat-mdc-form-field .mat-mdc-form-field-icon-prefix {
+  padding-right: 12px;
+  color: #66B3AD;
 }
 
 .detail-row {
   margin-bottom: 16px;
 }
 
-.info-grid-inline {
+/* Room Option Styling */
+.room-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 4px 0;
+}
+
+.room-number {
+  font-weight: 700;
+  color: #0d2e73;
+  font-size: 1.1rem;
+}
+
+.room-details {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #5f6368;
+}
+
+.room-type {
+  padding: 4px 8px;
+  background: #e3f2fd;
+  border-radius: 6px;
+  color: #1976d2;
+  font-weight: 600;
+}
+
+.room-capacity {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #66bb6a;
+  font-weight: 600;
+}
+
+.room-capacity mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Preview Content */
+.preview-content {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 16px;
+}
+
+.preview-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.preview-item:hover {
+  background: #e9ecef;
+  transform: translateX(4px);
+}
+
+.preview-item mat-icon {
+  color: #66B3AD;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.preview-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.preview-label {
+  font-size: 0.875rem;
+  color: #5f6368;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.preview-value {
+  font-size: 1.1rem;
+  color: #0d2e73;
+  font-weight: 700;
+}
+
+.preview-value.status-available {
+  color: #66bb6a;
+}
+
+/* No Rooms Message */
+.no-rooms-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.no-rooms-message mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #ffa726;
+}
+
+.no-rooms-message p {
+  font-size: 1.1rem;
+  color: #5f6368;
+  margin: 0;
 }
 
 /* Action Buttons */
@@ -275,33 +358,6 @@ mat-form-field {
   padding-bottom: 120px;
 }
 
-/* Material Select Styling */
-::ng-deep .mat-mdc-select-value {
-  color: #0d2e73 !important;
-}
-
-::ng-deep .mat-mdc-select-arrow {
-  color: #70b1e6 !important;
-}
-
-::ng-deep .mat-mdc-option {
-  font-size: 14px !important;
-}
-
-::ng-deep .mat-mdc-option:hover {
-  background-color: #f0f8ff !important;
-}
-
-::ng-deep .mat-mdc-option.mat-mdc-option-active {
-  background-color: #e8f4fd !important;
-  color: #0d2e73 !important;
-}
-
-/* Datepicker Styling */
-::ng-deep .mat-datepicker-toggle {
-  color: #70b1e6 !important;
-}
-
 /* Responsive Design */
 @media (max-width: 1024px) {
   .info-grid {
@@ -312,14 +368,11 @@ mat-form-field {
 @media (max-width: 768px) {
   .title {
     font-size: 2rem;
+    margin-right: 0;
   }
 
   .form-wrapper {
     padding: 0 16px;
-    margin-right: 0;
-  }
-
-  .title {
     margin-right: 0;
   }
 
@@ -328,20 +381,22 @@ mat-form-field {
     gap: 20px;
   }
 
-  .section-divider {
-    padding: 12px;
-  }
-
-  .section-divider span {
-    font-size: 1.25rem;
-  }
-
   .card-header-custom {
     padding: 16px;
   }
 
   .card-body {
     padding: 20px;
+  }
+
+  .room-option {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .room-details {
+    width: 100%;
   }
 
   .action-buttons {
@@ -376,20 +431,6 @@ mat-form-field {
     gap: 16px;
   }
 
-  .section-divider {
-    padding: 10px;
-  }
-
-  .section-divider span {
-    font-size: 1.1rem;
-  }
-
-  .section-divider mat-icon {
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
-  }
-
   .card-header-custom {
     padding: 14px;
     gap: 12px;
@@ -414,6 +455,16 @@ mat-form-field {
     padding: 16px;
   }
 
+  .preview-item {
+    padding: 12px;
+  }
+
+  .preview-item mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
   .action-buttons {
     flex-direction: column;
     padding: 12px;
@@ -432,14 +483,6 @@ mat-form-field {
 
   .form-wrapper {
     padding: 0 8px;
-  }
-
-  .section-divider {
-    padding: 8px;
-  }
-
-  .section-divider span {
-    font-size: 1rem;
   }
 
   .card-header-custom {

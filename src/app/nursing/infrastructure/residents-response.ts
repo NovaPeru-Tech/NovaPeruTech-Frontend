@@ -14,6 +14,8 @@ export interface ResidentsResource extends BaseResource {
   emergencyContactFirstName: string; // Emergency contact first name
   emergencyContactLastName: string; // Emergency contact last name
   emergencyContactPhoneNumber: string; // Emergency contact phone number
+
+  roomId: number | null;
 }
 
 /**

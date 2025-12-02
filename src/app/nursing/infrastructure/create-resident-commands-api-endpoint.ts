@@ -4,16 +4,16 @@ import { Resident } from '../domain/model/resident.entity';
 import { ResidentAssembler } from './resident-assembler';
 import { environment } from '../../../environments/environment';
 import { ResidentsResource } from './residents-response';
-import { ResidentCommand } from '../domain/model/resident.command';
+import { CreateResidentCommand } from '../domain/model/create-resident.command';
 import { ErrorHandlingEnabledBaseType } from '../../shared/infrastructure/error-handling-enabled-base-type';
-import { ResidentCommandAssembler } from './resident-command-assembler';
+import { CreateResidentCommandAssembler } from './create-resident-command-assembler';
 
 const residentCommandsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderNursingHomeResidentsEndpointPath}`;
 const residentsEndpointUrl = `${environment.platformProviderApiBaseUrl}${environment.platformProviderResidentsEndpointPath}`
 
-export class ResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
+export class CreateResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
   private readonly residentAssembler = new ResidentAssembler();
-  private readonly residentCommandAssembler = new ResidentCommandAssembler();
+  private readonly residentCommandAssembler = new CreateResidentCommandAssembler();
 
   constructor(private http: HttpClient) {
     super();
@@ -34,8 +34,8 @@ export class ResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
   }
 
   /** POST: /api/v1/nursing-homes/{nursingHomeId}/residents */
-  create(nursingHomeId: number, residentCommand: ResidentCommand): Observable<Resident> {
-    const resource = this.residentCommandAssembler.toResourceFromEntity(residentCommand);
+  create(nursingHomeId: number, createResidentCommand: CreateResidentCommand): Observable<Resident> {
+    const resource = this.residentCommandAssembler.toResourceFromEntity(createResidentCommand);
     const url = residentCommandsEndpointUrl.replace('{nursingHomeId}', nursingHomeId.toString());
     return this.http.post<Resident>(url, resource).pipe(
       map(createdResident => this.residentAssembler.toEntityFromResource(createdResident)),
@@ -44,8 +44,8 @@ export class ResidentCommandsApiEndpoint extends ErrorHandlingEnabledBaseType{
   }
 
   /** PUT: /api/v1/residents/{residentId} */
-  update(residentId: number, residentCommand: ResidentCommand): Observable<Resident> {
-    const resource = this.residentCommandAssembler.toResourceFromEntity(residentCommand);
+  update(residentId: number, createResidentCommand: CreateResidentCommand): Observable<Resident> {
+    const resource = this.residentCommandAssembler.toResourceFromEntity(createResidentCommand);
     const url = residentsEndpointUrl + `/${residentId}`
     return this.http.put<Resident>(url, resource).pipe(
       map(updatedResident => this.residentAssembler.toEntityFromResource(updatedResident)),

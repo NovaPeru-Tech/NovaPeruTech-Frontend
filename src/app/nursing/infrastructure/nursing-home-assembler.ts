@@ -14,7 +14,8 @@ export class NursingHomeAssembler implements BaseAssembler<NursingHome, NursingH
   toEntityFromResource(resource: NursingHomeResource): NursingHome {
     return new NursingHome({
       id:resource.id,
-      businessProfileId: resource.businessProfileId
+      businessProfileId: resource.businessProfileId,
+      administratorId: resource.administratorId,
     });
   }
 
@@ -25,7 +26,8 @@ export class NursingHomeAssembler implements BaseAssembler<NursingHome, NursingH
   toResourceFromEntity(entity: NursingHome): NursingHomeResource {
     return {
       id:entity.id,
-      businessProfileId: entity.businessProfileId
+      businessProfileId: entity.businessProfileId,
+      administratorId: entity.administratorId
     } as NursingHomeResource;
   }
 }

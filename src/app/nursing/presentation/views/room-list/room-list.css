@@ -210,6 +210,10 @@
   border-radius: 12px;
 }
 
+::ng-deep .search-container .mat-mdc-form-field-focus-overlay {
+  background-color: transparent !important;
+}
+
 ::ng-deep .search-container .mdc-text-field--outlined .mdc-notched-outline {
   border-radius: 12px;
 }

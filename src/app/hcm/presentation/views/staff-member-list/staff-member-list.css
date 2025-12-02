@@ -8,7 +8,7 @@
 }
 
 .search-container {
-  max-width: 290px;
+  margin-right: 40px;
 }
 
 .search-container mat-form-field {
@@ -204,6 +204,10 @@ mat-spinner {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .search-container mat-form-field {
+    max-width: 320px;
+  }
+
   .cards-grid {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
@@ -237,6 +241,10 @@ mat-spinner {
 }
 
 @media (max-width: 480px) {
+  .search-container mat-form-field {
+    max-width: 100%;
+  }
+
   .title {
     font-size: 1.75rem;
   }
