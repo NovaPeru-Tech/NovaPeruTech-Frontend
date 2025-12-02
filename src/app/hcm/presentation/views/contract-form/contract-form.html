@@ -4,12 +4,6 @@
   <div class="form-wrapper">
     <form [formGroup]="form" (ngSubmit)="submit()" class="contract-form">
 
-      <!-- Contract Information Section -->
-      <div class="section-divider">
-        <mat-icon>description</mat-icon>
-        <span>{{ 'Contract Information' | translate }}</span>
-      </div>
-
       <div class="info-grid">
         <mat-card class="full-width-card">
           <div class="card-header-custom">
@@ -19,57 +13,49 @@
             <h3>{{ 'Contract Dates' | translate }}</h3>
           </div>
           <div class="card-body">
-            <div class="calendar-section">
-              <!-- Start Date Calendar -->
+            <div class="calendar-section-horizontal">
+              <!-- Start Date -->
               <div class="calendar-wrapper">
                 <label class="calendar-label">
                   {{ 'Start Date' | translate }}
                   <span class="required">*</span>
                 </label>
+
                 <mat-calendar
-                  [selected]="form.get('startDate')?.value"
+                  [selected]="form.value.startDate"
                   (selectedChange)="onStartDateChange($event)">
                 </mat-calendar>
-                @if (form.get('startDate')?.value) {
-                  <div class="selected-date-display">
+
+                @if (form.value.startDate) {
+                  <div class="selected-date">
                     <mat-icon>check_circle</mat-icon>
-                    <span>{{ form.get('startDate')?.value | date:'mediumDate' }}</span>
+                    <span>{{ form.value.startDate | date:'dd/MM/yyyy' }}</span>
                   </div>
-                }
-                @if (form.get('startDate')?.touched && form.get('startDate')!.hasError('required')) {
-                  <mat-error class="calendar-error">{{ 'Start date is required' | translate }}</mat-error>
                 }
               </div>
 
-              <!-- End Date Calendar -->
+              <!-- End Date -->
               <div class="calendar-wrapper">
                 <label class="calendar-label">
                   {{ 'End Date' | translate }}
                   <span class="required">*</span>
                 </label>
+
                 <mat-calendar
-                  [selected]="form.get('endDate')?.value"
+                  [selected]="form.value.endDate"
                   (selectedChange)="onEndDateChange($event)">
                 </mat-calendar>
-                @if (form.get('endDate')?.value) {
-                  <div class="selected-date-display">
+
+                @if (form.value.endDate) {
+                  <div class="selected-date">
                     <mat-icon>check_circle</mat-icon>
-                    <span>{{ form.get('endDate')?.value | date:'mediumDate' }}</span>
+                    <span>{{ form.value.endDate | date:'dd/MM/yyyy' }}</span>
                   </div>
-                }
-                @if (form.get('endDate')?.touched && form.get('endDate')!.hasError('required')) {
-                  <mat-error class="calendar-error">{{ 'End date is required' | translate }}</mat-error>
                 }
               </div>
             </div>
           </div>
         </mat-card>
-      </div>
-
-      <!-- Contract Details Section -->
-      <div class="section-divider">
-        <mat-icon>assignment</mat-icon>
-        <span>{{ 'Contract Details' | translate }}</span>
       </div>
 
       <div class="info-grid">
@@ -119,12 +105,6 @@
             </mat-form-field>
           </div>
         </mat-card>
-      </div>
-
-      <!-- Work Shift Section -->
-      <div class="section-divider">
-        <mat-icon>schedule</mat-icon>
-        <span>{{ 'Work Schedule' | translate }}</span>
       </div>
 
       <div class="info-grid">

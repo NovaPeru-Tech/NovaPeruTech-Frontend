@@ -133,6 +133,112 @@ mat-form-field {
   color: #f56565 !important;
 }
 
+.calendar-section-horizontal {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  justify-items: center;
+}
+
+.calendar-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0d2e73;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.required {
+  color: #ef5350;
+  font-weight: 700;
+}
+
+/* Calendar styling */
+::ng-deep .mat-calendar {
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #fafbfc;
+  width: 100%;
+  max-width: 380px;
+}
+
+::ng-deep .mat-calendar-header {
+  background: #f0f8ff;
+  padding: 16px;
+  border-radius: 12px 12px 0 0;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: #66B3AD !important;
+  color: white !important;
+}
+
+.selected-date {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-radius: 12px;
+  border: 2px solid #66bb6a;
+  width: 100%;
+}
+
+.selected-date mat-icon {
+  color: #66bb6a;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.selected-date span {
+  font-size: 1.1rem;
+  color: #1b5e20;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .calendar-section-horizontal {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .calendar-wrapper {
+    max-width: 100%;
+  }
+
+  ::ng-deep .mat-calendar {
+    max-width: 100%;
+  }
+
+  .selected-date span {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-section-horizontal {
+    gap: 20px;
+  }
+
+  .calendar-label {
+    font-size: 0.9rem;
+  }
+
+  .selected-date {
+    padding: 12px;
+  }
+
+  .selected-date span {
+    font-size: 0.95rem;
+  }
+}
+
 .detail-row {
   margin-bottom: 16px;
 }
@@ -194,15 +300,6 @@ mat-form-field {
 /* Datepicker Styling */
 ::ng-deep .mat-datepicker-toggle {
   color: #70b1e6 !important;
-}
-
-::ng-deep .mat-calendar-body-selected {
-  background-color: #70b1e6 !important;
-  color: white !important;
-}
-
-::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) {
-  border-color: #70b1e6 !important;
 }
 
 /* Responsive Design */
