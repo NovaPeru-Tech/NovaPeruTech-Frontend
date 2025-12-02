@@ -5,6 +5,8 @@ const pageNotFound = () =>
   import('./shared/presentation/views/page-not-found/page-not-found').then(m => m.PageNotFound);
 const iamRoutes = () =>
   import('./iam/presentation/iam.routes').then(m => m.iamRoutes);
+const analyticsRoutes = () =>
+  import('./analytics/presentation/analytics-routes').then(m => m.analyticsRoutes);
 const nursingHomeRoutes = () =>
   import('./nursing/presentation/nursing-routes').then(m => m.nursingRoutes);
 const residentRoutes = () =>
@@ -24,6 +26,7 @@ const baseTitle = 'Veyra';
 export const routes: Routes = [
   { path: 'home',        component: Home,             title:`Home | ${baseTitle}` },
   { path: 'iam',         loadChildren: iamRoutes },
+  { path: 'analytics',   loadChildren: analyticsRoutes },
   { path: 'nursing',     loadChildren: nursingHomeRoutes },
   { path: 'residents',   loadChildren: residentRoutes },
   { path: 'staff',       loadChildren: staffRoutes },

@@ -1,0 +1,162 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ 'Analytics Dashboard' | translate }}</h1>
+
+  <!-- Year Selector -->
+  <div class="year-selector">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'Select Year' | translate }}</mat-label>
+      <mat-select [(ngModel)]="selectedYear" (selectionChange)="onYearChange()">
+        @for (year of availableYears; track year) {
+          <mat-option [value]="year">{{ year }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="analytics-container">
+    <!-- Loading State -->
+    @if (this.store.loading()) {
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>{{ 'Loading analytics data...' | translate }}</p>
+      </div>
+    }
+
+    <!-- Main Content -->
+    @if (!this.store.loading()) {
+      <!-- TOP CARDS - KPIs -->
+      <div class="cards">
+        <mat-card class="card card-blue">
+          <mat-card-title>{{ 'Total Hires' | translate }}</mat-card-title>
+          <mat-card-content>
+            <p class="big">{{ totalHires }}</p>
+            <span class="subtitle">{{ selectedYear }}</span>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="card card-red">
+          <mat-card-title>{{ 'Total Terminations' | translate }}</mat-card-title>
+          <mat-card-content>
+            <p class="big">{{ totalTerminations }}</p>
+            <span class="subtitle">{{ selectedYear }}</span>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="card card-green">
+          <mat-card-title>{{ 'Net Staff Change' | translate }}</mat-card-title>
+          <mat-card-content>
+            <p class="big" [class.positive]="netStaffChange >= 0" [class.negative]="netStaffChange < 0">
+              {{ netStaffChange >= 0 ? '+' : '' }}{{ netStaffChange }}
+            </p>
+            <span class="subtitle">{{ 'Hires - Terminations' | translate }}</span>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="card card-teal">
+          <mat-card-title>{{ 'Total Admissions' | translate }}</mat-card-title>
+          <mat-card-content>
+            <p class="big">{{ totalAdmissions }}</p>
+            <span class="subtitle">{{ selectedYear }}</span>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="card card-purple">
+          <mat-card-title>{{ 'Active Residents' | translate }}</mat-card-title>
+          <mat-card-content>
+            <p class="big">{{ activeResidents }}</p>
+            <span class="subtitle">{{ 'Current' | translate }}</span>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- CHARTS SECTION 1 - Staff Analysis -->
+      <div class="section-title">
+        <mat-icon>people</mat-icon>
+        <h2>{{ 'Staff Analysis' | translate }}</h2>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-container" (click)="expandChart('Staff Hires vs Terminations', barComparisonData, barComparisonOptions, barComparisonType)">
+          <canvas baseChart
+                  [data]="barComparisonData"
+                  [options]="barComparisonOptions"
+                  [type]="barComparisonType">
+          </canvas>
+          <div class="expand-hint">
+            <mat-icon>fullscreen</mat-icon>
+            <span>{{ 'Click to expand' | translate }}</span>
+          </div>
+        </div>
+
+        <div class="chart-container" (click)="expandChart('Staff Terminations by Month', lineTerminationsData, lineTerminationsOptions, lineTerminationsType)">
+          <canvas baseChart
+                  [data]="lineTerminationsData"
+                  [options]="lineTerminationsOptions"
+                  [type]="lineTerminationsType">
+          </canvas>
+          <div class="expand-hint">
+            <mat-icon>fullscreen</mat-icon>
+            <span>{{ 'Click to expand' | translate }}</span>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- CHARTS SECTION 2 - Resident Analysis -->
+      <div class="section-title">
+        <mat-icon>elderly</mat-icon>
+        <h2>{{ 'Resident Analysis' | translate }}</h2>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-container" (click)="expandChart('Resident Admissions by Month', lineAdmissionsData, lineAdmissionsOptions, lineAdmissionsType)">
+          <canvas baseChart
+                  [data]="lineAdmissionsData"
+                  [options]="lineAdmissionsOptions"
+                  [type]="lineAdmissionsType">
+          </canvas>
+          <div class="expand-hint">
+            <mat-icon>fullscreen</mat-icon>
+            <span>{{ 'Click to expand' | translate }}</span>
+          </div>
+        </div>
+
+        <div class="chart-container" (click)="expandChart('Monthly Resident Admissions', barAdmissionsData, barAdmissionsOptions, barAdmissionsType)">
+          <canvas baseChart
+                  [data]="barAdmissionsData"
+                  [options]="barAdmissionsOptions"
+                  [type]="barAdmissionsType">
+          </canvas>
+          <div class="expand-hint">
+            <mat-icon>fullscreen</mat-icon>
+            <span>{{ 'Click to expand' | translate }}</span>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Modal de gráfico expandido -->
+  @if (expandedChart) {
+    <div class="chart-modal-overlay" (click)="closeExpandedChart()">
+      <div class="chart-modal" (click)="$event.stopPropagation()">
+        <div class="chart-modal-header">
+          <h2>{{ expandedChart.title | translate }}</h2>
+          <button mat-icon-button (click)="closeExpandedChart()" class="close-button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div class="chart-modal-content">
+          <canvas baseChart
+                  [data]="expandedChart.data"
+                  [options]="expandedChart.options"
+                  [type]="expandedChart.type">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  }
+</app-layout-nursing-home>
