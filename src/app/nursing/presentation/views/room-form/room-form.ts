@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -10,6 +10,8 @@ import { NursingStore } from '../../../application/nursing.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatIcon } from '@angular/material/icon';
 import { RoomCommand } from '../../../domain/model/room.command';
+import { MatCard } from '@angular/material/card';
+import { MatOption, MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-room-form',
@@ -22,7 +24,10 @@ import { RoomCommand } from '../../../domain/model/room.command';
     ReactiveFormsModule,
     TranslatePipe,
     LayoutNursingHome,
-    MatIcon
+    MatIcon,
+    MatCard,
+    MatOption,
+    MatSelect
   ],
   templateUrl: './room-form.html',
   styleUrl: './room-form.css'
@@ -58,8 +63,17 @@ export class RoomForm {
     }
 
     this.store.addRoom(1, roomCommand);
-    alert('Habitación registrada exitosamente');
-    this.router.navigate(['/rooms/list']).then();
+
+    setTimeout(() => {
+      if (this.store.error()) {
+        alert(this.store.error()!);
+        return;
+      }
+
+      alert('Habitación registrada exitosamente');
+
+      this.router.navigate(['/rooms/list']).then();
+    }, 300);
   }
 
   onCancel(): void {
