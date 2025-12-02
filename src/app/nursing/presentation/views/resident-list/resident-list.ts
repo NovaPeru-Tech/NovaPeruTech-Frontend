@@ -105,6 +105,6 @@ export class ResidentList {
   };
 
   navigateToNew(){
-    this.router.navigate(['residents/list/new']).then();
+    this.router.navigate(['nursing/residents/new']).then();
   }
 }
