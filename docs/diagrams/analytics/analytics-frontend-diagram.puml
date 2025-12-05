@@ -1,0 +1,89 @@
+@startuml
+' Bounded Context: analytics
+
+package "application" {
+  class AnalyticsStore {
+    +metrics : MetricEntity[]
+    +isLoading : boolean
+    +error : string
+    +loadResidentMetrics(nursingHomeId: string) : void
+    +loadStaffMetrics(nursingHomeId: string) : void
+  }
+}
+
+package "domain.model" {
+  class MetricEntity {
+    +id : string
+    +nursingHomeId : string
+    +type : string
+    +category : string
+    +value : number
+    +recordedAt : Date
+  }
+}
+
+package "infrastructure" {
+  class AnalyticsApi {
+    +getResidentActivesByYear(nursingHomeId: string, year: number) : Promise<MetricsResponse>
+    +getResidentAdmissionsByDateRange(nursingHomeId: string, from: Date, to: Date) : Promise<MetricsResponse>
+    +getResidentAdmissionsByYearAndMonth(nursingHomeId: string, year: number, month: number) : Promise<MetricsResponse>
+    +getResidentAdmissionsByYear(nursingHomeId: string, year: number) : Promise<MetricsResponse>
+    +getStaffHiresByYearAndMonth(nursingHomeId: string, year: number, month: number) : Promise<MetricsResponse>
+    +getStaffHiresByYear(nursingHomeId: string, year: number) : Promise<MetricsResponse>
+    +getStaffTerminationsByYearAndMonth(nursingHomeId: string, year: number, month: number) : Promise<MetricsResponse>
+    +getStaffTerminationsByYear(nursingHomeId: string, year: number) : Promise<MetricsResponse>
+  }
+
+  class MetricAssembler {
+    +toEntities(response: MetricsResponse) : MetricEntity[]
+  }
+
+  class MetricsApiEndpoint {
+    +baseUrl : string
+    +metricsPath : string
+  }
+
+  class MetricsResponse {
+    +items : Object[]
+  }
+}
+
+package "presentation" {
+  class AnalyticsRoutes {
+    +configureRoutes() : void
+  }
+
+  package "views.analytics-dashboard" {
+    class AnalyticsDashboardComponent {
+      +ngOnInit() : void
+      +onFilterChange() : void
+      +onNursingHomeChange(id: string) : void
+    }
+
+    class AnalyticsDashboardHtml <<html>>
+    class AnalyticsDashboardCss <<css>>
+  }
+}
+
+' State & domain
+AnalyticsStore --> MetricEntity : manages *
+
+' Store uses infrastructure
+AnalyticsStore --> AnalyticsApi : uses
+AnalyticsStore --> MetricAssembler : uses
+
+' Infra relationships
+AnalyticsApi --> MetricsApiEndpoint : uses
+AnalyticsApi --> MetricsResponse : returns
+MetricAssembler --> MetricsResponse : reads
+MetricAssembler --> MetricEntity : creates *
+
+' Presentation uses application
+AnalyticsDashboardComponent --> AnalyticsStore : uses
+AnalyticsRoutes --> AnalyticsDashboardComponent : routes to
+
+' Template & styles
+AnalyticsDashboardComponent --> AnalyticsDashboardHtml
+AnalyticsDashboardComponent --> AnalyticsDashboardCss
+
+@enduml
