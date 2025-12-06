@@ -125,20 +125,7 @@ export class StaffMemberForm {
       this.store.addStaffMember(this.nursingHomeId, staffMemberCommand);
     }
 
-    setTimeout(() => {
-      if (this.store.error()) {
-        alert(this.store.error()!);
-        return;
-      }
-
-      alert(
-        this.isEdit
-          ? "Staff member actualizado correctamente"
-          : "Staff member creado correctamente"
-      );
-
-      this.router.navigate(['/hcm/staff']).then();
-    }, 300);
+    this.router.navigate(['/hcm/staff']).then();
   }
 
   private formatDateToISO(date: Date): string {
