@@ -1,15 +1,16 @@
-import {Component, inject} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Toolbar } from '../../../../shared/presentation/components/toolbar/toolbar';
-import { Router} from '@angular/router';
-import {NursingStore} from '../../../application/nursing.store';
-import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatCard} from '@angular/material/card';
-import {MatInput, MatLabel} from '@angular/material/input';
-import {TranslatePipe} from '@ngx-translate/core';
-import {MatError, MatFormField} from '@angular/material/form-field';
-import {MatIcon} from '@angular/material/icon';
-import {CreateNursingHomeCommand} from '../../../domain/model/create-nursing-home.command';
+import { Router } from '@angular/router';
+import { NursingStore } from '../../../application/nursing.store';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatCard } from '@angular/material/card';
+import { MatInput, MatLabel } from '@angular/material/input';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MatError, MatFormField } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { CreateNursingHomeCommand } from '../../../domain/model/create-nursing-home.command';
+import { retry } from 'rxjs';
 
 @Component({
   selector: 'app-nursing-home-form',
@@ -37,25 +38,25 @@ export class NursingHomeForm {
   adminId: number = Number(localStorage.getItem('userId'));
   showForm: boolean = false;
 
-  get administratorId(): number | null {
-    const userId = localStorage.getItem('userId');
-    return userId ? Number(userId) : null;
-  }
-
   constructor() {
-    this.store.getNursingHomeById(this.adminId);
+    const adminId = Number(localStorage.getItem('userId'));
 
-    if (!this.administratorId) {
+    if (!adminId) {
       this.router.navigate(['/iam/sign-in']).then();
+      return;
     }
 
-    setTimeout(() => {
-      if (!this.store.error()) {
+    this.store['nursingApi'].getNursingHome(adminId).pipe(retry(2)).subscribe({
+      next: nursingHome => {
+        this.store['_nursingHomesSignal'].set(nursingHome);
+        localStorage.setItem('nursingHomeId', nursingHome.id.toString());
         this.router.navigate(['/analytics/dashboard']).then();
-      } else {
+      },
+      error: err => {
         this.showForm = true;
+        this.store['_errorSignal'].set('No nursing home found');
       }
-    }, 300);
+    });
   }
 
   photoPreview: string | null = null;
