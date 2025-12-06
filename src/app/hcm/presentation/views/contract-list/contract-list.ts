@@ -106,6 +106,6 @@ export class ContractList {
   }
 
   goBack() {
-    this.router.navigate([`/hcm/staff/${this.staffMemberId()}/detail`]).then();
+    this.router.navigate([`/hcm/staff/${this.staffMemberId()}/show`]).then();
   }
 }
