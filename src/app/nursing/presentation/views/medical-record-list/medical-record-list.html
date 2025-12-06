@@ -1,144 +1,241 @@
 <app-layout-nursing-home>
-  <h1 class="title">{{ 'allergies' | translate }}</h1>
+  <h1 class="title">{{ 'medical-records' | translate }}</h1>
 
-  <div class="search-container">
-    <mat-form-field appearance="outline">
-      <mat-label>{{ 'Search' | translate }}</mat-label>
-      <mat-icon matPrefix>search</mat-icon>
-      <input
-        matInput
-        [placeholder]="'Enter the name' | translate"
-        [value]="searchTerm()"
-        (input)="searchTerm.set($any($event.target).value)"
-        type="text"/>
-      @if (searchTerm()) {
-        <button matSuffix mat-icon-button (click)="searchTerm.set('')">
-          <mat-icon>close</mat-icon>
-        </button>
-      }
-    </mat-form-field>
-  </div>
+  <!-- ALLERGIES SECTION -->
+  <div class="section-container">
+    <h2 class="section-title">{{ 'allergies' | translate }}</h2>
 
-  <div class="content-with-toolbar">
-    <div class="list-container">
-      <!-- Error State -->
-      @if (store.error()) {
-        <mat-error class="error-message">{{ store.error() }}</mat-error>
-      }
+    <div class="search-container">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'Search' | translate }}</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          [placeholder]="'Enter the name' | translate"
+          [value]="searchTerm()"
+          (input)="searchTerm.set($any($event.target).value)"
+          type="text"/>
+        @if (searchTerm()) {
+          <button matSuffix mat-icon-button (click)="searchTerm.set('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+    </div>
 
-      <!-- Table Container -->
-      <div class="table-container">
-        <div class="table">
-          <table mat-table [dataSource]="filteredAllergies()" class="allergies-table">
-            <!-- Allergen Name Column -->
-            <ng-container matColumnDef="allergenName">
-              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('allergenName')">
-                <div class="header-content">
-                  {{ 'allergenName' | translate }}
-                  <mat-icon class="header-icon">
-                    @if (selectedColumn() !== 'allergenName') { unfold_more }
-                    @else if (sortDirection() === 'asc') { arrow_drop_up }
-                    @else { arrow_drop_down }
-                  </mat-icon>
-                </div>
-              </th>
-              <td mat-cell *matCellDef="let allergy" class="name-cell">
-                <div class="name-wrapper">
-                  <span class="allergy-name">{{ allergy.allergenName }}</span>
-                </div>
-              </td>
-            </ng-container>
+    <div class="content-with-toolbar">
+      <div class="list-container">
+        <!-- Error State -->
+        @if (store.error()) {
+          <mat-error class="error-message">{{ store.error() }}</mat-error>
+        }
 
-            <!-- Reaction Column -->
-            <ng-container matColumnDef="reaction">
-              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('reaction')">
-                <div class="header-content">
-                  {{ 'reaction' | translate }}
-                  <mat-icon class="header-icon">
-                    @if (selectedColumn() !== 'reaction') { unfold_more }
-                    @else if (sortDirection() === 'asc') { arrow_drop_up }
-                    @else { arrow_drop_down }
-                  </mat-icon>
-                </div>
-              </th>
-              <td mat-cell *matCellDef="let allergy">{{ allergy.reaction }}</td>
-            </ng-container>
-
-            <!-- Severity Level Column -->
-            <ng-container matColumnDef="severityLevel">
-              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('severityLevel')">
-                <div class="header-content">
-                  {{ 'severityLevel' | translate }}
-                  <mat-icon class="header-icon">
-                    @if (selectedColumn() !== 'severityLevel') { unfold_more }
-                    @else if (sortDirection() === 'asc') { arrow_drop_up }
-                    @else { arrow_drop_down }
-                  </mat-icon>
-                </div>
-              </th>
-              <td mat-cell *matCellDef="let allergy">{{ allergy.severityLevel }}</td>
-            </ng-container>
-
-            <!-- Type Of Allergy Column -->
-            <ng-container matColumnDef="typeOfAllergy">
-              <th mat-header-cell *matHeaderCellDef (click)="toggleSort('typeOfAllergy')">
-                <div class="header-content">
-                  {{ 'typeOfAllergy' | translate }}
-                  <mat-icon class="header-icon">
-                    @if (selectedColumn() !== 'typeOfAllergy') { unfold_more }
-                    @else if (sortDirection() === 'asc') { arrow_drop_up }
-                    @else { arrow_drop_down }
-                  </mat-icon>
-                </div>
-              </th>
-              <td mat-cell *matCellDef="let allergy">{{ allergy.typeOfAllergy }}</td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-            <tr class="mat-row" *matNoDataRow>
-              <td class="mat-cell" [attr.colspan]="displayedColumns.length">
-                @if (store.loading()) {
-                  <div class="loading-wrapper">
-                    <mat-spinner diameter="40"></mat-spinner>
+        <!-- Table Container -->
+        <div class="table-container">
+          <div class="table">
+            <table mat-table [dataSource]="filteredAllergies()" class="allergies-table">
+              <!-- Allergen Name Column -->
+              <ng-container matColumnDef="allergenName">
+                <th mat-header-cell *matHeaderCellDef (click)="toggleSort('allergenName')">
+                  <div class="header-content">
+                    {{ 'allergenName' | translate }}
+                    <mat-icon class="header-icon">
+                      @if (selectedColumn() !== 'allergenName') { unfold_more }
+                      @else if (sortDirection() === 'asc') { arrow_drop_up }
+                      @else { arrow_drop_down }
+                    </mat-icon>
                   </div>
-                } @else {
-                  <div class="empty-state">
-                    <mat-icon>allergy</mat-icon>
-                    <p>{{ 'no-allergies' | translate }}</p>
+                </th>
+                <td mat-cell *matCellDef="let allergy" class="name-cell">
+                  <div class="name-wrapper">
+                    <span class="allergy-name">{{ allergy.allergenName }}</span>
                   </div>
-                }
-              </td>
-            </tr>
-          </table>
+                </td>
+              </ng-container>
+
+              <!-- Reaction Column -->
+              <ng-container matColumnDef="reaction">
+                <th mat-header-cell *matHeaderCellDef (click)="toggleSort('reaction')">
+                  <div class="header-content">
+                    {{ 'reaction' | translate }}
+                    <mat-icon class="header-icon">
+                      @if (selectedColumn() !== 'reaction') { unfold_more }
+                      @else if (sortDirection() === 'asc') { arrow_drop_up }
+                      @else { arrow_drop_down }
+                    </mat-icon>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let allergy">{{ allergy.reaction }}</td>
+              </ng-container>
+
+              <!-- Severity Level Column -->
+              <ng-container matColumnDef="severityLevel">
+                <th mat-header-cell *matHeaderCellDef (click)="toggleSort('severityLevel')">
+                  <div class="header-content">
+                    {{ 'severityLevel' | translate }}
+                    <mat-icon class="header-icon">
+                      @if (selectedColumn() !== 'severityLevel') { unfold_more }
+                      @else if (sortDirection() === 'asc') { arrow_drop_up }
+                      @else { arrow_drop_down }
+                    </mat-icon>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let allergy">{{ allergy.severityLevel }}</td>
+              </ng-container>
+
+              <!-- Type Of Allergy Column -->
+              <ng-container matColumnDef="typeOfAllergy">
+                <th mat-header-cell *matHeaderCellDef (click)="toggleSort('typeOfAllergy')">
+                  <div class="header-content">
+                    {{ 'typeOfAllergy' | translate }}
+                    <mat-icon class="header-icon">
+                      @if (selectedColumn() !== 'typeOfAllergy') { unfold_more }
+                      @else if (sortDirection() === 'asc') { arrow_drop_up }
+                      @else { arrow_drop_down }
+                    </mat-icon>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let allergy">{{ allergy.typeOfAllergy }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                  @if (store.loading()) {
+                    <div class="loading-wrapper">
+                      <mat-spinner diameter="40"></mat-spinner>
+                    </div>
+                  } @else {
+                    <div class="empty-state">
+                      <mat-icon>allergy</mat-icon>
+                      <p>{{ 'no-allergies' | translate }}</p>
+                    </div>
+                  }
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="paginator">
+            <mat-paginator
+              #allergyPaginator
+              [pageSizeOptions]="[5, 10, 25, 50]"
+              [pageSize]="10"
+              showFirstLastButtons
+              aria-label="Select page of allergies">
+            </mat-paginator>
+          </div>
         </div>
-
-        <div class="paginator">
-          <!-- Paginator -->
-          <mat-paginator
-            [pageSizeOptions]="[5, 10, 25, 50]"
-            [pageSize]="10"
-            showFirstLastButtons
-            aria-label="Select page of allergies">
-          </mat-paginator>
-        </div>
-      </div>
-
-      <!-- Action Buttons -->
-      <div class="floating-actions">
-        <button mat-raised-button
-                color="accent"
-                (click)="goBack()">
-          <mat-icon>arrow_back</mat-icon>
-          {{ 'go-back' | translate }}
-        </button>
-
-        <button mat-raised-button color="accent" (click)="navigateToNew(residentId()!)">
-          <mat-icon>add</mat-icon>
-          {{ 'allergies.add' | translate }}
-        </button>
       </div>
     </div>
+  </div>
+
+  <!-- VITAL SIGNS SECTION -->
+  <div class="section-container">
+    <h2 class="section-title">{{ 'vital-signs' | translate }}</h2>
+
+    <div class="search-container">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'Search' | translate }}</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          [placeholder]="'Search by ID or severity' | translate"
+          [value]="vitalSignsSearchTerm()"
+          (input)="vitalSignsSearchTerm.set($any($event.target).value)"
+          type="text"/>
+        @if (vitalSignsSearchTerm()) {
+          <button matSuffix mat-icon-button (click)="vitalSignsSearchTerm.set('')">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="content-with-toolbar">
+      <div class="list-container">
+        <!-- Vital Signs Table Container -->
+        <div class="table-container">
+          <div class="table">
+            <table mat-table [dataSource]="filteredVitalSigns()" class="vital-signs-table">
+              <!-- Measurement ID Column -->
+              <ng-container matColumnDef="measurementId">
+                <th mat-header-cell *matHeaderCellDef (click)="toggleVitalSignsSort('measurementId')">
+                  <div class="header-content">
+                    {{ 'measurementId' | translate }}
+                    <mat-icon class="header-icon">
+                      @if (vitalSignsSelectedColumn() !== 'measurementId') { unfold_more }
+                      @else if (vitalSignsSortDirection() === 'asc') { arrow_drop_up }
+                      @else { arrow_drop_down }
+                    </mat-icon>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let sign">{{ sign.measurementId }}</td>
+              </ng-container>
+
+              <!-- Severity Level Column -->
+              <ng-container matColumnDef="severityLevel">
+                <th mat-header-cell *matHeaderCellDef (click)="toggleVitalSignsSort('severityLevel')">
+                  <div class="header-content">
+                    {{ 'severityLevel' | translate }}
+                    <mat-icon class="header-icon">
+                      @if (vitalSignsSelectedColumn() !== 'severityLevel') { unfold_more }
+                      @else if (vitalSignsSortDirection() === 'asc') { arrow_drop_up }
+                      @else { arrow_drop_down }
+                    </mat-icon>
+                  </div>
+                </th>
+                <td mat-cell *matCellDef="let sign">{{ sign.severityLevel }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="vitalSignsColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: vitalSignsColumns;"></tr>
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" [attr.colspan]="vitalSignsColumns.length">
+                  @if (store.loading()) {
+                    <div class="loading-wrapper">
+                      <mat-spinner diameter="40"></mat-spinner>
+                    </div>
+                  } @else {
+                    <div class="empty-state">
+                      <mat-icon>monitor_heart</mat-icon>
+                      <p>{{ 'no-vital-signs' | translate }}</p>
+                    </div>
+                  }
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="paginator">
+            <mat-paginator
+              #vitalSignsPaginator
+              [pageSizeOptions]="[5, 10, 25, 50]"
+              [pageSize]="10"
+              showFirstLastButtons
+              aria-label="Select page of vital signs">
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Action Buttons -->
+  <div class="floating-actions">
+    <button mat-raised-button
+            color="accent"
+            (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'go-back' | translate }}
+    </button>
+
+    <button mat-raised-button color="accent" (click)="navigateToNew(residentId()!)">
+      <mat-icon>add</mat-icon>
+      {{ 'allergies.add' | translate }}
+    </button>
   </div>
 </app-layout-nursing-home>

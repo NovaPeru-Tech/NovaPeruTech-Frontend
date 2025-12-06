@@ -61,13 +61,21 @@ export class MedicalRecordList {
   protected router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('allergyPaginator') allergyPaginator!: MatPaginator;
+  @ViewChild('vitalSignsPaginator') vitalSignsPaginator!: MatPaginator;
 
+  // Allergies table columns
   displayedColumns: string[] = [
     'allergenName',
     'reaction',
     'severityLevel',
     'typeOfAllergy'
+  ];
+
+  // Vital signs table columns
+  vitalSignsColumns: string[] = [
+    'measurementId',
+    'severityLevel'
   ];
 
   residentId = signal<number | null>(null);
@@ -82,12 +90,22 @@ export class MedicalRecordList {
       }
     });
 
+    // Load both allergies and vital signs
     this.store.loadAllergies(this.residentId()!);
+    this.store.loadVitalSigns(this.residentId()!);
   }
+
+  // Allergies signals
   searchTerm = signal('');
   selectedColumn = signal<string>('allergenName');
   sortDirection = signal<'asc'|'desc'>('asc');
   allergies = computed(() => this.store.allergies());
+
+  // Vital signs signals
+  vitalSignsSearchTerm = signal('');
+  vitalSignsSelectedColumn = signal<string>('measurementId');
+  vitalSignsSortDirection = signal<'asc'|'desc'>('asc');
+  vitalSigns = computed(() => this.store.vitalSigns());
 
   filteredAllergies = computed(() => {
     const term = this.removeAccents(this.searchTerm().toLowerCase().trim());
@@ -100,6 +118,37 @@ export class MedicalRecordList {
       result = aller.filter(m => {
         const name = this.removeAccents(m.allergenName?.toLowerCase() || '');
         return name.startsWith(term);
+      });
+    }
+
+    return [...result].sort((a, b) => {
+      let valA = (a as any)[col];
+      let valB = (b as any)[col];
+
+      if (valA == null) return 1;
+      if (valB == null) return -1;
+
+      if (typeof valA === 'string') valA = valA.toLowerCase();
+      if (typeof valB === 'string') valB = valB.toLowerCase();
+
+      return dir === 'asc'
+        ? valA > valB ? 1 : -1
+        : valA < valB ? 1 : -1;
+    });
+  });
+
+  filteredVitalSigns = computed(() => {
+    const term = this.vitalSignsSearchTerm().toLowerCase().trim();
+    const signs = this.store.vitalSigns().filter(sign => sign.residentId === this.residentId());
+    const col = this.vitalSignsSelectedColumn();
+    const dir = this.vitalSignsSortDirection();
+    let result = signs;
+
+    if (term) {
+      result = signs.filter(s => {
+        const id = s.measurementId?.toString() || '';
+        const severity = s.severityLevel?.toLowerCase() || '';
+        return id.includes(term) || severity.includes(term);
       });
     }
 
@@ -132,8 +181,21 @@ export class MedicalRecordList {
     }
   }
 
+  toggleVitalSignsSort(col: string) {
+    if (this.vitalSignsSelectedColumn() === col) {
+      this.vitalSignsSortDirection.update(d => d === 'asc' ? 'desc' : 'asc');
+    } else {
+      this.vitalSignsSelectedColumn.set(col);
+      this.vitalSignsSortDirection.set('asc');
+    }
+  }
+
   navigateToNew(id: number) {
     this.router.navigate(['nursing/residents', id, 'allergies', 'new']).then();
+  }
+
+  navigateToNewVitalSign(id: number) {
+    this.router.navigate(['nursing/residents', id, 'vital-signs', 'new']).then();
   }
 
   goBack() {
