@@ -1,3 +1,4 @@
+<app-toolbar></app-toolbar>
 <div class="sign-in-container">
   <div class="sign-in-card">
     <div class="card-header">
@@ -88,7 +89,9 @@
 
     <!-- Sign Up Link -->
     <div class="footer-link">
-      <p>Don't have an account? <a routerLink="/iam/sign-up">Sign Up</a></p>
+      <p>Don't have an account? <strong>Sign Up</strong> <br>
+        <a (click)="performSignUpUser()">User</a>  -  <a (click)="performSignUpAdmin()">Administrator</a>
+      </p>
     </div>
   </div>
 </div>
