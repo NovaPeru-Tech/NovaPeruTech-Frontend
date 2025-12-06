@@ -41,6 +41,7 @@ export class ResidentForm {
   private store = inject(NursingStore);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
 
   form = this.fb.group({
     legalRepresentativeFirstName:   new FormControl<string> ('',       { nonNullable: true, validators: [Validators.required] }),
@@ -129,10 +130,8 @@ export class ResidentForm {
 
     if(this.isEdit){
       this.store.updateResident(this.residentId ?? 0, createResidentCommand);
-      alert("Residente actualizado correctamente");
     } else {
-      this.store.createResidentInNursingHome(1, createResidentCommand);
-      alert("Residente creado correctamente");
+      this.store.createResidentInNursingHome(this.nursingHomeId, createResidentCommand);
     }
 
     this.router.navigate(['/nursing/residents']).then();
