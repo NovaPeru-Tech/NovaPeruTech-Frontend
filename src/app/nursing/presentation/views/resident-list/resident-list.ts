@@ -80,15 +80,15 @@ export class ResidentList {
   }
 
   assignRoom(id: number) {
-    this.router.navigate(['nursing/residents', id, 'assign-room']).then();
+    this.router.navigate(['nursing/residents', id, 'room-assignments', 'new']).then();
   }
 
   viewDetails(id: number) {
-    this.router.navigate(['nursing/residents', id, 'detail']).then();
+    this.router.navigate(['nursing/residents', id, 'show']).then();
   }
 
   viewMedications(id: number) {
-    this.router.navigate(['nursing/medications', id]).then();
+    this.router.navigate(['nursing/residents', id, 'medications']).then();
   }
 
   editResident(id: number) {
@@ -97,14 +97,6 @@ export class ResidentList {
       this.selectedId = null;
     }
   }
-
-  deleteResident(id: number) {
-    if (!confirm("¿Estás seguro de que deseas eliminar este residente? Esta acción no se puede deshacer.")) {
-      return;
-    }
-
-    this.store.deleteResident(id);
-  };
 
   navigateToNew(){
     this.router.navigate(['nursing/residents/new']).then();
