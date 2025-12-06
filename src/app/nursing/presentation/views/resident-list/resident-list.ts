@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -41,9 +41,11 @@ export class ResidentList {
   readonly store = inject(NursingStore);
   protected router = inject(Router);
 
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
+
   constructor() {
-    this.store.loadResidentsByNursingHome(1);
-    this.store.loadRoomsByNursingHome(1);
+    this.store.loadResidentsByNursingHome(this.nursingHomeId);
+    this.store.loadRoomsByNursingHome(this.nursingHomeId);
   }
 
   selectedId: number | null = null;
@@ -66,8 +68,8 @@ export class ResidentList {
     const allResidents = this.residents();
     const term = this.searchTerm();
 
-    if (term && ids.length === 0) {
-      return [];
+    if (!term) {
+      return allResidents;
     }
 
     return allResidents.filter(r => ids.includes(r.personProfileId));
@@ -105,6 +107,6 @@ export class ResidentList {
   };
 
   navigateToNew(){
-    this.router.navigate(['residents/list/new']).then();
+    this.router.navigate(['nursing/residents/new']).then();
   }
 }
