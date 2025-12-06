@@ -11,18 +11,13 @@ export class PersonProfileAssembler implements BaseAssembler<PersonProfile, Pers
     return new PersonProfile({
       id: resource.id,
       dni: resource.dni,
-      firstName: resource.firstName,
-      lastName: resource.lastName,
+      fullName: resource.fullName,
       birthDate: resource.birthDate,
       age: resource.age,
-      emailAddress: resource.emailAddress,
-      street: resource.street,
-      number: resource.number,
-      city: resource.city,
-      postalCode: resource.postalCode,
-      country: resource.country,
       photo:resource.photo,
-      phoneNumber: resource.phoneNumber
+      phoneNumber: resource.phoneNumber,
+      emailAddress: resource.emailAddress,
+      streetAddress: resource.streetAddress
     });
   }
 
@@ -30,18 +25,13 @@ export class PersonProfileAssembler implements BaseAssembler<PersonProfile, Pers
     return {
       id: entity.id,
       dni: entity.dni,
-      firstName: entity.firstName,
-      lastName: entity.lastName,
+      fullName: entity.fullName,
       birthDate: entity.birthDate,
       age: entity.age,
-      emailAddress: entity.emailAddress,
-      street: entity.street,
-      number: entity.number,
-      city: entity.city,
-      postalCode: entity.postalCode,
-      country: entity.country,
       photo: entity.photo,
-      phoneNumber: entity.phoneNumber
+      phoneNumber: entity.phoneNumber,
+      emailAddress: entity.emailAddress,
+      streetAddress: entity.streetAddress
     } as PersonProfileResource;
   }
 }

@@ -1,0 +1,166 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ 'allergy.new.title' | translate }}</h1>
+
+  <div class="form-wrapper">
+    @if (store.loading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>{{ 'Loading...' | translate }}</p>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="allergy-form">
+      <div class="info-grid">
+        <!-- Allergen Information Card -->
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper allergen">
+              <mat-icon>coronavirus</mat-icon>
+            </div>
+            <h3>{{ 'allergy.allergen-info' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'allergy.form.allergenName' | translate }}</mat-label>
+                <input matInput formControlName="allergenName" placeholder="{{ 'e.g., Peanuts, Penicillin' | translate }}" required>
+                @if (form.get('allergenName')?.touched && form.get('allergenName')!.hasError('required')) {
+                  <mat-error>{{ 'allergy.error.allergenName-required' | translate }}</mat-error>
+                }
+                @if (form.get('allergenName')!.hasError('minlength')) {
+                  <mat-error>{{ 'allergy.error.allergenName-minlength' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <div class="detail-row">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'allergy.form.typeOfAllergy' | translate }}</mat-label>
+                <mat-select formControlName="typeOfAllergy" required>
+                  <mat-option value="FOOD">{{ 'allergy.type.food' | translate }}</mat-option>
+                  <mat-option value="DRUG">{{ 'allergy.type.drug' | translate }}</mat-option>
+                  <mat-option value="ENVIRONMENTAL">{{ 'allergy.type.environmental' | translate }}</mat-option>
+                  <mat-option value="INSECT">{{ 'allergy.type.insect' | translate }}</mat-option>
+                  <mat-option value="LATEX">{{ 'allergy.type.latex' | translate }}</mat-option>
+                  <mat-option value="CHEMICAL">{{ 'allergy.type.chemical' | translate }}</mat-option>
+                  <mat-option value="OTHER">{{ 'allergy.type.other' | translate }}</mat-option>
+                </mat-select>
+                @if (form.get('typeOfAllergy')?.touched && form.get('typeOfAllergy')!.hasError('required')) {
+                  <mat-error>{{ 'allergy.error.typeOfAllergy-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+
+        <!-- Reaction Details Card -->
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper reaction">
+              <mat-icon>healing</mat-icon>
+            </div>
+            <h3>{{ 'allergy.reaction-details' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'allergy.form.reaction' | translate }}</mat-label>
+                <textarea
+                  matInput
+                  formControlName="reaction"
+                  rows="4"
+                  placeholder="{{ 'allergy.reaction-placeholder' | translate }}"
+                  required>
+                </textarea>
+                @if (form.get('reaction')?.touched && form.get('reaction')!.hasError('required')) {
+                  <mat-error>{{ 'allergy.error.reaction-required' | translate }}</mat-error>
+                }
+                @if (form.get('reaction')!.hasError('minlength')) {
+                  <mat-error>{{ 'allergy.error.reaction-minlength' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+
+        <!-- Severity Level Card -->
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper severity">
+              <mat-icon>warning</mat-icon>
+            </div>
+            <h3>{{ 'allergy.severity-level' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'allergy.form.severityLevel' | translate }}</mat-label>
+                <mat-select formControlName="severityLevel" required>
+                  <mat-option value="NORMAL">
+                    <span class="severity-option normal">
+                      <mat-icon>check_circle</mat-icon>
+                      {{ 'allergy.severity.normal' | translate }}
+                    </span>
+                  </mat-option>
+                  <mat-option value="MEDIUM">
+                    <span class="severity-option medium">
+                      <mat-icon>info</mat-icon>
+                      {{ 'allergy.severity.medium' | translate }}
+                    </span>
+                  </mat-option>
+                  <mat-option value="HIGH">
+                    <span class="severity-option high">
+                      <mat-icon>warning</mat-icon>
+                      {{ 'allergy.severity.high' | translate }}
+                    </span>
+                  </mat-option>
+                  <mat-option value="CRITICAL">
+                    <span class="severity-option critical">
+                      <mat-icon>error</mat-icon>
+                      {{ 'allergy.severity.critical' | translate }}
+                    </span>
+                  </mat-option>
+                </mat-select>
+                @if (form.get('severityLevel')?.touched && form.get('severityLevel')!.hasError('required')) {
+                  <mat-error>{{ 'allergy.error.severityLevel-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            @if (form.value.severityLevel) {
+              <div class="severity-indicator" [class]="'severity-' + form.value.severityLevel.toLowerCase()">
+                <mat-icon>
+                  @switch (form.value.severityLevel) {
+                    @case ('NORMAL') { check_circle }
+                    @case ('MEDIUM') { info }
+                    @case ('HIGH') { warning }
+                    @case ('CRITICAL') { error }
+                  }
+                </mat-icon>
+                <div class="severity-info">
+                  <span class="severity-label">{{ 'allergy.selected-severity' | translate }}:</span>
+                  <span class="severity-value">{{ 'allergy.severity.' + form.value.severityLevel.toLowerCase() | translate }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="space"></div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" type="button" (click)="cancel()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'allergy.cancel' | translate }}
+        </button>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || store.loading()">
+          <mat-icon>save</mat-icon>
+          {{ 'allergy.add' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout-nursing-home>

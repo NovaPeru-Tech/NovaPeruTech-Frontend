@@ -1,1 +1,149 @@
-<p>contract-form works!</p>
+<app-layout-nursing-home>
+  <h1 class="title">{{ 'Create New Contract' | translate }}</h1>
+
+  <div class="form-wrapper">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="contract-form">
+
+      <div class="info-grid">
+        <mat-card class="full-width-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper">
+              <mat-icon>event</mat-icon>
+            </div>
+            <h3>{{ 'Contract Dates' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="calendar-section-horizontal">
+              <!-- Start Date -->
+              <div class="calendar-wrapper">
+                <label class="calendar-label">
+                  {{ 'Start Date' | translate }}
+                  <span class="required">*</span>
+                </label>
+
+                <mat-calendar
+                  [selected]="form.value.startDate"
+                  (selectedChange)="onStartDateChange($event)">
+                </mat-calendar>
+
+                @if (form.value.startDate) {
+                  <div class="selected-date">
+                    <mat-icon>check_circle</mat-icon>
+                    <span>{{ form.value.startDate | date:'dd/MM/yyyy' }}</span>
+                  </div>
+                }
+              </div>
+
+              <!-- End Date -->
+              <div class="calendar-wrapper">
+                <label class="calendar-label">
+                  {{ 'End Date' | translate }}
+                  <span class="required">*</span>
+                </label>
+
+                <mat-calendar
+                  [selected]="form.value.endDate"
+                  (selectedChange)="onEndDateChange($event)">
+                </mat-calendar>
+
+                @if (form.value.endDate) {
+                  <div class="selected-date">
+                    <mat-icon>check_circle</mat-icon>
+                    <span>{{ form.value.endDate | date:'dd/MM/yyyy' }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper">
+              <mat-icon>work</mat-icon>
+            </div>
+            <h3>{{ 'Type of Contract' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'Select Contract Type' | translate }}</mat-label>
+              <mat-select formControlName="typeOfContract">
+                <mat-option value="Full-time">{{ 'Full-time' | translate }}</mat-option>
+                <mat-option value="Part-time">{{ 'Part-time' | translate }}</mat-option>
+                <mat-option value="Temporary">{{ 'Temporary' | translate }}</mat-option>
+                <mat-option value="Freelance">{{ 'Freelance' | translate }}</mat-option>
+              </mat-select>
+              @if (form.get('typeOfContract')?.touched && form.get('typeOfContract')!.hasError('required')) {
+                <mat-error>{{ 'Contract type is required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper">
+              <mat-icon>badge</mat-icon>
+            </div>
+            <h3>{{ 'Staff Role' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'Select Role' | translate }}</mat-label>
+              <mat-select formControlName="staffRole">
+                <mat-option value="NURSE">{{ 'Nurse' | translate }}</mat-option>
+                <mat-option value="CAREGIVER">{{ 'Caregiver' | translate }}</mat-option>
+                <mat-option value="DOCTOR">{{ 'Doctor' | translate }}</mat-option>
+                <mat-option value="ADMINISTRATIVE">{{ 'Administrator' | translate }}</mat-option>
+                <mat-option value="COOK">{{ 'Cook' | translate }}</mat-option>
+              </mat-select>
+              @if (form.get('staffRole')?.touched && form.get('staffRole')!.hasError('required')) {
+                <mat-error>{{ 'Staff role is required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="info-grid">
+        <mat-card class="full-width-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper">
+              <mat-icon>access_time</mat-icon>
+            </div>
+            <h3>{{ 'Work Shift' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'Select Shift' | translate }}</mat-label>
+              <mat-select formControlName="workShift">
+                <mat-option value="DAY">{{ 'Morning (6:00 AM - 2:00 PM)' | translate }}</mat-option>
+                <mat-option value="NIGHT">{{ 'Afternoon (2:00 PM - 10:00 PM)' | translate }}</mat-option>
+                <mat-option value="DAWN">{{ 'Night (10:00 PM - 6:00 AM)' | translate }}</mat-option>
+              </mat-select>
+              @if (form.get('workShift')?.touched && form.get('workShift')!.hasError('required')) {
+                <mat-error>{{ 'Work shift is required' | translate }}</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="space"></div>
+
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" type="button" (click)="onCancel()">
+          <mat-icon>cancel</mat-icon>
+          {{ 'Cancel' | translate }}
+        </button>
+
+        <button mat-raised-button color="accent" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ 'Create Contract' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout-nursing-home>

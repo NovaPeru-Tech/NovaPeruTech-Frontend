@@ -4,6 +4,9 @@ import { HcmApi } from '../infrastructure/hcm-api';
 import { retry } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Contract } from '../domain/model/contract.entity';
+import { CreateStaffMemberCommand } from '../domain/model/create-staff-member.command';
+import { CreateContractCommand } from '../domain/model/create-contract.command';
+import { UpdateContractStatusCommand } from '../domain/model/update-contract-status.command';
 
 @Injectable({
   providedIn: 'root'
@@ -18,17 +21,14 @@ export class HcmStore {
   readonly staff = this._staffMemberSignal.asReadonly();
   readonly contracts = this._contractSignal.asReadonly();
 
-  constructor(private hcmApi: HcmApi) {
-    this.loadStaffMembers();
-    this.loadContracts();
-  }
+  constructor(private hcmApi: HcmApi) {}
 
-  addStaffMember(staffMember: StaffMember) {
+  addStaffMember(nursingHomeId: number, staffMemberCommand: CreateStaffMemberCommand) {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.hcmApi.createStaffMember(staffMember).pipe(retry(2)).subscribe({
+    this.hcmApi.createStaffMember(nursingHomeId, staffMemberCommand).pipe(retry(2)).subscribe({
       next: createdStaffMember => {
-        this._staffMemberSignal.update(staffMembers => [...staffMembers, createdStaffMember]);
+        this._staffMemberSignal.update(staff => [...staff, createdStaffMember]);
         this._loadingSignal.set(false);
       },
       error: err => {
@@ -56,25 +56,26 @@ export class HcmStore {
     })
   }
 
-  updateStaffMember(staffMember: StaffMember) {
+  updateStaffMember(staffMemberId: number, staffMemberCommand: CreateStaffMemberCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.hcmApi.updateStaffMember(staffMember).pipe(retry(2)).subscribe({
+    this.hcmApi.updateStaffMember(staffMemberId, staffMemberCommand).pipe(retry(2)).subscribe({
       next: updatedStaffMember => {
-        this._staffMemberSignal.update(staffMembers => staffMembers.map(s => s.id == updatedStaffMember.id ? updatedStaffMember : s));
+        this._staffMemberSignal.update(staff =>
+        staff.map(sta => sta.id === updatedStaffMember.id ? updatedStaffMember : sta));
         this._loadingSignal.set(false);
       },
       error: err => {
         this._errorSignal.set(this.formatError(err, 'Failed to update staff member'));
         this._loadingSignal.set(false);
       }
-    })
+    });
   }
 
-  addContract(contract: Contract) {
+  addContract(staffMemberId: number, contractCommand: CreateContractCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.hcmApi.createContract(contract).pipe(retry(2)).subscribe({
+    this.hcmApi.createContract(staffMemberId, contractCommand).pipe(retry(2)).subscribe({
       next: createdContract => {
         this._contractSignal.update(contracts => [...contracts, createdContract]);
         this._loadingSignal.set(false);
@@ -86,25 +87,41 @@ export class HcmStore {
     });
   }
 
-  getContractById(id: number): Signal<Contract | undefined> {
-    return computed(() => id ? this.contracts().find(c => c.id === id) : undefined);
-  }
-
-  loadStaffMembers() {
+  updateContractStatus(staffMemberId: number, contractId: number, updateContractStatusCommand: UpdateContractStatusCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.hcmApi.getStaffMembers().pipe(takeUntilDestroyed()).subscribe({
-      next: staffMember => {
-        this._staffMemberSignal.set(staffMember);
+    this.hcmApi.updateContractStatus(staffMemberId, contractId, updateContractStatusCommand).pipe(retry(2)).subscribe({
+      next: updatedContract => {
+        this._contractSignal.update(contracts =>
+        contracts.map(con => con.id === updatedContract.id ? updatedContract: con));
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to update contract status'));
         this._loadingSignal.set(false);
       }
-    })
+    });
   }
 
-  loadContracts() {
+  loadStaff(nursingHomeId: number): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.hcmApi.getContracts().pipe(takeUntilDestroyed()).subscribe({
+    this.hcmApi.getStaffMembers(nursingHomeId).pipe(takeUntilDestroyed()).subscribe({
+      next: staff => {
+        this._staffMemberSignal.set(staff);
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to load staff'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
+  loadContracts(staffMemberId: number) {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.hcmApi.getContracts(staffMemberId).pipe(takeUntilDestroyed()).subscribe({
       next: contract => {
         this._contractSignal.set(contract);
         this._loadingSignal.set(false);

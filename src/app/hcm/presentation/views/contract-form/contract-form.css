@@ -1,0 +1,464 @@
+.form-wrapper {
+  margin-right: 40px;
+  background-color: transparent;
+}
+
+.title {
+  padding-bottom: 12px;
+  border-bottom: 4px solid #66B3AD;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0d2e73;
+  margin-right: 40px;
+}
+
+/* Section Dividers */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 40px 0 24px 0;
+  padding: 16px;
+  background-color: #f0f8ff;
+  border-radius: 12px;
+  border-left: 4px solid #70b1e6;
+}
+
+.section-divider mat-icon {
+  color: #70b1e6;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.section-divider span {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0d2e73;
+}
+
+/* Info Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Cards */
+.info-card,
+.full-width-card {
+  border-radius: 16px !important;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  background-color: white !important;
+}
+
+.info-card:hover,
+.full-width-card:hover {
+  transform: translateY(-4px);
+  border-color: #70b1e6;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+}
+
+.full-width-card {
+  grid-column: 1 / -1;
+}
+
+/* Card Header */
+.card-header-custom {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: #f0f8ff;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.card-header-custom h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0d2e73;
+}
+
+.icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: 2px solid #70b1e6;
+  color: #70b1e6;
+  flex-shrink: 0;
+}
+
+.icon-wrapper mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+/* Card Body */
+.card-body {
+  padding: 24px;
+  background: white;
+}
+
+/* Form Fields */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  background-color: #f8f9fa !important;
+  border-radius: 12px;
+}
+
+::ng-deep .mdc-text-field--outlined .mdc-notched-outline {
+  border-radius: 12px;
+}
+
+::ng-deep .mat-mdc-form-field-focus-overlay {
+  background-color: transparent !important;
+}
+
+::ng-deep .mat-mdc-form-field-error {
+  color: #f56565 !important;
+}
+
+.calendar-section-horizontal {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  justify-items: center;
+}
+
+.calendar-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0d2e73;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.required {
+  color: #ef5350;
+  font-weight: 700;
+}
+
+/* Calendar styling */
+::ng-deep .mat-calendar {
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #fafbfc;
+  width: 100%;
+  max-width: 380px;
+}
+
+::ng-deep .mat-calendar-header {
+  background: #f0f8ff;
+  padding: 16px;
+  border-radius: 12px 12px 0 0;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: #66B3AD !important;
+  color: white !important;
+}
+
+.selected-date {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-radius: 12px;
+  border: 2px solid #66bb6a;
+  width: 100%;
+}
+
+.selected-date mat-icon {
+  color: #66bb6a;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.selected-date span {
+  font-size: 1.1rem;
+  color: #1b5e20;
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .calendar-section-horizontal {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .calendar-wrapper {
+    max-width: 100%;
+  }
+
+  ::ng-deep .mat-calendar {
+    max-width: 100%;
+  }
+
+  .selected-date span {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-section-horizontal {
+    gap: 20px;
+  }
+
+  .calendar-label {
+    font-size: 0.9rem;
+  }
+
+  .selected-date {
+    padding: 12px;
+  }
+
+  .selected-date span {
+    font-size: 0.95rem;
+  }
+}
+
+.detail-row {
+  margin-bottom: 16px;
+}
+
+.info-grid-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Action Buttons */
+.action-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  border: 2px solid #e0e0e0;
+}
+
+.action-buttons button {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  height: 44px !important;
+  padding: 0 20px !important;
+}
+
+.space {
+  padding-bottom: 120px;
+}
+
+/* Material Select Styling */
+::ng-deep .mat-mdc-select-value {
+  color: #0d2e73 !important;
+}
+
+::ng-deep .mat-mdc-select-arrow {
+  color: #70b1e6 !important;
+}
+
+::ng-deep .mat-mdc-option {
+  font-size: 14px !important;
+}
+
+::ng-deep .mat-mdc-option:hover {
+  background-color: #f0f8ff !important;
+}
+
+::ng-deep .mat-mdc-option.mat-mdc-option-active {
+  background-color: #e8f4fd !important;
+  color: #0d2e73 !important;
+}
+
+/* Datepicker Styling */
+::ng-deep .mat-datepicker-toggle {
+  color: #70b1e6 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .form-wrapper {
+    padding: 0 16px;
+    margin-right: 0;
+  }
+
+  .title {
+    margin-right: 0;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .section-divider {
+    padding: 12px;
+  }
+
+  .section-divider span {
+    font-size: 1.25rem;
+  }
+
+  .card-header-custom {
+    padding: 16px;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .action-buttons {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 12px 16px;
+  }
+
+  .action-buttons button {
+    flex: 1 1 auto;
+    min-width: 120px;
+  }
+
+  .space {
+    padding-bottom: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .form-wrapper {
+    padding: 0 12px;
+  }
+
+  .info-grid {
+    gap: 16px;
+  }
+
+  .section-divider {
+    padding: 10px;
+  }
+
+  .section-divider span {
+    font-size: 1.1rem;
+  }
+
+  .section-divider mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .card-header-custom {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .card-header-custom h3 {
+    font-size: 1.1rem;
+  }
+
+  .icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .icon-wrapper mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .action-buttons button {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 360px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .form-wrapper {
+    padding: 0 8px;
+  }
+
+  .section-divider {
+    padding: 8px;
+  }
+
+  .section-divider span {
+    font-size: 1rem;
+  }
+
+  .card-header-custom {
+    padding: 12px;
+  }
+
+  .card-body {
+    padding: 12px;
+  }
+
+  .action-buttons {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    padding: 10px;
+  }
+
+  .action-buttons button {
+    height: 40px !important;
+    font-size: 0.9rem !important;
+  }
+}

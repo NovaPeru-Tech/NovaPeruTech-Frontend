@@ -1,17 +1,107 @@
-.toolbar{
+.toolbar {
   background: #FFFFFF;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 0 2rem;
+  transition: box-shadow 0.3s ease;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
+
+.toolbar:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
 .toolbar img {
   height: 50px;
   width: auto;
-  margin-right: 8px;
+  margin-right: 12px;
+  transition: transform 0.3s ease;
 }
-.title{
-  font-weight: 600;
-  font-size: 20px;
+
+.toolbar img:hover {
+  transform: scale(1.05);
+}
+
+.title {
+  font-weight: 700;
+  font-size: 24px;
   color: #66B3AD;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
 }
-.spacer{
+
+.title:hover {
+  color: #70b1e6;
+}
+
+.spacer {
   flex: 1 1 auto;
+}
+
+/* Language Switcher Integration */
+::ng-deep app-language-switcher {
+  margin-left: 1rem;
+}
+
+::ng-deep mat-button-toggle-group {
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  overflow: hidden;
+}
+
+::ng-deep mat-button-toggle {
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+::ng-deep mat-button-toggle.mat-button-toggle-checked {
+  background: #70b1e6;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .toolbar {
+    padding: 0 1rem;
+  }
+
+  .toolbar img {
+    height: 40px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toolbar img {
+    height: 36px;
+    margin-right: 8px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  ::ng-deep app-language-switcher {
+    margin-left: 0.5rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .toolbar {
+    padding: 0 0.75rem;
+  }
+
+  .toolbar img {
+    height: 32px;
+    margin-right: 6px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
 }

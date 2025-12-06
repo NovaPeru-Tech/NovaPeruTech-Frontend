@@ -1,43 +1,31 @@
 import { Profile } from './profile.entity';
 
 export class PersonProfile extends Profile {
+  private _fullName: string;
   private _dni: string;
-  private _firstName: string;
-  private _lastName: string;
   private _birthDate: Date;
   private _age: number;
 
   constructor(personProfile: {
     id: number;
+    fullName: string;
     dni: string;
-    firstName: string;
-    lastName: string;
     birthDate: Date;
     age: number;
-    emailAddress: string;
-    street: string;
-    number: string;
-    city: string;
-    postalCode: string;
-    country: string;
     photo: string;
     phoneNumber: string;
+    emailAddress: string;
+    streetAddress: string;
   }) {
     super({
       id: personProfile.id,
-      emailAddress: personProfile.emailAddress,
-      street: personProfile.street,
-      number: personProfile.number,
-      city: personProfile.city,
-      postalCode: personProfile.postalCode,
-      country: personProfile.country,
       photo: personProfile.photo,
-      phoneNumber: personProfile.phoneNumber
+      phoneNumber: personProfile.phoneNumber,
+      emailAddress: personProfile.emailAddress,
+      streetAddress: personProfile.streetAddress
     });
-
+    this._fullName = personProfile.fullName;
     this._dni = personProfile.dni;
-    this._firstName = personProfile.firstName;
-    this._lastName = personProfile.lastName;
     this._birthDate = personProfile.birthDate;
     this._age = personProfile.age;
   }
@@ -48,22 +36,6 @@ export class PersonProfile extends Profile {
 
   set dni(value: string) {
     this._dni = value;
-  }
-
-  get firstName(): string {
-    return this._firstName;
-  }
-
-  set firstName(value: string) {
-    this._firstName = value;
-  }
-
-  get lastName(): string {
-    return this._lastName;
-  }
-
-  set lastName(value: string) {
-    this._lastName = value;
   }
 
   get birthDate(): Date {
@@ -80,5 +52,13 @@ export class PersonProfile extends Profile {
 
   set age(value: number) {
     this._age = value;
+  }
+
+  get fullName(): string {
+    return this._fullName;
+  }
+
+  set fullName(value: string) {
+    this._fullName = value;
   }
 }

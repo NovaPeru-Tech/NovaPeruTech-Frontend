@@ -1,7 +1,6 @@
-import {Component, computed, effect, EventEmitter, inject, Input, Output} from '@angular/core';
+import { Component, effect, inject, Input } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PersonProfile } from '../../../domain/model/person-profile.entity';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatError, MatFormField, MatHint, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { TranslatePipe } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
@@ -10,14 +9,27 @@ import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { ProfilesStore } from '../../../application/profiles.store';
-import { catchError, map, Observable, of } from 'rxjs';
 import { provideNativeDateAdapter } from '@angular/material/core';
+
+export interface PersonProfileFormValue {
+  dni: string;
+  firstName: string;
+  lastName: string;
+  birthDate: Date;
+  emailAddress: string;
+  street: string;
+  number: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  photo: string;
+  phoneNumber: string;
+}
 
 @Component({
   selector: 'app-person-profile-form',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
     MatFormField,
     MatLabel,
     MatInput,
@@ -28,7 +40,9 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     MatCard,
     MatError,
     MatButton,
-    MatIconButton
+    MatIconButton,
+    MatHint,
+    ReactiveFormsModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './person-profile-form.html',
@@ -67,72 +81,91 @@ export class PersonProfileForm {
     effect(() => {
       this.isEdit = !!this.personProfileId;
 
-      if (this.isEdit && this.personProfileId) {
+      if(this.isEdit && this.personProfileId) {
         let id = this.personProfileId;
 
         const personProfile = this.store.getPersonProfileById(id)();
 
         if(personProfile) {
+          const parsed = this.parsePersonProfile(personProfile);
+
           this.form.patchValue({
             dni: personProfile.dni,
-            firstName: personProfile.firstName,
-            lastName: personProfile.lastName,
-            birthDate: personProfile.birthDate,
+            firstName: parsed.firstName,
+            lastName: parsed.lastName,
+            birthDate: new Date(personProfile.birthDate  + 'T00:00:00'),
             emailAddress: personProfile.emailAddress,
-            street: personProfile.street,
-            number: personProfile.number,
-            city: personProfile.city,
-            postalCode: personProfile.postalCode,
-            country: personProfile.country,
+            street: parsed.street,
+            number: parsed.number,
+            city: parsed.city,
+            postalCode: parsed.postalCode,
+            country: parsed.country,
             photo: personProfile.photo,
             phoneNumber: personProfile.phoneNumber
           });
 
+          this.maxDate = new Date(personProfile.birthDate);
           this.photoPreview = personProfile.photo;
         }
       }
     });
   }
 
-  submit(): Observable<number | null>  {
+  getProfileData(): PersonProfileFormValue | null {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      return of(null);
+      return null;
     }
 
-    const formValue = this.form.getRawValue();
+    const rawValue = this.form.getRawValue();
 
-    const personProfile = new PersonProfile({
-      id: this.personProfileId ?? 0,
-      dni: formValue.dni!,
-      firstName: formValue.firstName!,
-      lastName: formValue.lastName!,
-      birthDate: formValue.birthDate!,
-      age: this.calculateAge(formValue.birthDate!),
-      emailAddress: formValue.emailAddress!,
-      street: formValue.street!,
-      number: formValue.number!,
-      city: formValue.city!,
-      postalCode: formValue.postalCode!,
-      country: formValue.country!,
-      photo: formValue.photo!,
-      phoneNumber: formValue.phoneNumber!
+    if (!rawValue.birthDate) {
+      return null;
+    }
+
+    return rawValue as PersonProfileFormValue;
+  }
+
+  private resizeImage(file: File, maxWidth: number, maxHeight: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = event => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > maxWidth) {
+              height = height * (maxWidth / width);
+              width = maxWidth;
+            }
+          } else {
+            if (height > maxHeight) {
+              width = width * (maxHeight / height);
+              height = maxHeight;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          const ctx = canvas.getContext('2d');
+          ctx!.drawImage(img, 0, 0, width, height);
+
+          const result = canvas.toDataURL('image/jpeg', 0.8);
+          resolve(result);
+        };
+      };
+
+      reader.onerror = err => reject(err);
     });
-
-    if (this.isEdit) {
-      return this.store.updatePersonProfile(personProfile).pipe(
-        map(updatedProfile => {
-          return updatedProfile.id;
-        })
-      );
-    }
-    else {
-      return this.store.addPersonProfile(personProfile).pipe(
-        map((createdProfile: { id: any; }) => {
-          return createdProfile.id;
-        })
-      );
-    }
   }
 
   onFileSelected(event: Event): void {
@@ -152,15 +185,15 @@ export class PersonProfileForm {
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.photoPreview = e.target?.result as string;
-        this.form.patchValue({
-          photo: e.target?.result as string
-        });
-      };
+      this.resizeImage(file, 400, 400).then(resized => {
+        this.photoPreview = resized;
 
-      reader.readAsDataURL(file);
+        this.form.patchValue({
+          photo: resized
+        });
+
+        console.log('Tamaño Base64:', resized.length, 'caracteres');
+      });
     }
   }
 
@@ -177,16 +210,43 @@ export class PersonProfileForm {
     this.form.get('birthDate')?.markAsTouched();
   }
 
-  private calculateAge(birthDate: Date): number {
-    const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
+  parsePersonProfile(personProfile: any) {
+    const fullNameParts = (personProfile.fullName ?? "").trim().split(/\s+/);
 
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--;
+    let firstName;
+    let lastName;
+
+    if (fullNameParts.length === 2) {
+      firstName = fullNameParts[0];
+      lastName = fullNameParts[1];
+    }
+    else if (fullNameParts.length >= 3) {
+      lastName = fullNameParts.slice(-2).join(" ");
+      firstName = fullNameParts.slice(0, -2).join(" ");
+    }
+    else {
+      firstName = fullNameParts[0] ?? "";
+      lastName = "";
     }
 
-    return age;
+    const streetAddressParts = personProfile.streetAddress.split(',');
+    const streetAndNumber = streetAddressParts[0]?.trim() ?? '';
+    const postalCode = streetAddressParts[1]?.trim() ?? '';
+    const city = streetAddressParts[2]?.trim() ?? '';
+    const country = streetAddressParts[3]?.trim() ?? '';
+    const streetParts = streetAndNumber.split(' ');
+    const number = streetParts.pop() ?? '';
+    const street = streetParts.join(' ');
+
+    return {
+      firstName,
+      lastName,
+      street,
+      number,
+      city,
+      postalCode,
+      country
+    };
   }
+
 }

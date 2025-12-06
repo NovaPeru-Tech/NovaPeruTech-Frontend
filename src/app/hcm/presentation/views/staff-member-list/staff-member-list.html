@@ -35,7 +35,7 @@
 
   <!-- Error State -->
   @if (store.error()) {
-    <mat-error>{{ store.error() }}</mat-error>
+    <mat-error class="error-message">{{ store.error() }}</mat-error>
   }
 
   <!-- Grid de Tarjetas de Empleados -->
@@ -61,7 +61,7 @@
           {{ 'staff-management.buttons.details' | translate }}
         </button>
 
-        @if (staffMember.status === 'PENDING') {
+        @if (staffMember.status === 'INACTIVE') {
           <button mat-raised-button
                   color="primary"
                   class="detail-button"
@@ -79,14 +79,6 @@
 
   <!-- Botones de acción globales -->
   <div class="action-buttons">
-    <button mat-raised-button
-            color="warn"
-            [disabled]="!selectedId"
-            (click)="deleteStaffMember(selectedId!)">
-      <mat-icon>delete</mat-icon>
-      {{ 'staff-management.buttons.delete' | translate }}
-    </button>
-
     <button mat-raised-button
             color="primary"
             [disabled]="!selectedId"

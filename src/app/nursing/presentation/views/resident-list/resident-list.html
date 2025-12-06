@@ -35,7 +35,7 @@
 
   <!-- Error State -->
   @if (store.error()) {
-    <mat-error>{{ store.error() }}</mat-error>
+    <mat-error class="error-message">{{ store.error() }}</mat-error>
   }
 
   <div class="cards-grid">
@@ -53,10 +53,29 @@
           [personProfileId]="resident.personProfileId">
         </app-person-profile-detail>
 
+        @if(resident.roomId != null) {
+          <div class="resident-info">
+            <strong>{{ 'Room' | translate }}:</strong>
+             {{ roomNumberById(resident.roomId) }}
+          </div>
+        } @else {
+          <button mat-raised-button
+                  class="detail-button"
+                  (click)="assignRoom(resident.id); $event.stopPropagation()">
+            {{ 'Assign Room' | translate }}
+          </button>
+        }
+
         <button mat-raised-button
                 class="detail-button"
                 (click)="viewDetails(resident.id); $event.stopPropagation()">
           {{ 'residents.buttons.details' | translate }}
+        </button>
+
+        <button mat-raised-button
+                class="detail-button"
+                (click)="viewMedications(resident.id); $event.stopPropagation()">
+          {{ 'View Medications' | translate }}
         </button>
 
       </mat-card>
@@ -68,14 +87,6 @@
   </div>
 
   <div class="action-buttons">
-    <button mat-raised-button
-            color="warn"
-            [disabled]="!selectedId"
-            (click)="deleteResident(selectedId!)">
-      <mat-icon>delete</mat-icon>
-      {{ 'residents.buttons.delete' | translate }}
-    </button>
-
     <button mat-raised-button
             color="primary"
             [disabled]="!selectedId"

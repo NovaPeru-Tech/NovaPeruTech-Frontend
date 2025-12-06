@@ -36,6 +36,11 @@ import { PersonProfileDetail } from '../../../../profiles/presentation/component
 export class StaffMemberList {
   readonly store = inject(HcmStore);
   protected router = inject(Router);
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
+
+  constructor() {
+    this.store.loadStaff(this.nursingHomeId);
+  }
 
   selectedId: number | null = null;
   searchTerm = signal('');
@@ -51,11 +56,11 @@ export class StaffMemberList {
     const allStaff = this.staff();
     const term = this.searchTerm();
 
-    if (term && ids.length === 0) {
-      return [];
+    if (!term) {
+      return allStaff;
     }
 
-    return allStaff.filter(r => ids.includes(r.personProfileId));
+    return allStaff.filter(staff => ids.includes(staff.personProfileId));
   });
 
   selectStaffMember(id: number) {
@@ -63,25 +68,21 @@ export class StaffMemberList {
   }
 
   viewDetails(id: number) {
-    this.router.navigate(['staff/list', id, 'detail']).then();
+    this.router.navigate(['hcm/staff', id, 'show']).then();
   }
 
   editStaffMember(id: number) {
-    this.router.navigate(['staff/list', id, 'edit']).then();
+    this.router.navigate(['hcm/staff', id, 'edit']).then();
     if (this.selectedId === id) {
       this.selectedId = null;
     }
   }
 
-  deleteStaffMember(id: number) {
-    this.store.deleteStaffMember(id);
-  }
-
   navigateToNew() {
-    this.router.navigate(['staff/list/new']).then();
+    this.router.navigate(['hcm/staff/new']).then();
   }
 
   navigateToNewContract(id: number) {
-    this.router.navigate(['contracts/list', id,'new']).then();
+    this.router.navigate(['hcm/staff', id,'contracts', 'new']).then();
   }
 }

@@ -1,7 +1,6 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Resident } from '../../../domain/model/resident.entity';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -10,7 +9,9 @@ import { MatIcon } from '@angular/material/icon';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatCard } from '@angular/material/card';
 import { NursingStore } from '../../../application/nursing.store';
-import { PersonProfileForm } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
+import { PersonProfileForm, PersonProfileFormValue } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
+import { CreateResidentCommand } from '../../../domain/model/create-resident.command';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-resident-form',
@@ -29,6 +30,7 @@ import { PersonProfileForm } from '../../../../profiles/presentation/components/
     MatLabel,
     PersonProfileForm
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './resident-form.html',
   styleUrl: './resident-form.css'
 })
@@ -39,6 +41,7 @@ export class ResidentForm {
   private store = inject(NursingStore);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
 
   form = this.fb.group({
     legalRepresentativeFirstName:   new FormControl<string> ('',       { nonNullable: true, validators: [Validators.required] }),
@@ -51,6 +54,7 @@ export class ResidentForm {
   isEdit = false;
   residentId: number | null = null;
   personProfileId: number | null = null;
+  residentData: any = null;
 
   constructor() {
     this.route.params.subscribe(params => {
@@ -60,7 +64,11 @@ export class ResidentForm {
       if (this.isEdit && this.residentId) {
         let id = this.residentId;
         const resident = this.store.getResidentById(id)();
+
         if(resident) {
+          this.residentData = resident;
+          this.personProfileId = resident.personProfileId;
+
           this.form.patchValue({
             legalRepresentativeFirstName: resident.legalRepresentativeFirstName,
             legalRepresentativeLastName: resident.legalRepresentativeLastName,
@@ -69,58 +77,81 @@ export class ResidentForm {
             emergencyContactLastName: resident.emergencyContactLastName,
             emergencyContactPhoneNumber: resident.emergencyContactPhoneNumber
           });
-
-          this.personProfileId = resident.personProfileId;
         }
       }
     });
   }
 
-  submit(){
+  submit() {
     if (this.form.invalid) {
       alert("Datos incompletos");
       this.form.markAllAsTouched();
       return;
     }
 
-    this.personProfileForm.submit().subscribe({
-      next: (profileId: number | null) => {
+    const personProfile: PersonProfileFormValue | null = this.personProfileForm.getProfileData();
+    if (!personProfile) {
+      alert("Datos incompletos");
+      this.form.markAllAsTouched();
+      return;
+    }
 
-        if (profileId === null) {
-          alert("Datos incompletos");
-          return;
-        }
+    const resident = this.form.getRawValue();
 
-        const formValue = this.form.getRawValue();
-
-        const resident = new Resident({
-          id: this.residentId ?? 0,
-          personProfileId: profileId,
-
-          legalRepresentativeFirstName: formValue.legalRepresentativeFirstName!,
-          legalRepresentativeLastName: formValue.legalRepresentativeLastName!,
-          legalRepresentativePhoneNumber: formValue.legalRepresentativePhoneNumber!,
-
-          emergencyContactFirstName: formValue.emergencyContactFirstName!,
-          emergencyContactLastName: formValue.emergencyContactLastName!,
-          emergencyContactPhoneNumber: formValue.emergencyContactPhoneNumber!
-        });
-
-        if (this.isEdit) {
-          this.store.updateResident(resident);
-        } else {
-          this.store.addResident(resident);
-        }
-
-        this.router.navigate(['/residents/list']).then();
-      },
-      error: () => {
-        console.error('Ocurrió un error en la llamada API al guardar el perfil.');
-      }
+    const createResidentCommand = new CreateResidentCommand({
+      dni: personProfile.dni,
+      firstName: personProfile.firstName,
+      lastName: personProfile.lastName,
+      birthDate: this.formatDateToISO(personProfile.birthDate),
+      age: this.calculateAge(personProfile.birthDate),
+      emailAddress: personProfile.emailAddress,
+      street: personProfile.street,
+      number: personProfile.number,
+      city: personProfile.city,
+      postalCode: personProfile.postalCode,
+      country: personProfile.country,
+      photo: personProfile.photo,
+      phoneNumber: personProfile.phoneNumber,
+      legalRepresentativeFirstName: resident.legalRepresentativeFirstName,
+      legalRepresentativeLastName: resident.legalRepresentativeLastName,
+      legalRepresentativePhoneNumber: resident.legalRepresentativePhoneNumber,
+      emergencyContactFirstName: resident.emergencyContactFirstName,
+      emergencyContactLastName: resident.emergencyContactLastName,
+      emergencyContactPhoneNumber: resident.emergencyContactPhoneNumber
     });
+
+    if(this.isEdit){
+      this.store.updateResident(this.residentId ?? 0, createResidentCommand);
+    } else {
+      this.store.createResidentInNursingHome(this.nursingHomeId, createResidentCommand);
+    }
+
+    this.router.navigate(['/nursing/residents']).then();
+  }
+
+  private formatDateToISO(date: Date): string {
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private calculateAge(birthDate: Date): number {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return age;
   }
 
   onCancel(): void {
-    this.router.navigate(['/residents/list']).then();
+    this.router.navigate(['/nursing/residents']).then();
   }
 }

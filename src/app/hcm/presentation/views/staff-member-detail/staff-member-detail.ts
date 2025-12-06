@@ -52,34 +52,26 @@ export class StaffMemberDetail {
       this.staffMemberId.set(id);
 
       if (!id) {
-        this.router.navigate(['/staff/list']).then();
+        this.router.navigate(['/hcm/staff']).then();
       }
     });
   }
 
   goBack() {
-    this.router.navigate(['/staff/list']).then();
+    this.router.navigate(['/hcm/staff']).then();
   }
 
   editStaffMember() {
     const id = this.staffMemberId();
     if (id) {
-      this.router.navigate(['staff/list', id, 'edit']).then();
-    }
-  }
-
-  deleteStaffMember() {
-    const id = this.staffMemberId();
-    if (id && confirm('¿Está seguro de eliminar este empleado?')) {
-      this.store.deleteStaffMember(id);
-      this.router.navigate(['/staff/list']).then();
+      this.router.navigate(['hcm/staff', id, 'edit']).then();
     }
   }
 
   viewEmploymentRecord() {
     const id = this.staffMemberId();
     if (id) {
-      this.router.navigate(['staff/list', id, 'records']).then();
+      this.router.navigate(['hcm/staff', id, 'contracts']).then();
     }
   }
 }

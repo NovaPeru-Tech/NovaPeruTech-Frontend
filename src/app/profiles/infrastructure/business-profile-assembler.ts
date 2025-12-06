@@ -12,14 +12,10 @@ export class BusinessProfileAssembler implements BaseAssembler<BusinessProfile, 
       id: resource.id,
       businessName: resource.businessName,
       ruc: resource.ruc,
-      emailAddress: resource.emailAddress,
-      street: resource.street,
-      number: resource.number,
-      city: resource.city,
-      postalCode: resource.postalCode,
-      country: resource.country,
       photo:resource.photo,
-      phoneNumber: resource.phoneNumber
+      phoneNumber: resource.phoneNumber,
+      emailAddress: resource.emailAddress,
+      streetAddress: resource.streetAddress
     });
   }
 
@@ -28,14 +24,10 @@ export class BusinessProfileAssembler implements BaseAssembler<BusinessProfile, 
       id: entity.id,
       businessName: entity.businessName,
       ruc: entity.ruc,
-      emailAddress: entity.emailAddress,
-      street: entity.street,
-      number: entity.number,
-      city: entity.city,
-      postalCode: entity.postalCode,
-      country: entity.country,
       photo: entity.photo,
-      phoneNumber: entity.phoneNumber
+      phoneNumber: entity.phoneNumber,
+      emailAddress: entity.emailAddress,
+      streetAddress: entity.streetAddress
     } as BusinessProfileResource;
   }
 }

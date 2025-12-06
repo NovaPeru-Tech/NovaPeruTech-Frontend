@@ -1,26 +1,33 @@
-import {BaseAssembler} from '../../shared/infrastructure/base-assembler';
-import {SignUp} from '../domain/model/sign-up.entity';
 import {SignUpResource, SignUpResponse} from './sign-up-response';
+import {SignUpCommand} from '../domain/model/sign-up.command';
+import {SignUpRequest} from './sign-up.request';
 
+/**
+ * Assembler for converting between sign-up domain models and API request/response models.
+ */
+export class SignUpAssembler {
+  /**
+   * Converts a sign-up response from the API to a sign-up resource.
+   * @param response - The API response.
+   * @returns The sign-up resource.
+   */
+  toResourceFromResponse(response: SignUpResponse): SignUpResource {
+    return {
+      id: response.id,
+      username: response.username
+    } as SignUpResource;
+  }
 
-export class SignUpAssembler implements BaseAssembler<SignUp, SignUpResource, SignUpResponse>{
-    toEntityFromResource(resource: SignUpResource): SignUp {
-        return new SignUp({id:resource.id,lastName:resource.lastName,firstName:resource.firstName,email:resource.email,password:resource.password, role:resource.role});
-    }
-
-    toResourceFromEntity(entity: SignUp): SignUpResource {
-     return {
-       id:entity.id,
-       firstName:entity.firstName,
-       lastName:entity.lastName,
-       email:entity.email,
-       password:entity.password,
-       role:entity.rol
-     } as SignUpResource;
-    }
-    toEntitiesFromResponse(response: SignUpResponse): SignUp[] {
-    return response.SignUp.map(signUp => this.toEntityFromResource(signUp));
-    }
-
-
+  /**
+   * Converts a sign-up command to a sign-up request for the API.
+   * @param command - The domain command.
+   * @returns The API request.
+   */
+  toRequestFromCommand(command: SignUpCommand): SignUpRequest {
+    return {
+      username: command.username,
+      password: command.password,
+      roles: command.roles
+    } as SignUpRequest;
+  }
 }

@@ -18,22 +18,38 @@
     }
 
     @if (staffMember()) {
-
-      <!-- Botón Volver arriba -->
-      <div class="top-actions">
-        <button mat-raised-button
-                color="accent"
-                (click)="goBack()">
-          <mat-icon>arrow_back</mat-icon>
-          {{ 'staff-management.buttons.go-back' | translate }}
-        </button>
-      </div>
-
       <div class="detail-layout">
         <app-person-profile-detail
           [personProfileCard]="false"
           [personProfileId]="personProfileId()">
         </app-person-profile-detail>
+
+        <div class="info-grid">
+          <mat-card class="full-width-card">
+            <div class="card-header-custom">
+              <div class="icon-wrapper emergency">
+                <mat-icon>contact_emergency</mat-icon>
+              </div>
+              <h3>{{ 'residents.main-contact' | translate }}</h3>
+            </div>
+            <div class="card-body">
+              <div class="detail-row">
+                <strong>{{ 'emergencyContactFirstName' | translate }}:</strong>
+                {{ staffMember()?.emergencyContactFirstName }}
+              </div>
+
+              <div class="detail-row">
+                <strong>{{ 'emergencyContactLastName' | translate }}:</strong>
+                {{ staffMember()?.emergencyContactLastName }}
+              </div>
+
+              <div class="detail-row">
+                <strong>{{ 'emergencyContactPhoneNumber' | translate }}:</strong>
+                {{ staffMember()?.emergencyContactPhoneNumber }}
+              </div>
+            </div>
+          </mat-card>
+        </div>
 
         <mat-card class="records-card">
           <div class="records-content">
@@ -54,6 +70,8 @@
             </button>
           </div>
         </mat-card>
+
+        <div class="spacer"></div>
       </div>
     } @else {
       <div class="not-found">
@@ -76,13 +94,6 @@
             (click)="goBack()">
       <mat-icon>arrow_back</mat-icon>
       {{ 'staff-management.buttons.go-back' | translate }}
-    </button>
-
-    <button mat-raised-button
-            color="warn"
-            (click)="deleteStaffMember()">
-      <mat-icon>delete</mat-icon>
-      {{ 'staff-management.buttons.delete' | translate }}
     </button>
 
     <button mat-raised-button

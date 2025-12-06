@@ -1,0 +1,127 @@
+.checkout-container {
+  display: flex;
+  gap: 30px;
+  padding: 40px;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #f8fdfc;
+}
+
+.checkout-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  width: 420px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  border: 1px solid #e8f7f5;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #157a74;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Inputs */
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: #14504e;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #bde7e2;
+  background: #f7fffe;
+  font-size: 15px;
+  transition: border 0.2s ease;
+}
+
+.form-input:focus {
+  border: 1px solid #36b5ae;
+  outline: none;
+}
+
+/* Rows */
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.col {
+  flex: 1;
+}
+
+/* Buttons */
+.pay-button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 10px;
+  background: #3cb371;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.pay-button:hover {
+  background: #2e965c;
+}
+
+.cancel-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: #4ec7e8;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancel-button:hover {
+  background: #36a8c7;
+}
+
+/* Summary */
+.summary-card {
+  border-left: 5px solid #3cb371;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.summary-item.total {
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.label {
+  color: #14504e;
+}
+
+.value {
+  color: #157a74;
+}
+
+.error-text {
+  color: #d9534f;
+  margin-top: 10px;
+  font-weight: 600;
+}

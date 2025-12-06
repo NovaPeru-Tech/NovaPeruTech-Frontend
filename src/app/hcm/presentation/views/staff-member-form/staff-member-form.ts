@@ -1,7 +1,6 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StaffMember } from '../../../domain/model/staff-member.entity';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -11,7 +10,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { HcmStore } from '../../../application/hcm.store';
 import { LayoutNursingHome } from '../../../../shared/presentation/components/layout-nursing-home/layout-nursing-home';
 import { MatCard } from '@angular/material/card';
-import { PersonProfileForm } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
+import { PersonProfileForm, PersonProfileFormValue } from '../../../../profiles/presentation/components/person-profile-form/person-profile-form';
+import { CreateStaffMemberCommand } from '../../../domain/model/create-staff-member.command';
 
 @Component({
   selector: 'app-staff-member-form',
@@ -41,16 +41,17 @@ export class StaffMemberForm {
   protected store = inject(HcmStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
 
   form = this.fb.group({
-    emergencyContactFirstName:      new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] }),
-    emergencyContactLastName:       new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] }),
-    emergencyContactPhoneNumber:    new FormControl<string> ('',        { nonNullable: true, validators: [Validators.required] }),
-    status:                         new FormControl<string> ('PENDING', { nonNullable: true, validators: [Validators.required] })
+    emergencyContactFirstName:   new FormControl<string> ('', { nonNullable: true, validators: [Validators.required] }),
+    emergencyContactLastName:    new FormControl<string> ('', { nonNullable: true, validators: [Validators.required] }),
+    emergencyContactPhoneNumber: new FormControl<string> ('', { nonNullable: true, validators: [Validators.required] })
   });
   isEdit = false;
   staffMemberId: number | null = null;
   personProfileId: number | null = null;
+  staffMemberData: any = null;
 
   constructor() {
     this.route.params.subscribe(params => {
@@ -60,15 +61,16 @@ export class StaffMemberForm {
       if (this.isEdit && this.staffMemberId) {
         let id = this.staffMemberId;
         const staffMember = this.store.getStaffMemberById(id)();
-        if (staffMember) {
+
+        if(staffMember) {
+          this.staffMemberData = staffMember;
+          this.personProfileId = staffMember.personProfileId;
+
           this.form.patchValue({
             emergencyContactFirstName: staffMember.emergencyContactFirstName,
             emergencyContactLastName: staffMember.emergencyContactLastName,
-            emergencyContactPhoneNumber: staffMember.emergencyContactPhoneNumber,
-            status: staffMember.status
+            emergencyContactPhoneNumber: staffMember.emergencyContactPhoneNumber
           });
-
-          this.personProfileId = staffMember.personProfileId;
         }
       }
     });
@@ -81,41 +83,74 @@ export class StaffMemberForm {
       return;
     }
 
-    this.personProfileForm.submit().subscribe({
-      next: (personProfileId: number | null) => {
+    const personProfile: PersonProfileFormValue | null = this.personProfileForm.getProfileData();
+    if (!personProfile) {
+      alert("Datos incompletos");
+      this.form.markAllAsTouched();
+      return;
+    }
 
-        if (personProfileId === null) {
-          alert("Datos incompletos");
-          return;
-        }
+    const staffMember = this.form.getRawValue();
 
-        const formValue = this.form.getRawValue();
-
-        const staffMember = new StaffMember({
-          id: this.staffMemberId ?? 0,
-          personProfileId: personProfileId,
-
-          emergencyContactFirstName: formValue.emergencyContactFirstName!,
-          emergencyContactLastName: formValue.emergencyContactLastName!,
-          emergencyContactPhoneNumber: formValue.emergencyContactPhoneNumber!,
-          status: formValue.status
-        });
-
-        if (this.isEdit) {
-          this.store.updateStaffMember(staffMember);
-        } else {
-          this.store.addStaffMember(staffMember);
-        }
-
-        this.router.navigate(['/staff/list']).then();
-      },
-      error: () => {
-        console.error('Ocurrió un error en la llamada API al guardar el perfil.');
-      }
+    const staffMemberCommand = new CreateStaffMemberCommand({
+      dni: personProfile.dni,
+      firstName: personProfile.firstName,
+      lastName: personProfile.lastName,
+      birthDate: this.formatDateToISO(personProfile.birthDate),
+      age: this.calculateAge(personProfile.birthDate),
+      emailAddress: personProfile.emailAddress,
+      street: personProfile.street,
+      number: personProfile.number,
+      city: personProfile.city,
+      postalCode: personProfile.postalCode,
+      country: personProfile.country,
+      photo: personProfile.photo,
+      phoneNumber: personProfile.phoneNumber,
+      emergencyContactFirstName: staffMember.emergencyContactFirstName,
+      emergencyContactLastName: staffMember.emergencyContactLastName,
+      emergencyContactPhoneNumber: staffMember.emergencyContactPhoneNumber
     });
+
+    const confirmMessage = this.isEdit
+      ? "¿Deseas guardar los cambios del staff member?"
+      : "¿Deseas crear este nuevo staff member?";
+
+    if (!confirm(confirmMessage)) {
+      return;
+    }
+
+    if(this.isEdit){
+      this.store.updateStaffMember(this.staffMemberId ?? 0, staffMemberCommand);
+    } else {
+      this.store.addStaffMember(this.nursingHomeId, staffMemberCommand);
+    }
+
+    this.router.navigate(['/hcm/staff']).then();
+  }
+
+  private formatDateToISO(date: Date): string {
+    if (!date) return '';
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  private calculateAge(birthDate: Date): number {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return age;
   }
 
   onCancel(): void {
-    this.router.navigate(['/staff/list']).then();
+    this.router.navigate(['/hcm/staff']).then();
   }
 }

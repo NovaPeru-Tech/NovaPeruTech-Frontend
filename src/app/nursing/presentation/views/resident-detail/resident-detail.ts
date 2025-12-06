@@ -9,6 +9,7 @@ import { LayoutNursingHome } from '../../../../shared/presentation/components/la
 import { TranslatePipe } from '@ngx-translate/core';
 import { NursingStore } from '../../../application/nursing.store';
 import { PersonProfileDetail } from '../../../../profiles/presentation/components/person-profile-detail/person-profile-detail';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-resident-detail',
@@ -22,7 +23,8 @@ import { PersonProfileDetail } from '../../../../profiles/presentation/component
     MatFabButton,
     LayoutNursingHome,
     TranslatePipe,
-    PersonProfileDetail
+    PersonProfileDetail,
+    ReactiveFormsModule
   ],
   templateUrl: './resident-detail.html',
   styleUrl: './resident-detail.css'
@@ -52,34 +54,26 @@ export class ResidentDetail {
       this.residentId.set(id);
 
       if (!id) {
-        this.router.navigate(['/residents/list']).then();
+        this.router.navigate(['/nursing/residents']).then();
       }
     });
   }
 
   goBack() {
-    this.router.navigate(['/residents/list']).then();
+    this.router.navigate(['/nursing/residents']).then();
   }
 
   editResident() {
     const id = this.residentId();
     if (id) {
-      this.router.navigate(['residents/list', id, 'edit']).then();
-    }
-  }
-
-  deleteResident() {
-    const id = this.residentId();
-    if (id && confirm('¿Está seguro de eliminar este residente?')) {
-      this.store.deleteResident(id);
-      this.router.navigate(['/residents/list']).then();
+      this.router.navigate(['nursing/residents', id, 'edit']).then();
     }
   }
 
   viewMedicalHistory() {
     const id = this.residentId();
     if (id) {
-      this.router.navigate(['residents/list', id, 'medical-history']).then();
+      this.router.navigate(['nursing/residents', id, 'medical-records']).then();
     }
   }
 }

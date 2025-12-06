@@ -1,13 +1,21 @@
-import {BaseResource, BaseResponse} from '../../shared/infrastructure/base-response';
+import {BaseResource} from '../../shared/infrastructure/base-response';
 
+/**
+ * Resource interface for sign-up response.
+ */
 export interface SignUpResource extends BaseResource {
-id: number;
-firstName: string;
-lastName: string;
-email: string;
-password: string;
-  role: 'administrator' | 'family';
+  /**
+   * The unique identifier of the user.
+   */
+  id: number;
+
+  /**
+   * The username of the user.
+   */
+  username: string;
 }
-export interface  SignUpResponse extends BaseResponse {
-  SignUp: SignUpResource[];
-}
+
+/**
+ * Response interface for sign-up API.
+ */
+export interface SignUpResponse extends BaseResource, SignUpResource {}

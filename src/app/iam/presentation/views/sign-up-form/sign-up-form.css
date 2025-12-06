@@ -1,0 +1,583 @@
+.sign-up-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #70b1e6;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+/* Animated Background Elements */
+.sign-up-container::before {
+  content: '';
+  position: absolute;
+  width: 550px;
+  height: 550px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  top: -275px;
+  right: -275px;
+  animation: float1 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.sign-up-container::after {
+  content: '';
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  bottom: -225px;
+  left: -225px;
+  animation: float2 10s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+@keyframes float1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translate(30px, 30px) scale(1.1);
+    opacity: 0.15;
+  }
+}
+
+@keyframes float2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.08;
+  }
+  50% {
+    transform: translate(-30px, -30px) scale(1.15);
+    opacity: 0.12;
+  }
+}
+
+.sign-up-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+  animation: slideUp 0.6s ease-out;
+  margin: 2rem auto;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.card-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0d2e73;
+  margin: 0 0 0.5rem 0;
+  position: relative;
+  display: inline-block;
+}
+
+.card-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: #66B3AD;
+  border-radius: 2px;
+}
+
+.card-header p {
+  color: #718096;
+  margin: 1rem 0 0 0;
+  font-size: 0.95rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background-color: #f7fafc;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #70b1e6;
+  box-shadow: 0 0 0 3px rgba(112, 177, 230, 0.1);
+  background-color: white;
+}
+
+.form-group input.error {
+  border-color: #f56565;
+  background-color: #fff5f5;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-input-wrapper input {
+  padding-right: 3rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #718096;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.toggle-password:hover {
+  color: #2d3748;
+  background-color: rgba(112, 177, 230, 0.1);
+}
+
+.toggle-password svg {
+  width: 20px;
+  height: 20px;
+}
+
+.password-strength {
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 6px;
+  background-color: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  border-radius: 3px;
+}
+
+.strength-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  min-width: 60px;
+  text-align: right;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.error-message {
+  display: block;
+  color: #f56565;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.alert {
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.alert-error {
+  background-color: #fff5f5;
+  border: 2px solid #fc8181;
+  color: #c53030;
+}
+
+.alert svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.85rem;
+  background: #70b1e6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(112, 177, 230, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #5a9dd4;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(112, 177, 230, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spinner {
+  animation: rotate 1s linear infinite;
+  width: 20px;
+  height: 20px;
+}
+
+.spinner circle {
+  stroke: white;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+.footer-link {
+  text-align: center;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 2px solid #f0f0f0;
+}
+
+.footer-link p {
+  color: #718096;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.footer-link a {
+  color: #70b1e6;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.footer-link a:hover {
+  color: #5a9dd4;
+  text-decoration: underline;
+}
+
+/* Roles Selection */
+.roles-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.role-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f7fafc;
+}
+
+.role-option:hover {
+  border-color: #cbd5e0;
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.role-option.selected {
+  border-color: #70b1e6;
+  background: rgba(112, 177, 230, 0.05);
+  box-shadow: 0 4px 12px rgba(112, 177, 230, 0.15);
+}
+
+.role-radio {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 2px solid #cbd5e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background: white;
+  margin-top: 2px;
+}
+
+.role-option.selected .role-radio {
+  border-color: #70b1e6;
+  border-width: 2px;
+}
+
+.radio-dot {
+  width: 10px;
+  height: 10px;
+  background: #70b1e6;
+  border-radius: 50%;
+  animation: radioAppear 0.3s ease;
+}
+
+@keyframes radioAppear {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.role-info {
+  flex: 1;
+}
+
+.role-label {
+  font-weight: 700;
+  color: #2d3748;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.role-option.selected .role-label {
+  color: #70b1e6;
+}
+
+.role-description {
+  font-size: 0.85rem;
+  color: #718096;
+  line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .sign-up-card {
+    padding: 2rem 1.5rem;
+    margin: 1.5rem 1rem;
+  }
+
+  .card-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-group input {
+    padding: 0.8rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  .role-option {
+    padding: 0.85rem;
+  }
+
+  .btn-primary {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .sign-up-container::before {
+    width: 400px;
+    height: 400px;
+    top: -200px;
+    right: -200px;
+  }
+
+  .sign-up-container::after {
+    width: 350px;
+    height: 350px;
+    bottom: -175px;
+    left: -175px;
+  }
+}
+
+@media (max-width: 360px) {
+  .sign-up-card {
+    padding: 1.75rem 1.25rem;
+    margin: 1rem 0.75rem;
+  }
+
+  .card-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .card-header p {
+    font-size: 0.875rem;
+  }
+
+  .form-group input {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.9rem;
+  }
+
+  .role-option {
+    padding: 0.75rem;
+  }
+
+  .role-label {
+    font-size: 0.9rem;
+  }
+
+  .role-description {
+    font-size: 0.8rem;
+  }
+
+  .btn-primary {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .sign-up-container::before {
+    width: 320px;
+    height: 320px;
+    top: -160px;
+    right: -160px;
+  }
+
+  .sign-up-container::after {
+    width: 280px;
+    height: 280px;
+    bottom: -140px;
+    left: -140px;
+  }
+}
+
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+  color: white;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+}
+
+.admin-badge svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Admin Button Styling */
+.btn-primary.admin-btn {
+  background: linear-gradient(135deg, #f44336 0%, #e91e63 100%) !important;
+}
+
+.btn-primary.admin-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d32f2f 0%, #c2185b 100%) !important;
+  box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4) !important;
+}
+
+/* Card Header Adjustments */
+.card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.card-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.card-header p {
+  font-size: 1rem;
+  color: #718096;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .admin-badge {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    margin-bottom: 12px;
+  }
+
+  .admin-badge svg {
+    width: 16px;
+    height: 16px;
+  }
+}

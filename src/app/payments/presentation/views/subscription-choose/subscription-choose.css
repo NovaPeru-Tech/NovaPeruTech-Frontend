@@ -1,0 +1,98 @@
+.choose-container {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.85),
+    rgba(112, 177, 230, 0.35)
+  ),
+  radial-gradient(
+    circle at top left,
+    #70b1e6 0%,
+    #fff 60%
+  );
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+
+/* Title */
+.title {
+  font-size: 2.4rem;
+  color: #0d2e73;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #0d2e73;
+  opacity: 0.8;
+  margin-bottom: 50px;
+}
+
+/* Grid */
+.plans-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* Plan card */
+.plan-card {
+  width: 280px;
+  padding: 25px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform .2s;
+  border-top: 6px solid #12a18d;
+}
+
+.plan-card:hover {
+  transform: translateY(-6px);
+}
+
+.plan-card h2 {
+  color: #0d2e73;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* Pricing */
+.price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #12a18d;
+  margin: 8px 0;
+}
+
+.price span {
+  font-size: 0.9rem;
+  color: #0d2e73;
+}
+
+.yearly {
+  font-size: 1.3rem;
+  color: #0d2e73;
+}
+
+/* Button */
+.details-btn {
+  margin-top: 20px;
+  padding: 12px 18px;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  background: #12a18d;
+  transition: background 0.2s;
+}
+
+.details-btn:hover {
+  background: #0d2e73;
+}

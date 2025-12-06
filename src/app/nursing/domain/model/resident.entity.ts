@@ -17,6 +17,8 @@ export class Resident {
   private _emergencyContactLastName: string;
   private _emergencyContactPhoneNumber: string;
 
+  private _roomId: number | null;
+
   constructor(resident: {
     id: number;
     personProfileId: number;
@@ -30,6 +32,8 @@ export class Resident {
     emergencyContactFirstName: string;
     emergencyContactLastName: string;
     emergencyContactPhoneNumber: string;
+
+    roomId: number | null;
   }) {
     this._id = resident.id;
     this._personProfileId = resident.personProfileId;
@@ -43,6 +47,8 @@ export class Resident {
     this._emergencyContactFirstName = resident.emergencyContactFirstName;
     this._emergencyContactLastName = resident.emergencyContactLastName;
     this._emergencyContactPhoneNumber = resident.emergencyContactPhoneNumber;
+
+    this._roomId = resident.roomId ?? null;
   }
 
   // Getters and Setters
@@ -108,5 +114,13 @@ export class Resident {
 
   set emergencyContactPhoneNumber(value: string) {
     this._emergencyContactPhoneNumber = value;
+  }
+
+  get roomId(): number | null {
+    return this._roomId;
+  }
+
+  set roomId(value: number | null) {
+    this._roomId = value;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -41,13 +41,26 @@ export class ResidentList {
   readonly store = inject(NursingStore);
   protected router = inject(Router);
 
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
+
+  constructor() {
+    this.store.loadResidentsByNursingHome(this.nursingHomeId);
+    this.store.loadRoomsByNursingHome(this.nursingHomeId);
+  }
+
   selectedId: number | null = null;
   searchTerm = signal('');
   filteredPersonProfilesIds = signal<number[]>([]);
   residents = computed(() => this.store.residents());
+  rooms = computed(() => this.store.rooms());
 
   onFiltered(ids: number[]) {
     this.filteredPersonProfilesIds.set(ids);
+  }
+
+  roomNumberById(id: number): string {
+    const room = this.rooms().find(r => r.id === id);
+    return room ? room.roomNumber : 'N/A';
   }
 
   filteredResidents = computed(() => {
@@ -55,8 +68,8 @@ export class ResidentList {
     const allResidents = this.residents();
     const term = this.searchTerm();
 
-    if (term && ids.length === 0) {
-      return [];
+    if (!term) {
+      return allResidents;
     }
 
     return allResidents.filter(r => ids.includes(r.personProfileId));
@@ -66,22 +79,26 @@ export class ResidentList {
     this.selectedId = this.selectedId === id ? null : id;
   }
 
+  assignRoom(id: number) {
+    this.router.navigate(['nursing/residents', id, 'room-assignments', 'new']).then();
+  }
+
   viewDetails(id: number) {
-    this.router.navigate(['residents/list', id, 'detail']).then();
+    this.router.navigate(['nursing/residents', id, 'show']).then();
+  }
+
+  viewMedications(id: number) {
+    this.router.navigate(['nursing/residents', id, 'medications']).then();
   }
 
   editResident(id: number) {
-    this.router.navigate(['residents/list', id, 'edit']).then();
+    this.router.navigate(['nursing/residents', id, 'edit']).then();
     if (this.selectedId === id) {
       this.selectedId = null;
     }
   }
 
-  deleteResident(id: number) {
-    this.store.deleteResident(id);
-  };
-
   navigateToNew(){
-    this.router.navigate(['residents/list/new']).then();
+    this.router.navigate(['nursing/residents/new']).then();
   }
 }

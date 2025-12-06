@@ -11,26 +11,70 @@
 
     @if (store.error()) {
       <mat-error class="error-message">
-        <mat-icon>error</mat-icon>
         {{ store.error() }}
       </mat-error>
     }
 
     @if (resident()) {
-      <div class="top-actions">
-        <button mat-raised-button
-                color="accent"
-                (click)="goBack()">
-          <mat-icon>arrow_back</mat-icon>
-          {{ 'residents.buttons.go-back' | translate }}
-        </button>
-      </div>
-
       <div class="detail-layout">
         <app-person-profile-detail
           [personProfileCard]="false"
           [personProfileId]="personProfileId()">
         </app-person-profile-detail>
+
+        <div class="info-grid">
+          <mat-card class="full-width-card">
+            <div class="card-header-custom">
+              <div class="icon-wrapper legal">
+                <mat-icon>account_balance</mat-icon>
+              </div>
+              <h3>{{ 'residents.legal-guardian' | translate }}</h3>
+            </div>
+            <div class="card-body">
+              <div class="detail-row">
+                <strong>{{ 'legalRepresentativeFirstName' | translate }}:</strong>
+                {{ resident()?.legalRepresentativeFirstName }}
+              </div>
+
+              <div class="detail-row">
+                <strong>{{ 'legalRepresentativeLastName' | translate }}:</strong>
+                {{ resident()?.legalRepresentativeLastName }}
+              </div>
+
+              <div class="detail-row">
+                <strong>{{ 'legalRepresentativePhoneNumber' | translate }}:</strong>
+                {{ resident()?.legalRepresentativePhoneNumber }}
+              </div>
+            </div>
+          </mat-card>
+        </div>
+
+        <div class="info-grid">
+          <mat-card class="full-width-card">
+            <div class="card-header-custom">
+              <div class="icon-wrapper emergency">
+                <mat-icon>contact_emergency</mat-icon>
+              </div>
+              <h3>{{ 'residents.main-contact' | translate }}</h3>
+            </div>
+            <div class="card-body">
+              <div class="detail-row">
+                <strong>{{ 'emergencyContactFirstName' | translate }}:</strong>
+                {{ resident()?.emergencyContactFirstName }}
+              </div>
+
+              <div class="detail-row">
+                <strong>{{ 'emergencyContactLastName' | translate }}:</strong>
+                {{ resident()?.emergencyContactLastName }}
+              </div>
+
+              <div class="detail-row">
+                <strong>{{ 'emergencyContactPhoneNumber' | translate }}:</strong>
+                {{ resident()?.emergencyContactPhoneNumber }}
+              </div>
+            </div>
+          </mat-card>
+        </div>
 
         <mat-card class="medical-card">
           <div class="medical-content">
@@ -51,6 +95,8 @@
             </button>
           </div>
         </mat-card>
+
+        <div class="spacer"></div>
       </div>
     } @else {
       <div class="not-found">
@@ -73,13 +119,6 @@
             (click)="goBack()">
       <mat-icon>arrow_back</mat-icon>
       {{ 'residents.buttons.go-back' | translate }}
-    </button>
-
-    <button mat-raised-button
-            color="warn"
-            (click)="deleteResident()">
-      <mat-icon>delete</mat-icon>
-      {{ 'residents.buttons.delete' | translate }}
     </button>
 
     <button mat-raised-button

@@ -1,36 +1,38 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import {MatIconModule} from '@angular/material/icon';
+import {Component, EventEmitter, inject, Output} from '@angular/core';
+import {Router} from '@angular/router';
+import {IamStore} from '../../../application/iam.store';
 import {MatButton} from '@angular/material/button';
-import {TranslatePipe} from '@ngx-translate/core';
+
 @Component({
   selector: 'app-authentication-section',
-  standalone: true,
   imports: [
-    MatIconModule,
-    MatButton,
-    TranslatePipe,
+    MatButton
   ],
   templateUrl: './authentication-section.html',
   styleUrl: './authentication-section.css'
 })
 export class AuthenticationSection {
-  constructor(
-    private router: Router,
-  ) {
+  private router = inject(Router);
+  protected store = inject(IamStore);
 
+  performSignIn(): void {
+    this.router.navigate(['/iam/sign-in']).then();
   }
 
-
-  onSignIn() {
-    void this.router.navigate(['auth/sign-in']);
+  performSignUpUser(): void {
+    this.router.navigate(['/iam/sign-up'], {
+      queryParams: { role: 'user' }
+    }).then();
   }
 
-  onRegisterAdmin() {
-    void this.router.navigate(['auth/sign-up/administrator']);
+  performSignUpAdmin(): void {
+    this.router.navigate(['/iam/sign-up'], {
+      queryParams: { role: 'admin' }
+    }).then();
   }
 
-  onRegisterFamily() {
-    void this.router.navigate(['auth/sign-up/familiar']);
+  performSignOut(): void {
+    this.store.signOut(this.router);
   }
 }
+

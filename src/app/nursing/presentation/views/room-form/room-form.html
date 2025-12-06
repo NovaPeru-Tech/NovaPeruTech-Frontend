@@ -1,51 +1,77 @@
 <app-layout-nursing-home>
-  <h1 class="title">{{ (isEdit ? 'Edit Room' : 'New Room') | translate }}</h1>
+  <h1 class="title">{{ 'New Room' | translate }}</h1>
 
-  <div class="content">
+  <div class="form-wrapper">
     <form [formGroup]="form" (ngSubmit)="submit()">
-      <mat-form-field>
-        <mat-label>{{ 'Room Number'|translate }}</mat-label>
-        <input matInput formControlName="number" required>
-        @if (form.get('number')!.touched && form.get('number')!.hasError('required')) {
-          <mat-error>{{ 'Room number is required' | translate }}</mat-error>
-        }
-      </mat-form-field>
+      <div class="info-grid">
+        <mat-card class="full-width-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper">
+              <mat-icon>meeting_room</mat-icon>
+            </div>
+            <h3>{{ 'Room Information' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="info-grid-inline">
+              <div class="detail-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ 'Room Number' | translate }}</mat-label>
+                  <input matInput formControlName="roomNumber" placeholder="{{ 'e.g., 101, A-201' | translate }}" required>
+                  <mat-icon matPrefix>pin</mat-icon>
+                  @if (form.get('roomNumber')!.touched && form.get('roomNumber')!.hasError('required')) {
+                    <mat-error>{{ 'Room number is required' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+              </div>
 
-      <mat-form-field>
-        <mat-label>{{ 'Type'|translate }}</mat-label>
-        <input matInput formControlName="type" required>
-        @if (form.get('type')!.touched && form.get('type')!.hasError('required')) {
-          <mat-error>{{ 'Type is required' | translate }}</mat-error>
-        }
-      </mat-form-field>
+              <div class="detail-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ 'Room Type' | translate }}</mat-label>
+                  <mat-select formControlName="type" required>
+                    <mat-option value="single">{{ 'Single' | translate }}</mat-option>
+                    <mat-option value="double">{{ 'Double' | translate }}</mat-option>
+                    <mat-option value="shared">{{ 'Shared' | translate }}</mat-option>
+                    <mat-option value="suite">{{ 'Suite' | translate }}</mat-option>
+                  </mat-select>
+                  <mat-icon matPrefix>category</mat-icon>
+                  @if (form.get('type')!.touched && form.get('type')!.hasError('required')) {
+                    <mat-error>{{ 'Room type is required' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+              </div>
 
-      <mat-form-field>
-        <mat-label>{{ 'Max Capacity'|translate }}</mat-label>
-        <input matInput formControlName="capacity" required>
-        @if (form.get('capacity')!.touched && form.get('capacity')!.hasError('required')) {
-          <mat-error>{{ 'Max capacity is required' | translate }}</mat-error>
-        }
-      </mat-form-field>
+              <div class="detail-row">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{ 'Max Capacity' | translate }}</mat-label>
+                  <input matInput type="number" formControlName="capacity" min="1" max="10" placeholder="{{ 'Number of residents' | translate }}" required>
+                  <mat-icon matPrefix>groups</mat-icon>
+                  @if (form.get('capacity')!.touched && form.get('capacity')!.hasError('required')) {
+                    <mat-error>{{ 'Max capacity is required' | translate }}</mat-error>
+                  }
+                  @if (form.get('capacity')!.hasError('min')) {
+                    <mat-error>{{ 'Capacity must be at least 1' | translate }}</mat-error>
+                  }
+                  @if (form.get('capacity')!.hasError('max')) {
+                    <mat-error>{{ 'Capacity cannot exceed 10' | translate }}</mat-error>
+                  }
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
 
-      @if (isEdit) {
-        <mat-form-field>
-          <mat-label>{{ 'Status' | translate }}</mat-label>
-          <mat-select formControlName="status">
-            <mat-option value="Available">Available</mat-option>
-            <mat-option value="Maintenance">Maintenance</mat-option>
-          </mat-select>
-        </mat-form-field>
-      }
+      <div class="space"></div>
 
       <div class="action-buttons">
         <button mat-raised-button color="primary" type="button" (click)="onCancel()">
-          <mat-icon>cancel</mat-icon>
+          <mat-icon>arrow_back</mat-icon>
           {{ 'Cancel' | translate }}
         </button>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
           <mat-icon>save</mat-icon>
-          {{ (isEdit? 'Update Room' : 'Register Room') | translate }}
+          {{ 'Register Room' | translate }}
         </button>
       </div>
     </form>

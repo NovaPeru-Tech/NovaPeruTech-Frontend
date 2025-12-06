@@ -6,6 +6,12 @@ import { StaffMember } from '../domain/model/staff-member.entity';
 import { Observable } from 'rxjs';
 import { ContractsApiEndpoint } from './contracts-api-endpoint';
 import { Contract } from '../domain/model/contract.entity';
+import { CreateStaffMemberCommandsApiEndpoint } from './create-staff-member-commands-api-endpoint';
+import {CreateStaffMemberCommand} from '../domain/model/create-staff-member.command';
+import {CreateContractCommandsApiEndpoint} from './create-contract-commands-api-endpoint';
+import {CreateContractCommand} from '../domain/model/create-contract.command';
+import {UpdateContractStatusCommandsApiEndpoint} from './update-contract-status.commands-api-endpoint';
+import {UpdateContractStatusCommand} from '../domain/model/update-contract-status.command';
 
 @Injectable({
   providedIn: 'root'
@@ -13,34 +19,44 @@ import { Contract } from '../domain/model/contract.entity';
 export class HcmApi extends BaseApi {
   private readonly _staffApiEndpoint: StaffApiEndpoint;
   private readonly _contractsApiEndpoint: ContractsApiEndpoint;
+  private readonly _staffMemberCommandsApiEndpoint: CreateStaffMemberCommandsApiEndpoint;
+  private readonly _contractCommandsApiEndpoint: CreateContractCommandsApiEndpoint;
+  private readonly _updateContractStatusCommandsApiEndpoint: UpdateContractStatusCommandsApiEndpoint;
 
   constructor(http:HttpClient) {
     super();
     this._staffApiEndpoint = new StaffApiEndpoint(http);
     this._contractsApiEndpoint = new ContractsApiEndpoint(http);
+    this._staffMemberCommandsApiEndpoint = new CreateStaffMemberCommandsApiEndpoint(http);
+    this._contractCommandsApiEndpoint = new CreateContractCommandsApiEndpoint(http);
+    this._updateContractStatusCommandsApiEndpoint = new UpdateContractStatusCommandsApiEndpoint(http);
   }
 
-  createStaffMember(staffMember:StaffMember):Observable<StaffMember> {
-    return this._staffApiEndpoint.create(staffMember);
+  createStaffMember(nursingHomeId: number, staffMemberCommand: CreateStaffMemberCommand): Observable<StaffMember> {
+    return this._staffMemberCommandsApiEndpoint.create(nursingHomeId, staffMemberCommand);
   }
 
-  deleteStaffMember(id:number):Observable<void> {
+  deleteStaffMember(id: number): Observable<void> {
     return this._staffApiEndpoint.delete(id);
   }
 
-  updateStaffMember(staffMember:StaffMember):Observable<StaffMember> {
-    return this._staffApiEndpoint.update(staffMember,staffMember.id);
+  updateStaffMember(staffMemberId: number, staffMemberCommand: CreateStaffMemberCommand): Observable<StaffMember> {
+    return this._staffMemberCommandsApiEndpoint.update(staffMemberId, staffMemberCommand);
   }
 
-  getStaffMembers() {
-    return this._staffApiEndpoint.getAll();
+  getStaffMembers(nursingHomeId: number) {
+    return this._staffMemberCommandsApiEndpoint.getAll(nursingHomeId);
   }
 
-  createContract(contract: Contract):Observable<Contract> {
-    return this._contractsApiEndpoint.create(contract);
+  createContract(staffMemberId: number, contractCommand: CreateContractCommand): Observable<Contract> {
+    return this._contractCommandsApiEndpoint.create(staffMemberId, contractCommand);
   }
 
-  getContracts() {
-    return this._contractsApiEndpoint.getAll();
+  getContracts(staffMemberId: number): Observable<Contract[]> {
+    return this._contractCommandsApiEndpoint.getAll(staffMemberId);
+  }
+
+  updateContractStatus(staffMemberId: number, contractId: number, updateContractStatusCommand: UpdateContractStatusCommand): Observable<Contract> {
+    return this._updateContractStatusCommandsApiEndpoint.updateContractStatus(staffMemberId, contractId, updateContractStatusCommand);
   }
 }

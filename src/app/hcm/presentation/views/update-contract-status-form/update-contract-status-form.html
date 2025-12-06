@@ -1,0 +1,156 @@
+<app-layout-nursing-home>
+  <h1 class="title">{{ 'contract.update-status.title' | translate }}</h1>
+
+  <div class="form-wrapper">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="contract-status-form">
+      <div class="info-grid">
+        <!-- Current Status Card -->
+        @if (currentStatus) {
+          <mat-card class="info-card current-status-card">
+            <div class="card-header-custom">
+              <div class="icon-wrapper current">
+                <mat-icon>info</mat-icon>
+              </div>
+              <h3>{{ 'contract.current-status' | translate }}</h3>
+            </div>
+            <div class="card-body">
+              <div class="status-display" [class]="'status-' + currentStatus.toLowerCase()">
+                <mat-icon>{{ getStatusIcon(currentStatus) }}</mat-icon>
+                <div class="status-info">
+                  <span class="status-label">{{ 'contract.status.label' | translate }}</span>
+                  <span class="status-value">{{ 'contract.status.' + currentStatus.toLowerCase() | translate }}</span>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+        }
+
+        <!-- New Status Selection Card -->
+        <mat-card class="info-card">
+          <div class="card-header-custom">
+            <div class="icon-wrapper status">
+              <mat-icon>sync_alt</mat-icon>
+            </div>
+            <h3>{{ 'contract.new-status' | translate }}</h3>
+          </div>
+          <div class="card-body">
+            <div class="detail-row">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ 'contract.select-new-status' | translate }}</mat-label>
+                <mat-select formControlName="newStatus">
+                  <mat-option value="ACTIVE">
+                    <span class="status-option active">
+                      <mat-icon>check_circle</mat-icon>
+                      {{ 'contract.status.active' | translate }}
+                    </span>
+                  </mat-option>
+                  <mat-option value="PENDING">
+                    <span class="status-option pending">
+                      <mat-icon>schedule</mat-icon>
+                      {{ 'contract.status.pending' | translate }}
+                    </span>
+                  </mat-option>
+                  <mat-option value="SUSPENDED">
+                    <span class="status-option suspended">
+                      <mat-icon>pause_circle</mat-icon>
+                      {{ 'contract.status.suspended' | translate }}
+                    </span>
+                  </mat-option>
+                  <mat-option value="TERMINATED">
+                    <span class="status-option terminated">
+                      <mat-icon>cancel</mat-icon>
+                      {{ 'contract.status.terminated' | translate }}
+                    </span>
+                  </mat-option>
+                </mat-select>
+                @if (form.get('newStatus')?.touched && form.get('newStatus')!.hasError('required')) {
+                  <mat-error>{{ 'contract.error.status-required' | translate }}</mat-error>
+                }
+              </mat-form-field>
+            </div>
+
+            <!-- Status Preview -->
+            @if (form.value.newStatus) {
+              <div class="status-preview" [class]="'status-' + form.value.newStatus.toLowerCase()">
+                <mat-icon>{{ getStatusIcon(form.value.newStatus) }}</mat-icon>
+                <div class="preview-info">
+                  <span class="preview-label">{{ 'contract.preview-status' | translate }}:</span>
+                  <span class="preview-value">{{ 'contract.status.' + form.value.newStatus.toLowerCase() | translate }}</span>
+                  <p class="preview-description">{{ getStatusDescription(form.value.newStatus) | translate }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </mat-card>
+      </div>
+
+      <!-- Status Information Card -->
+      <mat-card class="info-card full-width-card status-info-card">
+        <div class="card-header-custom">
+          <div class="icon-wrapper info">
+            <mat-icon>help_outline</mat-icon>
+          </div>
+          <h3>{{ 'contract.status-information' | translate }}</h3>
+        </div>
+        <div class="card-body">
+          <div class="status-guide">
+            <div class="status-guide-item active">
+              <div class="guide-icon">
+                <mat-icon>check_circle</mat-icon>
+              </div>
+              <div class="guide-content">
+                <h4>{{ 'contract.status.active' | translate }}</h4>
+                <p>{{ 'contract.status.active-description' | translate }}</p>
+              </div>
+            </div>
+
+            <div class="status-guide-item pending">
+              <div class="guide-icon">
+                <mat-icon>schedule</mat-icon>
+              </div>
+              <div class="guide-content">
+                <h4>{{ 'contract.status.pending' | translate }}</h4>
+                <p>{{ 'contract.status.pending-description' | translate }}</p>
+              </div>
+            </div>
+
+            <div class="status-guide-item suspended">
+              <div class="guide-icon">
+                <mat-icon>pause_circle</mat-icon>
+              </div>
+              <div class="guide-content">
+                <h4>{{ 'contract.status.suspended' | translate }}</h4>
+                <p>{{ 'contract.status.suspended-description' | translate }}</p>
+              </div>
+            </div>
+
+            <div class="status-guide-item terminated">
+              <div class="guide-icon">
+                <mat-icon>cancel</mat-icon>
+              </div>
+              <div class="guide-content">
+                <h4>{{ 'contract.status.terminated' | translate }}</h4>
+                <p>{{ 'contract.status.terminated-description' | translate }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+
+      <div class="space"></div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" type="button" (click)="cancel()">
+          <mat-icon>arrow_back</mat-icon>
+          {{ 'contract.cancel' | translate }}
+        </button>
+
+        <button mat-raised-button color="accent" type="submit" [disabled]="form.invalid">
+          <mat-icon>save</mat-icon>
+          {{ 'contract.update-status' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</app-layout-nursing-home>

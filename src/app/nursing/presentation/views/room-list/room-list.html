@@ -19,12 +19,13 @@
     </mat-form-field>
   </div>
 
+  <!-- Error State -->
+  @if (store.error()) {
+    <mat-error class="error-message">{{ store.error() }}</mat-error>
+  }
+
   <div class="content-with-toolbar">
     <div class="list-container">
-      <!-- Error State -->
-      @if (store.error()) {
-        <mat-error class="error-message">{{ store.error() }}</mat-error>
-      }
 
       <!-- Table Container -->
       <div class="table-container">
@@ -55,7 +56,7 @@
               </th>
               <td mat-cell *matCellDef="let room" class="name-cell">
                 <div class="name-wrapper">
-                  <span class="room-number">{{ room.number }}</span>
+                  <span class="room-number">{{ room.roomNumber }}</span>
                 </div>
               </td>
             </ng-container>
@@ -171,17 +172,6 @@
 
       <!-- Action Buttons -->
       <div class="floating-actions">
-        <button mat-raised-button color="warn" (click)="deleteRoom(selectedId!)" [disabled]="!selectedId">
-          <mat-icon>delete</mat-icon>
-          {{ 'medications.delete' | translate }}
-        </button>
-
-        <button mat-raised-button color="primary" (click)="editRoom(selectedId!)"
-                [disabled]="!selectedId">
-          <mat-icon>edit</mat-icon>
-          {{ 'medications.edit' | translate }}
-        </button>
-
         <button mat-raised-button color="accent" (click)="navigateToNew()">
           <mat-icon>add</mat-icon>
           {{ 'medications.add' | translate }}

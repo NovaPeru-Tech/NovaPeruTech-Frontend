@@ -8,14 +8,15 @@ export class RoomAssembler implements BaseAssembler<Room, RoomResource, RoomsRes
   }
 
   toEntityFromResource(resource: RoomResource): Room {
-    return new Room({id: resource.id, number: resource.number, capacity: resource.capacity,
-      occupied: resource.occupied, type: resource.type, status: resource.status });
+    return new Room({id: resource.id, roomNumber: resource.roomNumber, nursingHomeId: resource.nursingHomeId,
+      capacity: resource.capacity, occupied: resource.occupied, type: resource.type, status: resource.status });
   }
 
   toResourceFromEntity(entity: Room): RoomResource {
     return {
       id: entity.id,
-      number: entity.number,
+      roomNumber: entity.roomNumber,
+      nursingHomeId: entity.nursingHomeId,
       capacity: entity.capacity,
       occupied: entity.occupied,
       type: entity.type,

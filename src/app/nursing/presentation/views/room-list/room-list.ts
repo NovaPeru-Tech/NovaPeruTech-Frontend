@@ -48,6 +48,11 @@ import { MatIcon } from '@angular/material/icon';
 export class RoomList {
   readonly store = inject(NursingStore);
   protected router = inject(Router);
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
+
+  constructor() {
+    this.store.loadRoomsByNursingHome(this.nursingHomeId);
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -76,8 +81,8 @@ export class RoomList {
 
     if (term) {
       result = rooms.filter(m => {
-        const name = this.removeAccents(m.number?.toLowerCase() || '');
-        return name.startsWith(term);
+        const name = this.removeAccents(m.roomNumber?.toLowerCase() || '');
+        return name.includes(term);
       });
     }
 
@@ -114,17 +119,7 @@ export class RoomList {
     this.selectedId = this.selectedId === id ? null : id;
   }
 
-  editRoom(id: number) {
-    this.router.navigate(['rooms/list', id, 'edit']).then();
-  }
-
-  deleteRoom(id: number) {
-    if (confirm('¿Está seguro de eliminar esta habitación?')) {
-      this.store.deleteRoom(id);
-    }
-  }
-
   navigateToNew() {
-    this.router.navigate(['rooms/list/new']).then();
+    this.router.navigate(['nursing/rooms/new']).then();
   }
 }

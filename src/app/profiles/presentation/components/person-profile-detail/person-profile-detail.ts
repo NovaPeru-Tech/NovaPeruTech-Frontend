@@ -29,11 +29,12 @@ export class PersonProfileDetail {
   imageLoaded: boolean = false;
   personProfiles = computed(() => this.store.personProfiles());
   personProfile = computed(() => {
-    if (this.personProfileId === null) return undefined;
     return this.personProfiles().find(p => p.id === this.personProfileId);
   });
 
   constructor() {
+    this.store.loadPersonProfiles();
+
     effect(() => {
       if (this.personProfileCard) {
         return;
@@ -46,8 +47,7 @@ export class PersonProfileDetail {
         this.idsFiltered.emit(personProfiles.map(pp => pp.id));
       } else {
         const filtered = personProfiles.filter(pp =>
-          this.removeAccents(pp.firstName).toLowerCase().includes(term) ||
-          this.removeAccents(pp.lastName).toLowerCase().includes(term)
+          this.removeAccents(pp.fullName).toLowerCase().includes(term)
         );
         this.idsFiltered.emit(filtered.map(pp => pp.id));
       }
