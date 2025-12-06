@@ -1,8 +1,17 @@
 {
+  "devices.list-title": "Device List",
+  "Search": "Search",
+  "Enter the name": "Enter the name",
+  "device-id": "Device ID",
+  "assignedBy": "Assigned By",
+  "assignedAt": "Assigned At",
+  "status": "Status",
+  "no-devices": "No devices available",
+
   "nav": {
     "dashboard": "Dashboard",
     "inventory": "Inventory",
-    "activity": "Activities",
+    "device": "Devices",
     "resident": "Residents",
     "staff": "Staff",
     "care-management": "Care Management",
