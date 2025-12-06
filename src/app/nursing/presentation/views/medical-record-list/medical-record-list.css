@@ -1,0 +1,318 @@
+.content-with-toolbar {
+  flex-direction: column;
+  padding-bottom: 120px;
+}
+
+.title {
+  margin-right: 40px;
+  padding-bottom: 12px;
+  border-bottom: 4px solid #66B3AD;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0d2e73;
+}
+
+.search-container {
+  margin-right: 40px;
+}
+
+.search-container mat-form-field {
+  width: 100%;
+  max-width: 400px;
+}
+
+.list-container {
+  margin-right: 40px;
+  background-color: transparent;
+}
+
+/* Loading and Error */
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}
+
+.error-message {
+  text-align: center;
+  padding: 16px;
+  margin: 0 0 20px 0;
+  background-color: #ffebee;
+  border-radius: 12px;
+  color: #c62828;
+  border: 2px solid #ef9a9a;
+}
+
+/* Table Container */
+.table-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 2px solid #e0e0e0;
+}
+
+.table {
+  overflow-x: auto;
+}
+
+/* Table Styling */
+.rooms-table {
+  width: 100%;
+  background: white;
+}
+
+/* Header */
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.header-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  color: #70b1e6;
+}
+
+::ng-deep .mat-mdc-header-row {
+  background-color: #f0f8ff;
+  height: 56px;
+}
+
+::ng-deep .mat-mdc-header-cell {
+  color: #0d2e73 !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  border-bottom: 2px solid #70b1e6 !important;
+}
+
+/* Rows */
+::ng-deep .mat-mdc-row {
+  height: 60px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+::ng-deep .mat-mdc-row:hover {
+  background-color: #f0f8ff;
+}
+
+::ng-deep .mat-mdc-row.selected-row {
+  background-color: #e3f2fd;
+  border-left: 4px solid #70b1e6;
+}
+
+::ng-deep .mat-mdc-cell {
+  color: #333;
+  font-size: 14px;
+  padding: 12px 16px !important;
+}
+
+/* Name Cell */
+.name-cell {
+  font-weight: 600;
+  color: #0d2e73;
+}
+
+.name-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.room-number {
+  flex: 1;
+}
+
+/* Checkbox Styling */
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__background {
+  border: 2px solid #70b1e6 !important;
+  border-radius: 4px;
+}
+
+::ng-deep .mat-mdc-checkbox.mat-mdc-checkbox-checked .mdc-checkbox__background {
+  background-color: #70b1e6 !important;
+  border-color: #70b1e6 !important;
+}
+
+::ng-deep .mdc-checkbox__checkmark-path {
+  stroke: white !important;
+}
+
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__ripple::before,
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__ripple::after {
+  background-color: #70b1e6 !important;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+/* Paginator */
+.paginator {
+  border-top: 2px solid #e0e0e0;
+}
+
+::ng-deep .mat-mdc-paginator {
+  background: #f8f9fa;
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-paginator-container {
+  min-height: 56px;
+  padding: 0 16px;
+}
+
+/* Floating Actions */
+.floating-actions {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  border: 2px solid #e0e0e0;
+}
+
+.floating-actions button {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  height: 44px !important;
+}
+
+/* Form Field Customization */
+::ng-deep .search-container .mat-mdc-text-field-wrapper {
+  background-color: white !important;
+  border-radius: 12px;
+}
+
+::ng-deep .search-container .mdc-text-field--outlined .mdc-notched-outline {
+  border-radius: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 1240px) {
+  .table {
+    overflow-x: auto;
+  }
+
+  .rooms-table {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .search-container mat-form-field {
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .content-with-toolbar {
+    padding-bottom: 160px;
+  }
+
+  .floating-actions {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 12px 16px;
+  }
+
+  .floating-actions button {
+    flex: 1 1 auto;
+    font-size: 0.9rem;
+    min-width: 120px;
+  }
+
+  .table-container {
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .search-container mat-form-field {
+    max-width: 100%;
+  }
+
+  .floating-actions {
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .floating-actions button {
+    width: 100%;
+    min-width: unset;
+  }
+
+  ::ng-deep .mat-mdc-header-cell,
+  ::ng-deep .mat-mdc-cell {
+    font-size: 13px !important;
+    padding: 8px 12px !important;
+  }
+
+  ::ng-deep .mat-mdc-row {
+    height: 56px;
+  }
+}
+
+@media (max-width: 360px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .floating-actions {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    padding: 10px;
+  }
+
+  .table-container {
+    border-radius: 10px;
+  }
+
+  ::ng-deep .mat-mdc-header-cell,
+  ::ng-deep .mat-mdc-cell {
+    font-size: 12px !important;
+    padding: 6px 8px !important;
+  }
+
+  .rooms-table {
+    min-width: 700px;
+  }
+}
