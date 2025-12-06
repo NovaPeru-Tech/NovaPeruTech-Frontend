@@ -11,8 +11,6 @@ const contractList = () =>
   import('./views/contract-list/contract-list').then(m => m.ContractList);
 const contractForm = () =>
   import('./views/contract-form/contract-form').then(m => m.ContractForm);
-const updateContractStatusForm = () =>
-  import('./views/update-contract-status-form/update-contract-status-form').then(m => m.UpdateContractStatusForm);
 
 const baseTitle = 'Veyra';
 const hcmRoutes: Routes = [
@@ -22,7 +20,6 @@ const hcmRoutes: Routes = [
   { path: 'staff/:id/edit',                          loadComponent: staffMemberForm,          title: `Edit Staff Member | ${baseTitle}` },
   { path: 'staff/:id/contracts',                     loadComponent: contractList,             title: `Contracts | ${baseTitle}` },
   { path: 'staff/:id/contracts/new',                 loadComponent: contractForm,             title: `New Contract | ${baseTitle}` },
-  { path: 'staff/:staffMemberId/contracts/:id/edit', loadComponent: updateContractStatusForm, title: `Update Contract Status | ${baseTitle}` },
 ];
 
 export { hcmRoutes };

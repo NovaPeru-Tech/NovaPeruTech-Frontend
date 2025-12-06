@@ -1,12 +1,12 @@
-import {computed, Injectable, signal} from '@angular/core';
-import {User} from '../domain/model/user.entity';
-import {SignInCommand} from '../domain/model/sign-in.command';
-import {Router} from '@angular/router';
-import {IamApi} from '../infrastructure/iam-api';
-import {SignUpCommand} from '../domain/model/sign-up.command';
-import {CreateAdministratorCommand} from '../domain/model/create-administrator.command';
+import { computed, Injectable, signal } from '@angular/core';
+import { User } from '../domain/model/user.entity';
+import { SignInCommand } from '../domain/model/sign-in.command';
+import { Router } from '@angular/router';
+import { IamApi } from '../infrastructure/iam-api';
+import { SignUpCommand } from '../domain/model/sign-up.command';
+import { CreateAdministratorCommand } from '../domain/model/create-administrator.command';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class IamStore {
   private readonly _loadingSignal = signal<boolean>(false);
   private readonly _errorSignal = signal<string | null>(null);
@@ -14,6 +14,7 @@ export class IamStore {
   private readonly currentUsernameSignal = signal<string | null>(null);
   private readonly currentUserIdSignal = signal<number | null>(null);
   private readonly usersSignal = signal<Array<User>>([]);
+
   readonly isSignedIn = this.isSignedInSignal.asReadonly();
   readonly loadingUsers = signal<boolean>(false);
   readonly currentUsername = this.currentUsernameSignal.asReadonly();
@@ -25,9 +26,17 @@ export class IamStore {
   readonly isLoadingUsers = this.loadingUsers.asReadonly();
 
   constructor(private iamApi: IamApi) {
-    this.isSignedInSignal.set(false);
-    this.currentUsernameSignal.set(null);
-    this.currentUserIdSignal.set(null);
+    const savedToken = localStorage.getItem('token');
+    const savedUserId = localStorage.getItem('userId');
+
+    if (savedToken) {
+      this.isSignedInSignal.set(true);
+      this.currentUserIdSignal.set(savedUserId ? Number(savedUserId) : null);
+    } else {
+      this.isSignedInSignal.set(false);
+      this.currentUsernameSignal.set(null);
+      this.currentUserIdSignal.set(null);
+    }
   }
 
   createAdministrator(createAdministratorCommand: CreateAdministratorCommand, router: Router) {
@@ -52,11 +61,14 @@ export class IamStore {
     console.log(signInCommand);
     this.iamApi.signIn(signInCommand).subscribe({
       next: (signInResource) => {
+        // Esto ya lo tenías bien: guarda el token para el interceptor
         localStorage.setItem('token', signInResource.token);
         localStorage.setItem('userId', signInResource.id.toString());
+
         this.isSignedInSignal.set(true);
         this.currentUsernameSignal.set(signInResource.username);
         this.currentUserIdSignal.set(signInResource.id);
+
         if(signInResource.roles.includes("ROLE_ADMIN")) {
           router.navigate(['/nursing/nursing-homes/new']).then();
         } else {

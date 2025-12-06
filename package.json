@@ -4,6 +4,10 @@
   "description": "Frontend Nova Peru Tech",
   "author": "Nova Peru Tech",
   "license": "MIT",
+  "engines": {
+    "node": ">=20.19.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -1,18 +1,15 @@
-import {HttpInterceptorFn} from '@angular/common/http';
-import {inject} from '@angular/core';
-import {IamStore} from '../application/iam.store';
+import { HttpInterceptorFn } from '@angular/common/http';
 
-export const iamInterceptor: HttpInterceptorFn = (
-  request,
-  next) => {
-  const store = inject(IamStore);
-  // Get the token from local storage.
-  const token = store.currentToken();
-  // If the token exists, add it to the request headers. Otherwise, send the request as is.
-  const handledRequest = token
-    ? request.clone({headers: request.headers.set('Authorization', `Bearer ${token}`)})
-    : request;
-  console.log(token);
-  // Return the handled request.
-  return next(handledRequest);
+export const authenticationInterceptor: HttpInterceptorFn = (req, next) => {
+
+  const token = localStorage.getItem('token');
+
+  if (token && token.length > 0) {
+    const clonedRequest = req.clone({
+      headers: req.headers.set('Authorization', `Bearer ${token}`)
+    });
+    return next(clonedRequest);
+  }
+
+  return next(req);
 };

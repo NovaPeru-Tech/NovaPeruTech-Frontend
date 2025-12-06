@@ -1,0 +1,307 @@
+@startuml
+title Frontend - Class Diagram
+
+package "Frontend" {
+
+  ' =================== NURSING FRONTEND ===================
+  package "Nursing Frontend" {
+
+    package "Nursing Presentation" {
+      class NursingRoutes
+
+      class MedicationFormComponent
+      class MedicationListComponent
+
+      class NursingHomeFormComponent
+
+      class ResidentDetailComponent
+      class ResidentFormComponent
+      class ResidentListComponent
+    }
+
+    package "Nursing Application" {
+      class NursingStore
+    }
+
+    package "Nursing Infrastructure" {
+      class NursingApi
+    }
+
+    package "Nursing Domain" {
+      class NursingHomeViewModel
+      class ResidentViewModel
+      class MedicationViewModel
+    }
+
+    NursingRoutes --> MedicationFormComponent
+    NursingRoutes --> MedicationListComponent
+    NursingRoutes --> NursingHomeFormComponent
+    NursingRoutes --> ResidentDetailComponent
+    NursingRoutes --> ResidentFormComponent
+    NursingRoutes --> ResidentListComponent
+
+    MedicationFormComponent --> NursingStore
+    MedicationListComponent --> NursingStore
+    NursingHomeFormComponent --> NursingStore
+    ResidentDetailComponent --> NursingStore
+    ResidentFormComponent --> NursingStore
+    ResidentListComponent --> NursingStore
+
+    NursingStore --> NursingApi
+    NursingStore --> NursingHomeViewModel
+    NursingStore --> ResidentViewModel
+    NursingStore --> MedicationViewModel
+  }
+
+  ' =================== HCM FRONTEND ===================
+  package "HCM Frontend" {
+
+    package "Hcm Presentation" {
+      class HcmRoutes
+
+      class ContractFormComponent
+      class ContractListComponent
+      class StaffMemberDetailComponent
+      class StaffMemberFormComponent
+      class StaffMemberListComponent
+    }
+
+    package "Hcm Application" {
+      class HcmStore
+    }
+
+    package "Hcm Infrastructure" {
+      class HcmApi
+      class StaffApiEndpoint
+      class ContractsApiEndpoint
+      class ContractCommandsApiEndpoint
+      class StaffMemberCommandsApiEndpoint
+      class StaffMemberAssembler
+      class ContractAssembler
+      class ContractCommandAssembler
+      class StaffMemberCommandAssembler
+    }
+
+    package "Hcm Domain" {
+      class StaffMember
+      class Contract
+    }
+
+    HcmRoutes --> ContractListComponent
+    HcmRoutes --> ContractFormComponent
+    HcmRoutes --> StaffMemberListComponent
+    HcmRoutes --> StaffMemberFormComponent
+    HcmRoutes --> StaffMemberDetailComponent
+
+    ContractFormComponent --> HcmStore
+    ContractListComponent --> HcmStore
+    StaffMemberListComponent --> HcmStore
+    StaffMemberFormComponent --> HcmStore
+    StaffMemberDetailComponent --> HcmStore
+
+    HcmStore --> HcmApi
+    HcmApi --> StaffApiEndpoint
+    HcmApi --> ContractsApiEndpoint
+    HcmApi --> ContractCommandsApiEndpoint
+    HcmApi --> StaffMemberCommandsApiEndpoint
+    HcmApi --> StaffMemberAssembler
+    HcmApi --> ContractAssembler
+    HcmApi --> ContractCommandAssembler
+    HcmApi --> StaffMemberCommandAssembler
+
+    HcmStore --> StaffMember
+    HcmStore --> Contract
+  }
+
+  ' =================== IAM FRONTEND ===================
+  package "IAM Frontend" {
+
+    package "Iam Presentation" {
+      class IamRoutes
+      class AuthenticationSectionComponent
+      class SigninFormComponent
+      class SignUpFormComponent
+    }
+
+    package "Iam Application" {
+      class IamStore
+    }
+
+    package "Iam Infrastructure" {
+      class IamInterceptor
+      class IamApi
+      class SigninApiEndpoint
+      class SignUpApiEndpoint
+      class SigninAssembler
+      class SignUpAssembler
+    }
+
+    package "Iam Domain" {
+      class SigninCommand
+      class SignUpCommand
+      class User
+    }
+
+    IamRoutes --> AuthenticationSectionComponent
+    AuthenticationSectionComponent --> SigninFormComponent
+    AuthenticationSectionComponent --> SignUpFormComponent
+
+    SigninFormComponent --> IamStore
+    SignUpFormComponent --> IamStore
+
+    IamStore --> IamApi
+    IamApi --> SigninApiEndpoint
+    IamApi --> SignUpApiEndpoint
+    IamApi --> SigninAssembler
+    IamApi --> SignUpAssembler
+
+    IamStore --> SigninCommand
+    IamStore --> SignUpCommand
+    IamStore --> User
+  }
+
+  ' =================== ANALYTICS FRONTEND ===================
+  package "Analytics Frontend" {
+
+    package "Analytics Presentation" {
+      class AnalyticsRoutes
+      class AnalyticsDashboardComponent
+    }
+
+    package "Analytics Application" {
+      class AnalyticsStore
+    }
+
+    package "Analytics Infrastructure" {
+      class AnalyticsApi
+      class MetricsApiEndpoint
+      class MetricAssembler
+      class MetricsResponse
+    }
+
+    package "Analytics Domain" {
+      class MetricEntity
+    }
+
+    AnalyticsRoutes --> AnalyticsDashboardComponent
+    AnalyticsDashboardComponent --> AnalyticsStore
+
+    AnalyticsStore --> AnalyticsApi
+    AnalyticsApi --> MetricsApiEndpoint
+    AnalyticsApi --> MetricsResponse
+    AnalyticsApi --> MetricAssembler
+
+    AnalyticsStore --> MetricEntity
+  }
+
+  ' =================== PROFILES FRONTEND ===================
+  package "Profiles Frontend" {
+
+    package "Profiles Presentation" {
+      class BusinessProfileDetailComponent
+      class BusinessProfileFormComponent
+      class PersonProfileDetailComponent
+      class PersonProfileFormComponent
+    }
+
+    package "Profiles Application" {
+      class ProfilesStore
+    }
+
+    package "Profiles Infrastructure" {
+      class ProfilesApi
+      class BusinessProfilesApiEndpoint
+      class PersonProfilesApiEndpoint
+      class BusinessProfileAssembler
+      class PersonProfileAssembler
+      class BusinessProfilesResponse
+      class PersonProfilesResponse
+    }
+
+    package "Profiles Domain" {
+      abstract class Profile
+      class BusinessProfile
+      class PersonProfile
+    }
+
+    BusinessProfileDetailComponent --> ProfilesStore
+    BusinessProfileFormComponent --> ProfilesStore
+    PersonProfileDetailComponent --> ProfilesStore
+    PersonProfileFormComponent --> ProfilesStore
+
+    ProfilesStore --> ProfilesApi
+    ProfilesApi --> BusinessProfilesApiEndpoint
+    ProfilesApi --> PersonProfilesApiEndpoint
+    ProfilesApi --> BusinessProfileAssembler
+    ProfilesApi --> PersonProfileAssembler
+    ProfilesApi --> BusinessProfilesResponse
+    ProfilesApi --> PersonProfilesResponse
+
+    Profile <|-- BusinessProfile
+    Profile <|-- PersonProfile
+
+    ProfilesStore --> BusinessProfile
+    ProfilesStore --> PersonProfile
+  }
+
+  ' =================== SHARED FRONTEND ===================
+  package "Shared Frontend" {
+
+    package "Shared Infrastructure" {
+      class ErrorHandlingEnabledBaseType
+      class BaseApi
+      class BaseApiEndpoint
+      class BaseAssembler
+      class BaseResponse
+    }
+
+    package "Shared Domain" {
+      class BaseEntity
+    }
+
+    package "Shared Presentation" {
+      class HomeComponent
+      class PageNotFoundComponent
+      abstract class BaseFormComponent
+      class LayoutNursingHomeComponent
+      class LanguageSwitcherComponent
+      class ToolbarComponent
+    }
+
+    ErrorHandlingEnabledBaseType <|-- BaseApi
+    BaseApi --> BaseApiEndpoint
+    BaseApiEndpoint --> BaseResponse
+    BaseAssembler --> BaseEntity
+
+    HomeComponent --> LayoutNursingHomeComponent
+    LayoutNursingHomeComponent --> ToolbarComponent
+    LayoutNursingHomeComponent --> LanguageSwitcherComponent
+  }
+
+  ' ===== RELACIONES COMPARTIDAS CON SHARED =====
+
+  BaseApi <|-- NursingApi
+  BaseApi <|-- HcmApi
+  BaseApi <|-- IamApi
+  BaseApi <|-- AnalyticsApi
+  BaseApi <|-- ProfilesApi
+
+  BaseFormComponent <|-- NursingHomeFormComponent
+  BaseFormComponent <|-- ResidentFormComponent
+  BaseFormComponent <|-- MedicationFormComponent
+  BaseFormComponent <|-- ContractFormComponent
+  BaseFormComponent <|-- StaffMemberFormComponent
+  BaseFormComponent <|-- SigninFormComponent
+  BaseFormComponent <|-- SignUpFormComponent
+  BaseFormComponent <|-- BusinessProfileFormComponent
+  BaseFormComponent <|-- PersonProfileFormComponent
+
+  BaseEntity <|-- StaffMember
+  BaseEntity <|-- Contract
+  BaseEntity <|-- User
+  BaseEntity <|-- MetricEntity
+  BaseEntity <|-- BusinessProfile
+  BaseEntity <|-- PersonProfile
+}
+
+@enduml
