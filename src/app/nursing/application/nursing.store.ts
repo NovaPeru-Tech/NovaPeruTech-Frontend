@@ -1,7 +1,7 @@
 import { computed, Injectable, Signal, signal } from '@angular/core';
 import { NursingHome } from '../domain/model/nursing-home.entity';
 import { NursingApi } from '../infrastructure/nursing-api';
-import { retry, throwError } from 'rxjs';
+import {Observable, retry, throwError} from 'rxjs';
 import { Resident } from '../domain/model/resident.entity';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Room } from '../domain/model/room.entity';
@@ -13,6 +13,7 @@ import { AssignRoomCommand } from '../domain/model/assign-room.command';
 import { CreateNursingHomeCommand } from '../domain/model/create-nursing-home.command';
 import { Allergy } from '../domain/model/allergy.entity';
 import {CreateAllergyCommand} from '../domain/model/create-allergy.command';
+import {Device} from '../domain/model/device.entity';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -28,10 +29,12 @@ export class NursingStore {
   private readonly _nursingHomesSignal= signal<NursingHome[]>([]);
   private readonly _roomsSignal = signal<Room[]>([]);
   private readonly _allergiesSignal = signal<Allergy[]>([]);
+  private readonly _devicesSignal = signal<Device[]>([]);
   private readonly _loadingSignal=signal<boolean>(false);
   private readonly _errorSignal=signal<string|null>(null);
   readonly loading=this._loadingSignal.asReadonly();
   readonly error = this._errorSignal.asReadonly();
+  readonly devices = this._devicesSignal.asReadonly();
   readonly allergies = this._allergiesSignal.asReadonly();
   readonly medications = this._medicationsSignal.asReadonly();
   readonly residents = this._residentSignal.asReadonly();
@@ -265,6 +268,21 @@ export class NursingStore {
       },
       error: err => {
         this._errorSignal.set(this.formatError(err, 'Failed to get allergies'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
+  loadDevices(): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.getDevices().pipe(takeUntilDestroyed()).subscribe({
+      next: devices => {
+        this._devicesSignal.set(devices);
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to get devices'));
         this._loadingSignal.set(false);
       }
     });

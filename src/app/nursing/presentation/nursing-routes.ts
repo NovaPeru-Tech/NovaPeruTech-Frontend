@@ -23,6 +23,8 @@ const medicationForm = () =>
   import('./views/medication-form/medication-form').then(m => m.MedicationForm);
 const assignRoomForm = () =>
   import('./views/assign-room-form/assign-room-form').then(m => m.AssignRoomForm);
+const deviceList = () =>
+  import('./views/device-list/device-list').then(m => m.DeviceList);
 
 const baseTitle = 'Veyra';
 const nursingRoutes: Routes = [
@@ -38,7 +40,8 @@ const nursingRoutes: Routes = [
   { path: 'rooms/new',                          loadComponent: roomForm,              title: `New Room | ${baseTitle}` },
   { path: 'rooms/:id/edit',                     loadComponent: roomForm,              title: `Edit Room | ${baseTitle}` },
   { path: 'residents/:id/medications',          loadComponent: medicationList,        title: `Medications | ${baseTitle}` },
-  { path: 'residents/:id/medications/new',      loadComponent: medicationForm,        title: `New Medication | ${baseTitle}` }
+  { path: 'residents/:id/medications/new',      loadComponent: medicationForm,        title: `New Medication | ${baseTitle}` },
+  { path: 'devices',                            loadComponent: deviceList,            title: `Devices | ${baseTitle}` },
 ];
 
 export { nursingRoutes };

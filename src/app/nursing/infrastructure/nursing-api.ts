@@ -24,6 +24,8 @@ import { AllergiesApiEndpoint } from './allergies-api-endpoint';
 import { CreateAllergyCommandsApiEndpoint } from './create-allergy-commands-api-endpoint';
 import { Allergy } from '../domain/model/allergy.entity';
 import { CreateAllergyCommand } from '../domain/model/create-allergy.command';
+import {DevicesApiEndpoint} from './devices-api-endpoint';
+import {Device} from '../domain/model/device.entity';
 
 /**
  * @purpose: Service to interact with the Nursing Home API
@@ -48,6 +50,7 @@ export class NursingApi extends BaseApi{
   private readonly _createNursingHomeCommandsApiEndpoint: CreateNursingHomeCommandsApiEndpoint;
   private readonly _allergiesApiEndpoint: AllergiesApiEndpoint;
   private readonly _createAllergyCommandsApiEndpoint: CreateAllergyCommandsApiEndpoint;
+  private readonly _devicesApiEndpoint: DevicesApiEndpoint;
 
   /**
    * Initializes the Resident, Room and Nursing Home API service with the required HTTP client.
@@ -66,6 +69,7 @@ export class NursingApi extends BaseApi{
     this._createNursingHomeCommandsApiEndpoint = new CreateNursingHomeCommandsApiEndpoint(http);
     this._allergiesApiEndpoint = new AllergiesApiEndpoint(http);
     this._createAllergyCommandsApiEndpoint = new CreateAllergyCommandsApiEndpoint(http);
+    this._devicesApiEndpoint = new DevicesApiEndpoint(http);
   }
 
   createNursingHome(administratorId: number, createNursingHomeCommand: CreateNursingHomeCommand):Observable<NursingHome>{
@@ -148,5 +152,9 @@ export class NursingApi extends BaseApi{
 
   createAllergy(residentId: number, createAllergyCommand: CreateAllergyCommand): Observable<Allergy> {
     return this._createAllergyCommandsApiEndpoint.create(residentId, createAllergyCommand);
+  }
+
+  getDevices(): Observable<Device[]> {
+    return this._devicesApiEndpoint.getAll();
   }
 }
