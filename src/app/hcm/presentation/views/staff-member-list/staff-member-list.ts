@@ -36,9 +36,10 @@ import { PersonProfileDetail } from '../../../../profiles/presentation/component
 export class StaffMemberList {
   readonly store = inject(HcmStore);
   protected router = inject(Router);
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
 
   constructor() {
-    this.store.loadStaff(1);
+    this.store.loadStaff(this.nursingHomeId);
   }
 
   selectedId: number | null = null;
@@ -55,8 +56,8 @@ export class StaffMemberList {
     const allStaff = this.staff();
     const term = this.searchTerm();
 
-    if (term && ids.length === 0) {
-      return [];
+    if (!term) {
+      return allStaff;
     }
 
     return allStaff.filter(staff => ids.includes(staff.personProfileId));
@@ -86,6 +87,6 @@ export class StaffMemberList {
   }
 
   navigateToNewContract(id: number) {
-    this.router.navigate(['hcm/contracts', id,'new']).then();
+    this.router.navigate(['hcm/staff', id,'contracts', 'new']).then();
   }
 }
