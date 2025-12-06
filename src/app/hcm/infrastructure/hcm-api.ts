@@ -10,6 +10,8 @@ import { CreateStaffMemberCommandsApiEndpoint } from './create-staff-member-comm
 import {CreateStaffMemberCommand} from '../domain/model/create-staff-member.command';
 import {CreateContractCommandsApiEndpoint} from './create-contract-commands-api-endpoint';
 import {CreateContractCommand} from '../domain/model/create-contract.command';
+import {UpdateContractStatusCommandsApiEndpoint} from './update-contract-status.commands-api-endpoint';
+import {UpdateContractStatusCommand} from '../domain/model/update-contract-status.command';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,7 @@ export class HcmApi extends BaseApi {
   private readonly _contractsApiEndpoint: ContractsApiEndpoint;
   private readonly _staffMemberCommandsApiEndpoint: CreateStaffMemberCommandsApiEndpoint;
   private readonly _contractCommandsApiEndpoint: CreateContractCommandsApiEndpoint;
+  private readonly _updateContractStatusCommandsApiEndpoint: UpdateContractStatusCommandsApiEndpoint;
 
   constructor(http:HttpClient) {
     super();
@@ -26,6 +29,7 @@ export class HcmApi extends BaseApi {
     this._contractsApiEndpoint = new ContractsApiEndpoint(http);
     this._staffMemberCommandsApiEndpoint = new CreateStaffMemberCommandsApiEndpoint(http);
     this._contractCommandsApiEndpoint = new CreateContractCommandsApiEndpoint(http);
+    this._updateContractStatusCommandsApiEndpoint = new UpdateContractStatusCommandsApiEndpoint(http);
   }
 
   createStaffMember(nursingHomeId: number, staffMemberCommand: CreateStaffMemberCommand): Observable<StaffMember> {
@@ -50,5 +54,9 @@ export class HcmApi extends BaseApi {
 
   getContracts(staffMemberId: number): Observable<Contract[]> {
     return this._contractCommandsApiEndpoint.getAll(staffMemberId);
+  }
+
+  updateContractStatus(staffMemberId: number, contractId: number, updateContractStatusCommand: UpdateContractStatusCommand): Observable<Contract> {
+    return this._updateContractStatusCommandsApiEndpoint.updateContractStatus(staffMemberId, contractId, updateContractStatusCommand);
   }
 }
