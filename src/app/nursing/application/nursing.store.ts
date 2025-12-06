@@ -11,6 +11,8 @@ import { CreateRoomCommand } from '../domain/model/create-room.command';
 import { CreateMedicationCommand } from '../domain/model/create-medication.command';
 import { AssignRoomCommand } from '../domain/model/assign-room.command';
 import { CreateNursingHomeCommand } from '../domain/model/create-nursing-home.command';
+import { Allergy } from '../domain/model/allergy.entity';
+import {CreateAllergyCommand} from '../domain/model/create-allergy.command';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -25,15 +27,15 @@ export class NursingStore {
   private readonly _residentSignal = signal<Resident[]>([]);
   private readonly _nursingHomesSignal= signal<NursingHome[]>([]);
   private readonly _roomsSignal = signal<Room[]>([]);
+  private readonly _allergiesSignal = signal<Allergy[]>([]);
   private readonly _loadingSignal=signal<boolean>(false);
   private readonly _errorSignal=signal<string|null>(null);
   readonly loading=this._loadingSignal.asReadonly();
   readonly error = this._errorSignal.asReadonly();
+  readonly allergies = this._allergiesSignal.asReadonly();
   readonly medications = this._medicationsSignal.asReadonly();
-  readonly nursingHomes=this._nursingHomesSignal.asReadonly();
   readonly residents = this._residentSignal.asReadonly();
   readonly rooms = this._roomsSignal.asReadonly();
-  readonly roomCount = computed(() => this.rooms().length);
 
   constructor(private nursingApi: NursingApi) {}
 
@@ -237,6 +239,37 @@ export class NursingStore {
   getMedicationsByResidentId(residentId: number): Signal<Medication[]> {
     return computed(() => this.medications().filter(medication => medication.residentId === residentId));
   }
+
+  addAllergy(residentId: number, createAllergyCommand: CreateAllergyCommand): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.createAllergy(residentId, createAllergyCommand).pipe(retry(2)).subscribe({
+      next: createdAllergy => {
+        this._allergiesSignal.update(allergies => [...allergies, createdAllergy]);
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to create allergy'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
+  loadAllergies(residentId: number): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.getAllergies(residentId).pipe(takeUntilDestroyed()).subscribe({
+      next: allergies => {
+        this._allergiesSignal.set(allergies);
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to get allergies'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
   /**
    * Loads all residents from the API into the store.
    */
