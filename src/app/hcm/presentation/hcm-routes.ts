@@ -15,7 +15,7 @@ const contractForm = () =>
 const baseTitle = 'Veyra';
 const hcmRoutes: Routes = [
   { path: 'staff',                                   loadComponent: staffMemberList,          title: `Staff | ${baseTitle}` },
-  { path: 'staff/:id/detail',                        loadComponent: staffMemberDetail,        title: `Staff Member Detail | ${baseTitle}` },
+  { path: 'staff/:id/show',                          loadComponent: staffMemberDetail,        title: `Staff Member Detail | ${baseTitle}` },
   { path: 'staff/new',                               loadComponent: staffMemberForm,          title: `New Staff Member | ${baseTitle}` },
   { path: 'staff/:id/edit',                          loadComponent: staffMemberForm,          title: `Edit Staff Member | ${baseTitle}` },
   { path: 'staff/:id/contracts',                     loadComponent: contractList,             title: `Contracts | ${baseTitle}` },

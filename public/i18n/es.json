@@ -1,8 +1,17 @@
 {
+  "devices.list-title": "Lista de dispositivos",
+  "Search": "Buscar",
+  "Enter the name": "Ingresa el nombre",
+  "device-id": "ID del dispositivo",
+  "assignedBy": "Asignado por",
+  "assignedAt": "Asignado en",
+  "status": "Estado",
+  "no-devices": "No hay dispositivos disponibles",
+
   "nav": {
     "dashboard": "Tablero",
     "inventory": "Inventario",
-    "activity": "Actividades",
+    "device": "Dispositivos",
     "resident": "Residentes",
     "staff": "Personal",
     "care-management": "Gestión de la atención",

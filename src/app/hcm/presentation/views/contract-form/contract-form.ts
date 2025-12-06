@@ -96,27 +96,12 @@ export class ContractForm {
       workShift:      this.form.value.workShift!
     });
 
-    const confirmMessage = "¿Deseas crear este nuevo contrato?";
-
-    if (!confirm(confirmMessage)) {
-      return;
-    }
-
     this.store.addContract(this.staffMemberId!, contractCommand);
 
-    setTimeout(() => {
-      if (this.store.error()) {
-        alert(this.store.error()!);
-        return;
-      }
-
-      this.router.navigate(['/hcm/staff']).then();
-    }, 300);
+    this.router.navigate(['/hcm/staff']).then();
   }
 
   onCancel(): void {
-    if (confirm('¿Estás seguro de que deseas cancelar? Los datos no guardados se perderán.')) {
-      this.router.navigate(['/hcm/staff']).then();
-    }
+    this.router.navigate(['/hcm/staff']).then();
   }
 }

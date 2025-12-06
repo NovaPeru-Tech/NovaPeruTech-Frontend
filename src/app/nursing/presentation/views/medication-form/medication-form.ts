@@ -95,7 +95,7 @@ export class MedicationForm {
 
     this.store.addMedication(this.residentId!, createMedicationCommand);
 
-    this.router.navigate(['nursing/medications', this.residentId]).then();
+    this.router.navigate(['nursing/residents', this.residentId, 'medications']).then();
   }
 
   private formatDateToISO(date: Date): string {
@@ -109,6 +109,6 @@ export class MedicationForm {
 
 
   onCancel(): void {
-    this.router.navigate(['nursing/medications', this.residentId]).then();
+    this.router.navigate(['nursing/residents', this.residentId, 'medications']).then();
   }
 }

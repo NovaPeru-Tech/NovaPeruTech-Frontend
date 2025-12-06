@@ -68,7 +68,7 @@ export class StaffMemberList {
   }
 
   viewDetails(id: number) {
-    this.router.navigate(['hcm/staff', id, 'detail']).then();
+    this.router.navigate(['hcm/staff', id, 'show']).then();
   }
 
   editStaffMember(id: number) {
@@ -76,10 +76,6 @@ export class StaffMemberList {
     if (this.selectedId === id) {
       this.selectedId = null;
     }
-  }
-
-  deleteStaffMember(id: number) {
-    this.store.deleteStaffMember(id);
   }
 
   navigateToNew() {

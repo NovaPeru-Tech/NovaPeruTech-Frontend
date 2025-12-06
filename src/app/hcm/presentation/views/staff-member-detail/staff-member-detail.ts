@@ -68,14 +68,6 @@ export class StaffMemberDetail {
     }
   }
 
-  deleteStaffMember() {
-    const id = this.staffMemberId();
-    if (id && confirm('¿Está seguro de eliminar este empleado?')) {
-      this.store.deleteStaffMember(id);
-      this.router.navigate(['/hcm/staff']).then();
-    }
-  }
-
   viewEmploymentRecord() {
     const id = this.staffMemberId();
     if (id) {

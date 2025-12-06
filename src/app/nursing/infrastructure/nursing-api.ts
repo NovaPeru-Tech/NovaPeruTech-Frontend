@@ -16,10 +16,16 @@ import { CreateRoomCommandsApiEndpoint } from './create-room-commands-api-endpoi
 import { CreateRoomCommand } from '../domain/model/create-room.command';
 import { CreateMedicationCommandsApiEndpoint } from './create-medication-commands-api-endpoint';
 import { CreateMedicationCommand } from '../domain/model/create-medication.command';
-import {AssignRoomCommandsApiEndpoint} from './assign-room-commands-api-endpoint';
-import {AssignRoomCommand} from '../domain/model/assign-room.command';
-import {CreateNursingHomeCommandsApiEndpoint} from './create-nursing-home-commands-api-endpoint';
-import {CreateNursingHomeCommand} from '../domain/model/create-nursing-home.command';
+import { AssignRoomCommandsApiEndpoint } from './assign-room-commands-api-endpoint';
+import { AssignRoomCommand } from '../domain/model/assign-room.command';
+import { CreateNursingHomeCommandsApiEndpoint } from './create-nursing-home-commands-api-endpoint';
+import { CreateNursingHomeCommand } from '../domain/model/create-nursing-home.command';
+import { AllergiesApiEndpoint } from './allergies-api-endpoint';
+import { CreateAllergyCommandsApiEndpoint } from './create-allergy-commands-api-endpoint';
+import { Allergy } from '../domain/model/allergy.entity';
+import { CreateAllergyCommand } from '../domain/model/create-allergy.command';
+import {DevicesApiEndpoint} from './devices-api-endpoint';
+import {Device} from '../domain/model/device.entity';
 
 /**
  * @purpose: Service to interact with the Nursing Home API
@@ -42,6 +48,9 @@ export class NursingApi extends BaseApi{
   private readonly _medicationCommandsApiEndpoint: CreateMedicationCommandsApiEndpoint;
   private readonly _assignRoomCommandsApiEndpoint: AssignRoomCommandsApiEndpoint;
   private readonly _createNursingHomeCommandsApiEndpoint: CreateNursingHomeCommandsApiEndpoint;
+  private readonly _allergiesApiEndpoint: AllergiesApiEndpoint;
+  private readonly _createAllergyCommandsApiEndpoint: CreateAllergyCommandsApiEndpoint;
+  private readonly _devicesApiEndpoint: DevicesApiEndpoint;
 
   /**
    * Initializes the Resident, Room and Nursing Home API service with the required HTTP client.
@@ -58,6 +67,9 @@ export class NursingApi extends BaseApi{
     this._medicationCommandsApiEndpoint = new CreateMedicationCommandsApiEndpoint(http);
     this._assignRoomCommandsApiEndpoint = new AssignRoomCommandsApiEndpoint(http);
     this._createNursingHomeCommandsApiEndpoint = new CreateNursingHomeCommandsApiEndpoint(http);
+    this._allergiesApiEndpoint = new AllergiesApiEndpoint(http);
+    this._createAllergyCommandsApiEndpoint = new CreateAllergyCommandsApiEndpoint(http);
+    this._devicesApiEndpoint = new DevicesApiEndpoint(http);
   }
 
   createNursingHome(administratorId: number, createNursingHomeCommand: CreateNursingHomeCommand):Observable<NursingHome>{
@@ -132,5 +144,17 @@ export class NursingApi extends BaseApi{
 
   assignRoomToResident(nursingHomeId: number, residentId: number, assignRoomCommand: AssignRoomCommand): Observable<Resident> {
     return this._assignRoomCommandsApiEndpoint.assignRoom(nursingHomeId, residentId, assignRoomCommand);
+  }
+
+  getAllergies(residentId: number): Observable<Allergy[]> {
+    return this._allergiesApiEndpoint.getAll(residentId);
+  }
+
+  createAllergy(residentId: number, createAllergyCommand: CreateAllergyCommand): Observable<Allergy> {
+    return this._createAllergyCommandsApiEndpoint.create(residentId, createAllergyCommand);
+  }
+
+  getDevices(): Observable<Device[]> {
+    return this._devicesApiEndpoint.getAll();
   }
 }

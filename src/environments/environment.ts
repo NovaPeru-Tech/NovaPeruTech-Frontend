@@ -19,6 +19,8 @@ export const environment = {
   platformProviderAdministratorsEndpointPath: '/administrators',
 
   // Nursing Bounded Context
+  platformProviderDevicesEndpointPath: '/devices',
+  platformProviderResidentAllergiesEndpointPath: '/residents/{residentId}/allergies',
   platformProviderAdministratorNursingHomesEndpointPath: '/administrators/{administratorId}/nursing-homes',
   platformProviderResidentRoomsEndpointPath: '/nursing-homes/{nursingHomeId}/rooms/{residentId}',
   platformProviderResidentMedicationsEndpointPath: '/residents/{residentId}/medications',

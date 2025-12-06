@@ -80,14 +80,6 @@
   <!-- Botones de acción globales -->
   <div class="action-buttons">
     <button mat-raised-button
-            color="warn"
-            [disabled]="!selectedId"
-            (click)="deleteStaffMember(selectedId!)">
-      <mat-icon>delete</mat-icon>
-      {{ 'staff-management.buttons.delete' | translate }}
-    </button>
-
-    <button mat-raised-button
             color="primary"
             [disabled]="!selectedId"
             (click)="editStaffMember(selectedId!)">

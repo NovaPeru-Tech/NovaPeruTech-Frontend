@@ -114,7 +114,7 @@ export class MedicationList {
   }
 
   navigateToNew(id: number) {
-    this.router.navigate(['nursing/medications', id, 'new']).then();
+    this.router.navigate(['nursing/residents', id, 'medications','new']).then();
   }
 
   goBack() {

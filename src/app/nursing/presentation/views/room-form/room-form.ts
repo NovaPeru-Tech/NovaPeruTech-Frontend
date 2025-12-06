@@ -36,6 +36,7 @@ export class RoomForm {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private store = inject(NursingStore);
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
 
   form = this.fb.group({
     capacity:   new FormControl<number | null> (null,        { nonNullable: true, validators: [Validators.required] }),
@@ -58,16 +59,9 @@ export class RoomForm {
       roomNumber: room.roomNumber
     });
 
-    this.store.addRoom(1, createRoomCommand);
+    this.store.addRoom(this.nursingHomeId, createRoomCommand);
 
-    setTimeout(() => {
-      if (this.store.error()) {
-        alert(this.store.error()!);
-        return;
-      }
-
-      this.router.navigate(['/nursing/rooms']).then();
-    }, 300);
+    this.router.navigate(['/nursing/rooms']).then();
   }
 
   onCancel(): void {
