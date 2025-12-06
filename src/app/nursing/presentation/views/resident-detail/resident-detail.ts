@@ -70,18 +70,10 @@ export class ResidentDetail {
     }
   }
 
-  deleteResident() {
-    const id = this.residentId();
-    if (id && confirm("¿Estás seguro de que deseas eliminar este residente? Esta acción no se puede deshacer.")) {
-      this.store.deleteResident(id);
-      this.router.navigate(['/nursing/residents']).then();
-    }
-  }
-
   viewMedicalHistory() {
     const id = this.residentId();
     if (id) {
-      this.router.navigate(['nursing/residents', id, 'medical-history']).then();
+      this.router.navigate(['nursing/residents', id, 'medical-records']).then();
     }
   }
 }
