@@ -120,14 +120,6 @@ export class ResidentForm {
       emergencyContactPhoneNumber: resident.emergencyContactPhoneNumber
     });
 
-    const confirmMessage = this.isEdit
-      ? "¿Deseas guardar los cambios del residente?"
-      : "¿Deseas crear este nuevo residente?";
-
-    if (!confirm(confirmMessage)) {
-      return;
-    }
-
     if(this.isEdit){
       this.store.updateResident(this.residentId ?? 0, createResidentCommand);
     } else {
