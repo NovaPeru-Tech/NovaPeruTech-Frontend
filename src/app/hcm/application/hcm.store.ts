@@ -6,6 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Contract } from '../domain/model/contract.entity';
 import { CreateStaffMemberCommand } from '../domain/model/create-staff-member.command';
 import { CreateContractCommand } from '../domain/model/create-contract.command';
+import { UpdateContractStatusCommand } from '../domain/model/update-contract-status.command';
 
 @Injectable({
   providedIn: 'root'
@@ -86,8 +87,20 @@ export class HcmStore {
     });
   }
 
-  getContractById(id: number): Signal<Contract | undefined> {
-    return computed(() => id ? this.contracts().find(c => c.id === id) : undefined);
+  updateContractStatus(staffMemberId: number, contractId: number, updateContractStatusCommand: UpdateContractStatusCommand): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.hcmApi.updateContractStatus(staffMemberId, contractId, updateContractStatusCommand).pipe(retry(2)).subscribe({
+      next: updatedContract => {
+        this._contractSignal.update(contracts =>
+        contracts.map(con => con.id === updatedContract.id ? updatedContract: con));
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to update contract status'));
+        this._loadingSignal.set(false);
+      }
+    });
   }
 
   loadStaff(nursingHomeId: number): void {
