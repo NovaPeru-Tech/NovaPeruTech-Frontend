@@ -37,7 +37,7 @@ export class LayoutNursingHome {
 
   options = [
     { label: 'nav.dashboard', icon: 'home',         link: '/analytics/dashboard', color: '#5FC2BA'},
-    //{ label: 'nav.activity',  icon: 'assignment',   link: '/activities/list',           color: '#5FC2BA'},
+    { label: 'nav.device',    icon: 'assignment',   link: '/nursing/devices',     color: '#5FC2BA'},
     { label: 'nav.resident',  icon: 'person',       link: '/nursing/residents',   color: '#5FC2BA'},
     { label: 'nav.staff',     icon: 'group',        link: '/hcm/staff',           color: '#5FC2BA'},
     { label: 'nav.room',      icon: 'meeting_room', link: '/nursing/rooms',       color: '#5FC2BA'},
