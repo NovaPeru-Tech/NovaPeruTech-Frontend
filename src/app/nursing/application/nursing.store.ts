@@ -14,6 +14,7 @@ import { CreateNursingHomeCommand } from '../domain/model/create-nursing-home.co
 import { Allergy } from '../domain/model/allergy.entity';
 import {CreateAllergyCommand} from '../domain/model/create-allergy.command';
 import {Device} from '../domain/model/device.entity';
+import {VitalSign} from '../domain/model/vital-sign.entity';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -30,6 +31,7 @@ export class NursingStore {
   private readonly _roomsSignal = signal<Room[]>([]);
   private readonly _allergiesSignal = signal<Allergy[]>([]);
   private readonly _devicesSignal = signal<Device[]>([]);
+  private readonly _vitalSignsSignal = signal<VitalSign[]>([]);
   private readonly _loadingSignal=signal<boolean>(false);
   private readonly _errorSignal=signal<string|null>(null);
   readonly loading=this._loadingSignal.asReadonly();
@@ -39,6 +41,7 @@ export class NursingStore {
   readonly medications = this._medicationsSignal.asReadonly();
   readonly residents = this._residentSignal.asReadonly();
   readonly rooms = this._roomsSignal.asReadonly();
+  readonly vitalSigns = this._vitalSignsSignal.asReadonly();
 
   constructor(private nursingApi: NursingApi) {}
 
@@ -301,6 +304,21 @@ export class NursingStore {
       },
       error: err => {
         this._errorSignal.set(this.formatError(err, 'Failed to load medications'));
+        this._loadingSignal.set(false);
+      }
+    });
+  }
+
+  loadVitalSigns(residentId: number): void {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.getVitalSigns(residentId).pipe(takeUntilDestroyed()).subscribe({
+      next: vitalSigns => {
+        this._vitalSignsSignal.set(vitalSigns);
+        this._loadingSignal.set(false);
+      },
+      error: err => {
+        this._errorSignal.set(this.formatError(err, 'Failed to load vital signs'));
         this._loadingSignal.set(false);
       }
     });
