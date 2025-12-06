@@ -41,6 +41,7 @@ export class StaffMemberForm {
   protected store = inject(HcmStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
 
   form = this.fb.group({
     emergencyContactFirstName:   new FormControl<string> ('', { nonNullable: true, validators: [Validators.required] }),
@@ -121,7 +122,7 @@ export class StaffMemberForm {
     if(this.isEdit){
       this.store.updateStaffMember(this.staffMemberId ?? 0, staffMemberCommand);
     } else {
-      this.store.addStaffMember(1, staffMemberCommand);
+      this.store.addStaffMember(this.nursingHomeId, staffMemberCommand);
     }
 
     setTimeout(() => {
