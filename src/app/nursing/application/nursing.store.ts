@@ -8,8 +8,9 @@ import { Room } from '../domain/model/room.entity';
 import { Medication } from '../domain/model/medication.entity';
 import { CreateResidentCommand } from '../domain/model/create-resident.command';
 import { CreateRoomCommand } from '../domain/model/create-room.command';
-import {CreateMedicationCommand} from '../domain/model/create-medication.command';
-import {AssignRoomCommand} from '../domain/model/assign-room.command';
+import { CreateMedicationCommand } from '../domain/model/create-medication.command';
+import { AssignRoomCommand } from '../domain/model/assign-room.command';
+import { CreateNursingHomeCommand } from '../domain/model/create-nursing-home.command';
 
 /*
 * @purpose: Manage the state of nursing homes in the application
@@ -40,22 +41,37 @@ export class NursingStore {
 * @purpose: Add a new nursing home
 * @description: This method sets the loading state to true, clears any previous errors, and calls the API to create a new nursing home. On success, it updates the nursing homes signal and sets loading to false. On error, it sets an appropriate error message and sets loading to false.
 * */
-  addNursingHome(nursingHome:NursingHome){
+  addNursingHome(administratorId: number, createNursingHomeCommand: CreateNursingHomeCommand):void{
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.nursingApi.createNursingHome(nursingHome).pipe(retry(2)).subscribe({
+    this.nursingApi.createNursingHome(administratorId, createNursingHomeCommand).pipe(retry(2)).subscribe({
       next:createdNursingHome=>{
         this._nursingHomesSignal.update(nursingHome=>[...nursingHome,createdNursingHome]);
+        localStorage.setItem('nursingHomeId', createdNursingHome.id.toString());
         this._loadingSignal.set(false);
-
       },
       error:err=>{
-        this._errorSignal.set(this.formatError(err,'failed to create '));
+        this._errorSignal.set(this.formatError(err,'Failed to create nursing home'));
         this._loadingSignal.set(false);
       }
     });
   }
 
+  getNursingHomeById(administratorId: number) {
+    this._loadingSignal.set(true);
+    this._errorSignal.set(null);
+    this.nursingApi.getNursingHome(administratorId).pipe(retry(2)).subscribe({
+      next: nursingHome => {
+        this._nursingHomesSignal.set(nursingHome);
+        localStorage.setItem('nursingHomeId', nursingHome.id.toString());
+        this._loadingSignal.set(false);
+      },
+      error: err=>{
+        this._errorSignal.set(this.formatError(err,'Failed to get nursing home'));
+        this._loadingSignal.set(false);
+      }
+    })
+  }
   /**
    * Retrieves a resident by ID as a reactive signal.
    * @param id - Resident unique identifier.
@@ -198,7 +214,7 @@ export class NursingStore {
   assignRoom(nursingHomeId: number, residentId: number, assignRoomCommand: AssignRoomCommand): void {
     this._loadingSignal.set(true);
     this._errorSignal.set(null);
-    this.nursingApi.assignRoomToResident(nursingHomeId, residentId, assignRoomCommand).subscribe({
+    this.nursingApi.assignRoomToResident(nursingHomeId, residentId, assignRoomCommand).pipe(retry(2)).subscribe({
       next: updatedResident => {
         this._residentSignal.update(residents =>
           residents.map(res => res.id === updatedResident.id ? updatedResident : res));
