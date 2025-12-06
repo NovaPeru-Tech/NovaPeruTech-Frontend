@@ -1,11 +1,12 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl,
+import { FormGroup, ReactiveFormsModule, Validators, AbstractControl,
   ValidationErrors, FormControl } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { IamStore } from '../../../application/iam.store';
 import { SignUpCommand } from '../../../domain/model/sign-up.command';
 import { CreateAdministratorCommand } from '../../../domain/model/create-administrator.command';
+import {Toolbar} from '../../../../shared/presentation/components/toolbar/toolbar';
 
 /**
  * Component for user sign-up functionality.
@@ -18,11 +19,12 @@ import { CreateAdministratorCommand } from '../../../domain/model/create-adminis
     CommonModule,
     ReactiveFormsModule,
     RouterLink,
+    Toolbar,
   ],
   templateUrl: './sign-up-form.html',
   styleUrls: ['./sign-up-form.css']
 })
-export class SignUpForm implements OnInit {
+export class SignUpForm {
   protected store = inject(IamStore);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -39,10 +41,9 @@ export class SignUpForm implements OnInit {
   hidePassword = true;
   hideConfirmPassword = true;
 
-  ngOnInit() {
-    // Check route to determine if this is admin or user registration
+  constructor() {
     this.route.queryParams.subscribe(params => {
-      this.isAdminMode = params['mode'] === 'admin';
+      this.isAdminMode = params['role'] === 'admin';
     });
   }
 
@@ -86,7 +87,6 @@ export class SignUpForm implements OnInit {
         });
         this.store.createAdministrator(createAdminCommand, this.router);
       } else {
-        // Create regular user with ROLE_USER
         const signUpCommand = new SignUpCommand({
           username: this.form.value.username!,
           password: this.form.value.password!,
