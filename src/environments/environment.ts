@@ -3,14 +3,15 @@ export const environment = {
   platformProviderApiBaseUrl: 'http://localhost:8080/api/v1',
 
   // Analytics Bounded Context
-  platformProviderAnalyticsStaffTerminationsEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/staff/terminations',
-  platformProviderAnalyticsStaffHiresEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/staff/hires',
-  platformProviderAnalyticsResidentsAdmissionsEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/residents/admissions',
+  platformProviderAnalyticsStaffTerminationsEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/staff-terminations',
+  platformProviderAnalyticsStaffHiresEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/staff-hires',
+  platformProviderAnalyticsResidentsAdmissionsEndpointPath: '/nursing-homes/{nursingHomeId}/analytics/residents-admissions',
 
   // Hcm Bounded Context
   platformProviderContractsEndpointPath: '/contracts',
   platformProviderStaffEndpointPath:'/staff',
   platformProviderStaffMemberContractsEndpointPath:'/staff/{staffMemberId}/contracts',
+  platformProviderStaffMemberContractStatusEndpointPath:'/staff/{staffMemberId}/contracts/{contractId}',
 
   //IAM Bounded Context
   platformProviderSignInEndpointPath: '/authentication/sign-in',
@@ -18,6 +19,7 @@ export const environment = {
   platformProviderAdministratorsEndpointPath: '/administrators',
 
   // Nursing Bounded Context
+  platformProviderAdministratorNursingHomesEndpointPath: '/administrators/{administratorId}/nursing-homes',
   platformProviderResidentRoomsEndpointPath: '/nursing-homes/{nursingHomeId}/rooms/{residentId}',
   platformProviderResidentMedicationsEndpointPath: '/residents/{residentId}/medications',
   platformProviderNursingHomeResidentsEndpointPath: '/nursing-homes/{nursingHomeId}/residents',
