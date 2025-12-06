@@ -3,6 +3,7 @@ import {BaseResource, BaseResponse} from '../../shared/infrastructure/base-respo
 export interface UserResource extends BaseResource {
   id: number;
   username: string;
+  roles: string[];
 }
 export interface UsersResponse extends BaseResponse {
   courses: UserResource[];
