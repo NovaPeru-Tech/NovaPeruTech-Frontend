@@ -14,6 +14,8 @@ export interface SignInResource extends BaseResource {
    */
   username: string;
 
+  roles: string[];
+
   /**
    * The authentication token.
    */
