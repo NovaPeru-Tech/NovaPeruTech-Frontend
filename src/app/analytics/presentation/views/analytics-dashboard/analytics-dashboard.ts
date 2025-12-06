@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MatCard, MatCardContent, MatCardTitle } from '@angular/material/card';
 import { MatDivider } from '@angular/material/divider';
@@ -44,25 +44,24 @@ interface ExpandedChart {
   templateUrl: './analytics-dashboard.html',
   styleUrl: './analytics-dashboard.css'
 })
-export class AnalyticsDashboard implements OnInit {
+export class AnalyticsDashboard {
   protected store = inject(AnalyticsStore);
 
   selectedYear = new Date().getFullYear();
-  nursingHomeId = 1;
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
 
-  availableYears = [2025];
+  availableYears = [2025, 2026];
 
   expandedChart: ExpandedChart | null = null;
 
-  ngOnInit() {
-    this.loadAllMetrics();
+  constructor() {
+    this.store.getStaffTerminations(this.nursingHomeId, this.selectedYear);
+    this.store.getStaffHires(this.nursingHomeId, this.selectedYear);
+    this.store.getResidentsAdmissions(this.nursingHomeId, this.selectedYear);
   }
 
   onYearChange() {
-    this.loadAllMetrics();
-  }
-
-  private loadAllMetrics() {
+    this.store.resetMetrics();
     this.store.getStaffTerminations(this.nursingHomeId, this.selectedYear);
     this.store.getStaffHires(this.nursingHomeId, this.selectedYear);
     this.store.getResidentsAdmissions(this.nursingHomeId, this.selectedYear);
