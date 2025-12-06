@@ -18,6 +18,8 @@ import { CreateMedicationCommandsApiEndpoint } from './create-medication-command
 import { CreateMedicationCommand } from '../domain/model/create-medication.command';
 import {AssignRoomCommandsApiEndpoint} from './assign-room-commands-api-endpoint';
 import {AssignRoomCommand} from '../domain/model/assign-room.command';
+import {CreateNursingHomeCommandsApiEndpoint} from './create-nursing-home-commands-api-endpoint';
+import {CreateNursingHomeCommand} from '../domain/model/create-nursing-home.command';
 
 /**
  * @purpose: Service to interact with the Nursing Home API
@@ -39,6 +41,7 @@ export class NursingApi extends BaseApi{
   private readonly _roomCommandsApiEndpoint: CreateRoomCommandsApiEndpoint;
   private readonly _medicationCommandsApiEndpoint: CreateMedicationCommandsApiEndpoint;
   private readonly _assignRoomCommandsApiEndpoint: AssignRoomCommandsApiEndpoint;
+  private readonly _createNursingHomeCommandsApiEndpoint: CreateNursingHomeCommandsApiEndpoint;
 
   /**
    * Initializes the Resident, Room and Nursing Home API service with the required HTTP client.
@@ -54,18 +57,15 @@ export class NursingApi extends BaseApi{
     this._roomCommandsApiEndpoint = new CreateRoomCommandsApiEndpoint(http);
     this._medicationCommandsApiEndpoint = new CreateMedicationCommandsApiEndpoint(http);
     this._assignRoomCommandsApiEndpoint = new AssignRoomCommandsApiEndpoint(http);
+    this._createNursingHomeCommandsApiEndpoint = new CreateNursingHomeCommandsApiEndpoint(http);
   }
 
-  createNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
-    return this._nursingHomesApidEndpoint.create(nursingHome);
+  createNursingHome(administratorId: number, createNursingHomeCommand: CreateNursingHomeCommand):Observable<NursingHome>{
+    return this._createNursingHomeCommandsApiEndpoint.create(administratorId, createNursingHomeCommand);
   }
 
-  updateNursingHome(nursingHome:NursingHome):Observable<NursingHome>{
-    return this._nursingHomesApidEndpoint.update(nursingHome,nursingHome.id);
-  }
-
-  getNursingHome(id:number):Observable<any>{
-    return this._nursingHomesApidEndpoint.getById(id);
+  getNursingHome(administratorId: number):Observable<any>{
+    return this._createNursingHomeCommandsApiEndpoint.getByAdministratorId(administratorId);
   }
 
   createResidentToNursingHome(nursingHomeId: number, command: CreateResidentCommand): Observable<Resident> {

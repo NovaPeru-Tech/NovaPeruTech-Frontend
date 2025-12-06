@@ -48,9 +48,10 @@ import { MatIcon } from '@angular/material/icon';
 export class RoomList {
   readonly store = inject(NursingStore);
   protected router = inject(Router);
+  nursingHomeId: number = Number(localStorage.getItem('nursingHomeId'));
 
   constructor() {
-    this.store.loadRoomsByNursingHome(1);
+    this.store.loadRoomsByNursingHome(this.nursingHomeId);
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

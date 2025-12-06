@@ -41,7 +41,9 @@ export class IamStore {
         this.isSignedInSignal.set(false);
         this.currentUsernameSignal.set(null);
         this.currentUserIdSignal.set(null);
-        router.navigate(['/iam/sign-up']).then();
+        router.navigate(['/iam/sign-up'], {
+          queryParams: { role: 'admin' }
+        }).then();
       }
     })
   }
@@ -51,10 +53,15 @@ export class IamStore {
     this.iamApi.signIn(signInCommand).subscribe({
       next: (signInResource) => {
         localStorage.setItem('token', signInResource.token);
+        localStorage.setItem('userId', signInResource.id.toString());
         this.isSignedInSignal.set(true);
         this.currentUsernameSignal.set(signInResource.username);
         this.currentUserIdSignal.set(signInResource.id);
-        router.navigate(['/analytics/dashboard']).then();
+        if(signInResource.roles.includes("ROLE_ADMIN")) {
+          router.navigate(['/nursing/nursing-homes/new']).then();
+        } else {
+          router.navigate(['/analytics/dashboard']).then();
+        }
       },
       error: (err) => {
         console.error('Sign-in failed:', err);
@@ -84,6 +91,8 @@ export class IamStore {
 
   signOut(router: Router) {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('nursingHomeId');
     this.isSignedInSignal.set(false);
     this.currentUsernameSignal.set(null);
     this.currentUserIdSignal.set(null);

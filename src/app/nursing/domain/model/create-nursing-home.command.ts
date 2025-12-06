@@ -12,7 +12,6 @@ export class CreateNursingHomeCommand {
 
   constructor(createNursingHomeCommand: {
     businessName: string;
-    lastName: string;
     emailAddress: string;
     street: string;
     number: string;

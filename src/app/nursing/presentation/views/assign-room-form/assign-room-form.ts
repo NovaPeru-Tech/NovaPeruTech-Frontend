@@ -81,8 +81,6 @@ export class AssignRoomForm {
 
       this.store.assignRoom(1, this.residentId, assignRoomCommand);
 
-      alert('Habitación asignada exitosamente');
-
       this.router.navigate(['/nursing/residents']).then();
     } else {
       this.form.markAllAsTouched();

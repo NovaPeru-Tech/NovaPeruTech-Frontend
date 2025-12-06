@@ -6,14 +6,16 @@ import {BaseEntity} from '../../../shared/domain/model/base-entity';
 export class User implements BaseEntity{
   private _id: number;
   private _username: string;
+  private _roles: string[];
 
   /**
    * Creates a new User instance.
    * @param user - The user data object containing id and username.
    */
-  constructor(user:{id: number, username: string}) {
+  constructor(user:{id: number, username: string, roles: string[]}) {
     this._id = user.id;
     this._username = user.username;
+    this._roles = user.roles;
   }
 
   /**
@@ -46,5 +48,13 @@ export class User implements BaseEntity{
    */
   set username(value: string) {
     this._username = value;
+  }
+
+  get roles(): string[] {
+    return this._roles;
+  }
+
+  set roles(value: string[]) {
+    this._roles = value;
   }
 }

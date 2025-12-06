@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, EventEmitter, inject, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {IamStore} from '../../../application/iam.store';
 import {MatButton} from '@angular/material/button';
@@ -21,13 +21,13 @@ export class AuthenticationSection {
 
   performSignUpUser(): void {
     this.router.navigate(['/iam/sign-up'], {
-      queryParams: { mode: 'user' }
+      queryParams: { role: 'user' }
     }).then();
   }
 
   performSignUpAdmin(): void {
     this.router.navigate(['/iam/sign-up'], {
-      queryParams: { mode: 'admin' }
+      queryParams: { role: 'admin' }
     }).then();
   }
 

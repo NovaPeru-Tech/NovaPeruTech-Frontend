@@ -21,10 +21,7 @@ export class ProfilesStore {
   readonly businessProfileCount = computed(() => this.businessProfiles().length);
   readonly personProfileCount = computed(() => this.personProfiles().length);
 
-  constructor(private profilesApi: ProfilesApi) {
-    this.loadBusinessProfiles();
-    this.loadPersonProfiles();
-  }
+  constructor(private profilesApi: ProfilesApi) {}
 
   getBusinessProfileById(id: number | null | undefined): Signal<BusinessProfile | undefined> {
     return computed(() => id

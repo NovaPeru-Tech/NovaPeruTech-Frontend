@@ -110,8 +110,6 @@ export class ContractForm {
         return;
       }
 
-      alert("Contrato creado correctamente");
-
       this.router.navigate(['/hcm/staff']).then();
     }, 300);
   }

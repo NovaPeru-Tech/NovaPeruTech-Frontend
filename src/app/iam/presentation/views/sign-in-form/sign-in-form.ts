@@ -1,9 +1,10 @@
-import {Component, effect, inject} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {Router, RouterLink} from '@angular/router';
-import {SignInCommand} from '../../../domain/model/sign-in.command';
-import {IamStore} from '../../../application/iam.store';
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SignInCommand } from '../../../domain/model/sign-in.command';
+import { IamStore } from '../../../application/iam.store';
+import { Toolbar } from '../../../../shared/presentation/components/toolbar/toolbar';
 
 /**
  * Component for user sign-in functionality.
@@ -15,7 +16,7 @@ import {IamStore} from '../../../application/iam.store';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterLink
+    Toolbar
   ],
   templateUrl: './sign-in-form.html',
   styleUrls: ['./sign-in-form.css']
@@ -88,5 +89,17 @@ export class SignInForm {
       return 'Password must be at least 6 characters';
     }
     return '';
+  }
+
+  performSignUpUser(): void {
+    this.router.navigate(['/iam/sign-up'], {
+      queryParams: { role: 'user' }
+    }).then();
+  }
+
+  performSignUpAdmin(): void {
+    this.router.navigate(['/iam/sign-up'], {
+      queryParams: { role: 'admin' }
+    }).then();
   }
 }

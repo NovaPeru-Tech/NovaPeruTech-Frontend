@@ -58,10 +58,6 @@ export class RoomForm {
       roomNumber: room.roomNumber
     });
 
-    if (!confirm("¿Deseas guardar los cambios de la habitación?")) {
-      return;
-    }
-
     this.store.addRoom(1, createRoomCommand);
 
     setTimeout(() => {
@@ -69,8 +65,6 @@ export class RoomForm {
         alert(this.store.error()!);
         return;
       }
-
-      alert('Habitación registrada exitosamente');
 
       this.router.navigate(['/nursing/rooms']).then();
     }, 300);

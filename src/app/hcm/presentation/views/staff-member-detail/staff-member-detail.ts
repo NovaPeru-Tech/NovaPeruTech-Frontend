@@ -79,7 +79,7 @@ export class StaffMemberDetail {
   viewEmploymentRecord() {
     const id = this.staffMemberId();
     if (id) {
-      this.router.navigate(['hcm/staff', id, 'records']).then();
+      this.router.navigate(['hcm/staff', id, 'contracts']).then();
     }
   }
 }
