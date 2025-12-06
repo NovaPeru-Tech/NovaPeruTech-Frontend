@@ -11,7 +11,7 @@ const roomList = () =>
   import('./views/room-list/room-list').then(m => m.RoomList);
 const roomForm = () =>
   import('./views/room-form/room-form').then(m => m.RoomForm);
-const nursingHomeRegister = () =>
+const nursingHomeForm = () =>
   import('./views/nursing-home-form/nursing-home-form').then(m => m.NursingHomeForm)
 const medicationList = () =>
   import('./views/medication-list/medication-list').then(m => m.MedicationList);
@@ -22,16 +22,17 @@ const assignRoomForm = () =>
 
 const baseTitle = 'Veyra';
 const nursingRoutes: Routes = [
-  { path: 'residents',                 loadComponent: residentList,   title: `Residents | ${baseTitle}` },
-  { path: 'residents/:id/detail',      loadComponent: residentDetail, title: `Resident Detail | ${baseTitle}` },
-  { path: 'residents/new',             loadComponent: residentForm,   title: `New Resident | ${baseTitle}` },
-  { path: 'residents/:id/edit',        loadComponent: residentForm,   title: `Edit Resident | ${baseTitle}` },
-  { path: 'residents/:id/assign-room', loadComponent: assignRoomForm, title: `Assign-Room | ${baseTitle}` },
-  { path: 'rooms',                     loadComponent: roomList,       title: `Rooms | ${baseTitle}` },
-  { path: 'rooms/new',                 loadComponent: roomForm,       title: `New Room | ${baseTitle}` },
-  { path: 'rooms/:id/edit',            loadComponent: roomForm,       title: `Edit Room | ${baseTitle}` },
-  { path: 'medications/:id',           loadComponent: medicationList, title: `Medications | ${baseTitle}` },
-  { path: 'medications/:id/new',       loadComponent: medicationForm, title: `New Medication | ${baseTitle}` }
+  { path: 'nursing-homes/new',         loadComponent: nursingHomeForm, title: `New Nursing Home | ${baseTitle}` },
+  { path: 'residents',                 loadComponent: residentList,    title: `Residents | ${baseTitle}` },
+  { path: 'residents/:id/detail',      loadComponent: residentDetail,  title: `Resident Detail | ${baseTitle}` },
+  { path: 'residents/new',             loadComponent: residentForm,    title: `New Resident | ${baseTitle}` },
+  { path: 'residents/:id/edit',        loadComponent: residentForm,    title: `Edit Resident | ${baseTitle}` },
+  { path: 'residents/:id/assign-room', loadComponent: assignRoomForm,  title: `Assign-Room | ${baseTitle}` },
+  { path: 'rooms',                     loadComponent: roomList,        title: `Rooms | ${baseTitle}` },
+  { path: 'rooms/new',                 loadComponent: roomForm,        title: `New Room | ${baseTitle}` },
+  { path: 'rooms/:id/edit',            loadComponent: roomForm,        title: `Edit Room | ${baseTitle}` },
+  { path: 'medications/:id',           loadComponent: medicationList,  title: `Medications | ${baseTitle}` },
+  { path: 'medications/:id/new',       loadComponent: medicationForm,  title: `New Medication | ${baseTitle}` }
 ];
 
 export { nursingRoutes };
